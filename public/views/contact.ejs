@@ -1,0 +1,49 @@
+<%- include('includes/header') %>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="dhMQZjlk"></script>
+<!-- CONTACT FORM -->
+<div id="contactForm" class="full-width-home-container-transparent py-3 my-4">
+    <h1 class="text-center caveat display-1">Message Hanford</h1>
+    <% if (status == 'fail') { %>
+        <div class="alert alert-danger text-center small py-2">Sorry, your message couldn't be sent...maybe try the Facebook Page below instead?</div>
+      <% } else if (status == 'success') { %>
+        <div class="alert alert-success text-center small py-2">Your message has been sent successfully. Thanks for reaching out!</div>
+      <% } %>
+    <form id="contact-form" class="my-4" action="/sendEmail" method="POST">
+        <h2 style="font-size: 20px;" class="text-center mt-4 mb-5">You will usually receive a reply within 24 hours.<br>Feel free to ask me anything!</h2>
+        <div id="contactEmailDiv" class="input-group mb-3">
+          <div id="contactEmailPrepend" class="input-group-prepend">
+            <span id="contactEmailText" class="input-group-text">Your Email</span>
+          </div>
+          <input id="contactEmailInput" autocomplete="off" type="email" name="email" class="form-control" value="" placeholder=" eg. abc@123.com">
+        </div>
+        <div id="contactMessageDiv" class="form-group">
+          <textarea id="contactMessageInput" autocomplete="off" name="message" class="form-control" value="" placeholder="Schedule a free trial, enquire about exam accompaniment, ask for music learning advice, etc." rows="10"></textarea>
+        </div>
+        <p class="mt-3 text-muted text-center">Please be patient ~ Nodemailer is working hard behind the scenes but may still take a minute.</p>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-success btn-lg btn-block mt-3">Send</button>
+      </form>
+    </div>
+
+<!-- FACEBOOK -->
+<div class="full-width-home-container-transparent pt-3 mt-5 justify-content-center">
+  <h3 style="font-size: 20px;" class="white-text text-center mb-4">Or via Facebook Page</h3>
+  <div class="fb-page d-flex justify-content-center" data-href="https://www.facebook.com/hanfordlampiano/" data-tabs="messages" data-width="500" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/hanfordlampiano/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/hanfordlampiano/">Hanford Lam</a></blockquote></div>
+</div>
+
+
+<!-- GOOGLE MAPS -->
+<div class="full-width-home-container-transparent pb-3 mb-5 justify-content-center">
+    <h3 style="font-size: 20px;" class="white-text text-center mb-4">Studio located in Boronia, Melbourne, Australia</h3>
+    <div class="mapouter d-flex justify-content-center">
+        <div class="gmap_canvas">
+            <iframe width="699" height="285" id="gmap_canvas" src="https://maps.google.com/maps?q=boronia&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="auto">
+            </iframe>
+        </div>
+        <style>.mapouter{margin:auto; position:relative;text-align:center;height:320px;width:699px;}.gmap_canvas {overflow:hidden;background:none!important;height:320px;width:699px;}iframe {width:100%;height:100%;}</style>
+    </div>
+</div>
+    
+
+<%- include('includes/footer') %>

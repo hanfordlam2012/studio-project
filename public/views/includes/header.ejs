@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <title>Hanford Lam | Piano</title>
+  </head>
+  <body>
+    <div id="page-container" class="container">
+      <header>
+      <!-- NAVBAR -->
+      <nav class="rounded-bottom navbar navbar-expand-lg bg-dark navbar-dark mb-1">
+        <a class="navbar-brand recursive" href='/'>Hanford Lam | Piano</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li id="homeTab" class="nav-item">
+              <a class="nav-link nav-border" href='/'>Home</a>
+            </li>
+            <li id="mediaTab" class="nav-item">
+              <a class="nav-link" href="/media">Media</a>
+            </li>
+            <li id="reportsTab" class="nav-item">
+              <a class="nav-link" href="/reports">Reports</a>
+            </li>
+            <li id="blogTab" class="nav-item">
+              <a class="nav-link" href="/blog">Blog</a>
+            </li>
+            <li id="contactTab" class="nav-item">
+              <a class="nav-link" href="/contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+        <a class="btn btn-outline-light float-right" href="/contact">Message Hanford</a>
+      </nav>
+      <!-- DYNAMIC NAVBAR AND TITLE -->
+      <script>
+        let currentPath = window.location.pathname
+        if (currentPath == '/') {
+          document.getElementById("homeTab").classList.add("active")
+          document.getElementById("homeTab").classList.add("border-bottom")
+          document.title = "Hanford Lam | Piano"
+        } else if (currentPath == '/media') {
+          document.getElementById("mediaTab").classList.add("active")
+          document.getElementById("mediaTab").classList.add("border-bottom")
+          document.title = "Media - Hanford Lam | Piano"
+        } else if (currentPath == '/reports' || currentPath == '/create-week' || currentPath == '/admin-page') {
+          document.getElementById("reportsTab").classList.add("active")
+          document.getElementById("reportsTab").classList.add("border-bottom")
+          document.title = "Reports - Hanford Lam | Piano"
+        } else if (currentPath == '/blog') {
+          document.getElementById("blogTab").classList.add("active")
+          document.getElementById("blogTab").classList.add("border-bottom")
+          document.title = "Blog - Hanford Lam | Piano"
+        } else if (currentPath = '/contact') {
+          document.getElementById("contactTab").classList.add("active")
+          document.getElementById("contactTab").classList.add("border-bottom")
+          document.title = "Contact - Hanford Lam | Piano"
+        }
+      </script>
+    </header>
+    <div class="main">

@@ -1,0 +1,275 @@
+html,
+body,
+.container {
+    background-color: #101326;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+nav {
+    box-shadow: 0px 0px 5px rgb(0, 0, 0);
+}
+
+.poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+.caveat {
+    font-family: 'Caveat', cursive;
+}
+
+.recursive,
+.alert,
+.btn {
+    font-family: 'Recursive', sans-serif;
+}
+
+.input-group-text {
+    background-color: black;
+    color: rgb(179, 255, 0);
+    border: 1px solid rgb(179, 255, 0);
+}
+
+.input-group-prepend {
+    border-right: 1px solid rgb(179, 255, 0);
+}
+
+#registerForm,
+#contactForm {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+#home-container-1 {
+    min-height: 500px;
+    min-width: 100%;
+    background: radial-gradient(transparent, black), url("../images/hanford-lam-studio-min.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
+}
+
+#brand {
+    background-color: rgba(0, 0, 0, 0.734);
+    box-shadow: 0px 0px 50px 20px rgba(0, 0, 0, 0.713);
+    padding: 10px 25px 25px 25px;
+}
+
+#brand h1 {
+    color: rgb(179, 255, 0);
+}
+
+#landscapeHeadshot {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 10px 10px 20px black;
+}
+
+#portraitHeadshot {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 10px 10px 20px black;
+}
+
+#backstage {
+    max-width: 100%;
+    max-height: 100%;
+    box-shadow: 10px 10px 20px black;
+}
+
+.full-width-home-container-indigo {
+    min-height: 500px;
+    min-width: 100%;
+    background-color: rgb(37, 2, 61);
+    border: 1px solid rgb(255, 255, 255);
+    box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
+}
+
+.full-width-home-container-indigo h1 {
+    color: #31ed4d;
+}
+
+.full-width-home-container-transparent {
+    min-height: 500px;
+    min-width: 100%;
+    background-color: transparent;
+}
+
+.full-width-home-container-black {
+    min-height: 500px;
+    min-width: 100%;
+    background-color: rgb(0, 0, 0);
+    border: 1px solid rgb(255, 255, 255);
+    box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
+}
+
+.full-width-home-container-black h1 {
+    color: #ff005d;
+}
+
+.card-header,
+.card-body {
+    display: inline-table;
+    text-align: center;
+    background-color: rgb(31, 31, 31);
+    color: white;
+    border: 1px solid white;
+    min-width: 250px;
+}
+
+.card-title {
+    font-family: 'Recursive', sans-serif;
+}
+
+.full-width-home-container-blue {
+    min-height: 500px;
+    min-width: 100%;
+    background-color: rgb(7, 0, 39);
+    border: 1px solid rgb(255, 255, 255);
+    box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
+}
+
+.full-width-home-container-blue h1,
+.full-width-home-container-blue p {
+    text-align: center;
+}
+
+.jumbotron {
+    background-color: rgb(37, 2, 61);
+    border: 1px solid white;
+    box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
+}
+
+.jumbotron p {
+    color: white;
+}
+
+h1 {
+    color: #efcb00;
+    font-weight: 500;
+}
+
+h2 {
+    color: white;
+}
+
+.modal-body pre {
+    white-space: pre-wrap;
+}
+
+main {
+    flex: 1;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+.row-border {
+    border: 1px solid white;
+}
+
+.col-sm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+
+.col-sm p {
+    margin: 0;
+}
+
+.white-text {
+    color: white;
+}
+
+.rhythm {
+    background-color: rgba(255, 182, 198, 0.9);
+}
+
+.coordination {
+    background-color: rgba(143, 194, 228, 0.9);
+}
+
+.tone {
+    background-color: rgba(255, 232, 173, 0.9);
+}
+
+.dynamics {
+    background-color: rgba(144, 218, 218, 0.9);
+}
+
+.stylistic {
+    background-color: rgba(200, 173, 253, 0.9);
+}
+
+.bonus {
+    background-color: rgb(226, 226, 226);
+}
+
+.eagle {
+    background-color: #b6dcff;
+}
+
+.octopus {
+    background-color: #ffd5bd;
+}
+
+.koala {
+    background-color: #d8ffc5;
+}
+
+.jellyfish {
+    background-color: #ffeeba;
+}
+
+.bear {
+    background-color: #ffd7d7;
+}
+
+/* ASSESSMENT GRID */
+
+.rubric-grid {
+    background-color: rgb(226, 226, 226);
+    border: 1px solid white;
+    padding: 0;
+}
+
+.rubric-grid {
+    margin: 0;
+}
+
+.rubric-grid div div {
+    border: 1px solid white;
+}
+
+.rubric-grid input[type="radio"] {
+    display: none;
+}
+
+.rubric-grid label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.rubric-grid input[type="radio"]:checked+label {
+    font-weight: bold;
+}
+
+.answer-options input[type="radio"]:checked {
+    font-weight: bold;
+}
+
+hr {
+    background-color: transparent;
+    border-top: 1px solid white;
+}
