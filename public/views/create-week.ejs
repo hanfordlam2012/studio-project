@@ -1,7 +1,7 @@
 <%- include('includes/header') %>
 <!-- SUCCESS MESSAGE -->
 <% success.forEach(function(message) { %>
-  <div class="alert alert-success test-center small py-1"><%= message %></div>
+  <div class="alert alert-success mt-2 text-center small py-1"><%= message %></div>
 <% }) %>
 <div class="jumbotron p-3 my-4"><h1 class="display-4 text-center">Progress Logging</h1></div>
 <!-- Form Element-->
@@ -254,7 +254,7 @@
   <!-- General Comments -->
   <h2 class="text-center display-4 mb-4">Lesson Notes</h2>
   <div class="form-group">
-    <textarea required autocomplete="off" name="comments" class="form-control" placeholder="General comments and suggestions for home practice; feel free to drag the bottom-right corner to expand" id="comments" rows="10"></textarea>
+    <textarea required autocomplete="off" name="comments" class="form-control" placeholder="General comments and suggestions for home practice; feel free to drag the bottom-right corner to expand" id="comments" rows="50"></textarea>
   </div>
   <hr>
 

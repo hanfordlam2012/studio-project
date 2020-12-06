@@ -144,7 +144,7 @@ User.doesEmailExist = function(email) {
 User.getStudentWeeks = async function(userId) {
     return new Promise(async(resolve, reject) => {
         // create studentWeeks object
-        let studentWeeks = await weeksCollection.find({"studentId": ObjectID(userId)}).sort({createdDate: -1}).toArray()
+        let studentWeeks = await weeksCollection.find({"studentId": ObjectID(userId)}).sort({createdDate: 1}).toArray()
         // create graphData object
         let dateLabels = []
         let rhythmArray = []
