@@ -1,7 +1,7 @@
 html,
 body,
 .container {
-    background-color: #101326;
+    background-color: #212121;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -46,7 +46,7 @@ nav {
 #home-container-1 {
     min-height: 500px;
     min-width: 100%;
-    background: radial-gradient(transparent, black), url("../images/hanford-lam-studio-min.jpg");
+    background: radial-gradient(transparent, rgb(22, 22, 22)), url("../images/hanford-lam-studio-min.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -87,31 +87,17 @@ nav {
 .full-width-home-container-indigo {
     min-height: 500px;
     min-width: 100%;
-    background-color: rgb(37, 2, 61);
-    border: 1px solid rgb(255, 255, 255);
-    box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
+    background-color: transparent;
 }
 
 .full-width-home-container-indigo h1 {
-    color: #31ed4d;
+    color: #2bff00;
 }
 
 .full-width-home-container-transparent {
     min-height: 500px;
     min-width: 100%;
     background-color: transparent;
-}
-
-.full-width-home-container-black {
-    min-height: 500px;
-    min-width: 100%;
-    background-color: rgb(0, 0, 0);
-    border: 1px solid rgb(255, 255, 255);
-    box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
-}
-
-.full-width-home-container-black h1 {
-    color: #ff005d;
 }
 
 .card-header,
@@ -128,23 +114,15 @@ nav {
     font-family: 'Recursive', sans-serif;
 }
 
-.full-width-home-container-blue {
-    min-height: 500px;
-    min-width: 100%;
-    background-color: rgb(7, 0, 39);
-    border: 1px solid rgb(255, 255, 255);
-    box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
-}
-
-.full-width-home-container-blue h1,
-.full-width-home-container-blue p {
-    text-align: center;
-}
-
 .jumbotron {
     background-color: rgb(37, 2, 61);
     border: 1px solid white;
     box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
+}
+
+.jumbotron-transparent {
+    background-color: transparent;
+    border: none;
 }
 
 .jumbotron p {
@@ -186,6 +164,30 @@ main {
 
 .col-sm p {
     margin: 0;
+}
+
+.pink-text {
+    color: #ff005d;
+}
+
+.green-text {
+    color: #8cff2f;
+}
+
+.palegreen-text {
+    color: #b6ff7a;
+}
+
+.purple-text {
+    color: #6200ff;
+}
+
+.orange-text {
+    color: #ff810c;
+}
+
+.blue-text {
+    color: #45cdff;
 }
 
 .white-text {

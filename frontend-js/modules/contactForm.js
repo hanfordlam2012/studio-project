@@ -68,7 +68,7 @@ export default class ContactForm {
         this.contactEmailDiv.errors = false
         // this formula gives standard time delay after events
         clearTimeout(this.contactEmailInput.timer)
-        this.contactEmailInput.timer = setTimeout(() => this.contactEmailInputAfterDelay(), 600)
+        this.contactEmailInput.timer = setTimeout(() => this.contactEmailInputAfterDelay(), 800)
     }
 
     contactMessageInputHandler() {

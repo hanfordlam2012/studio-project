@@ -4,7 +4,9 @@
   <div class="alert alert-danger text-center small py-1"><%= message %></div>
 <% }) %>
 <!-- GRAPH -->
-<div class="jumbotron m-2 mt-4 p-3"><h1 class="display-4 text-center"><span class="caveat">Salutations,</span> <span class="recursive"><%= fName %> and <%= parentName %></span></h1></div>
+<hr>
+<div class="jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Salutations, <%= fName %> and <%= parentName %></h1></div>
+<hr>
 <canvas id="pieceGraph"></canvas>
 
 <script>
@@ -345,8 +347,10 @@ function showExtraComponentInfo() {
       </tbody>
     </table>
   </div>
+  <hr>
   <!-- RUBRIC GUIDELINES TABLE -->
-  <div class="jumbotron p-3 mb-4"><h1 class="display-4 text-center">Rubric Scoring Guidelines</h1></div>
+  <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive text-center">Practice Guidelines</h1></div>
+  <hr class="mb-5">
   <div class="px-0 rubric-grid">
     <div class="row m-0 text-center row-border">
       <div class="col-sm rhythm">

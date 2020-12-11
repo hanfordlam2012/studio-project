@@ -177,7 +177,7 @@ export default class RegistrationForm {
         this.fNameInputImmediately()
         // this formula gives standard time delay after events
         clearTimeout(this.fNameInput.timer)
-        this.fNameInput.timer = setTimeout(() => this.fNameInputAfterDelay(), 600)
+        this.fNameInput.timer = setTimeout(() => this.fNameInputAfterDelay(), 800)
     }
 
     lNameInputHandler() {
@@ -185,7 +185,7 @@ export default class RegistrationForm {
         this.lNameInputImmediately()
         // this formula gives standard time delay after events
         clearTimeout(this.lNameInput.timer)
-        this.lNameInput.timer = setTimeout(() => this.lNameInputAfterDelay(), 600)
+        this.lNameInput.timer = setTimeout(() => this.lNameInputAfterDelay(), 800)
     }
 
     parentNameInputHandler() {
@@ -193,7 +193,7 @@ export default class RegistrationForm {
         this.parentNameInputImmediately()
         // this formula gives standard time delay after events
         clearTimeout(this.parentNameInput.timer)
-        this.parentNameInput.timer = setTimeout(() => this.parentNameInputAfterDelay(), 600)
+        this.parentNameInput.timer = setTimeout(() => this.parentNameInputAfterDelay(), 800)
     }
 
     usernameInputHandler() {
@@ -201,7 +201,7 @@ export default class RegistrationForm {
         this.usernameInputImmediately()
         // this formula gives standard time delay after events
         clearTimeout(this.usernameInput.timer)
-        this.usernameInput.timer = setTimeout(() => this.usernameInputAfterDelay(), 600)
+        this.usernameInput.timer = setTimeout(() => this.usernameInputAfterDelay(), 800)
     }
 
     passwordInputHandler() {
@@ -209,28 +209,28 @@ export default class RegistrationForm {
         this.passwordInputImmediately()
         // this formula gives standard time delay after events
         clearTimeout(this.passwordInput.timer)
-        this.passwordInput.timer = setTimeout(() => this.passwordInputAfterDelay(), 600)
+        this.passwordInput.timer = setTimeout(() => this.passwordInputAfterDelay(), 800)
     }
 
     emailInputHandler() {
         this.emailDiv.errors = false
         // this formula gives standard time delay after events
         clearTimeout(this.emailInput.timer)
-        this.emailInput.timer = setTimeout(() => this.emailInputAfterDelay(), 600)
+        this.emailInput.timer = setTimeout(() => this.emailInputAfterDelay(), 800)
     }
 
     mobileInputHandler() {
         this.mobileDiv.errors = false
         // this formula gives standard time delay after events
         clearTimeout(this.mobileInput.timer)
-        this.mobileInput.timer = setTimeout(() => this.mobileInputAfterDelay(), 600)
+        this.mobileInput.timer = setTimeout(() => this.mobileInputAfterDelay(), 800)
     }
 
     secretInputHandler() {
         this.secretDiv.errors = false
         // this formula gives standard time delay after events
         clearTimeout(this.secretInput.timer)
-        this.secretInput.timer = setTimeout(() => this.secretInputAfterDelay(), 600)
+        this.secretInput.timer = setTimeout(() => this.secretInputAfterDelay(), 800)
     }
 
     fNameInputImmediately() {

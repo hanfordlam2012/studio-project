@@ -3,7 +3,9 @@
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="dhMQZjlk"></script>
 <!-- CONTACT FORM -->
 <div id="contactForm" class="full-width-home-container-transparent py-3 my-4">
-    <h1 class="text-center caveat display-1">Message Hanford</h1>
+  <hr>
+    <h1 class="text-center orange-text caveat display-1">Message Hanford</h1>
+    <hr>
     <% if (status == 'fail') { %>
         <div class="alert alert-danger text-center small py-2">Sorry, your message couldn't be sent...maybe try the Facebook Page below instead?</div>
       <% } else if (status == 'success') { %>
@@ -34,7 +36,7 @@
 
 
 <!-- GOOGLE MAPS -->
-<div class="full-width-home-container-transparent pb-3 mb-5 justify-content-center">
+<div class="full-width-home-container-transparent pb-3 mb-0 justify-content-center">
     <h3 style="font-size: 20px;" class="white-text text-center mb-4">Studio located in Boronia, Melbourne, Australia</h3>
     <div class="mapouter d-flex justify-content-center">
         <div class="gmap_canvas">

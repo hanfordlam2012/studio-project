@@ -1,8 +1,9 @@
 <%- include('includes/header') %>
         <!-- LOGIN FORM -->
-        <div class="jumbotron justify-content-center text-center p-3 my-4">
-          <h1 class="text-center mb-3 display-4 recursive">Log In</h1>
-          <p class="text-center h2 caveat">Keep track of your music learning journey!</p>
+        <hr>
+        <div class="jumbotron-transparent justify-content-center text-center p-3 my-4">
+          <h1 class="text-center green-text mb-3 display-4 recursive">Log In</h1>
+          <p class="text-center white-text h2 caveat">Keep track of your music learning journey!</p>
           <br>
           <% errors.forEach(function(message) { %>
             <div class="alert alert-danger text-center d-inline small mb-3 py-1"><%= message %></div>
@@ -19,9 +20,10 @@
             </form>
           </div>
         </div>
+        <hr>
         <!-- REGISTER FORM -->
-      <div id="registerForm" class="jumbotron py-5 my-5"><h1 class="text-center recursive display-4"><i>otherwise</i> Hanford needs...</h1>
-        <form id="registration-form" class="my-4" action="/register" method="POST">
+      <div id="registerForm" class="jumbotron-transparent px-5 my-5"><h1 class="orange-text text-center recursive display-4"><i>otherwise</i> Hanford needs...</h1>
+        <form id="registration-form" class="my-5" action="/register" method="POST">
             <% regErrors.forEach(function(message) { %>
               <div class="alert alert-danger small py-1"><%= message %></div>
             <% }) %>
