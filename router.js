@@ -28,6 +28,7 @@ router.post('/sendEmail', messageController.sendEmail)
 router.post('/doesUsernameExist', userController.doesUsernameExist)
 router.post('/doesEmailExist', userController.doesEmailExist)
 router.post('/isCorrect', userController.isCorrect)
+//router.post('/submitQuiz', quizController.saveQuizScore)
 
 // admin routes
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)

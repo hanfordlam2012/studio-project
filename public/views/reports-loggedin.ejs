@@ -1,14 +1,20 @@
 <%- include('includes/header') %>
+<!-- INITIALISE ANIMATION SCRIPT -->
+<script>
+  new WOW().init();
+</script>
 <!-- ERRORS -->
 <% adErrors.forEach(function(message) { %>
   <div class="alert alert-danger text-center small py-1"><%= message %></div>
 <% }) %>
+<!-- GREETINGS -->
+<hr>
+<div data-wow-duration="1.5s" class="wow zoomIn">
+  <div class="jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Salutations, <%= fName %> and <%= parentName %></h1></div>
+</div>
+<hr>
 <!-- GRAPH -->
-<hr>
-<div class="jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Salutations, <%= fName %> and <%= parentName %></h1></div>
-<hr>
 <canvas id="pieceGraph"></canvas>
-
 <script>
 let ctx = document.getElementById('pieceGraph').getContext('2d');
 Chart.defaults.global.defaultFontColor = 'white';
@@ -348,8 +354,17 @@ function showExtraComponentInfo() {
     </table>
   </div>
   <hr>
-  <!-- RUBRIC GUIDELINES TABLE -->
-  <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive text-center">Practice Guidelines</h1></div>
+  <!-- QUIZ LEADERBOARD -->
+  <div data-wow-duration="1.5s" class="wow swing">
+    <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive blue-text text-center">Quiz Leaderboard</h1></div>
+  </div>
+  <hr>
+  <div class="alert alert-info text-center">The purpose of these quizzes is to encourage learning. Being resourceful and creative in sourcing answers is encouraged. You are all capable of making your own decisions. The highest scoring student will receive two free movie tickets at Boronia’s very own Metro Cinemas. In addition to enjoying a film in their cosy theatres, you can feel good about getting your piano teacher to support their small family-run business. Good luck and have fun!</div>
+  <hr>
+  <!-- PRACTICE GUIDELINES TABLE -->
+  <div data-wow-duration="1.5s" class="wow rollIn">
+    <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive text-center">Practice Guidelines</h1></div>
+  </div>
   <hr class="mb-5">
   <div class="px-0 rubric-grid">
     <div class="row m-0 text-center row-border">
@@ -527,4 +542,15 @@ function showExtraComponentInfo() {
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <button type="submit" class="btn btn-secondary btn-lg btn-block">Log Out</button>
 </form>
+
+<!-- REANIMATE -->
+<script>
+  window.addEventListener('scroll', function(e) {
+    if( $(window).scrollTop() <= 0) {
+      $('.wow').removeClass('animated');
+      $('.wow').removeAttr('style');
+      new WOW().init();
+    }
+  });
+  </script>
 <%- include('includes/footer') %>
