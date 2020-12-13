@@ -1,17 +1,23 @@
 <%- include('includes/header') %>
+<!-- INITIALISE ANIMATION SCRIPT -->
+<script>
+  new WOW().init();
+</script>
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="dhMQZjlk"></script>
 <!-- CONTACT FORM -->
 <div id="contactForm" class="full-width-home-container-transparent py-3 my-4">
   <hr>
+  <div data-wow-duration="1s" class="wow tada">
     <h1 class="text-center orange-text caveat display-1">Message Hanford</h1>
-    <hr>
+  </div>
+    <hr class="mb-5">
     <% if (status == 'fail') { %>
         <div class="alert alert-danger text-center small py-2">Sorry, your message couldn't be sent...maybe try the Facebook Page below instead?</div>
       <% } else if (status == 'success') { %>
         <div class="alert alert-success text-center small py-2">Your message has been sent successfully. Thanks for reaching out!</div>
       <% } %>
-    <form id="contact-form" class="my-4" action="/sendEmail" method="POST">
+    <form id="contact-form" class="my-4 mx-5 px-3" action="/sendEmail" method="POST">
         <h2 style="font-size: 20px;" class="text-center mt-4 mb-5">You will usually receive a reply within 24 hours.<br>Feel free to ask me anything!</h2>
         <div id="contactEmailDiv" class="input-group mb-3">
           <div id="contactEmailPrepend" class="input-group-prepend">
@@ -47,5 +53,15 @@
     </div>
 </div>
     
+<!-- REANIMATE -->
+<script>
+  window.addEventListener('scroll', function(e) {
+    if( $(window).scrollTop() <= 0) {
+      $('.wow').removeClass('animated');
+      $('.wow').removeAttr('style');
+      new WOW().init();
+    }
+  });
+  </script>
 
 <%- include('includes/footer') %>

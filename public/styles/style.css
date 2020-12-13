@@ -3,10 +3,13 @@ body,
 .container {
     background-color: #212121;
     min-height: 100vh;
+    min-width: 65vw;
     display: flex;
     flex-direction: column;
     padding: auto;
     font-family: 'Poppins', sans-serif;
+    position: static;
+    margin: 0 auto;
 }
 
 nav {
@@ -37,8 +40,7 @@ nav {
     border-right: 1px solid rgb(179, 255, 0);
 }
 
-#registerForm,
-#contactForm {
+#registerForm {
     padding-left: 20%;
     padding-right: 20%;
 }
@@ -82,16 +84,6 @@ nav {
     max-width: 100%;
     max-height: 100%;
     box-shadow: 10px 10px 20px black;
-}
-
-.full-width-home-container-indigo {
-    min-height: 500px;
-    min-width: 100%;
-    background-color: transparent;
-}
-
-.full-width-home-container-indigo h1 {
-    color: #2bff00;
 }
 
 .full-width-home-container-transparent {
