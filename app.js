@@ -19,7 +19,7 @@ let sessionOptions = session({
     resave: false,
     saveUninitialized: false,
     // one day expiry
-    cookie: {maxAge: 1000 * 60 * 60 *24, httpOnly: true}
+    cookie: {maxAge: 1000 * 60 * 60 * 24, httpOnly: true}
 })
 
 app.use(sessionOptions)

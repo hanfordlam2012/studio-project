@@ -115,18 +115,24 @@ exports.reports = function(req, res) {
            let dynamicsArray = data.graphData.componentsArray.dynamicsArray
            let stylisticArray = data.graphData.componentsArray.stylisticArray
 
-           res.render('reports-loggedin', {
-               fName: req.session.user.fName, 
-               parentName: req.session.user.parentName, 
-               admin: req.session.user.admin, 
-               dateLabels: dateLabels,
-               rhythmArray: rhythmArray,
-               coordinationArray: coordinationArray,
-               toneArray: toneArray,
-               dynamicsArray: dynamicsArray,
-               stylisticArray: stylisticArray,
-               studentWeeks: studentWeeks, 
-               adErrors: req.flash('adErrors')}) 
+            User.getQuiz().then(function(data) {
+                let quizData = data.quizDataDoc
+                let quizMsg = data.msg
+            res.render('reports-loggedin', {
+                fName: req.session.user.fName, 
+                parentName: req.session.user.parentName, 
+                admin: req.session.user.admin, 
+                dateLabels: dateLabels,
+                rhythmArray: rhythmArray,
+                coordinationArray: coordinationArray,
+                toneArray: toneArray,
+                dynamicsArray: dynamicsArray,
+                stylisticArray: stylisticArray,
+                studentWeeks: studentWeeks,
+                quizData: quizData,
+                quizMsg: quizMsg,
+                adErrors: req.flash('adErrors')}) 
+            })
         })
     } else {
         res.render('reports-guest', {errors: req.flash('errors'), regErrors: req.flash('regErrors')})

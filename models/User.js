@@ -4,6 +4,7 @@ const ObjectID = require('mongodb').ObjectID
 // opens connection to database collection
 const usersCollection = require('../db').db('studio-project').collection('users')
 const weeksCollection = require('../db').db('studio-project').collection('weeks')
+const quizCollection = require('../db').db('studio-project').collection('quiz')
 // more convenient validation
 const validator = require("validator")
 
@@ -197,6 +198,18 @@ User.prototype.register = function() {
             resolve({fName: this.data.fName, lName: this.data.lName, parentName: this.data.parentName, admin: this.data.admin, userId: this.data._id, secret: this.data.secret})
         } else {
             reject(this.errors)
+        }
+    })
+}
+
+// QUIZ FEATURE
+User.getQuiz = async function() {
+    return new Promise(async(resolve, reject) => {
+        let quizDataDoc = await quizCollection.findOne()
+        if (quizDataDoc) {
+            resolve ({quizDataDoc, msg: "There is a Quiz mission!"})
+        } else {
+            resolve ({quizDataDoc, msg: 'Waiting for a mini-mission to be made!'})
         }
     })
 }

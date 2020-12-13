@@ -9,11 +9,255 @@
 <% }) %>
 <!-- GREETINGS -->
 <hr>
-<div data-wow-duration="1.5s" class="wow zoomIn">
   <div class="jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Salutations, <%= fName %> and <%= parentName %></h1></div>
+<div class="text-center">
+  <a href="#mini-missions" type="button" class="mx-1 btn btn-secondary btn-lg">Mini-Missions</a>
+  <a href="#leaderboard" type="button" class="mx-1 btn btn-secondary btn-lg">Leaderboard</a>
+  <a href="#progress-tracker" type="button" class="mx-1 btn btn-secondary btn-lg">Progress Tracker</a>
+  <a href="#full-record" type="button" class="mx-1 btn btn-secondary btn-lg">Full Record</a>
+  <a href="#practice-guide" type="button" class="mx-1 btn btn-secondary btn-lg">Practice Guide</a>
 </div>
 <hr>
+<!-- MINI MISSIONS -->
+<div id="mini-missions" data-wow-duration="1.5s" class="wow pulse">
+  <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive palegreen-text text-center">Mini-Missions</h1></div>
+</div>
+<hr>
+<div class="alert alert-primary text-center">The purpose of these mini-missions is to encourage learning. Being resourceful and creative in sourcing answers is encouraged. You are all capable of improving. The highest scoring student at the end of each term receives two free movie tickets for Boronia’s very own Metro Cinemas. In addition to enjoying a film in their cosy theatres, you can feel good about getting your piano teacher to support their small family-run business. Good luck and have fun!</div>
+<% if (!quizData) { %>
+    <div class="alert alert-danger text-center"><%= quizMsg %></div>
+<% } else { %>
+  <div class="alert alert-success text-center"><%= quizMsg %></div>
+<form id="quiz-form" class="text-center px-5 my-4 white-text" action="/submitQuiz" method="POST">
+  <!-- Question 1 -->
+  <div class="question-div">
+    <h2>Question 1: <span class="small"><%= quizData.q1 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q1" id="q1o1" value="<%= quizData.q1o1 %>">
+    <label class="form-check-label" for="q1o1">
+      <%= quizData.q1o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q1" id="q1o2" value="<%= quizData.q1o2 %>">
+    <label class="form-check-label" for="q1o2">
+      <%= quizData.q1o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q1" id="q1o3" value="<%= quizData.q1o3 %>">
+    <label class="form-check-label" for="q1o3">
+      <%= quizData.q1o3 %>
+    </label>
+  </div>
+  </div>
+  
+  <!-- Question 2 -->
+  <div class="question-div"> <h2>Question 2: <span class="small"><%= quizData.q2 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q2" id="q2o1" value="<%= quizData.q2o1 %>">
+    <label class="form-check-label" for="q2o1">
+      <%= quizData.q2o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q2" id="q2o2" value="<%= quizData.q2o2 %>">
+    <label class="form-check-label" for="q2o2">
+      <%= quizData.q2o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q2" id="q2o3" value="<%= quizData.q2o3 %>">
+    <label class="form-check-label" for="q2o3">
+      <%= quizData.q2o3 %>
+    </label>
+  </div></div>
+ 
+  <!-- Question 3 -->
+  <div class="question-div"><h2>Question 3: <span class="small"><%= quizData.q3 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q3" id="q3o1" value="<%= quizData.q3o1 %>">
+    <label class="form-check-label" for="q3o1">
+      <%= quizData.q3o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q3" id="q3o2" value="<%= quizData.q3o2 %>">
+    <label class="form-check-label" for="q3o2">
+      <%= quizData.q3o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q3" id="q3o3" value="<%= quizData.q3o3 %>">
+    <label class="form-check-label" for="q3o3">
+      <%= quizData.q3o3 %>
+    </label>
+  </div></div>
+  
+  <!-- Question 4 -->
+  <div class="question-div"><h2>Question 4: <span class="small"><%= quizData.q4 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q4" id="q4o1" value="<%= quizData.q4o1 %>">
+    <label class="form-check-label" for="q4o1">
+      <%= quizData.q4o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q4" id="q4o2" value="<%= quizData.q4o2 %>">
+    <label class="form-check-label" for="q4o2">
+      <%= quizData.q4o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q4" id="q4o3" value="<%= quizData.q4o3 %>">
+    <label class="form-check-label" for="q4o3">
+      <%= quizData.q4o3 %>
+    </label>
+  </div></div>
+  
+  <!-- Question 5 -->
+  <div class="question-div"><h2>Question 5: <span class="small"><%= quizData.q5 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q5" id="q5o1" value="<%= quizData.q5o1 %>">
+    <label class="form-check-label" for="q5o1">
+      <%= quizData.q5o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q5" id="q5o2" value="<%= quizData.q5o2 %>">
+    <label class="form-check-label" for="q5o2">
+      <%= quizData.q5o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q5" id="q5o3" value="<%= quizData.q5o3 %>">
+    <label class="form-check-label" for="q5o3">
+      <%= quizData.q5o3 %>
+    </label>
+  </div></div>
+  
+  <!-- Question 6 -->
+  <div class="question-div"> <h2>Question 6: <span class="small"><%= quizData.q6 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q6" id="q6o1" value="<%= quizData.q6o1 %>">
+    <label class="form-check-label" for="q6o1">
+      <%= quizData.q6o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q6" id="q6o2" value="<%= quizData.q6o2 %>">
+    <label class="form-check-label" for="q6o2">
+      <%= quizData.q6o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q6" id="q6o3" value="<%= quizData.q6o3 %>">
+    <label class="form-check-label" for="q6o3">
+      <%= quizData.q6o3 %>
+    </label>
+  </div></div>
+ 
+  <!-- Question 7 -->
+  <div class="question-div"> <h2>Question 7: <span class="small"><%= quizData.q7 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q7" id="q7o1" value="<%= quizData.q7o1 %>">
+    <label class="form-check-label" for="q7o1">
+      <%= quizData.q7o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q7" id="q7o2" value="<%= quizData.q7o2 %>">
+    <label class="form-check-label" for="q7o2">
+      <%= quizData.q7o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q7" id="q7o3" value="<%= quizData.q7o3 %>">
+    <label class="form-check-label" for="q7o3">
+      <%= quizData.q7o3 %>
+    </label>
+  </div></div>
+ 
+  <!-- Question 8 -->
+  <div class="question-div"><h2>Question 8: <span class="small"><%= quizData.q8 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q8" id="q8o1" value="<%= quizData.q8o1 %>">
+    <label class="form-check-label" for="q8o1">
+      <%= quizData.q8o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q8" id="q8o2" value="<%= quizData.q8o2 %>">
+    <label class="form-check-label" for="q8o2">
+      <%= quizData.q8o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q8" id="q8o3" value="<%= quizData.q8o3 %>">
+    <label class="form-check-label" for="q8o3">
+      <%= quizData.q8o3 %>
+    </label>
+  </div></div>
+  
+  <!-- Question 9 -->
+  <div class="question-div"><h2>Question 9: <span class="small"><%= quizData.q9 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q9" id="q9o1" value="<%= quizData.q9o1 %>">
+    <label class="form-check-label" for="q9o1">
+      <%= quizData.q9o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q9" id="q9o2" value="<%= quizData.q9o2 %>">
+    <label class="form-check-label" for="q9o2">
+      <%= quizData.q9o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q9" id="q9o3" value="<%= quizData.q9o3 %>">
+    <label class="form-check-label" for="q9o3">
+      <%= quizData.q9o3 %>
+    </label>
+  </div></div>
+  
+  <!-- Question 10 -->
+  <div class="question-div"><h2>Question 10: <span class="small"><%= quizData.q10 %></span></h2>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q10" id="q10o1" value="<%= quizData.q10o1 %>">
+    <label class="form-check-label" for="q10o1">
+      <%= quizData.q10o1 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q10" id="q10o2" value="<%= quizData.q10o2 %>">
+    <label class="form-check-label" for="q10o2">
+      <%= quizData.q10o2 %>
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="q10" id="q10o3" value="<%= quizData.q10o3 %>">
+    <label class="form-check-label" for="q10o3">
+      <%= quizData.q10o3 %>
+    </label>
+  </div></div>
+  
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <button class="btn btn-success btn-lg my-1" type="submit">Submit Quiz</button>
+</form>
+<% } %>
+<hr>
+  <!-- LEADERBOARD -->
+  <div data-wow-duration="1.5s" class="wow pulse">
+    <div id="leaderboard" class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive purple-text text-center">Leaderboard</h1></div>
+  </div>
+  <hr>
+  <div class="alert alert-info text-center">Leaderboard will be updated after the first mission.</div>
 <!-- GRAPH -->
+<hr class="mt-5">
+<div data-wow-duration="1.5s" class="wow pulse">
+  <div id="progress-tracker" class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive pink-text text-center">Progress Tracker</h1></div>
+</div>
+<hr>
 <canvas id="pieceGraph"></canvas>
 <script>
 let ctx = document.getElementById('pieceGraph').getContext('2d');
@@ -93,6 +337,11 @@ function showExtraComponentInfo() {
 }
 </script>
 <!-- DETAILED RECORD -->
+<hr>
+<div data-wow-duration="1.5s" class="wow pulse">
+  <div id="full-record" class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive blue-text text-center">Full Record</h1></div>
+</div>
+<hr>
 <div class="justify-content-center mt-2 mb-5 px-0 table-responsive">
   <table class="justify-content-center table table-hover text-center">
       <thead>
@@ -353,17 +602,11 @@ function showExtraComponentInfo() {
       </tbody>
     </table>
   </div>
+  
+  <!-- PRACTICE GUIDE -->
   <hr>
-  <!-- QUIZ LEADERBOARD -->
-  <div data-wow-duration="1.5s" class="wow swing">
-    <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive blue-text text-center">Quiz Leaderboard</h1></div>
-  </div>
-  <hr>
-  <div class="alert alert-info text-center">The purpose of these quizzes is to encourage learning. Being resourceful and creative in sourcing answers is encouraged. You are all capable of making your own decisions. The highest scoring student will receive two free movie tickets at Boronia’s very own Metro Cinemas. In addition to enjoying a film in their cosy theatres, you can feel good about getting your piano teacher to support their small family-run business. Good luck and have fun!</div>
-  <hr>
-  <!-- PRACTICE GUIDELINES TABLE -->
-  <div data-wow-duration="1.5s" class="wow rollIn">
-    <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive text-center">Practice Guidelines</h1></div>
+  <div data-wow-duration="1.5s" class="wow pulse">
+    <div id="practice-guide" class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive orange-text text-center">Practice Guide</h1></div>
   </div>
   <hr class="mb-5">
   <div class="px-0 rubric-grid">
