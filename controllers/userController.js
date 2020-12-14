@@ -14,8 +14,8 @@ exports.doesUsernameExist = function(req, res) {
         } else {
             res.json(false)
         }
-    }).catch(function() {
-        console.log(response)
+    }).catch(function(err) {
+        console.log(err)
     })
 }
 
@@ -115,10 +115,31 @@ exports.reports = function(req, res) {
             let dynamicsArray = data.graphData.componentsArray.dynamicsArray
             let stylisticArray = data.graphData.componentsArray.stylisticArray
             
-            User.getMissionStatus(req.session.user.userId).then((missionStatus) => {
+            User.getLeaderboard().then((leaderboard) => {
 
-                if (!missionStatus) {
-                    User.getMissionCode().then(function(missionCode) {
+               User.getMissionStatus(req.session.user.userId).then((missionStatus) => {
+
+                    if (!missionStatus) {
+                        User.getMissionCode().then(function(missionCode) {
+                            res.render('reports-loggedin', {
+                                fName: req.session.user.fName,
+                                userId: req.session.user.userId,
+                                parentName: req.session.user.parentName, 
+                                admin: req.session.user.admin, 
+                                dateLabels: dateLabels,
+                                rhythmArray: rhythmArray,
+                                coordinationArray: coordinationArray,
+                                toneArray: toneArray,
+                                dynamicsArray: dynamicsArray,
+                                stylisticArray: stylisticArray,
+                                studentWeeks: studentWeeks,
+                                missionStatus: missionStatus,
+                                missionCode: missionCode,
+                                missionResults: req.flash('missionResults'),
+                                leaderboard: leaderboard,
+                                adErrors: req.flash('adErrors')}) 
+                        })
+                    } else {
                         res.render('reports-loggedin', {
                             fName: req.session.user.fName,
                             userId: req.session.user.userId,
@@ -132,29 +153,16 @@ exports.reports = function(req, res) {
                             stylisticArray: stylisticArray,
                             studentWeeks: studentWeeks,
                             missionStatus: missionStatus,
-                            missionCode: missionCode,
+                            missionCode: false,
                             missionResults: req.flash('missionResults'),
-                            adErrors: req.flash('adErrors')}) 
-                    })
-                } else {
-                    res.render('reports-loggedin', {
-                        fName: req.session.user.fName,
-                        userId: req.session.user.userId,
-                        parentName: req.session.user.parentName, 
-                        admin: req.session.user.admin, 
-                        dateLabels: dateLabels,
-                        rhythmArray: rhythmArray,
-                        coordinationArray: coordinationArray,
-                        toneArray: toneArray,
-                        dynamicsArray: dynamicsArray,
-                        stylisticArray: stylisticArray,
-                        studentWeeks: studentWeeks,
-                        missionStatus: missionStatus,
-                        missionCode: false,
-                        missionResults: req.flash('missionResults'),
-                        adErrors: req.flash('adErrors')})
-                }
-           })
+                            leaderboard: leaderboard,
+                            adErrors: req.flash('adErrors')})
+                    }
+                })   
+
+            })
+
+            
         })
     } else {
         res.render('reports-guest', {errors: req.flash('errors'), regErrors: req.flash('regErrors')})

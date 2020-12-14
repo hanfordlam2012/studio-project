@@ -35,7 +35,9 @@ User.prototype.cleanUp = function() {
         username: this.data.username.trim().toLowerCase(),
         password: this.data.password,
         secret: this.data.secret,
-        admin: false
+        admin: false,
+        missionStatus: false,
+        leaderboardScore: 0
     }
 }
 
@@ -97,7 +99,6 @@ User.getStudentList = async function(secret, userId) {
     return new Promise(async (resolve, reject) => {
         let studentList = await usersCollection.find({"_id": {$ne: ObjectID(userId)},"secret": secret}).project({fName: 1, lName: 1}).toArray()
         studentList = studentList.filter(student => student.fName != "superuser")
-        console.log(studentList)
         resolve(studentList)
     }).catch(function(err) {reject(err)})
 }
@@ -146,6 +147,13 @@ User.getMissionStatus = async (userId) => {
     return new Promise (async(resolve, reject) => {
         let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
         resolve(userDoc.missionStatus)
+    })
+}
+
+User.getLeaderboard = function() {
+    return new Promise (async(resolve, reject) => {
+        let leaderboard = await usersCollection.find({"admin": false}).project({username: 1, leaderboardScore: 1}).sort({leaderboardScore: -1}).toArray()
+        resolve(leaderboard)
     })
 }
 
