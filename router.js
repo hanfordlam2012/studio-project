@@ -5,6 +5,7 @@ const router = express.Router()
 const userController = require('./controllers/userController')
 const weekController = require('./controllers/weekController')
 const messageController = require('./controllers/messageController')
+const missionController = require('./controllers/missionController')
 
 // run this function for that route
 router.get('/', function(req, res) {
@@ -28,7 +29,7 @@ router.post('/sendEmail', messageController.sendEmail)
 router.post('/doesUsernameExist', userController.doesUsernameExist)
 router.post('/doesEmailExist', userController.doesEmailExist)
 router.post('/isCorrect', userController.isCorrect)
-//router.post('/submitQuiz',)
+router.post('/submitQuiz', missionController.checkQuiz)
 
 // admin routes
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)

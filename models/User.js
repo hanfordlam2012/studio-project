@@ -4,7 +4,7 @@ const ObjectID = require('mongodb').ObjectID
 // opens connection to database collection
 const usersCollection = require('../db').db('studio-project').collection('users')
 const weeksCollection = require('../db').db('studio-project').collection('weeks')
-const quizCollection = require('../db').db('studio-project').collection('quiz')
+const missionsCollection = require('../db').db('studio-project').collection('missions')
 // more convenient validation
 const validator = require("validator")
 
@@ -142,6 +142,13 @@ User.doesEmailExist = function(email) {
     })
 }
 
+User.getMissionStatus = async (userId) => {
+    return new Promise (async(resolve, reject) => {
+        let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+        resolve(userDoc.missionStatus)
+    })
+}
+
 User.getStudentWeeks = async function(userId) {
     return new Promise(async(resolve, reject) => {
         // create studentWeeks object
@@ -202,14 +209,129 @@ User.prototype.register = function() {
     })
 }
 
-// QUIZ FEATURE
-User.getQuiz = async function() {
+// MISSIONS FEATURE
+User.getMissionCode = async function() {
     return new Promise(async(resolve, reject) => {
-        let quizDataDoc = await quizCollection.findOne()
-        if (quizDataDoc) {
-            resolve ({quizDataDoc, msg: "There is a Quiz mission!"})
-        } else {
-            resolve ({quizDataDoc, msg: 'Waiting for a mini-mission to be made!'})
+        let missionCode = ""
+        let missionDoc = await missionsCollection.findOne({name: "quiz1"})
+        if (!missionDoc) {
+            resolve (false)
+            // 5 QUESTION QUIZZES
+        } else if (missionDoc.type == 'quiz') {
+            missionCode = `<div class="alert alert-success text-center">There's a Quick Quiz mission worth 10 points. Do it now!</div>
+            <form id="quiz-form" class="text-center px-5 my-4 white-text" action="/submitQuiz" method="POST">
+              <!-- Question 1 -->
+              <div class="question-div">
+                <h2>Let's begin : <span class="small">${missionDoc.q1}</span></h2>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1r" id="q1o1" value="${missionDoc.q1o1}">
+                <label class="form-check-label" for="q1o1">
+                ${missionDoc.q1o1}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1r" id="q1o2" value="${missionDoc.q1o2}">
+                <label class="form-check-label" for="q1o2">
+                  ${missionDoc.q1o2}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1r" id="q1o3" value="${missionDoc.q1o3}">
+                <label class="form-check-label" for="q1o3">
+                  ${missionDoc.q1o3}
+                </label>
+              </div>
+              </div>
+              <!-- Question 2 -->
+              <div class="question-div">
+                <h2>How about this : <span class="small">${missionDoc.q2}</span></h2>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2r" id="q2o1" value="${missionDoc.q2o1}">
+                <label class="form-check-label" for="q2o1">
+                  ${missionDoc.q2o1}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2r" id="q2o2" value="${missionDoc.q2o2}">
+                <label class="form-check-label" for="q2o2">
+                  ${missionDoc.q2o2}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2r" id="q2o3" value="${missionDoc.q2o3}">
+                <label class="form-check-label" for="q2o3">
+                  ${missionDoc.q2o3}
+                </label>
+              </div></div>
+              <!-- Question 3 -->
+              <div class="question-div">
+                <h2>Halfway there now : <span class="small">${missionDoc.q3}</span></h2>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3r" id="q3o1" value="${missionDoc.q3o1}">
+                <label class="form-check-label" for="q3o1">
+                  ${missionDoc.q3o1}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3r" id="q3o2" value="${missionDoc.q3o2}">
+                <label class="form-check-label" for="q3o2">
+                  ${missionDoc.q3o2}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q3r" id="q3o3" value="${missionDoc.q3o3}">
+                <label class="form-check-label" for="q3o3">
+                  ${missionDoc.q3o3}
+                </label>
+              </div></div>
+              <!-- Question 4 -->
+              <div class="question-div">
+                <h2>And this : <span class="small">${missionDoc.q4}</span></h2>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4r" id="q4o1" value="${missionDoc.q4o1}">
+                <label class="form-check-label" for="q4o1">
+                  ${missionDoc.q4o1}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4r" id="q4o2" value="${missionDoc.q4o2}">
+                <label class="form-check-label" for="q4o2">
+                  ${missionDoc.q4o2}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q4r" id="q4o3" value="${missionDoc.q4o3}">
+                <label class="form-check-label" for="q4o3">
+                  ${missionDoc.q4o3}
+                </label>
+              </div></div>
+              <!-- Question 5 -->
+              <div class="question-div">
+                <h2>A final tricky question : <span class="small">${missionDoc.q5}</span></h2>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5r" id="q5o1" value="${missionDoc.q5o1}">
+                <label class="form-check-label" for="q5o1">
+                  ${missionDoc.q5o1}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5r" id="q5o2" value="${missionDoc.q5o2}">
+                <label class="form-check-label" for="q5o2">
+                  ${missionDoc.q5o2}
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="q5r" id="q5o3" value="${missionDoc.q5o3}">
+                <label class="form-check-label" for="q5o3">
+                  ${missionDoc.q5o3}
+                </label>
+              </div></div>
+              <input type="hidden" name="name" value="${missionDoc.name}">
+              <input type="hidden" name="type" value="${missionDoc.type}">
+              <button id="missionSubmitButton" class="btn btn-success btn-lg my-1" type="submit">Submit Quick Quiz</button>
+            </form>`
+
+            resolve (missionCode)
         }
     })
 }

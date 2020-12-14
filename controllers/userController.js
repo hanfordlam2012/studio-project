@@ -107,32 +107,54 @@ exports.register = function(req, res) {
 exports.reports = function(req, res) {
     if (req.session.user) {
         User.getStudentWeeks(req.session.user.userId).then(function(data) {
-           let studentWeeks = data.studentWeeks
-           let dateLabels = data.graphData.dateLabels
-           let rhythmArray = data.graphData.componentsArray.rhythmArray
-           let coordinationArray = data.graphData.componentsArray.coordinationArray
-           let toneArray = data.graphData.componentsArray.toneArray
-           let dynamicsArray = data.graphData.componentsArray.dynamicsArray
-           let stylisticArray = data.graphData.componentsArray.stylisticArray
+            let studentWeeks = data.studentWeeks
+            let dateLabels = data.graphData.dateLabels
+            let rhythmArray = data.graphData.componentsArray.rhythmArray
+            let coordinationArray = data.graphData.componentsArray.coordinationArray
+            let toneArray = data.graphData.componentsArray.toneArray
+            let dynamicsArray = data.graphData.componentsArray.dynamicsArray
+            let stylisticArray = data.graphData.componentsArray.stylisticArray
+            
+            User.getMissionStatus(req.session.user.userId).then((missionStatus) => {
 
-            User.getQuiz().then(function(data) {
-                let quizData = data.quizDataDoc
-                let quizMsg = data.msg
-            res.render('reports-loggedin', {
-                fName: req.session.user.fName, 
-                parentName: req.session.user.parentName, 
-                admin: req.session.user.admin, 
-                dateLabels: dateLabels,
-                rhythmArray: rhythmArray,
-                coordinationArray: coordinationArray,
-                toneArray: toneArray,
-                dynamicsArray: dynamicsArray,
-                stylisticArray: stylisticArray,
-                studentWeeks: studentWeeks,
-                quizData: quizData,
-                quizMsg: quizMsg,
-                adErrors: req.flash('adErrors')}) 
-            })
+                if (!missionStatus) {
+                    User.getMissionCode().then(function(missionCode) {
+                        res.render('reports-loggedin', {
+                            fName: req.session.user.fName,
+                            userId: req.session.user.userId,
+                            parentName: req.session.user.parentName, 
+                            admin: req.session.user.admin, 
+                            dateLabels: dateLabels,
+                            rhythmArray: rhythmArray,
+                            coordinationArray: coordinationArray,
+                            toneArray: toneArray,
+                            dynamicsArray: dynamicsArray,
+                            stylisticArray: stylisticArray,
+                            studentWeeks: studentWeeks,
+                            missionStatus: missionStatus,
+                            missionCode: missionCode,
+                            missionResults: req.flash('missionResults'),
+                            adErrors: req.flash('adErrors')}) 
+                    })
+                } else {
+                    res.render('reports-loggedin', {
+                        fName: req.session.user.fName,
+                        userId: req.session.user.userId,
+                        parentName: req.session.user.parentName, 
+                        admin: req.session.user.admin, 
+                        dateLabels: dateLabels,
+                        rhythmArray: rhythmArray,
+                        coordinationArray: coordinationArray,
+                        toneArray: toneArray,
+                        dynamicsArray: dynamicsArray,
+                        stylisticArray: stylisticArray,
+                        studentWeeks: studentWeeks,
+                        missionStatus: missionStatus,
+                        missionCode: false,
+                        missionResults: req.flash('missionResults'),
+                        adErrors: req.flash('adErrors')})
+                }
+           })
         })
     } else {
         res.render('reports-guest', {errors: req.flash('errors'), regErrors: req.flash('regErrors')})

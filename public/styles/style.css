@@ -283,9 +283,11 @@ hr {
     border-top: 1px solid white;
 }
 
-#quiz-form .question-div {
+.question-div {
     margin-bottom: 2rem;
     border-radius: 5px;
     border: 1px solid white;
     padding: 2rem;
+    color: white;
+    text-align: center;
 }
