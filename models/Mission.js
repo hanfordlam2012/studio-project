@@ -8,6 +8,7 @@ let Mission = function(data) {
 Mission.checkQuiz = async function(quizSubmit) {
     return new Promise(async(resolve, reject) => {
         let quizDoc = await missionsCollection.findOne({name: quizSubmit.name})
+        let quizScore = 0
         let q1status = ``
         let q2status = ``
         let q3status = ``
@@ -16,35 +17,40 @@ Mission.checkQuiz = async function(quizSubmit) {
         if (!quizSubmit.q1r) {
             q1status = `<p>You didn't answer this question.</p><p class="pink-text">The correct response is "${quizDoc.q1a}".</p>`
         } else if (quizSubmit.q1r == quizDoc.q1a) {
-            q1status = `<p>You answered : "${quizSubmit.q1r}".</p><p class="green-text">Correct!</p>`
+            q1status = `<p>You answered : "${quizSubmit.q1r}".</p><p class="green-text">Correct! + 2 points</p>`
+            quizScore = quizScore + 2
         } else {
             q1status = `<p>You answered : "${quizSubmit.q1r}". That's not the answer.</p><p class="pink-text">The correct response is "${quizDoc.q1a}".</p>`
         }
         if (!quizSubmit.q2r) {
             q2status = `<p>You didn't answer this question.</p><p class="pink-text">The correct response is "${quizDoc.q2a}".</p>`
         } else if (quizSubmit.q2r == quizDoc.q2a) {
-            q2status = `You answered : "${quizSubmit.q2r}".</p><p class="green-text">Correct!</p>`
+            q2status = `You answered : "${quizSubmit.q2r}".</p><p class="green-text">Correct! + 2 points</p>`
+            quizScore = quizScore + 2
         } else {
             q2status = `<p>You answered : "${quizSubmit.q2r}". That's not the answer.</p><p class="pink-text">The correct response is "${quizDoc.q2a}".</p>`
         }
         if (!quizSubmit.q3r) {
             q3status = `<p>You didn't answer this question.</p><p class="pink-text">The correct response is "${quizDoc.q3a}".</p>`
         } else if (quizSubmit.q3r == quizDoc.q3a) {
-            q3status = `You answered : "${quizSubmit.q3r}".</p><p class="green-text">Correct!</p>`
+            q3status = `You answered : "${quizSubmit.q3r}".</p><p class="green-text">Correct! + 2 points</p>`
+            quizScore = quizScore + 2
         } else {
             q3status = `<p>You answered : "${quizSubmit.q3r}". That's not the answer.</p><p class="pink-text">The correct response is "${quizDoc.q3a}".</p>`
         }
         if (!quizSubmit.q4r) {
             q4status = `<p>You didn't answer this question.</p><p class="pink-text">The correct response is "${quizDoc.q4a}".</p>`
         } else if (quizSubmit.q4r == quizDoc.q4a) {
-            q4status = `You answered : "${quizSubmit.q4r}".</p><p class="green-text">Correct!</p>`
+            q4status = `You answered : "${quizSubmit.q4r}".</p><p class="green-text">Correct! + 2 points</p>`
+            quizScore = quizScore + 2
         } else {
             q4status = `<p>You answered : "${quizSubmit.q4r}". That's not the answer.</p><p class="pink-text">The correct response is "${quizDoc.q4a}".</p>`
         }
         if (!quizSubmit.q5r) {
             q5status = `<p>You didn't answer this question.</p><p class="pink-text">The correct response is "${quizDoc.q5a}".</p>`
         } else if (quizSubmit.q5r == quizDoc.q5a) {
-            q5status = `You answered : "${quizSubmit.q5r}".</p><p class="green-text">Correct!</p>`
+            q5status = `You answered : "${quizSubmit.q5r}".</p><p class="green-text">Correct! + 2 points</p>`
+            quizScore = quizScore + 2
         } else {
             q5status = `<p>You answered : "${quizSubmit.q5r}". That's not the answer.</p><p class="pink-text">The correct response is "${quizDoc.q5a}".</p>`
         }
@@ -71,7 +77,7 @@ Mission.checkQuiz = async function(quizSubmit) {
         ${q5status}
         </div>
         `
-        resolve (missionResult)
+        resolve ({missionResult: missionResult, quizScore: quizScore})
     })
 }
     

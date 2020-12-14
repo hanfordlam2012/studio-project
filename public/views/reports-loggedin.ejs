@@ -26,9 +26,9 @@
 <div id="mission-blurb" class="alert alert-primary text-center"><p>Mini-missions are for everybody and they hope to inspire learning. Being resourceful and creative in sourcing responses is encouraged. The highest scoring student at the end of each term receives two free movie tickets for Boronia’s very own Metro Cinemas. In addition to enjoying a film in their cosy theatres, you can feel good about getting your piano teacher to support their small family-run business.</p><p>Good luck, have fun, and give it your best shot!</p></div>
 <% if (missionCode) { %>
   <%- missionCode %>
-<% } else if (!missionCode && missionResults.length != 0) { %>
-  <% missionResults.forEach(function(results) { %>
-    <%- results %>
+<% } else if (!missionCode && missionResult.length != 0) { %>
+  <% missionResult.forEach(function(result) { %>
+    <%- result %>
   <% }) %>
 <% } else { %>
   <div class="alert alert-danger text-center">Waiting for the next mission to arrive...</div>
@@ -39,7 +39,7 @@
     <div id="leaderboard" class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive purple-text text-center">Leaderboard</h1></div>
   </div>
   <hr>
-  <table class="table table-dark">
+  <table class="table text-center table-dark">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -52,7 +52,7 @@
       <% leaderboard.forEach((leader) => { %>
         <tr>
           <th scope="row"><%= i %></th>
-          <td><%= leader.username %></td>
+          <td id="leader<%= i %>" class=""><%= leader.username %></td>
           <td><%= leader.leaderboardScore %></td>
         </tr>
       <% i = i+1 }) %>
@@ -634,5 +634,8 @@ function showExtraComponentInfo() {
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="_csrf" value="<%= csrfToken %>">')
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="userId" value="<%= userId %>">')
   }
+  var d2 = document.getElementById('leader1')
+  d2.insertAdjacentHTML('beforeend', '<img class="pl-3" src="../images/crown.png">')
+  d2.insertAdjacentHTML('afterbegin', '<img class="pr-3" src="../images/crown.png">')
 </script>
 <%- include('includes/footer') %>

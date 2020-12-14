@@ -154,7 +154,7 @@ exports.reports = function(req, res) {
                             studentWeeks: studentWeeks,
                             missionStatus: missionStatus,
                             missionCode: false,
-                            missionResults: req.flash('missionResults'),
+                            missionResult: req.flash('missionResult'),
                             leaderboard: leaderboard,
                             adErrors: req.flash('adErrors')})
                     }
