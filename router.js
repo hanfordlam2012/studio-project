@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
     res.render('home')
 })
 router.get('/media', function(req, res) {
-    res.render('under-construction')
+    res.render('media')
 })
 router.get('/blog', function(req, res) {
     res.render('under-construction')

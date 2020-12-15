@@ -18,33 +18,32 @@
   </head>
   <body>
     <div class="container">
-      <header>
       <!-- NAVBAR -->
-      <nav class="rounded-bottom navbar navbar-expand-lg bg-dark navbar-dark mb-4">
-        <a class="navbar-brand recursive" href='/'>Hanford Lam | Piano</a>
+      <nav class="rounded-bottom navbar fixed-top navbar-expand-lg bg-dark navbar-dark mb-4">
+        <a class="navbar-brand ml-3 recursive" href='/'>Hanford Lam | Piano</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li id="homeTab" class="nav-item">
+          <ul class="navbar-nav abs-center-x">
+            <li id="homeTab" class="mx-3 nav-item">
               <a class="nav-link nav-border" href='/'>Home</a>
             </li>
-            <li id="mediaTab" class="nav-item">
+            <li id="mediaTab" class="mx-3 nav-item">
               <a class="nav-link" href="/media">Media</a>
             </li>
-            <li id="reportsTab" class="nav-item">
+            <li id="reportsTab" class="mx-3 nav-item">
               <a class="nav-link" href="/reports">Reports</a>
             </li>
-            <li id="blogTab" class="nav-item">
+            <li id="blogTab" class="mx-3 nav-item">
               <a class="nav-link" href="/blog">Blog</a>
             </li>
-            <li id="contactTab" class="nav-item">
+            <li id="contactTab" class="mx-3 nav-item">
               <a class="nav-link" href="/contact">Contact</a>
             </li>
           </ul>
         </div>
-        <a class="btn btn-outline-light float-right" href="/contact">Message Hanford</a>
+        <a id="navbarMessageButton" class="btn btn-outline-light mr-3" href="/contact">Message Hanford</a>
       </nav>
       <!-- DYNAMIC NAVBAR AND TITLE -->
       <script>
@@ -71,5 +70,4 @@
           document.title = "Contact - Hanford Lam | Piano"
         }
       </script>
-    </header>
     <div class="main">

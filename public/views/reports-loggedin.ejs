@@ -11,11 +11,15 @@
 <hr>
   <div class="jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Salutations, <%= fName %> and <%= parentName %></h1></div>
 <div class="text-center">
-  <a href="#mini-missions" type="button" class="mx-1 btn btn-secondary btn-lg">Mini-Missions</a>
-  <a href="#leaderboard" type="button" class="mx-1 btn btn-secondary btn-lg">Leaderboard</a>
-  <a href="#progress-tracker" type="button" class="mx-1 btn btn-secondary btn-lg">Progress Tracker</a>
-  <a href="#full-record" type="button" class="mx-1 btn btn-secondary btn-lg">Full Record</a>
-  <a href="#practice-guide" type="button" class="mx-1 btn btn-secondary btn-lg">Practice Guide</a>
+  <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Mini-Missions</a>
+  <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Leaderboard</a>
+  <a href="#progress-tracker" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Progress Tracker</a>
+  <a href="#full-record" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Full Record</a>
+  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Practice Guide</a>
+  <form class="mt-3" action="/logout" method="POST">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit" class="mx-1 btn btn-outline-secondary btn-lg">Log Out</button>
+  </form>
 </div>
 <hr>
 <!-- MINI MISSIONS -->
