@@ -8,26 +8,28 @@
   <div class="alert alert-danger text-center small py-1"><%= message %></div>
 <% }) %>
 <!-- GREETINGS -->
-<hr>
-  <div class="jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Salutations, <%= fName %> and <%= parentName %></h1></div>
+  <div class="wow pulse jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Hi <%= fName %> and <%= parentName %></h1></div>
 <div class="text-center">
-  <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Mini-Missions</a>
-  <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Leaderboard</a>
-  <a href="#progress-tracker" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Progress Tracker</a>
-  <a href="#full-record" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Full Record</a>
-  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Practice Guide</a>
+  <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Mini-Missions</a>
+  <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Leaderboard</a>
+  <a href="#progress-tracker" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Progress Tracker</a>
+  <a href="#full-record" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Full Record</a>
+  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Practice Guide</a>
   <form class="mt-3" action="/logout" method="POST">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <button type="submit" class="mx-1 btn btn-outline-secondary btn-lg">Log Out</button>
   </form>
 </div>
-<hr>
+<hr class="mt-5">
 <!-- MINI MISSIONS -->
-<div id="mini-missions" data-wow-duration="1.5s" class="wow pulse">
-  <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive palegreen-text text-center">Mini-Missions</h1></div>
+<div id="mini-missions" class="section">
+  <div class="jumbotron-transparent py-0 m-3"><h1 class="display-2 recursive rainbowText text-center">Mini-Missions</h1></div>
 </div>
-<hr>
-<div id="mission-blurb" class="alert alert-primary text-center pt-4"><p>Mini-missions are for everybody and they hope to inspire learning. Being resourceful and creative in sourcing responses is encouraged. The highest scoring student at the end of each term receives two free movie tickets for Boronia’s very own Metro Cinemas. In addition to enjoying a film in their cosy theatres, you can feel good about getting your piano teacher to support their small family-run business.</p><p>Good luck, have fun, and give it your best shot!</p></div>
+
+<div id="mission-blurb" class="alert alert-primary text-center pt-4">
+  <p>Mini-missions are for everybody and they hope to inspire improvement. Being resourceful and creative is encouraged. Collect leaderboard points and earn rewards!</p>
+  <p>Good luck, have fun, and give it your best shot!</p>
+</div>
 <% if (missionCode) { %>
   <%- missionCode %>
 <% } else if (!missionCode && missionResult.length != 0) { %>
@@ -38,11 +40,17 @@
   <div class="alert alert-danger text-center">Waiting for the next mission to arrive...</div>
 <% } %>
 <hr>
+
   <!-- LEADERBOARD -->
-  <div data-wow-duration="1.5s" class="wow pulse">
-    <div id="leaderboard" class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive purple-text text-center">Leaderboard</h1></div>
+  <div id="leaderboard" class="section">
+    <div class="jumbotron-transparent py-0 m-3"><h1 class="display-2 recursive rainbowText text-center">Leaderboard</h1></div>
   </div>
-  <hr>
+
+  <div id="leaderboard-blurb" class="alert alert-primary text-center pt-4">
+    <p>Winners get tickets to Boronia’s local movie theatre, Metro Cinemas. This small family-run business shows all the latest films in a comfortable and cosy space.</p>
+    <p>Also up for grabs this round is the <i>Pioneer's Badge</i> <img src="../images/pioneer.png"> that shows you were the FIRST EVER to win. Any badges you collect will be displayed beside your leaderboard name FOREVER.</p>
+    <p>Oh and you get to choose a colour for your username.</p>
+  </div>
   <table class="table text-center table-dark">
     <thead>
       <tr>
@@ -56,18 +64,23 @@
       <% leaderboard.forEach((leader) => { %>
         <tr>
           <th scope="row"><%= i %></th>
-          <td id="leader<%= i %>" class=""><%= leader.username %></td>
+          <td id="leader<%= i %>" class="<%= leader.leaderboardColor %> langar">
+            <%= leader.username %>
+            <% if (leader.badges && leader.badges.includes("pioneer")) { %>
+              <img class="leaderboard-badge" src="../images/pioneer.png">
+            <% } %>
+          </td>
           <td><%= leader.leaderboardScore %></td>
         </tr>
-      <% i = i+1 }) %>
+      <% i = i+1 %>
+      <% }) %>
     </tbody>
   </table>
 <!-- GRAPH -->
 <hr class="mt-5">
-<div data-wow-duration="1.5s" class="wow pulse">
-  <div id="progress-tracker" class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive pink-text text-center">Progress Tracker</h1></div>
+<div id="progress-tracker" class="section">
+  <div class="jumbotron-transparent py-0 m-3"><h1 class="display-2 recursive rainbowText text-center">Progress Tracker</h1></div>
 </div>
-<hr>
 <canvas id="pieceGraph"></canvas>
 <script>
 let ctx = document.getElementById('pieceGraph').getContext('2d');
@@ -120,8 +133,10 @@ let stackedBar = new Chart(ctx, {
     },
     title: {
       display : true,
-      text: ['Track your mastery across the fundamental components of music'],
-      fontSize: 20,
+      text: ['Mastering the fundamental components of music'],
+      fontSize: 40,
+      fontFamily: 'Caveat',
+      fontStyle: 'normal',
       padding: 20
     },
     scales: {
@@ -148,10 +163,10 @@ function showExtraComponentInfo() {
 </script>
 <!-- DETAILED RECORD -->
 <hr>
-<div data-wow-duration="1.5s" class="wow pulse">
-  <div id="full-record" class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive blue-text text-center">Full Record</h1></div>
+<div id="full-record" class="section">
+  <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive rainbowText text-center">Full Record</h1></div>
 </div>
-<hr>
+
 <div class="justify-content-center mt-2 mb-5 px-0 table-responsive">
   <table class="justify-content-center table table-hover text-center">
       <thead>
@@ -415,10 +430,10 @@ function showExtraComponentInfo() {
   
   <!-- PRACTICE GUIDE -->
   <hr>
-  <div data-wow-duration="1.5s" class="wow pulse">
-    <div id="practice-guide" class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive orange-text text-center">Practice Guide</h1></div>
+  <div id="practice-guide" class="section">
+    <div class="jumbotron-transparent py-0 mt-3 mb-4"><h1 class="display-2 recursive rainbowText text-center">Practice Guide</h1></div>
   </div>
-  <hr class="mb-5">
+
   <div class="px-0 rubric-grid">
     <div class="row m-0 text-center row-border">
       <div class="col-sm rhythm">
@@ -621,25 +636,33 @@ function showExtraComponentInfo() {
   <button type="submit" class="btn btn-secondary btn-lg btn-block">Log Out</button>
 </form>
 
-<!-- REANIMATE -->
+
 <script>
-  window.addEventListener('scroll', function(e) {
-    if( $(window).scrollTop() <= 0) {
-      $('.wow').removeClass('animated');
-      $('.wow').removeAttr('style');
-      new WOW().init();
-    }
-  });
-  </script>
-<!-- ADD CSRF TOKEN TO MISSION SUBMITS -->
-<script>
+// ADD CSRF TOKEN TO MISSION SUBMITS
   if (document.getElementById('missionSubmitButton')) {
     var d1 = document.getElementById('missionSubmitButton')
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="_csrf" value="<%= csrfToken %>">')
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="userId" value="<%= userId %>">')
   }
-  var d2 = document.getElementById('leader1')
-  d2.insertAdjacentHTML('beforeend', '<img class="pl-3" src="../images/crown.png">')
-  d2.insertAdjacentHTML('afterbegin', '<img class="pr-3" src="../images/crown.png">')
+// rainbow headings
+  window.addEventListener("load", function() {
+  let elements = document.getElementsByClassName("rainbowText");
+  for (let i = 0; i < elements.length; i++) {
+    generateRainbowText(elements[i]);
+  }
+})
+
+function generateRainbowText(element) {
+  let text = element.innerText;
+  element.innerHTML = "";
+  for (let i = 0; i < text.length; i++) {
+    let charElem = document.createElement("span");
+    charElem.style.color = "hsl(" + (360 * i / text.length) + ",80%,50%)";
+    charElem.innerHTML = text[i];
+    element.appendChild(charElem);
+  }
+}
+
 </script>
+
 <%- include('includes/footer') %>

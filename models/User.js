@@ -13,6 +13,29 @@ let User = function(data) {
     this.errors = []
 }
 
+// prototype methods save memory space
+User.prototype.register = function() {
+  return new Promise(async (resolve, reject) => {
+      try {
+      // Validate user data
+      this.cleanUp()
+      await this.validate()
+      } catch(err) {
+          console.log(err)
+      }
+      // If no errors, save data to database
+      if (!this.errors.length) {
+          // hash user password
+          let salt = bcrypt.genSaltSync(10)
+          this.data.password = bcrypt.hashSync(this.data.password, salt)
+          await usersCollection.insertOne(this.data)
+          resolve({fName: this.data.fName, lName: this.data.lName, parentName: this.data.parentName, admin: this.data.admin, userId: this.data._id, secret: this.data.secret})
+      } else {
+          reject(this.errors)
+      }
+  })
+}
+
 User.prototype.cleanUp = function() {
 
 
@@ -37,7 +60,9 @@ User.prototype.cleanUp = function() {
         secret: this.data.secret,
         admin: false,
         missionStatus: false,
-        leaderboardScore: 0
+        leaderboardScore: 0,
+        skillsStatuses: [false, false, false, false, false],
+        leaderboardColor: 'leaderboard-text'
     }
 }
 
@@ -152,7 +177,7 @@ User.getMissionStatus = async (userId) => {
 
 User.getLeaderboard = function() {
     return new Promise (async(resolve, reject) => {
-        let leaderboard = await usersCollection.find({"admin": false}).project({username: 1, leaderboardScore: 1}).sort({leaderboardScore: -1}).toArray()
+        let leaderboard = await usersCollection.find({"admin": false}).project({username: 1, leaderboardScore: 1, badges: 1, leaderboardColor: 1}).sort({leaderboardScore: -1}).toArray()
         resolve(leaderboard)
     })
 }
@@ -194,43 +219,19 @@ User.getStudentWeeks = async function(userId) {
     }).catch(function(err) {reject(err)})
 }
 
-// prototype methods save memory space
-User.prototype.register = function() {
-    return new Promise(async (resolve, reject) => {
-        try {
-        // Validate user data
-        this.cleanUp()
-        await this.validate()
-        } catch(err) {
-            console.log(err)
-        }
-        // If no errors, save data to database
-        if (!this.errors.length) {
-            // hash user password
-            let salt = bcrypt.genSaltSync(10)
-            this.data.password = bcrypt.hashSync(this.data.password, salt)
-            await usersCollection.insertOne(this.data)
-            resolve({fName: this.data.fName, lName: this.data.lName, parentName: this.data.parentName, admin: this.data.admin, userId: this.data._id, secret: this.data.secret})
-        } else {
-            reject(this.errors)
-        }
-    })
-}
-
-// MISSIONS FEATURE
-User.getMissionCode = async function() {
+User.getMissionCode = async function(userId) {
     return new Promise(async(resolve, reject) => {
         let missionCode = ""
-        let missionDoc = await missionsCollection.findOne({name: "quiz1"})
+        let missionDoc = await missionsCollection.findOne({name: "skill1"})
         if (!missionDoc) {
             resolve (false)
             // 5 QUESTION QUIZZES
         } else if (missionDoc.type == 'quiz') {
-            missionCode = `<div class="alert alert-success text-center">There's a Quick Quiz mission worth 10 points. Do it now!</div>
+            missionCode = `<div class="alert alert-success text-center">There's a Quiz mission worth 50 points. Time to think hard!</div>
             <form id="quiz-form" class="text-center px-5 my-4 white-text" action="/submitQuiz" method="POST">
               <!-- Question 1 -->
               <div class="question-div">
-                <h2>Let's begin : <span class="small">${missionDoc.q1}</span></h2>
+                <h2><span class="orange-text">Let's begin : </span><span class="blue-text small">${missionDoc.q1}</span></h2>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="q1r" id="q1o1" value="${missionDoc.q1o1}">
                 <label class="form-check-label" for="q1o1">
@@ -252,7 +253,7 @@ User.getMissionCode = async function() {
               </div>
               <!-- Question 2 -->
               <div class="question-div">
-                <h2>How about this : <span class="small">${missionDoc.q2}</span></h2>
+                <h2><span class="orange-text">How about this : </span><span class="blue-text small">${missionDoc.q2}</span></h2>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="q2r" id="q2o1" value="${missionDoc.q2o1}">
                 <label class="form-check-label" for="q2o1">
@@ -273,7 +274,7 @@ User.getMissionCode = async function() {
               </div></div>
               <!-- Question 3 -->
               <div class="question-div">
-                <h2>Halfway there now : <span class="small">${missionDoc.q3}</span></h2>
+                <h2><span class="orange-text">Halfway there now : </span><span class="blue-text small">${missionDoc.q3}</span></h2>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="q3r" id="q3o1" value="${missionDoc.q3o1}">
                 <label class="form-check-label" for="q3o1">
@@ -294,7 +295,7 @@ User.getMissionCode = async function() {
               </div></div>
               <!-- Question 4 -->
               <div class="question-div">
-                <h2>And this : <span class="small">${missionDoc.q4}</span></h2>
+                <h2><span class="orange-text">And this : </span><span class="blue-text small">${missionDoc.q4}</span></h2>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="q4r" id="q4o1" value="${missionDoc.q4o1}">
                 <label class="form-check-label" for="q4o1">
@@ -315,7 +316,7 @@ User.getMissionCode = async function() {
               </div></div>
               <!-- Question 5 -->
               <div class="question-div">
-                <h2>A final tricky question : <span class="small">${missionDoc.q5}</span></h2>
+                <h2><span class="orange-text">A final tricky question : </span><span class="blue-text small">${missionDoc.q5}</span></h2>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="q5r" id="q5o1" value="${missionDoc.q5o1}">
                 <label class="form-check-label" for="q5o1">
@@ -338,6 +339,79 @@ User.getMissionCode = async function() {
               <input type="hidden" name="type" value="${missionDoc.type}">
               <button id="missionSubmitButton" class="btn btn-success btn-lg my-1" type="submit">Submit Quick Quiz</button>
             </form>`
+
+            resolve (missionCode)
+
+            // 5 TASK MISSIONS
+        } else if (missionDoc.type == 'skill') {
+          // get current skill mission progress
+            let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+            let skillsStatuses = userDoc.skillsStatuses
+
+            missionCode = `
+            <div class="alert alert-success text-center">There's a Skill mission worth 51 points. Begin upgrading your skills today!</div>
+              <!-- Task 1 -->
+              <div id="skill-mission-container">
+                ${skillsStatuses[0] ? 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
+                  <h2 class="purple-text">1 Point : <span class="small">${missionDoc.task1}</span></h2>
+                  <h2 class="recursive correct-text">Completed! + 1 point</h2><img src="../images/check-mark.png">
+                </div>` : 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
+                  <h2 class="purple-text">1 Point : <span class="small">${missionDoc.task1}</span></h2>
+                  <p>${missionDoc.task1desc}</p>
+                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
+                </div>`
+                }
+              <!-- Task 2 -->
+              ${skillsStatuses[1] ? 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
+                  <h2 class="purple-text">5 Points : <span class="small">${missionDoc.task2}</span></h2>
+                  <h2 class="recursive correct-text">Completed! + 5 points</h2><img src="../images/check-mark.png">
+                </div>` : 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
+                  <h2 class="purple-text">5 Points : <span class="small">${missionDoc.task2}</span></h2>
+                  <p>${missionDoc.task2desc}</p>
+                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
+                </div>`
+                }
+              <!-- Task 3 -->
+              ${skillsStatuses[2] ? 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
+                  <h2 class="purple-text">5 Points : <span class="small">${missionDoc.task3}</span></h2>
+                  <h2 class="recursive correct-text">Completed! + 5 points</h2><img src="../images/check-mark.png">
+                </div>` : 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
+                  <h2 class="purple-text">5 Points : <span class="small">${missionDoc.task3}</span></h2>
+                  <p>${missionDoc.task3desc}</p>
+                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
+                </div>`
+                }
+              <!-- Task 4 -->
+              ${skillsStatuses[3] ? 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
+                  <h2 class="purple-text">10 Points : <span class="small">${missionDoc.task4}</span></h2>
+                  <h2 class="recursive correct-text">Completed! + 10 points</h2><img src="../images/check-mark.png">
+                </div>` : 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
+                  <h2 class="purple-text">10 Points : <span class="small">${missionDoc.task4}</span></h2>
+                  <p>${missionDoc.task4desc}</p>
+                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
+                </div>`
+                }
+              <!-- Task 5 -->
+              ${skillsStatuses[4] ? 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
+                  <h2 class="purple-text">20 Points : <span class="small">${missionDoc.task5}</span></h2>
+                  <h2 class="recursive correct-text">Completed! + 20 points</h2><img src="../images/check-mark.png">
+                </div>` : 
+                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
+                  <h2 class="purple-text">20 Points : <span class="small">${missionDoc.task5}</span></h2>
+                  <p>${missionDoc.task5desc}</p>
+                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
+                </div>`
+                }
+                </div>`
 
             resolve (missionCode)
         }

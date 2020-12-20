@@ -120,7 +120,8 @@ exports.reports = function(req, res) {
                User.getMissionStatus(req.session.user.userId).then((missionStatus) => {
 
                     if (!missionStatus) {
-                        User.getMissionCode().then(function(missionCode) {
+
+                        User.getMissionCode(req.session.user.userId).then(function(missionCode) {
                             res.render('reports-loggedin', {
                                 fName: req.session.user.fName,
                                 userId: req.session.user.userId,
@@ -133,12 +134,13 @@ exports.reports = function(req, res) {
                                 dynamicsArray: dynamicsArray,
                                 stylisticArray: stylisticArray,
                                 studentWeeks: studentWeeks,
-                                missionStatus: missionStatus,
-                                missionCode: missionCode,
-                                missionResults: req.flash('missionResults'),
+                                missionStatus: missionStatus, // true for completed mission (1 mission at a time)
+                                missionCode: missionCode, // string of dynamic HTML
+                                missionResult: req.flash('missionResult'),
                                 leaderboard: leaderboard,
                                 adErrors: req.flash('adErrors')}) 
                         })
+                        
                     } else {
                         res.render('reports-loggedin', {
                             fName: req.session.user.fName,

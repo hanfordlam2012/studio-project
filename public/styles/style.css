@@ -35,10 +35,24 @@ nav {
     font-family: 'Caveat', cursive;
 }
 
+.langar {
+    font-family: 'Langar', cursive;
+    font-size: 1.5rem;
+}
+
+.leaderboard-text {
+    color: rgb(99, 138, 157);
+}
+
 .recursive,
 .alert,
 .btn {
     font-family: 'Recursive', sans-serif;
+}
+
+.alert {
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
 .input-group-text {
@@ -307,4 +321,46 @@ hr {
     padding: 2rem;
     color: white;
     text-align: center;
+}
+
+#skill-mission-container {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+#skill-mission-container img {
+    margin-bottom: 0.6rem;
+    margin-top: 0.6rem;
+}
+
+.task-div-complete {
+    background-color: rgb(178, 255, 174);
+    color: black;
+    padding-right: 20%;
+    padding-left: 20%;
+}
+
+.task-div-incomplete {
+    background-color: rgb(255, 204, 204);
+    color: black;
+    padding-right: 20%;
+    padding-left: 20%;
+}
+
+.correct-text {
+    color: rgb(24, 141, 0)
+}
+
+.leaderboard-badge {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.section::before {
+    display: block;
+    content: " ";
+    margin-top: -80px;
+    height: 80px;
+    visibility: hidden;
+    pointer-events: none;
 }
