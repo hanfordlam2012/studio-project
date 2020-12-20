@@ -222,7 +222,7 @@ User.getStudentWeeks = async function(userId) {
 User.getMissionCode = async function(userId) {
     return new Promise(async(resolve, reject) => {
         let missionCode = ""
-        let missionDoc = await missionsCollection.findOne({name: "skill1"})
+        let missionDoc = await missionsCollection.findOne({name: ""})
         if (!missionDoc) {
             resolve (false)
             // 5 QUESTION QUIZZES
@@ -349,7 +349,7 @@ User.getMissionCode = async function(userId) {
             let skillsStatuses = userDoc.skillsStatuses
 
             missionCode = `
-            <div class="alert alert-success text-center">There's a Skill mission worth 51 points. Begin upgrading your skills today!</div>
+            <div class="alert alert-success text-center">There's a Skill mission worth 51 points. Begin upgrading your skills IRL today!</div>
               <!-- Task 1 -->
               <div id="skill-mission-container">
                 ${skillsStatuses[0] ? 

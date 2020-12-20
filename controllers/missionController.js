@@ -10,7 +10,7 @@ exports.checkQuiz = function(req, res) {
         let newScore = userDoc.leaderboardScore + data.quizScore
         usersCollection.updateOne({"_id": ObjectID(req.body.userId)}, { $set: {"missionStatus": true, "leaderboardScore": newScore} })
         req.session.save(function() {
-            res.redirect('/reports')
+            res.redirect('/reports#mini-missions')
         })
     })
 }

@@ -318,13 +318,16 @@ hr {
     margin-bottom: 2rem;
     border-radius: 5px;
     border: 1px solid white;
-    padding: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 10%;
+    padding-right: 10%;
     color: white;
     text-align: center;
 }
 
 #skill-mission-container {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
     text-align: center;
 }
 
