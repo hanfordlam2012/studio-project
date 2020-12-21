@@ -114,14 +114,38 @@ exports.reports = function(req, res) {
             let toneArray = data.graphData.componentsArray.toneArray
             let dynamicsArray = data.graphData.componentsArray.dynamicsArray
             let stylisticArray = data.graphData.componentsArray.stylisticArray
-            
-            User.getLeaderboard().then((leaderboard) => {
 
-               User.getMissionStatus(req.session.user.userId).then((missionStatus) => {
+            User.getLatestComments(req.session.user.userId).then(function(latestComments) {
 
-                    if (!missionStatus) {
+                User.getLeaderboard().then((leaderboard) => {
 
-                        User.getMissionCode(req.session.user.userId).then(function(missionCode) {
+                    User.getMissionStatus(req.session.user.userId).then((missionStatus) => {
+
+                        if (!missionStatus) {
+
+                            User.getMissionCode(req.session.user.userId).then(function(missionCode) {
+                                res.render('reports-loggedin', {
+                                    fName: req.session.user.fName,
+                                    userId: req.session.user.userId,
+                                    parentName: req.session.user.parentName, 
+                                    admin: req.session.user.admin, 
+                                    dateLabels: dateLabels,
+                                    rhythmArray: rhythmArray,
+                                    coordinationArray: coordinationArray,
+                                    toneArray: toneArray,
+                                    dynamicsArray: dynamicsArray,
+                                    stylisticArray: stylisticArray,
+                                    studentWeeks: studentWeeks,
+                                    latestComments: latestComments,
+                                    missionStatus: missionStatus, // true for completed mission (1 mission at a time)
+                                    missionCode: missionCode, // string of dynamic HTML
+                                    missionResult: req.flash('missionResult'),
+                                    leaderboard: leaderboard,
+                                    adErrors: req.flash('adErrors')
+                                }) 
+                            })
+                            
+                        } else {
                             res.render('reports-loggedin', {
                                 fName: req.session.user.fName,
                                 userId: req.session.user.userId,
@@ -134,35 +158,20 @@ exports.reports = function(req, res) {
                                 dynamicsArray: dynamicsArray,
                                 stylisticArray: stylisticArray,
                                 studentWeeks: studentWeeks,
-                                missionStatus: missionStatus, // true for completed mission (1 mission at a time)
-                                missionCode: missionCode, // string of dynamic HTML
+                                latestComments: latestComments,
+                                missionStatus: missionStatus,
+                                missionCode: false,
                                 missionResult: req.flash('missionResult'),
                                 leaderboard: leaderboard,
-                                adErrors: req.flash('adErrors')}) 
-                        })
-                        
-                    } else {
-                        res.render('reports-loggedin', {
-                            fName: req.session.user.fName,
-                            userId: req.session.user.userId,
-                            parentName: req.session.user.parentName, 
-                            admin: req.session.user.admin, 
-                            dateLabels: dateLabels,
-                            rhythmArray: rhythmArray,
-                            coordinationArray: coordinationArray,
-                            toneArray: toneArray,
-                            dynamicsArray: dynamicsArray,
-                            stylisticArray: stylisticArray,
-                            studentWeeks: studentWeeks,
-                            missionStatus: missionStatus,
-                            missionCode: false,
-                            missionResult: req.flash('missionResult'),
-                            leaderboard: leaderboard,
-                            adErrors: req.flash('adErrors')})
-                    }
-                })   
+                                adErrors: req.flash('adErrors')
+                            })
+                        }
+                    })   
 
+                })
             })
+            
+            
 
             
         })

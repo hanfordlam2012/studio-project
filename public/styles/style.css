@@ -314,6 +314,11 @@ hr {
     border-top: 1px solid white;
 }
 
+#weeklySnapshot pre {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
 .question-div {
     margin-bottom: 2rem;
     border-radius: 5px;

@@ -8,13 +8,12 @@
   <div class="alert alert-danger text-center small py-1"><%= message %></div>
 <% }) %>
 <!-- GREETINGS -->
-  <div class="wow pulse jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Hi <%= fName %> and <%= parentName %></h1></div>
+  <div class="wow pulse jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Welcome back, <%= fName %> and <%= parentName %></h1></div>
 <div class="text-center">
   <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Mini-Missions</a>
   <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Leaderboard</a>
-  <a href="#progress-tracker" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Progress Tracker</a>
   <a href="#full-record" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Full Record</a>
-  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Practice Guide</a>
+  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Practice Buddy</a>
   <form class="mt-3" action="/logout" method="POST">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <button type="submit" class="mx-1 btn btn-outline-secondary btn-lg">Log Out</button>
@@ -76,10 +75,10 @@
       <% }) %>
     </tbody>
   </table>
-<!-- GRAPH -->
+<!-- FULL RECORD -->
 <hr class="mt-5">
-<div id="progress-tracker" class="section">
-  <div class="jumbotron-transparent py-0 m-3"><h1 class="display-2 recursive rainbowText text-center">Progress Tracker</h1></div>
+<div id="full-record" class="section">
+  <div class="jumbotron-transparent pt-3 pb-1 mt-3 mb-0"><h1 class="display-2 recursive rainbowText text-center">Full Record</h1></div>
 </div>
 <canvas id="pieceGraph"></canvas>
 <script>
@@ -91,31 +90,31 @@ let stackedBar = new Chart(ctx, {
     datasets: [{
         label: 'Rhythm and Pulse',
         data: [<%- rhythmArray %>],
-        backgroundColor: 'rgba(255, 99, 132, 0.9)',
+        backgroundColor: 'rgba(255, 99, 132, 0.6)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
     }, {
         label: 'Coordination and Pitch',
         data: [<%- coordinationArray %>],
-        backgroundColor: 'rgba(54, 162, 235, 0.9)',
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
     }, {
         label: 'Tone and Articulation',
         data: [<%- toneArray %>],
-        backgroundColor: 'rgba(255, 206, 86, 0.9)',
+        backgroundColor: 'rgba(255, 206, 86, 0.6)',
         borderColor: 'rgba(255, 206, 86, 1)',
         borderWidth: 1,
     }, {
         label: 'Dynamics and Balance',
         data: [<%- dynamicsArray %>],
-        backgroundColor: 'rgba(75, 192, 192, 0.9)',
+        backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
     }, {
         label: 'Stylistic Awareness',
         data: [<%- stylisticArray %>],
-        backgroundColor: 'rgba(153, 102, 255, 0.9)',
+        backgroundColor: 'rgba(153, 102, 255, 0.6)',
         borderColor: 'rgba(153, 102, 255, 1)',
         borderWidth: 1,
     }],
@@ -161,11 +160,6 @@ function showExtraComponentInfo() {
   // add function later as needed
 }
 </script>
-<!-- DETAILED RECORD -->
-<hr>
-<div id="full-record" class="section">
-  <div class="jumbotron-transparent pt-3 pb-1 m-3"><h1 class="display-2 recursive rainbowText text-center">Full Record</h1></div>
-</div>
 
 <div class="justify-content-center mt-2 mb-5 px-0 table-responsive">
   <table class="justify-content-center table table-hover text-center">
@@ -178,7 +172,7 @@ function showExtraComponentInfo() {
           <th scope="col">Score</th>
           <th scope="col">Tech B</th>
           <th scope="col">Score</th>
-          <th scope="col">Comments</th>
+          <th scope="col">Tasks</th>
         </tr>
       </thead>
       <tbody>
@@ -428,10 +422,16 @@ function showExtraComponentInfo() {
     </table>
   </div>
   
-  <!-- PRACTICE GUIDE -->
+  <!-- PRACTICE BUDDY -->
   <hr>
   <div id="practice-guide" class="section">
-    <div class="jumbotron-transparent py-0 mt-3 mb-4"><h1 class="display-2 recursive rainbowText text-center">Practice Guide</h1></div>
+    <div class="jumbotron-transparent py-0 mt-3 mb-4"><h1 class="display-2 recursive rainbowText text-center">Practice Buddy</h1></div>
+  </div>
+
+  <div id="weeklySnapshot">
+    <% latestComments.forEach((comment) => { %>
+      <h2 class="border rounded p-5"><pre class="white-text"><%= comment.comments %></pre></h2>
+    <% }) %>
   </div>
 
   <div class="px-0 rubric-grid">

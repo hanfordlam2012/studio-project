@@ -34,6 +34,8 @@ router.post('/submitQuiz', missionController.checkQuiz)
 // admin routes
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)
 router.post('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, weekController.createWeek)
+// router.get('/edit-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewEditWeekPage)
+// router.post('/edit-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.editWeek)
 
 // sitemap
 router.get('/sitemap.xml', function(req, res) {
