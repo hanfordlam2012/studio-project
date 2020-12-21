@@ -34,4 +34,10 @@ router.post('/submitQuiz', missionController.checkQuiz)
 // admin routes
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)
 router.post('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, weekController.createWeek)
+
+// sitemap
+router.get('/sitemap.xml', function(req, res) {
+    res.sendFile('sitemap.xml', { root: '.' });
+    });
+
 module.exports = router
