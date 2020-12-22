@@ -185,7 +185,6 @@ User.getLeaderboard = function() {
 User.getLatestComments = function(userId) {
   return new Promise (async(resolve, reject) => {
     let latestComments = await weeksCollection.find({"studentId": ObjectID(userId)}).sort({createdDate: -1}).limit(1).project({comments: 1}).toArray()
-    console.log(latestComments)
     resolve(latestComments)
   })
 }
