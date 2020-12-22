@@ -1,0 +1,81 @@
+<%- include('includes/header') %>
+<div class="jumbotron p-3 my-4"><h1 class="display-4 text-center">Edit this Week</h1></div>
+<!-- Form Element-->
+<form action="/edit-week" method="POST" id="edit-week" autocomplete="off">
+  <!-- Name of Piece -->
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Name of Piece</span>
+    </div>
+    <input type="text" value="<%= pieceName %>" class="form-control" name="pieceName" autocomplete="off">
+  </div>
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Rhythm</span>
+    </div>
+    <input required type="text" value="<%= rhythm %>" class="form-control" name="rhythm" autocomplete="off">
+  </div>
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Coordination</span>
+    </div>
+    <input required type="text" value="<%= coordination %>" class="form-control" name="coordination" autocomplete="off">
+  </div>
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Tone</span>
+    </div>
+    <input required type="text" value="<%= tone %>" class="form-control" name="tone" autocomplete="off">
+  </div>
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Dynamics</span>
+    </div>
+    <input required type="text" value="<%= dynamics %>" class="form-control" name="dynamics" autocomplete="off">
+  </div>
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Stylistic</span>
+    </div>
+    <input required type="text" value="<%= stylistic %>" class="form-control" name="stylistic" autocomplete="off">
+  </div>
+    <!-- Tech A-->
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Name of Tech A</span>
+    </div>
+    <input required type="text" class="form-control" value="<%= techAName %>" name="techAName" autocomplete="off">
+  </div>
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Tech A Score</span>
+    </div>
+    <input required type="text" class="form-control" value="<%= techAScore %>" Score="techAScore" autocomplete="off">
+  </div>
+  <!-- Tech B-->
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Name of Tech B</span>
+    </div>
+    <input required type="text" class="form-control" value="<%= techBName %>" name="techBName" autocomplete="off">
+  </div>
+  <div class="input-group input-group-lg">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Tech B Score</span>
+    </div>
+    <input required type="text" class="form-control" value="<%= techBScore %>" Score="techBScore" autocomplete="off">
+  </div>
+  <!-- General Comments -->
+  <p><pre class="white-text"><%= comments %></pre></p>
+  <h2 class="text-center display-4 mb-4">Comments</h2>
+  <div class="form-group">
+    <textarea required autocomplete="off" name="comments" class="form-control" value="" id="comments" rows="50"></textarea>
+  </div>
+
+  <input type="hidden" name="week_id" value="<%= week_id %>">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <!-- Submit Button-->
+  <button class="btn my-4 btn-success btn-block" type="submit">Edit Week</button>
+</form>
+<%- include('includes/footer') %>

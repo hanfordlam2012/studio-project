@@ -50,6 +50,14 @@ nav {
     font-family: 'Recursive', sans-serif;
 }
 
+.accented1 {
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-color: white;
+    text-decoration-thickness: 0.01em;
+    text-underline-position: under;
+}
+
 .alert {
     padding-left: 15%;
     padding-right: 15%;
@@ -279,6 +287,10 @@ main {
 
 .bear {
     background-color: #ffd7d7;
+}
+
+.bear-simplified {
+    background-color: #cacaca;
 }
 
 /* ASSESSMENT GRID */

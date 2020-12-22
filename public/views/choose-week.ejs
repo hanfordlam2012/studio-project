@@ -1,0 +1,18 @@
+<%- include('includes/header') %>
+
+<% if (msg != undefined) { %>
+  <div class="alert alert-light mt-2"><%= msg %></div>
+<% } %>
+
+<div class="jumbotron p-3 my-4"><h1 class="display-4 text-center">Choose a Week</h1></div>
+<!-- Form Element-->
+<form action="/choose-week" method="POST" id="choose-week" autocomplete="off">
+  <!-- Input Week _id -->
+  <input type="text" value="" name="week_id" placeholder="week_id">
+
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <!-- Submit Button-->
+  <button class="btn my-4 btn-success btn-block" type="submit">Choose Week</button>
+</form>
+<%- include('includes/footer') %>

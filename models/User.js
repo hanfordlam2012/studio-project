@@ -189,6 +189,38 @@ User.getLatestComments = function(userId) {
   })
 }
 
+User.getOneWeek = function(week_id) {
+  return new Promise(async(resolve, reject) => {
+    let oneWeek = await weeksCollection.find({"_id": ObjectID(week_id)}).toArray()
+    resolve(oneWeek)
+  })
+}
+
+User.findWeekAndUpdate = function(editData) {
+  return new Promise(async(resolve, reject) => {
+    try {
+      await weeksCollection.updateOne({ _id: ObjectID(editData.week_id)}, {
+        $set: {
+          pieceName: editData.pieceName,
+          rhythm: editData.rhythm,
+          coordination: editData.coordination,
+          tone: editData.tone,
+          dynamics: editData.dynamics,
+          stylistic: editData.stylistic,
+          techAName: editData.techAName,
+          techAScore: editData.techAScore,
+          techBName: editData.techBName,
+          techBScore: editData.techBScore,
+          comments: editData.comments,
+        }
+      })
+    resolve('Updated week successfully.')
+    } catch (err) {
+      reject('Could not update.')
+    }
+  })
+}
+
 User.getStudentWeeks = async function(userId) {
     return new Promise(async(resolve, reject) => {
         // create studentWeeks object

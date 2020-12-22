@@ -81,6 +81,35 @@ exports.viewCreateWeekPage = function(req, res) {
     })
 }
 
+exports.viewChooseWeekPage = function(req, res) {
+    res.render('choose-week', {msg: false})
+}
+
+exports.viewEditWeekPage = function(req, res) {
+    User.getOneWeek(req.body.week_id).then(function(weekData) {
+        res.render('edit-week', {
+            week_id: weekData[0]._id,
+            pieceName: weekData[0].pieceName,
+            rhythm: weekData[0].rhythm,
+            coordination: weekData[0].coordination,
+            tone: weekData[0].tone,
+            dynamics: weekData[0].dynamics,
+            stylistic: weekData[0].stylistic,
+            techAName: weekData[0].techAName,
+            techAScore: weekData[0].techAScore,
+            techBName: weekData[0].techBName,
+            techBScore: weekData[0].techBScore,
+            comments: weekData[0].comments
+        })
+    })
+}
+
+exports.editWeek = function(req, res) {
+    User.findWeekAndUpdate(req.body).then(function(result) {
+        res.render('choose-week', {msg: result})
+    })
+}
+
 exports.logout = function(req, res) {
     req.session.destroy(function() {
         res.redirect('/reports')
