@@ -1,6 +1,6 @@
 html,
 body,
-.container {
+.container-fluid {
     background-color: #212121;
     min-height: 100vh;
     min-width: 65vw;
@@ -139,6 +139,10 @@ nav {
     border: 1px solid white;
 }
 
+.card {
+    margin: 1px;
+}
+
 #priceRow {
     min-width: 90%;
 }
@@ -182,10 +186,6 @@ h2 {
     /* Opera 7 */
     word-wrap: break-word;
     /* Internet Explorer 5.5+ */
-}
-
-main {
-    flex: 1;
 }
 
 .footer {
