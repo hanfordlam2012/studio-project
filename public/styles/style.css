@@ -50,12 +50,11 @@ nav {
     font-family: 'Recursive', sans-serif;
 }
 
-.accented1 {
-    text-decoration-line: underline;
-    text-decoration-style: solid;
-    text-decoration-color: white;
-    text-decoration-thickness: 0.01em;
-    text-underline-position: under;
+.tight-header {
+    display: table;
+    margin: 0 auto;
+    border: 1px solid white;
+    border-radius: 3px;
 }
 
 .alert {
