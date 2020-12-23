@@ -62,7 +62,8 @@ User.prototype.cleanUp = function() {
         missionStatus: false,
         leaderboardScore: 0,
         skillsStatuses: [false, false, false, false, false],
-        leaderboardColor: 'leaderboard-text'
+        leaderboardColor: 'leaderboard-text',
+        badges: []
     }
 }
 

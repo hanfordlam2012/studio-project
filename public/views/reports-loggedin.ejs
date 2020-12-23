@@ -63,8 +63,8 @@
       <% leaderboard.forEach((leader) => { %>
         <tr>
           <th scope="row"><%= i %></th>
-          <td id="leader<%= i %>" class="<%= leader.leaderboardColor %> langar">
-            <%= leader.username %>
+          <td id="leader<%= i %>" class="langar">
+            <p class="<%= leader.leaderboardColor %> d-inline"><%= leader.username %></p>
             <!--ADD BADGES HERE-->
             <% if (leader.badges && leader.badges.includes("pioneer")) { %>
               <img class="leaderboard-badge" src="../images/pioneer.png">
