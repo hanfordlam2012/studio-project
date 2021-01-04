@@ -606,6 +606,11 @@ function showExtraComponentInfo() {
   }
 })
 
+// set iFrame height for game missions
+function resizeIframe(iframe) {
+  iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
+}
+
 function generateRainbowText(element) {
   let text = element.innerText;
   element.innerHTML = "";

@@ -262,7 +262,7 @@ User.getStudentWeeks = async function(userId) {
 User.getMissionCode = async function(userId) {
     return new Promise(async(resolve, reject) => {
         let missionCode = ""
-        let missionDoc = await missionsCollection.findOne({name: ""})
+        let missionDoc = await missionsCollection.findOne({name: "none"})
         if (!missionDoc) {
             resolve (false)
             // 5 QUESTION QUIZZES
@@ -453,6 +453,10 @@ User.getMissionCode = async function(userId) {
                 }
                 </div>`
 
+            resolve (missionCode)
+        } else if (missionDoc.type == 'game') {
+            missionCode = '<div class="alert alert-success text-center">There is a Game mission - put your thinking cap on and go for it!<br>What is the Cristofori Connection...?</div>' +
+            '<iframe class="rounded" src="..\\..\\files\\TheCristoforiConnection\\index.html" frameborder="0" height="650px" width="100%"></iframe>'
             resolve (missionCode)
         }
     })
