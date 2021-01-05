@@ -437,7 +437,6 @@ function showExtraComponentInfo() {
       WinPrint.document.close();
       WinPrint.focus();
       WinPrint.print();
-      setTimeout(function(){WinPrint.close(), 1000})
     }
   </script>
   
@@ -605,11 +604,6 @@ function showExtraComponentInfo() {
     generateRainbowText(elements[i]);
   }
 })
-
-// set iFrame height for game missions
-function resizeIframe(iframe) {
-  iframe.height = iframe.contentWindow.document.body.scrollHeight + "px";
-}
 
 function generateRainbowText(element) {
   let text = element.innerText;
