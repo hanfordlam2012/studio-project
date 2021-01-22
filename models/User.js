@@ -459,7 +459,7 @@ User.getMissionCode = async function(userId) {
             '<iframe class="rounded" src="..\\..\\files\\TheCristoforiConnection\\index.html" frameborder="0" height="650px" width="100%"></iframe>'
             resolve (missionCode)
         } else if (missionDoc.type == 'legatoSmooth') {
-          missionCode = `<div class="alert alert-success text-center pt-4"><p>There is a Game mission - are you up to the challenge?</p><p>1 block = 1 point<br>Your personal highscores are saved to the leaderboard!</p><p>Just refresh the page to exit from the game when you've had enough.<br>Music: Jupiter by Gustav Holst.<br>Enjoy!</p></div>'
+          missionCode = `<div class="alert alert-success text-center pt-4"><p>There is a Game mission - are you up to the challenge?</p><p>1 block = 1 point<br>Your personal highscores are saved to the leaderboard!</p><p>Just refresh the page to exit from the game when you've had enough.<br>Music: Jupiter by Gustav Holst.<br>Enjoy!</p><p>** Tip: Keep your mouse cursor in the game window for consistent control ***</p></div>'
                         '<iframe class="rounded" src="..\\..\\files\\LegatoSmooth\\index.html" frameborder="0" height="800px" width="100%"></iframe>`
           resolve (missionCode)
       }
