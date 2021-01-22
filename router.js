@@ -31,6 +31,10 @@ router.post('/doesEmailExist', userController.doesEmailExist)
 router.post('/isCorrect', userController.isCorrect)
 router.post('/submitQuiz', missionController.checkQuiz)
 
+// game routes
+//router.post('/addPracticePoints', function(req, res) {console.log(req.body)})
+router.post('/saveScore', userController.mustBeLoggedIn, function(req, res) {console.log(req.session.user)})
+
 // admin routes
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)
 router.post('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, weekController.createWeek)

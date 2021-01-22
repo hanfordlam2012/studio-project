@@ -21,6 +21,8 @@
 </div>
 <hr class="mt-5">
 <!-- MINI MISSIONS -->
+<!-- keep csrf token accessible -->
+<p id="csrf-landmark" data-value="<%= csrfToken %>"></p>
 <div id="mini-missions" class="section">
   <div class="jumbotron-transparent py-0 m-3"><h1 class="display-2 recursive rainbowText text-center">Mini-Missions</h1></div>
 </div>
@@ -587,6 +589,7 @@ function showExtraComponentInfo() {
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <button type="submit" class="btn btn-secondary btn-lg btn-block">Log Out</button>
 </form>
+
 
 
 <script>

@@ -454,12 +454,12 @@ User.getMissionCode = async function(userId) {
                 </div>`
 
             resolve (missionCode)
-        } else if (missionDoc.type == 'game1') {
+        } else if (missionDoc.type == 'theCristoforiConnection') {
             missionCode = '<div class="alert alert-success text-center">There is a Game mission - put your thinking cap on and go for it!<br>What is the Cristofori Connection...?</div>' +
             '<iframe class="rounded" src="..\\..\\files\\TheCristoforiConnection\\index.html" frameborder="0" height="650px" width="100%"></iframe>'
             resolve (missionCode)
-        } else if (missionDoc.type == 'game') {
-          missionCode = `<div class="alert alert-success text-center">There is a Game mission - are you up to the challenge?<p>You get one chance to show Hanford how many blocks you can break DURING your lesson.</p><p>1 block = 1 point</p><p>Feel free to practice at home as much as you like though!<br>Just refresh the page to exit from the game when you've had enough.<br>Music: Jupiter by Gustav Holst.<br>Enjoy!</div>'
+        } else if (missionDoc.type == 'legatoSmooth') {
+          missionCode = `<div class="alert alert-success text-center pt-4"><p>There is a Game mission - are you up to the challenge?</p><p>1 block = 1 point<br>Your personal highscores are saved to the leaderboard!</p><p>Just refresh the page to exit from the game when you've had enough.<br>Music: Jupiter by Gustav Holst.<br>Enjoy!</p></div>'
                         '<iframe class="rounded" src="..\\..\\files\\LegatoSmooth\\index.html" frameborder="0" height="800px" width="100%"></iframe>`
           resolve (missionCode)
       }

@@ -14,3 +14,7 @@ exports.checkQuiz = function(req, res) {
         })
     })
 }
+
+exports.addPoints = function(req, res) {
+        alert("received")
+}
