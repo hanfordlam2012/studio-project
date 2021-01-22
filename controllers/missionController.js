@@ -15,6 +15,12 @@ exports.checkQuiz = function(req, res) {
     })
 }
 
-exports.addPoints = function(req, res) {
-        alert("received")
+exports.compareScoreAndSave = async function(req, res) {
+    let userDoc = await usersCollection.findOne({"_id": ObjectID(req.session.user.userId)})
+    let currentScore =  parseInt(req.body.score, 10)
+    if (userDoc.leaderboardScore >= currentScore) {
+        return
+    } else {
+        usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"leaderboardScore": currentScore} })
+    }
 }

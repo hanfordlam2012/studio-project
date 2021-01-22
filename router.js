@@ -33,7 +33,7 @@ router.post('/submitQuiz', missionController.checkQuiz)
 
 // game routes
 //router.post('/addPracticePoints', function(req, res) {console.log(req.body)})
-router.post('/saveScore', userController.mustBeLoggedIn, function(req, res) {console.log(req.session.user)})
+router.post('/saveScore', userController.mustBeLoggedIn, missionController.compareScoreAndSave)
 
 // admin routes
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)
