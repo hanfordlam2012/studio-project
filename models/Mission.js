@@ -24,6 +24,8 @@ Mission.getPracticeStatus = function(userId) {
         let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
         let lastSubmittedDate = userDoc.lastSubmittedDate
         let todaysDate = new Date()
+        // set time-zone
+        todaysDate.setHours(todaysDate.getHours() + 11)
         if (lastSubmittedDate.getDate() != todaysDate.getDate()) {
             resolve(false)
         } else {
