@@ -1,4 +1,5 @@
 const session = require('express-session')
+const Mission = require('../models/Mission')
 const User = require('../models/User')
 
 exports.isCorrect = async function (req, res) {
@@ -133,7 +134,8 @@ exports.register = function (req, res) {
     })
 }
 
-exports.reports = function (req, res) {
+exports.reports = async function (req, res) {
+
     if (req.session.user) {
 
         User.getStudentWeeks(req.session.user.userId).then(function (data) {
@@ -149,11 +151,36 @@ exports.reports = function (req, res) {
 
                 User.getLeaderboard().then((leaderboard) => {
 
-                    User.getMissionStatus(req.session.user.userId).then((missionStatus) => {
+                    Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
 
-                        if (!missionStatus) {
+                        User.getMissionStatus(req.session.user.userId).then((missionStatus) => {
 
-                            User.getMissionCode(req.session.user.userId).then(function (missionCode) {
+                            if (!missionStatus) {
+
+                                User.getMissionCode(req.session.user.userId).then(function (missionCode) {
+                                    res.render('reports-loggedin', {
+                                        fName: req.session.user.fName,
+                                        userId: req.session.user.userId,
+                                        parentName: req.session.user.parentName,
+                                        admin: req.session.user.admin,
+                                        dateLabels: dateLabels,
+                                        rhythmArray: rhythmArray,
+                                        coordinationArray: coordinationArray,
+                                        toneArray: toneArray,
+                                        dynamicsArray: dynamicsArray,
+                                        stylisticArray: stylisticArray,
+                                        studentWeeks: studentWeeks,
+                                        latestComments: latestComments,
+                                        missionStatus: missionStatus, // true for completed mission (1 mission at a time)
+                                        missionCode: missionCode, // string of dynamic HTML
+                                        missionResult: req.flash('missionResult'),
+                                        leaderboard: leaderboard,
+                                        adErrors: req.flash('adErrors'),
+                                        practiceStatus: practiceStatus // true if already practised
+                                    })
+                                })
+
+                            } else {
                                 res.render('reports-loggedin', {
                                     fName: req.session.user.fName,
                                     userId: req.session.user.userId,
@@ -167,36 +194,18 @@ exports.reports = function (req, res) {
                                     stylisticArray: stylisticArray,
                                     studentWeeks: studentWeeks,
                                     latestComments: latestComments,
-                                    missionStatus: missionStatus, // true for completed mission (1 mission at a time)
-                                    missionCode: missionCode, // string of dynamic HTML
+                                    missionStatus: missionStatus,
+                                    missionCode: false,
                                     missionResult: req.flash('missionResult'),
                                     leaderboard: leaderboard,
-                                    adErrors: req.flash('adErrors')
+                                    adErrors: req.flash('adErrors'),
+                                    practiceStatus: practiceStatus
                                 })
-                            })
-
-                        } else {
-                            res.render('reports-loggedin', {
-                                fName: req.session.user.fName,
-                                userId: req.session.user.userId,
-                                parentName: req.session.user.parentName,
-                                admin: req.session.user.admin,
-                                dateLabels: dateLabels,
-                                rhythmArray: rhythmArray,
-                                coordinationArray: coordinationArray,
-                                toneArray: toneArray,
-                                dynamicsArray: dynamicsArray,
-                                stylisticArray: stylisticArray,
-                                studentWeeks: studentWeeks,
-                                latestComments: latestComments,
-                                missionStatus: missionStatus,
-                                missionCode: false,
-                                missionResult: req.flash('missionResult'),
-                                leaderboard: leaderboard,
-                                adErrors: req.flash('adErrors')
-                            })
-                        }
+                            }
+                        })
                     })
+
+                    
 
                 })
             })

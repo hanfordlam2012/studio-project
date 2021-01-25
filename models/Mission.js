@@ -1,8 +1,43 @@
 const missionsCollection = require('../db').db('studio-project').collection('missions')
+const usersCollection = require('../db').db('studio-project').collection('users')
+const ObjectID = require('mongodb').ObjectID
 
 let Mission = function(data) {
     this.data = data
     this.errors = []
+}
+
+// Template to set non-existing field
+Mission.giveEveryoneAGameScore = async function() {
+      await usersCollection.updateMany(
+        {admin: false},
+        { $set:
+           {
+             savedGameScore: 0
+           }
+        }
+     )
+  }
+
+Mission.getPracticeStatus = function(userId) {
+    Mission.giveEveryoneAGameScore()
+    return new Promise(async(resolve, reject) => {
+        let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+        let lastSubmittedDate = userDoc.lastSubmittedDate
+        let todaysDate = new Date()
+        if (lastSubmittedDate.getDate() != todaysDate.getDate()) {
+            resolve(false)
+        } else {
+            resolve(true)
+        }
+    })
+}
+
+Mission.updateLastSubmittedDateAndAddPoints = async function(points, userId) {
+    let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+    let leaderboardScore = userDoc.leaderboardScore
+    let practicePoints = parseInt(points, 10)
+    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"lastSubmittedDate": new Date(), "leaderboardScore": leaderboardScore + practicePoints} })
 }
 
 Mission.checkQuiz = async function(quizSubmit) {

@@ -53,7 +53,7 @@ nav {
 .tight-header {
     display: table;
     margin: 0 auto;
-    border: 1px solid white;
+    border: 1px solid #e8226a;
     border-radius: 3px;
 }
 
@@ -236,6 +236,10 @@ h2 {
     color: white;
 }
 
+.yellow-text {
+    color: #f0ad4e;
+}
+
 .rhythm {
     background-color: rgba(255, 182, 198, 0.9);
 }
@@ -270,6 +274,12 @@ h2 {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.practiceSuccessIcon {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 25px;
 }
 
 .octopus {

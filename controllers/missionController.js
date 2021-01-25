@@ -17,10 +17,21 @@ exports.checkQuiz = function(req, res) {
 
 exports.compareScoreAndSave = async function(req, res) {
     let userDoc = await usersCollection.findOne({"_id": ObjectID(req.session.user.userId)})
-    let currentScore =  parseInt(req.body.score, 10)
-    if (userDoc.leaderboardScore >= currentScore) {
+    let currentLeaderboardScore = userDoc.leaderboardScore
+    let currentGameScore =  parseInt(req.body.score, 10)
+    if (userDoc.savedGameScore >= currentGameScore) {
         return
     } else {
-        usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"leaderboardScore": currentScore} })
+        usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"leaderboardScore": currentLeaderboardScore + currentGameScore, "savedGameScore": currentGameScore} })
     }
+}
+
+exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
+    let randomInt = getRndInt(5, 10)
+    await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
+    res.redirect('/reports#weeklySnapshot')
+}
+
+function getRndInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
