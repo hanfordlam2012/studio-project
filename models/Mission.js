@@ -8,7 +8,7 @@ let Mission = function(data) {
 }
 
 // Template to set non-existing field
-Mission.giveEveryoneAGameScore = async function() {
+Mission.giveEveryoneASomething = async function() {
       await usersCollection.updateMany(
         {admin: false},
         { $set:
@@ -20,7 +20,6 @@ Mission.giveEveryoneAGameScore = async function() {
   }
 
 Mission.getPracticeStatus = function(userId) {
-    Mission.giveEveryoneAGameScore()
     return new Promise(async(resolve, reject) => {
         let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
         let lastSubmittedDate = userDoc.lastSubmittedDate

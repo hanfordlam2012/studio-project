@@ -17,12 +17,12 @@ exports.checkQuiz = function(req, res) {
 
 exports.compareScoreAndSave = async function(req, res) {
     let userDoc = await usersCollection.findOne({"_id": ObjectID(req.session.user.userId)})
-    let currentLeaderboardScore = userDoc.leaderboardScore
-    let currentGameScore =  parseInt(req.body.score, 10)
+    let currentGameScore = parseInt(req.body.score, 10)
     if (userDoc.savedGameScore >= currentGameScore) {
         return
     } else {
-        usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"leaderboardScore": currentLeaderboardScore + currentGameScore, "savedGameScore": currentGameScore} })
+        let scoreDifference = currentGameScore - userDoc.savedGameScore
+        await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"leaderboardScore": userDoc.leaderboardScore + scoreDifference, "savedGameScore": currentGameScore} })
     }
 }
 
