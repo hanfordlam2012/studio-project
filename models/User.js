@@ -461,8 +461,21 @@ User.getMissionCode = async function(userId) {
             '<iframe class="rounded" src="..\\..\\files\\TheCristoforiConnection\\index.html" frameborder="0" height="650px" width="100%"></iframe>'
             resolve (missionCode)
         } else if (missionDoc.type == 'legatoSmooth') {
-          missionCode = `<div class="alert alert-success text-center pt-4"><p>There is a Game mission - are you up to the challenge?</p><p>1 block = 1 point<br>Your personal highscores are saved to the leaderboard!</p><p>Just refresh the page to exit from the game when you've had enough.<br>Music: Jupiter by Gustav Holst.<br>Enjoy!</p><p>** Tip: Keep your mouse cursor in the game window for consistent control ***</p></div>'
-                        '<iframe class="rounded" src="..\\..\\files\\LegatoSmooth\\index.html" frameborder="0" height="800px" width="100%"></iframe>`
+          missionCode = `<div class="alert alert-success text-center pt-4 mb-3"><p>There is a Game mission - are you up to the challenge?</p><p>1 block = 1 point<br>Your personal highscores are saved to the leaderboard!</p><p>Just refresh the page to exit from the game when you've had enough.<br>Music: Jupiter by Gustav Holst.<br>Enjoy!</p><p>** Tip: Keep your mouse cursor in the game window for consistent control ***</p></div>
+                        <div class="alert alert-warning text-center pt-4 mt-2">
+                        <p>Hi guys! I am sweetcutiepie :)</p>
+                        <p>If you wanna get a high score in the game, you must:</p>
+                        <p>1) Use a good device<br>
+                        2) Get good internet connection <br>
+                        3) Dont get distracted by other people<br>
+                        4) Try to get the ball bouncing around the top (above "legato")<br>and between the words "legato" and "smooth"<br>
+                        5) Make sure your wrist is flexible and isnt stiff<br>
+                        6) Practice a LOT, you can do it!<br>
+                        7) Relax and dont panic</p>
+                        <p>Hope that helps.</p>
+                        <p>Enjoy playing the game! - sweetcutiepie :) ;)</p>
+                        </div>
+                        <iframe class="rounded" src="..\\..\\files\\LegatoSmooth\\index.html" frameborder="0" height="800px" width="100%"></iframe>`
           resolve (missionCode)
       }
     })
