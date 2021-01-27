@@ -1,5 +1,6 @@
 const session = require('express-session')
 const Mission = require('../models/Mission')
+const missionController = require('./missionController')
 const User = require('../models/User')
 
 exports.isCorrect = async function (req, res) {
@@ -153,16 +154,21 @@ exports.reports = async function (req, res) {
 
                     Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
 
-                        User.getMissionStatus(req.session.user.userId).then((missionStatus) => {
+                        User.getMissionStatus(req.session.user.userId).then(async(missionStatus) => {
+
+                            let randomBPM = await missionController.getRandomBPM()
+                            let BPMStatus = await missionController.getBPMStatus(req.session.user.userId)
 
                             if (!missionStatus) {
 
                                 User.getMissionCode(req.session.user.userId).then(function (missionCode) {
                                     res.render('reports-loggedin', {
+                                        // general
                                         fName: req.session.user.fName,
                                         userId: req.session.user.userId,
                                         parentName: req.session.user.parentName,
                                         admin: req.session.user.admin,
+                                        // record
                                         dateLabels: dateLabels,
                                         rhythmArray: rhythmArray,
                                         coordinationArray: coordinationArray,
@@ -171,12 +177,15 @@ exports.reports = async function (req, res) {
                                         stylisticArray: stylisticArray,
                                         studentWeeks: studentWeeks,
                                         latestComments: latestComments,
+                                        // missions
                                         missionStatus: missionStatus, // true for completed mission (1 mission at a time)
                                         missionCode: missionCode, // string of dynamic HTML
                                         missionResult: req.flash('missionResult'),
                                         leaderboard: leaderboard,
                                         adErrors: req.flash('adErrors'),
-                                        practiceStatus: practiceStatus // true if already practised
+                                        practiceStatus: practiceStatus, // true if already practised
+                                        randomBPM: randomBPM, // taken from admin acc
+                                        BPMStatus: BPMStatus // 'success' 'notQuite' 'open'
                                     })
                                 })
 
@@ -199,7 +208,9 @@ exports.reports = async function (req, res) {
                                     missionResult: req.flash('missionResult'),
                                     leaderboard: leaderboard,
                                     adErrors: req.flash('adErrors'),
-                                    practiceStatus: practiceStatus
+                                    practiceStatus: practiceStatus,
+                                    randomBPM: randomBPM,
+                                    BPMStatus: BPMStatus
                                 })
                             }
                         })

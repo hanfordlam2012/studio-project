@@ -1,4 +1,9 @@
 <%- include('includes/header') %>
+<form class="mt-3" action="/logout" method="POST">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <button type="submit" class="btn btn-secondary btn-lg btn-block">Log Out</button>
+</form>
+
 <!-- SUCCESS MESSAGE -->
 <% success.forEach(function(message) { %>
   <div class="alert alert-success mt-2 text-center small py-1"><%= message %></div>

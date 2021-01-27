@@ -8,12 +8,12 @@
   <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
 <% }) %>
 <!-- GREETINGS -->
-  <div class="wow pulse jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat orange-text text-center">Welcome back, <%= fName %> and <%= parentName %></h1></div>
+  <div class="wow pulse jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat purple-text text-center">Welcome back, <%= fName %> and <%= parentName %></h1></div>
 <div class="text-center">
-  <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Mini-Missions</a>
-  <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Leaderboard</a>
-  <a href="#full-record" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Full Record</a>
-  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-light btn-lg">Practice Hub</a>
+  <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-danger btn-lg">Mini-Missions</a>
+  <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-success btn-lg">Leaderboard</a>
+  <a href="#full-record" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Full Record</a>
+  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-info btn-lg">Practice Hub</a>
   <form class="mt-3" action="/logout" method="POST">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <button type="submit" class="mx-1 btn btn-outline-secondary btn-lg">Log Out</button>
@@ -611,8 +611,60 @@ function showExtraComponentInfo() {
   <div class="text-center py-4">
     <button class="mx-3 btn btn-outline-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Click for printer-friendly Practice Guide</button>
   </div>
+
+  <!-- Guess the Tempo -->
+  <% if (BPMStatus == 'success') { %>
+    <div id="bpm-success" class="alert alert-success text-center mb-4 mt-2 pt-4">
+      <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
+      <p>Spot on, <%= randomBPM %>! Your sense of timing is amazing.</p>
+      <p>The Piano Wizard has granted you 20 points for your achievement.</p>
+      <p>Guess again tomorrow!</p>
+    </div>
+    <div class="text-center mb-2">
+      <img class="mx-3 mb-0" src="../images/heart.png">
+      <img class="mx-3 mb-0" src="../images/towel.png">
+      <img class="mx-3 mb-0" src="../images/radish.png">
+      <img class="mx-3 mb-0" src="../images/acorn.png">
+      <img class="mx-3 mb-0" src="../images/microwave.png">
+      <img class="mx-3 mb-0" src="../images/acorn.png">
+      <img class="mx-3 mb-0" src="../images/radish.png">
+      <img class="mx-3 mb-0" src="../images/towel.png">
+      <img class="mx-3 mb-0" src="../images/heart.png">
+    </div>
+  <% } else if (BPMStatus == 'notQuite') { %>
+    <div id="bpm-almost" class="alert alert-warning text-center mb-4 mt-2 pt-4">
+      <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
+      <p>Not quite! The tempo is <%= randomBPM %> beats per minute.</p>
+      <p>The Piano Wizard has granted you some encouragement points.</p>
+      <p>Guess again tomorrow!</p>
+    </div>
+    <div class="text-center mb-2">
+      <img class="mx-3 mb-0" src="../images/heart.png">
+      <img class="mx-3 mb-0" src="../images/towel.png">
+      <img class="mx-3 mb-0" src="../images/radish.png">
+      <img class="mx-3 mb-0" src="../images/acorn.png">
+      <img class="mx-3 mb-0" src="../images/microwave.png">
+      <img class="mx-3 mb-0" src="../images/acorn.png">
+      <img class="mx-3 mb-0" src="../images/radish.png">
+      <img class="mx-3 mb-0" src="../images/towel.png">
+      <img class="mx-3 mb-0" src="../images/heart.png">
+    </div>
+  <% } else { %>
+    <form action="/guessBPM" method="POST" class="form-inline text-center justify-content-center">
+      <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
+      <div class="white-text form-group ml-4">
+        <label for="bpmGuess">I'm thinking... </label>
+        <input type="text" name="bpmGuess" id="bpmGuess" class="form-control input-lg mx-sm-3">
+        <small id="passwordHelpInline" class="text-muted">
+          beats per minute. 
+        </small>
+      </div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit" class="btn btn-success mb-2 ml-3">Guess!</button>
+    </form>
+  <% } %>
   
-<form class="mt-3" action="/logout" method="POST">
+<form id="logoutButton" class="mt-3" action="/logout" method="POST">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <button type="submit" class="btn btn-secondary btn-lg btn-block">Log Out</button>
 </form>
@@ -620,6 +672,17 @@ function showExtraComponentInfo() {
 
 
 <script>
+  // Guess the tempo
+  var img = document.getElementById('blinking_image');
+
+  var interval = window.setInterval(function(){
+    if (img.style.visibility == 'hidden') {
+      img.style.visibility = 'visible';
+    } else{
+      img.style.visibility = 'hidden';
+    }
+  }, 30000/<%- randomBPM %>);
+
 // ADD CSRF TOKEN TO MISSION SUBMITS
   if (document.getElementById('missionSubmitButton')) {
     var d1 = document.getElementById('missionSubmitButton')

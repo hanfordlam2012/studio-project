@@ -7,17 +7,20 @@ let Mission = function(data) {
     this.errors = []
 }
 
-// Template to set non-existing field
-Mission.giveEveryoneASomething = async function() {
-      await usersCollection.updateMany(
-        {admin: false},
-        { $set:
-           {
-             savedGameScore: 0
-           }
-        }
-     )
-  }
+// Template to set fields (both existing or not)
+giveEveryoneASomething = async function() {
+    let d = new Date()
+    d.setHours(d.getHours() + 11)
+    await usersCollection.updateMany(
+      {admin: false},
+      { $set:
+         {
+           BPMStatus: ""
+         }
+      }
+   )
+}
+//giveEveryoneASomething()
 
 Mission.getPracticeStatus = function(userId) {
     return new Promise(async(resolve, reject) => {
@@ -26,10 +29,10 @@ Mission.getPracticeStatus = function(userId) {
         let todaysDate = new Date()
         // set time-zone
         todaysDate.setHours(todaysDate.getHours() + 11)
-        if (lastSubmittedDate.getDate() != todaysDate.getDate()) {
-            resolve(false)
-        } else {
+        if (lastSubmittedDate.getDate() == todaysDate.getDate()) {
             resolve(true)
+        } else {
+            resolve(false)
         }
     })
 }
@@ -38,7 +41,10 @@ Mission.updateLastSubmittedDateAndAddPoints = async function(points, userId) {
     let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
     let leaderboardScore = userDoc.leaderboardScore
     let practicePoints = parseInt(points, 10)
-    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"lastSubmittedDate": new Date(), "leaderboardScore": leaderboardScore + practicePoints} })
+    let todaysDate = new Date()
+    // set time-zone
+    todaysDate.setHours(todaysDate.getHours() + 11)
+    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"lastSubmittedDate": todaysDate, "leaderboardScore": leaderboardScore + practicePoints} })
 }
 
 Mission.checkQuiz = async function(quizSubmit) {

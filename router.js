@@ -36,6 +36,7 @@ router.post('/saveScore', userController.mustBeLoggedIn, missionController.compa
 
 // practice routes
 router.post('/updateLastSubmittedDateAndAddPoints', userController.mustBeLoggedIn, missionController.updateLastSubmittedDateAndAddPoints)
+router.post('/guessBPM', userController.mustBeLoggedIn, missionController.checkBPM)
 
 // admin routes
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)
