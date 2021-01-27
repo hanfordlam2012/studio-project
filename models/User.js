@@ -463,7 +463,7 @@ User.getMissionCode = async function(userId) {
         } else if (missionDoc.type == 'legatoSmooth') {
           missionCode = `<div class="alert alert-success text-center pt-4 mb-3"><p>There is a Game mission - are you up to the challenge?</p><p>1 block = 1 point<br>Your personal highscores are saved to the leaderboard!</p><p>Just refresh the page to exit from the game when you've had enough.<br>Music: Jupiter by Gustav Holst.<br>Enjoy!</p><p>** Tip: Keep your mouse cursor in the game window for consistent control ***</p></div>
                         <div class="alert alert-warning text-center pt-4 mt-2">
-                        <p>Hi guys! I am sweetcutiepie :)</p>
+                        <p>Hi guys! I am sweetcutiepie (fellow student) :)</p>
                         <p>If you wanna get a high score in the game, you must:</p>
                         <p>1) Use a good device<br>
                         2) Get good internet connection <br>
