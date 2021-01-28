@@ -7,6 +7,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 // lets us display flash messages
 const flash = require('connect-flash')
+const markdown = require('marked')
 // CSURF protects against CRSF attacks
 const csrf = require('csurf')
 // express() returns top-level function
@@ -29,6 +30,10 @@ app.use(flash())
 app.use(function(req, res, next) {
     // working with object available within ejs templates
     res.locals.user = req.session.user
+    // make markdown function available in ejs templates
+    res.locals.filterUserHTML = function(content) {
+        return markdown(content)
+    }
     next()
 })
 

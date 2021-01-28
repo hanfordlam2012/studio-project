@@ -443,9 +443,9 @@ function showExtraComponentInfo() {
   </script>
   
     <% latestComments.forEach((comment) => { %>
-      <div class=""><h2 class="pink-text text-center caveat pb-4 pt-0 mb-5 mt-0">What to aim for this week... quality first, then quantity!</h2></div>
+      <div ><h2 class="pink-text text-center caveat pb-4 pt-0 mb-5 mt-0">What to aim for this week... quality first, then quantity!</h2></div>
         
-        <h3 id="weeklySnapshot"><pre class="py-5 white-text"><%= comment.comments %></pre></h3>
+        <div id="weeklySnapshot" class="px-5 mx-5"><%- filterUserHTML(comment.comments) %></div>
         <div class="text-center mt-5 pt-5 pb-2">
           <button class="mx-3 btn btn-outline-warning btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print this week's notes</button>
         </div>

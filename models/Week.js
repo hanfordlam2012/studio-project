@@ -1,5 +1,6 @@
 const weeksCollection = require('../db').db('studio-project').collection('weeks')
 const ObjectID = require('mongodb').ObjectID
+const sanitizeHTML = require('sanitize-html')
 
 let Week = function(weekData, sessionData) {
     this.weekData = weekData
@@ -35,7 +36,7 @@ Week.prototype.cleanUp = function() {
         techAScore: this.weekData.techAScore,
         techBName: this.weekData.techBName.trim(),
         techBScore: this.weekData.techBScore,
-        comments: this.weekData.comments,
+        comments: sanitizeHTML(this.weekData.comments, {allowedTags: [], allowedAttributes: []}),
         createdDate: new Date()
     }
 }

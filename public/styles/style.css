@@ -412,3 +412,18 @@ hr {
     visibility: hidden;
     pointer-events: none;
 }
+
+#weeklySnapshot p, ul, li{
+    font-size: 1.5rem;
+    color: white;
+}
+
+#weeklySnapshot em {
+    font-size: 1.5rem;
+    color: rgb(42, 116, 255);
+}
+
+#weeklySnapshot strong {
+    font-size: 1.5rem;
+    color: rgb(71, 208, 105);
+}

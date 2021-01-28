@@ -5,7 +5,7 @@
   "dependencies": {
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.12.7",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
     "bcryptjs": "^2.4.3",
     "bson": "^4.2.0",
@@ -17,11 +17,13 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "kerberos": "^1.1.4",
+    "marked": "^1.2.8",
     "mongodb": "^3.6.3",
     "mongodb-core": "^3.2.7",
     "node-gyp": "^7.1.2",
     "nodemailer": "^6.4.16",
     "nodemon": "^2.0.6",
+    "sanitize-html": "^2.3.2",
     "validator": "^13.1.17",
     "webpack": "^5.9.0",
     "webpack-cli": "^4.2.0"
