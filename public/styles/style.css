@@ -1,9 +1,9 @@
 html,
 body,
 .container-fluid {
-    background-color: #212121;
+    background-color: #1c1c1c;
     min-height: 100vh;
-    min-width: 65vw;
+    min-width: 80vw;
     display: flex;
     flex-direction: column;
     padding: auto;
@@ -160,6 +160,14 @@ nav {
 .jumbotron-transparent {
     background-color: transparent;
     border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 10px rgb(67, 41, 82);
+}s
+
+.jumbotron-transparent-greeting {
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
 }
 
 .jumbotron p {
@@ -419,11 +427,9 @@ hr {
 }
 
 #weeklySnapshot em {
-    font-size: 1.5rem;
     color: rgb(42, 116, 255);
 }
 
 #weeklySnapshot strong {
-    font-size: 1.5rem;
     color: rgb(71, 208, 105);
 }

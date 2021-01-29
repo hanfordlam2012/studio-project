@@ -7,25 +7,127 @@
 <% adErrors.forEach(function(message) { %>
   <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
 <% }) %>
+
 <!-- GREETINGS -->
-  <div class="wow pulse jumbotron-transparent m-2 mt-4 p-3"><h1 class="display-1 caveat purple-text text-center">Welcome back, <%= fName %> and <%= parentName %></h1></div>
-<div class="text-center">
+  <div class="wow pulse jumbotron-transparent-greeting mx-0 my-4 mb-2 p-3"><h1 class="display-1 caveat white-text text-center">Welcome back, <%= fName %> and <%= parentName %>!</h1></div>
+<div class="text-center mb-5">
+  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-info btn-lg">Practice</a>
   <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-danger btn-lg">Mini-Missions</a>
   <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-success btn-lg">Leaderboard</a>
-  <a href="#full-record" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Full Record</a>
-  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-info btn-lg">Practice Hub</a>
-  <form class="mt-3" action="/logout" method="POST">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="mx-1 btn btn-outline-secondary btn-lg">Log Out</button>
-  </form>
+  <a href="#full-record" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Parents</a>
 </div>
-<hr class="mt-5">
+<!-- PRACTICE HUB -->
+<div id="practice-guide" class="my-4 section">
+  <div class="jumbotron-transparent py-4 mt-3 mb-0 mx-0"><h1 class="display-2 recursive rainbowText text-center">~ Practice ~</h1></div>
+</div>
+<script >
+  // PRINT FEATURE PLAIN TEXT
+  function printDiv(elementId) {
+    var prtContent = document.getElementById(elementId);
+    var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+    WinPrint.document.write(prtContent.innerHTML);
+    WinPrint.document.close();
+    WinPrint.focus();
+    WinPrint.print();
+  }
+</script>
+
+  <% latestComments.forEach((comment) => { %>
+    <div ><h2 class="orange-text text-center caveat pb-4 pt-0 mb-5 mt-0">What to aim for today... quality first, then quantity!</h2></div>
+      
+      <div id="weeklySnapshot" class="px-5 mx-5"><%- filterUserHTML(comment.comments) %></div>
+      <div id="print-button" class="text-center mt-5 pt-5 pb-2">
+        <button class="mx-3 btn btn-outline-secondary btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print this week's notes</button>
+      </div>
+    
+  <% }) %>
+
+  <% if (practiceStatus) { %>
+    
+    <div id="practice-success" class="alert alert-success text-center mb-4 mt-4 pt-4">
+      <p>Well done for practising today! Small steps every day add up to big improvements over time.</p>
+      <p>The Piano Wizard has granted you some points for your dedication.</p>
+      <p>Hope to see you again tomorrow!</p>
+    </div>
+    <div class="text-center mb-5">
+      <img class="mb-3 mx-3" src="../images/smile.png">
+      <img class="mb-3 mx-3" src="../images/star.png">
+      <img class="mb-3 mx-3" src="../images/smile.png">
+      <img class="mb-3 mx-3" src="../images/star.png">
+      <img class="mb-3 mx-3" src="../images/smile.png">
+      <img class="mb-3 mx-3" src="../images/star.png">
+      <img class="mb-3 mx-3" src="../images/smile.png">
+      <img class="mb-3 mx-3" src="../images/star.png">
+      <img class="mb-3 mx-3" src="../images/smile.png">
+      <img class="mb-3 mx-3" src="../images/star.png">
+      <img class="mb-3 mx-3" src="../images/smile.png">
+    </div>
+  <% } else { %>
+    <form class="mt-3 mb-5 text-center" action="/updateLastSubmittedDateAndAddPoints" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit" class="btn btn-success btn-lg">Tell the Piano Wizard that you've practised today!</button>
+    </form>
+  <% } %>
+    
+    
+  
 <!-- MINI MISSIONS -->
 <!-- keep csrf token accessible -->
 <p id="csrf-landmark" data-value="<%= csrfToken %>"></p>
 <div id="mini-missions" class="section">
-  <div class="jumbotron-transparent py-0 m-3"><h1 class="display-2 recursive rainbowText text-center">Mini-Missions</h1></div>
+  <div class="jumbotron-transparent py-4 my-4 mb-4 mx-0"><h1 class="display-2 recursive rainbowText text-center">~~ Mini-Missions ~~</h1></div>
 </div>
+<!-- Guess the Tempo -->
+<% if (BPMStatus == 'success') { %>
+  <div id="bpm-success" class="alert alert-success text-center mb-4 mt-2 pt-4">
+    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
+    <p>Spot on, <%= randomBPM %>! Your sense of timing is amazing.</p>
+    <p>The Piano Wizard has granted you 20 points for your achievement.</p>
+    <p>Guess again tomorrow!</p>
+  </div>
+  <div class="text-center mb-4">
+    <img class="mx-3 mb-0" src="../images/heart.png">
+    <img class="mx-3 mb-0" src="../images/towel.png">
+    <img class="mx-3 mb-0" src="../images/radish.png">
+    <img class="mx-3 mb-0" src="../images/acorn.png">
+    <img class="mx-3 mb-0" src="../images/microwave.png">
+    <img class="mx-3 mb-0" src="../images/acorn.png">
+    <img class="mx-3 mb-0" src="../images/radish.png">
+    <img class="mx-3 mb-0" src="../images/towel.png">
+    <img class="mx-3 mb-0" src="../images/heart.png">
+  </div>
+<% } else if (BPMStatus == 'notQuite') { %>
+  <div id="bpm-almost" class="alert alert-warning text-center mb-4 mt-2 pt-4">
+    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
+    <p>Not quite! The tempo is <%= randomBPM %> beats per minute.</p>
+    <p>The Piano Wizard has granted you some encouragement points.</p>
+    <p>Guess again tomorrow!</p>
+  </div>
+  <div class="text-center mb-4">
+    <img class="mx-3 mb-0" src="../images/heart.png">
+    <img class="mx-3 mb-0" src="../images/towel.png">
+    <img class="mx-3 mb-0" src="../images/radish.png">
+    <img class="mx-3 mb-0" src="../images/acorn.png">
+    <img class="mx-3 mb-0" src="../images/microwave.png">
+    <img class="mx-3 mb-0" src="../images/acorn.png">
+    <img class="mx-3 mb-0" src="../images/radish.png">
+    <img class="mx-3 mb-0" src="../images/towel.png">
+    <img class="mx-3 mb-0" src="../images/heart.png">
+  </div>
+<% } else { %>
+  <form action="/guessBPM" method="POST" class="form-inline text-center mb-4 mt-5 justify-content-center">
+    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
+    <div class="white-text form-group ml-4">
+      <label for="bpmGuess">I'm thinking... </label>
+      <input type="text" name="bpmGuess" id="bpmGuess" class="form-control input-lg mx-sm-3">
+      <small id="passwordHelpInline" class="text-muted">
+        beats per minute. 
+      </small>
+    </div>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit" class="btn btn-success mb-2 ml-3">Guess!</button>
+  </form>
+<% } %>
 
 <div id="mission-blurb" class="alert alert-primary text-center pt-4">
   <p>Mini-missions are for everybody and they hope to inspire improvement. Being resourceful and creative is encouraged. Collect leaderboard points and earn rewards!</p>
@@ -40,19 +142,18 @@
 <% } else { %>
   <div class="alert alert-danger text-center">Waiting for the next mission to arrive...</div>
 <% } %>
-<hr>
 
   <!-- LEADERBOARD -->
   <div id="leaderboard" class="section">
-    <div class="jumbotron-transparent py-0 m-3"><h1 class="display-2 recursive rainbowText text-center">Leaderboard</h1></div>
+    <div class="jumbotron-transparent py-4 mx-0 my-4"><h1 class="display-2 recursive rainbowText text-center">~~~ Leaderboard ~~~</h1></div>
   </div>
 
-  <div id="leaderboard-blurb" class="alert alert-primary text-center pt-4">
+  <div id="leaderboard-blurb" class="alert alert-primary text-center mb-3 mt-3 pt-4">
     <p>Winners get tickets to Boronia’s local movie theatre, Metro Cinemas. This small family-run business shows all the latest films in a comfortable and cosy space.</p>
     <p>Also up for grabs this round is the <i>Pioneer's Badge</i> <img src="../images/pioneer.png"> that shows you were the FIRST EVER to win. Any badges you collect will be displayed beside your leaderboard name FOREVER.</p>
     <p>Oh and you get to choose any colour for your username.</p>
   </div>
-  <table class="table text-center table-dark">
+  <table class="mt-0 pt-0 table text-center table-dark">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -78,10 +179,17 @@
       <% }) %>
     </tbody>
   </table>
+
+    <!--LOGOUT-->
+    <form id="logoutButton" class="mt-5" action="/logout" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Log Out</button>
+    </form>
+    <hr class="mt-5">
 <!-- FULL RECORD -->
-<hr class="mt-5">
-<div id="full-record" class="section">
-  <div class="jumbotron-transparent pt-3 pb-1 mt-3 mb-0"><h1 class="display-2 recursive rainbowText text-center">Full Record</h1></div>
+
+<div id="full-record" class="section mt-5">
+  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="display-2 recursive rainbowText text-center">~~~~ Full Record ~~~~</h1></div>
 </div>
 <canvas id="pieceGraph"></canvas>
 <script>
@@ -164,7 +272,7 @@ function showExtraComponentInfo() {
 }
 </script>
 
-<div class="justify-content-center mt-2 mb-5 px-0 table-responsive">
+<div class="justify-content-center mt-2 mb-3 px-0 table-responsive">
   <table class="justify-content-center table table-hover text-center">
       <thead>
         <tr class="table-light">
@@ -425,61 +533,8 @@ function showExtraComponentInfo() {
     </table>
   </div>
   
-  <!-- PRACTICE HUB -->
-  <hr>
-  <div id="practice-guide" class="section">
-    <div class="jumbotron-transparent py-0 mt-3 mb-0"><h1 class="display-2 recursive rainbowText text-center">Practice Hub</h1></div>
-  </div>
-  <script >
-    // PRINT FEATURE PLAIN TEXT
-    function printDiv(elementId) {
-      var prtContent = document.getElementById(elementId);
-      var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-      WinPrint.document.write(prtContent.innerHTML);
-      WinPrint.document.close();
-      WinPrint.focus();
-      WinPrint.print();
-    }
-  </script>
-  
-    <% latestComments.forEach((comment) => { %>
-      <div ><h2 class="pink-text text-center caveat pb-4 pt-0 mb-5 mt-0">What to aim for this week... quality first, then quantity!</h2></div>
-        
-        <div id="weeklySnapshot" class="px-5 mx-5"><%- filterUserHTML(comment.comments) %></div>
-        <div class="text-center mt-5 pt-5 pb-2">
-          <button class="mx-3 btn btn-outline-warning btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print this week's notes</button>
-        </div>
-      
-    <% }) %>
-
-    <% if (practiceStatus) { %>
-      
-      <div id="practice-success" class="alert alert-success text-center mb-4 mt-4 pt-4">
-        <p>Well done for practising today! Small steps every day add up to big improvements over time.</p>
-        <p>The Piano Wizard has granted you some points for your dedication.</p>
-        <p>Hope to see you tomorrow again!</p>
-      </div>
-      <div class="text-center mb-5">
-        <img class="mb-3 mx-3" src="../images/smile.png">
-        <img class="mb-3 mx-3" src="../images/star.png">
-        <img class="mb-3 mx-3" src="../images/smile.png">
-        <img class="mb-3 mx-3" src="../images/star.png">
-        <img class="mb-3 mx-3" src="../images/smile.png">
-        <img class="mb-3 mx-3" src="../images/star.png">
-        <img class="mb-3 mx-3" src="../images/smile.png">
-        <img class="mb-3 mx-3" src="../images/star.png">
-        <img class="mb-3 mx-3" src="../images/smile.png">
-        <img class="mb-3 mx-3" src="../images/star.png">
-        <img class="mb-3 mx-3" src="../images/smile.png">
-      </div>
-    <% } else { %>
-      <form class="mt-3 mb-5 text-center" action="/updateLastSubmittedDateAndAddPoints" method="POST">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <button type="submit" class="btn btn-outline-success btn-lg">Click to tell the Piano Wizard that you've practised today!</button>
-      </form>
-    <% } %>
-
-  <div id="rubric-grid" class="px-0 mt-2 rubric-grid">
+  <!-- RUBRIC -->
+  <div id="rubric-grid" class="px-0 mt-0 rubric-grid">
     <div class="row m-0 text-center row-border">
       <div class="col-sm rhythm">
         <b>Rhythm and Pulse</b>
@@ -612,62 +667,7 @@ function showExtraComponentInfo() {
     <button class="mx-3 btn btn-outline-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Click for printer-friendly Practice Guide</button>
   </div>
 
-  <!-- Guess the Tempo -->
-  <% if (BPMStatus == 'success') { %>
-    <div id="bpm-success" class="alert alert-success text-center mb-4 mt-2 pt-4">
-      <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
-      <p>Spot on, <%= randomBPM %>! Your sense of timing is amazing.</p>
-      <p>The Piano Wizard has granted you 20 points for your achievement.</p>
-      <p>Guess again tomorrow!</p>
-    </div>
-    <div class="text-center mb-2">
-      <img class="mx-3 mb-0" src="../images/heart.png">
-      <img class="mx-3 mb-0" src="../images/towel.png">
-      <img class="mx-3 mb-0" src="../images/radish.png">
-      <img class="mx-3 mb-0" src="../images/acorn.png">
-      <img class="mx-3 mb-0" src="../images/microwave.png">
-      <img class="mx-3 mb-0" src="../images/acorn.png">
-      <img class="mx-3 mb-0" src="../images/radish.png">
-      <img class="mx-3 mb-0" src="../images/towel.png">
-      <img class="mx-3 mb-0" src="../images/heart.png">
-    </div>
-  <% } else if (BPMStatus == 'notQuite') { %>
-    <div id="bpm-almost" class="alert alert-warning text-center mb-4 mt-2 pt-4">
-      <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
-      <p>Not quite! The tempo is <%= randomBPM %> beats per minute.</p>
-      <p>The Piano Wizard has granted you some encouragement points.</p>
-      <p>Guess again tomorrow!</p>
-    </div>
-    <div class="text-center mb-2">
-      <img class="mx-3 mb-0" src="../images/heart.png">
-      <img class="mx-3 mb-0" src="../images/towel.png">
-      <img class="mx-3 mb-0" src="../images/radish.png">
-      <img class="mx-3 mb-0" src="../images/acorn.png">
-      <img class="mx-3 mb-0" src="../images/microwave.png">
-      <img class="mx-3 mb-0" src="../images/acorn.png">
-      <img class="mx-3 mb-0" src="../images/radish.png">
-      <img class="mx-3 mb-0" src="../images/towel.png">
-      <img class="mx-3 mb-0" src="../images/heart.png">
-    </div>
-  <% } else { %>
-    <form action="/guessBPM" method="POST" class="form-inline text-center justify-content-center">
-      <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
-      <div class="white-text form-group ml-4">
-        <label for="bpmGuess">I'm thinking... </label>
-        <input type="text" name="bpmGuess" id="bpmGuess" class="form-control input-lg mx-sm-3">
-        <small id="passwordHelpInline" class="text-muted">
-          beats per minute. 
-        </small>
-      </div>
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button type="submit" class="btn btn-success mb-2 ml-3">Guess!</button>
-    </form>
-  <% } %>
-  
-<form id="logoutButton" class="mt-3" action="/logout" method="POST">
-  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-  <button type="submit" class="btn btn-secondary btn-lg btn-block">Log Out</button>
-</form>
+
 
 
 

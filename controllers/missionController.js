@@ -51,11 +51,11 @@ exports.checkBPM = async function(req, res) {
     if (adminDoc.randomBPM == req.body.bpmGuess) {
         let newScore = studentDoc.leaderboardScore + 20
         await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "success", "lastBPMGuess": today, "leaderboardScore": newScore} })
-        res.redirect('/reports#logoutButton')
+        res.redirect('/reports#mini-missions')
     } else {
         let newScore = studentDoc.leaderboardScore + getRndInt(5, 10)
         await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "notQuite", "lastBPMGuess": today, "leaderboardScore": newScore} })
-        res.redirect('/reports#logoutButton')
+        res.redirect('/reports#mini-missions')
     }
 }
 
@@ -75,7 +75,7 @@ exports.compareScoreAndSave = async function(req, res) {
 exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
     let randomInt = getRndInt(5, 10)
     await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
-    res.redirect('/reports#weeklySnapshot')
+    res.redirect('/reports#print-button')
 }
 
 function getRndInt(min, max) {
