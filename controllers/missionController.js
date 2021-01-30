@@ -25,7 +25,7 @@ exports.getRandomBPM = async function() {
         let randomBPM = userDoc.randomBPM
         return randomBPM
     } else {
-        let randomBPM = getRndInt(4, 16) * 10
+        let randomBPM = getRndInt(3, 16) * 10
         await usersCollection.updateOne({"admin": true}, { $set: {"randomBPM": randomBPM, "lastBPMUpdate": today}})
         return randomBPM
     }
