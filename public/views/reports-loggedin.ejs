@@ -18,7 +18,7 @@
 </div>
 <!-- PRACTICE HUB -->
 <div id="practice-guide" class="my-4 section">
-  <div class="jumbotron-transparent py-4 mt-3 mb-0 mx-0"><h1 class="display-2 recursive rainbowText text-center">~ Practice ~</h1></div>
+  <div class="jumbotron-transparent py-4 mt-3 mb-0 mx-0"><h1 class="display-2 recursive rainbowText text-center">~ PRACTICE ~</h1></div>
 </div>
 <script >
   // PRINT FEATURE PLAIN TEXT
@@ -75,7 +75,7 @@
 <!-- keep csrf token accessible -->
 <p id="csrf-landmark" data-value="<%= csrfToken %>"></p>
 <div id="mini-missions" class="section">
-  <div class="jumbotron-transparent py-4 my-4 mb-4 mx-0"><h1 class="display-2 recursive rainbowText text-center">~~ Mini-Missions ~~</h1></div>
+  <div class="jumbotron-transparent py-4 my-4 mb-4 mx-0"><h1 class="display-2 recursive rainbowText text-center">~ MINI-MISSIONS ~</h1></div>
 </div>
 <!-- Guess the Tempo -->
 <% if (BPMStatus == 'success') { %>
@@ -145,7 +145,7 @@
 
   <!-- LEADERBOARD -->
   <div id="leaderboard" class="section">
-    <div class="jumbotron-transparent py-4 mx-0 my-4"><h1 class="display-2 recursive rainbowText text-center">~~~ Leaderboard ~~~</h1></div>
+    <div class="jumbotron-transparent py-4 mx-0 my-4"><h1 class="display-2 recursive rainbowText text-center">~ LEADERBOARD ~</h1></div>
   </div>
 
   <div id="leaderboard-blurb" class="alert alert-primary text-center mb-3 mt-3 pt-4">
@@ -183,13 +183,13 @@
     <!--LOGOUT-->
     <form id="logoutButton" class="mt-5" action="/logout" method="POST">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button type="submit" class="btn btn-primary btn-lg btn-block">All done? Log out here.</button>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">All done? Feel free to log out here. See you tomorrow!</button>
     </form>
     <hr class="mt-5">
 <!-- FULL RECORD -->
 
 <div id="full-record" class="section mt-5">
-  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="display-2 recursive rainbowText text-center">~~~~ Full Record ~~~~</h1></div>
+  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="display-2 recursive rainbowText text-center">~ FULL RECORD ~</h1></div>
 </div>
 <canvas id="pieceGraph"></canvas>
 <script>
@@ -703,6 +703,7 @@ function generateRainbowText(element) {
   for (let i = 0; i < text.length; i++) {
     let charElem = document.createElement("span");
     charElem.style.color = "hsl(" + (360 * i / text.length) + ",80%,50%)";
+    charElem.style.fontWeight = "bold";
     charElem.innerHTML = text[i];
     element.appendChild(charElem);
   }

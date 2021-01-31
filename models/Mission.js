@@ -12,15 +12,15 @@ giveEveryoneASomething = async function() {
     let d = new Date()
     d.setHours(d.getHours() + 11)
     await usersCollection.updateMany(
-      {admin: false},
+      {fName: ""},
       { $set:
          {
-           BPMStatus: ""
+           BPMStatus: "",
+           lastBPMGuess: new Date()
          }
       }
    )
 }
-//giveEveryoneASomething()
 
 Mission.getPracticeStatus = function(userId) {
     return new Promise(async(resolve, reject) => {

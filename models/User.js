@@ -65,7 +65,9 @@ User.prototype.cleanUp = function() {
         leaderboardColor: 'leaderboard-text',
         badges: [],
         lastSubmittedDate: new Date(),
-        savedGameScore: 0
+        savedGameScore: 0,
+        BPMStatus: "",
+        lastBPMGuess: new Date()
     }
 }
 
