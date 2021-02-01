@@ -3,7 +3,7 @@ body,
 .container-fluid {
     background-color: #1c1c1c;
     min-height: 100vh;
-    min-width: 80vw;
+    min-width: 70vw;
     display: flex;
     flex-direction: column;
     padding: auto;
@@ -11,6 +11,10 @@ body,
     position: static;
     margin: 0 auto;
     padding-top: 20px;
+}
+
+.container {
+    min-width: 70vw;
 }
 
 nav {
