@@ -431,13 +431,26 @@ hr {
 
 #weeklySnapshot p, ul, li{
     font-size: 1.5rem;
-    color: white;
+    color: rgb(228, 228, 228);
+}
+
+#weeklySnapshot {
+    margin-left: 10rem;
+    margin-right: 10rem;
 }
 
 #weeklySnapshot em {
-    color: rgb(42, 116, 255);
+    color: rgb(42, 152, 255);
+    font-family: 'Langar', cursive;
 }
 
 #weeklySnapshot strong {
     color: rgb(71, 208, 105);
+}
+
+#weeklySnapshot h1 {
+    font-family: 'Rye', cursive;
+    font-size: 3rem;
+    color: #ffe449;
+    margin-bottom: 1.5rem;
 }

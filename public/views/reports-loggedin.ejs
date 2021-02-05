@@ -9,8 +9,7 @@
 <% }) %>
 
 <!-- GREETINGS -->
-  <div class="wow pulse jumbotron-transparent-greeting mx-0 my-4 mb-2 p-3"><h1 class="display-1 caveat white-text text-center">Welcome back, <%= fName %> and <%= parentName %>!</h1></div>
-<div class="text-center mb-5">
+<div class="text-center my-5">
   <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-info btn-lg">Practice</a>
   <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-danger btn-lg">Mini-Missions</a>
   <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-success btn-lg">Leaderboard</a>
@@ -18,7 +17,8 @@
 </div>
 <!-- PRACTICE HUB -->
 <div id="practice-guide" class="my-4 section">
-  <div class="jumbotron-transparent py-4 mt-3 mb-0 mx-0"><h1 class="display-2 recursive rainbowText text-center">~ PRACTICE ~</h1></div>
+  <div class="jumbotron-transparent py-4 mt-3 mb-0 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ PRACTICE ~</h1>
+    <h2 class="orange-text text-center caveat pb-2 pt-0 mt-0">What to aim for today... quality first, then quantity!</h2></div>
 </div>
 <script >
   // PRINT FEATURE PLAIN TEXT
@@ -33,9 +33,7 @@
 </script>
 
   <% latestComments.forEach((comment) => { %>
-    <div ><h2 class="orange-text text-center caveat pb-4 pt-0 mb-5 mt-0">What to aim for today... quality first, then quantity!</h2></div>
-      
-      <div id="weeklySnapshot" class="px-5 mx-5"><%- filterUserHTML(comment.comments) %></div>
+      <div id="weeklySnapshot" class="mt-5 px-5"><%- filterUserHTML(comment.comments) %></div>
       <div id="print-button" class="text-center mt-5 pt-5 pb-2">
         <button class="mx-3 btn btn-outline-secondary btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print this week's notes</button>
       </div>
@@ -75,7 +73,7 @@
 <!-- keep csrf token accessible -->
 <p id="csrf-landmark" data-value="<%= csrfToken %>"></p>
 <div id="mini-missions" class="section">
-  <div class="jumbotron-transparent py-4 my-4 mb-4 mx-0"><h1 class="display-2 recursive rainbowText text-center">~ MINI-MISSIONS ~</h1></div>
+  <div class="jumbotron-transparent py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ MINI-MISSIONS ~</h1></div>
 </div>
 <!-- Guess the Tempo -->
 <% if (BPMStatus == 'success') { %>
@@ -145,7 +143,7 @@
 
   <!-- LEADERBOARD -->
   <div id="leaderboard" class="section">
-    <div class="jumbotron-transparent py-4 mx-0 my-4"><h1 class="display-2 recursive rainbowText text-center">~ LEADERBOARD ~</h1></div>
+    <div class="jumbotron-transparent py-4 mx-0 my-4"><h1 class="px-5 display-2 recursive rainbowText text-center">~ LEADERBOARD ~</h1></div>
   </div>
 
   <div id="leaderboard-blurb" class="alert alert-primary text-center mb-3 mt-3 pt-4">
@@ -194,7 +192,7 @@
 <!-- FULL RECORD -->
 
 <div id="full-record" class="section mt-5">
-  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="display-2 recursive rainbowText text-center">~ FULL RECORD ~</h1></div>
+  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ FULL RECORD ~</h1></div>
 </div>
 <div class="justify-content-center"><canvas  id="pieceGraph"></canvas></div>
 
