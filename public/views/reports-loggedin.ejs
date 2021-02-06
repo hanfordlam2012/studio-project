@@ -10,14 +10,14 @@
 
 <!-- GREETINGS -->
 <div class="text-center my-5">
-  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-info btn-lg">Practice</a>
-  <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-danger btn-lg">Mini-Missions</a>
-  <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-success btn-lg">Leaderboard</a>
+  <a href="#practice-guide" type="button" class="mx-1 my-1 btn btn-outline-info btn-lg">1. Practice</a>
+  <a href="#mini-missions" type="button" class="mx-1 my-1 btn btn-outline-danger btn-lg">2. Mini-Missions</a>
+  <a href="#leaderboard" type="button" class="mx-1 my-1 btn btn-outline-success btn-lg">3. Leaderboard</a>
   <a href="#full-record" type="button" class="mx-1 my-1 btn btn-outline-warning btn-lg">Parents</a>
 </div>
 <!-- PRACTICE HUB -->
 <div id="practice-guide" class="my-4 section">
-  <div class="jumbotron-transparent py-4 mt-3 mb-0 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ PRACTICE ~</h1>
+  <div class="jumbotron-transparent py-4 mt-3 mb-0 mx-0"><h1 id="headingText" class="px-5 display-2 recursive rainbowText text-center">~ PRACTICE ~</h1>
     <h2 class="orange-text text-center caveat pb-2 pt-0 mt-0">What to aim for today... quality first, then quantity!</h2></div>
 </div>
 <script >
@@ -73,7 +73,8 @@
 <!-- keep csrf token accessible -->
 <p id="csrf-landmark" data-value="<%= csrfToken %>"></p>
 <div id="mini-missions" class="section">
-  <div class="jumbotron-transparent py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ MINI-MISSIONS ~</h1></div>
+  <div class="jumbotron-transparent py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ MINI-MISSIONS ~</h1>
+    <h2 class="orange-text text-center caveat pb-2 pt-0 mt-0">Collect leaderboard points and earn rewards!</h2></div>
 </div>
 <!-- Guess the Tempo -->
 <% if (BPMStatus == 'success') { %>
@@ -113,9 +114,9 @@
     <img class="mx-3 mb-0" src="../images/heart.png">
   </div>
 <% } else { %>
-  <form action="/guessBPM" method="POST" class="form-inline text-center mb-4 mt-5 justify-content-center">
+  <form action="/guessBPM" method="POST" class="alert alert-primary form-inline text-center mb-3 mt-5 justify-content-center">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
-    <div class="white-text form-group ml-4">
+    <div class="form-group ml-4">
       <label for="bpmGuess">I'm thinking... </label>
       <input type="text" name="bpmGuess" id="bpmGuess" class="form-control input-lg mx-sm-3">
       <small id="passwordHelpInline" class="text-muted">
@@ -123,14 +124,11 @@
       </small>
     </div>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-success mb-2 ml-3">Guess!</button>
+    <button type="submit" class="btn btn-success ml-3">Guess!</button>
   </form>
 <% } %>
 
-<div id="mission-blurb" class="alert alert-primary text-center pt-4">
-  <p>Mini-missions are for everybody and they hope to inspire improvement. Being resourceful and creative is encouraged. Collect leaderboard points and earn rewards!</p>
-  <p>Good luck, have fun, and give it your best shot!</p>
-</div>
+<!--MISSIONCODE-->
 <% if (missionCode) { %>
   <%- missionCode %>
 <% } else if (!missionCode && missionResult.length != 0) { %>
@@ -143,18 +141,19 @@
 
   <!-- LEADERBOARD -->
   <div id="leaderboard" class="section">
-    <div class="jumbotron-transparent py-4 mx-0 my-4"><h1 class="px-5 display-2 recursive rainbowText text-center">~ LEADERBOARD ~</h1></div>
+    <div class="jumbotron-transparent py-4 mx-0 my-4"><h1 class="px-5 display-2 recursive rainbowText text-center">~ LEADERBOARD ~</h1>
+      <h2 class="orange-text text-center caveat pb-2 pt-0 mt-0">Short-term motivation for long-term skills!</h2></div>
   </div>
 
-  <div id="leaderboard-blurb" class="alert alert-primary text-center mb-3 mt-3 pt-4">
-    <p class="red-text recursive"><strong>Been busy earning points? Exchange them for rewards!</strong></p>
-    <p><span class="pink-text">100</span> : Customise your username font</p>
-    <p><span class="pink-text">200</span> : Customise your username colour</p>
-    <p><span class="pink-text">400</span> : Choose a username badge (eg. pianowizard <img src="../images/pioneer.png">)</p>
-    <p><span class="pink-text">800</span> : Bach, Mozart, Beethoven, or Verdi bust</p>
-    <p><span class="pink-text">1600</span> : 2 x Boronia Metro Cinemas movie tickets</p>
-    <p><span class="pink-text">3200</span> : 20% off next term's lesson fees (ie. parent rewards child)</p>
-    <p><span class="pink-text">5000</span> : EVERYTHING ABOVE + ??? + Hanford's respect for your exceptional diligence!</p>
+  <div id="leaderboard-blurb" class="alert alert-secondary text-center mb-3 mt-3 pt-4">
+    <p class="recursive"><strong>Been busy earning points? Exchange them for rewards!</strong></p>
+    <p><span class="pink-text"><strong>100</strong></span> : Customise your username font</p>
+    <p><span class="pink-text"><strong>200</strong></span> : Customise your username colour</p>
+    <p><span class="pink-text"><strong>400</strong></span> : Choose a username badge (eg. pianowizard <img src="../images/pioneer.png">)</p>
+    <p><span class="pink-text"><strong>800</strong></span> : Bach, Mozart, Beethoven, or Verdi bust</p>
+    <p><span class="pink-text"><strong>1600</strong></span> : 2 x Boronia Metro Cinemas movie tickets</p>
+    <p><span class="pink-text"><strong>3200</strong></span> : 20% off next term's lesson fees (ie. parent rewards child)</p>
+    <p><span class="pink-text"><strong>5000</strong></span> : EVERYTHING ABOVE + ??? + Hanford's respect for your exceptional diligence!</p>
   </div>
   <table class="mt-0 pt-0 table text-center table-dark">
     <thead>
@@ -192,7 +191,8 @@
 <!-- FULL RECORD -->
 
 <div id="full-record" class="section mt-5">
-  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ FULL RECORD ~</h1></div>
+  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ FULL RECORD ~</h1>
+    <h2 class="orange-text text-center caveat pb-2 pt-0 mt-0">Our journey to mastering the fundamental components of music!</h2></div>
 </div>
 <div class="justify-content-center"><canvas  id="pieceGraph"></canvas></div>
 
@@ -247,7 +247,7 @@ let stackedBar = new Chart(ctx, {
     },
     title: {
       display : true,
-      text: ['Mastering the fundamental components of music'],
+      text: [],
       fontSize: 40,
       fontFamily: 'Caveat',
       fontStyle: 'normal',
@@ -708,6 +708,7 @@ function generateRainbowText(element) {
     let charElem = document.createElement("span");
     charElem.style.color = "hsl(" + (360 * i / text.length) + ",80%,50%)";
     charElem.style.fontWeight = "bold";
+    charElem.style.textShadow = "0px 2px 1px black, 2px 0px 1px black, -2px 0px 1px black, 0px -2px 1px black";
     charElem.innerHTML = text[i];
     element.appendChild(charElem);
   }

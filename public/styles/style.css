@@ -360,21 +360,6 @@ hr {
     border-top: 1px solid white;
 }
 
-#weeklySnapshot pre {
-    padding-left: 15%;
-    padding-right: 15%;
-    white-space: pre-wrap;
-    /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap;
-    /* Mozilla, since 1999 */
-    white-space: -pre-wrap;
-    /* Opera 4-6 */
-    white-space: -o-pre-wrap;
-    /* Opera 7 */
-    word-wrap: break-word;
-    /* Internet Explorer 5.5+ */
-}
-
 .question-div {
     margin-bottom: 2rem;
     border-radius: 5px;
@@ -451,6 +436,7 @@ hr {
 #weeklySnapshot h1 {
     font-family: 'Rye', cursive;
     font-size: 3rem;
-    color: #ffe449;
+    color: #ffa013;
     margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 10px rgb(170, 0, 0);
 }
