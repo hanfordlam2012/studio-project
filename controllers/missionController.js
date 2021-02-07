@@ -52,7 +52,7 @@ exports.getBPMStatus = async function(userId) {
 exports.checkBPM = async function(req, res) {
     let adminDoc = await usersCollection.findOne({"admin": true})
     let studentDoc = await usersCollection.findOne({"_id": ObjectID(req.session.user.userId) })
-    let today = new Date()
+    let todaysDate = new Date()
     todaysDate.addHours(11)
     if (adminDoc.randomBPM == req.body.bpmGuess) {
         let newScore = studentDoc.leaderboardScore + 15
