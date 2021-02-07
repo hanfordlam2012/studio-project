@@ -18,7 +18,7 @@
 <!-- PRACTICE HUB -->
 <div id="practice-guide" class="my-4 section">
   <div class="jumbotron-transparent py-4 mt-3 mb-0 mx-0"><h1 id="headingText" class="px-5 display-2 recursive rainbowText text-center">~ PRACTICE ~</h1>
-    <h2 class="orange-text text-center caveat pb-2 pt-0 mt-0">What to aim for today... quality first, then quantity!</h2></div>
+    <h2 class="orange-text text-center caveat pb-2 pt-0 mt-0">Aim for quality first, then quantity!</h2></div>
 </div>
 <script >
   // PRINT FEATURE PLAIN TEXT
@@ -35,7 +35,7 @@
   <% latestComments.forEach((comment) => { %>
       <div id="weeklySnapshot" class="mt-5 px-5"><%- filterUserHTML(comment.comments) %></div>
       <div id="print-button" class="text-center mt-5 pt-5 pb-2">
-        <button class="mx-3 btn btn-outline-secondary btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print this week's notes</button>
+        <button class="mx-3 btn btn-outline-secondary btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print these notes</button>
       </div>
     
   <% }) %>
@@ -63,7 +63,7 @@
   <% } else { %>
     <form class="mt-3 mb-5 text-center" action="/updateLastSubmittedDateAndAddPoints" method="POST">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button type="submit" class="btn btn-success btn-lg">Tell the Piano Wizard that you've practised today!</button>
+      <button type="submit" class="btn btn-success btn-lg">Collect your daily practice points!</button>
     </form>
   <% } %>
     
@@ -153,7 +153,7 @@
     <p><span class="pink-text"><strong>800</strong></span> : Bach, Mozart, Beethoven, or Verdi bust</p>
     <p><span class="pink-text"><strong>1600</strong></span> : 2 x Boronia Metro Cinemas movie tickets</p>
     <p><span class="pink-text"><strong>3200</strong></span> : 20% off next term's lesson fees (ie. parent rewards child)</p>
-    <p><span class="pink-text"><strong>5000</strong></span> : EVERYTHING ABOVE + ??? + Hanford's respect for your exceptional diligence!</p>
+    <p><span class="pink-text"><strong>5000</strong></span> : EVERYTHING ABOVE <span class="pink-text"><strong>+</strong></span> ??? <span class="pink-text"><strong>+</strong></span> Hanford's respect for your exceptional diligence!</p>
   </div>
   <table class="mt-0 pt-0 table text-center table-dark">
     <thead>
@@ -189,10 +189,9 @@
     </form>
     <hr class="mt-5">
 <!-- FULL RECORD -->
-
 <div id="full-record" class="section mt-5">
-  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ FULL RECORD ~</h1>
-    <h2 class="orange-text text-center caveat pb-2 pt-0 mt-0">Our journey to mastering the fundamental components of music!</h2></div>
+  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="px-5 display-2 recursive rainbowText text-center">~ PARENTS ~</h1>
+    <h2 class="orange-text text-center caveat pb-2 pt-0 mt-0">Our journey to master the fundamental components of music!</h2></div>
 </div>
 <div class="justify-content-center"><canvas  id="pieceGraph"></canvas></div>
 
@@ -706,9 +705,9 @@ function generateRainbowText(element) {
   element.innerHTML = "";
   for (let i = 0; i < text.length; i++) {
     let charElem = document.createElement("span");
-    charElem.style.color = "hsl(" + (360 * i / text.length) + ",80%,50%)";
+    charElem.style.color = "hsl(" + (360 * i / text.length) + ",100%,50%)";
     charElem.style.fontWeight = "bold";
-    charElem.style.textShadow = "0px 2px 1px black, 2px 0px 1px black, -2px 0px 1px black, 0px -2px 1px black";
+    charElem.style.textShadow = "0px 4px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), -4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 0px -4px 5px hsl(" + (360 * i / text.length) + ",80%,20%)";
     charElem.innerHTML = text[i];
     element.appendChild(charElem);
   }

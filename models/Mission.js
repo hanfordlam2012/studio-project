@@ -22,13 +22,19 @@ giveEveryoneASomething = async function() {
    )
 }
 
+// For timezones
+Date.prototype.addHours = function(h) {
+    this.setTime(this.getTime() + (h*60*60*1000))
+    return this
+}
+
 Mission.getPracticeStatus = function(userId) {
     return new Promise(async(resolve, reject) => {
         let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
         let lastSubmittedDate = userDoc.lastSubmittedDate
         let todaysDate = new Date()
         // set time-zone
-        todaysDate.setHours(todaysDate.getHours() + 11)
+        todaysDate.addHours(11)
         if (lastSubmittedDate.getDate() == todaysDate.getDate()) {
             resolve(true)
         } else {
@@ -43,7 +49,7 @@ Mission.updateLastSubmittedDateAndAddPoints = async function(points, userId) {
     let practicePoints = parseInt(points, 10)
     let todaysDate = new Date()
     // set time-zone
-    todaysDate.setHours(todaysDate.getHours() + 11)
+    todaysDate.addHours(11)
     await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"lastSubmittedDate": todaysDate, "leaderboardScore": leaderboardScore + practicePoints} })
 }
 
