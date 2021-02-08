@@ -1,131 +1,85 @@
 <%- include('includes/header') %>
-<!-- INITIALISE ANIMATION SCRIPT -->
-<script>
-  new WOW().init();
-</script>
 
-
-<div data-wow-duration="1.5s" class="wow mt-5 flipInX">
-  <h1 class="text-center orange-text recursive" style="font-size: 6rem;">WELCOME</h1>
+<!-- WELCOME -->
+<div id="welcome" class="my-3 section">
+  <div class="jumbotron-transparent py-4 mt-2 mb-0 mx-0"><h1 id="headingText" class="px-5 display-2 recursive rainbowText text-center">Looking for a teacher?</h1>
+    <h2 class="white-text text-center handlee py-2 mt-0">Come along on a music-learning journey with Hanford<img class="mb-3 mx-3" src="../images/smile.png"></h2></div>
 </div>
-
 <div id="home-container-1" class="p-2 mx-0 my-5 rounded row align-items-center justify-content-center"></div>
-<hr>
-<div data-wow-offset="200" data-wow-duration="1s" class="wow bounceInUp">
-  <div class="p-2 mx-0 my-4 rounded full-width-home-container-transparent row align-items-center">
-    <div class="p-4 row">
-        <div class="col justify-content-center"><img class="rounded" src="../images/hanford-lam-portrait_d800-min.jpg" id="landscapeHeadshot" alt=""></div>
-        <div class="w-100"></div>
-        <div class="col mt-5 text-center">
-            <h1 class="caveat green-text" style="font-size: 6rem;">Hi, I'm Hanford.</h1>
-            <p class="white-text mb-4">I look forward to sharing with you all that I know about music and lifelong learning.<br>The emotions, the discipline, and the beauty of this imaginative sonic art.</p>
-        </div>
-    </div>
+
+<!-- MEET HANFORD -->
+<div id="meet-hanford" class="section">
+  <div class="jumbotron-transparent py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">Hi, I'm Hanford</h1>
+    <h2 class="white-text text-center handlee py-2 mt-3 px-5">I look forward to sharing with you all that I know about music and lifelong learning.<br>
+      The emotions, discipline, and beauty of this imaginative sonic art.</h2></div>
+</div>
+<div class="p-4 row justify-content-center">
+  <div class="col"><img class="rounded" src="../images/hanford-lam-portrait_d800-min.jpg" id="landscapeHeadshot" alt=""></div>
+  <div class="w-100"></div>
+  <div id="blurb" class="col-9 text-center">
+    <p class="handlee white-text mt-5">I am delighted to speak to <span class="yellow-text">you</span> candidly. My own <span class="blue-text">diverse</span> journey has given me valuable <span class="purple-text">opportunities</span> to <span class="green-text">learn</span> at local and international <span class="pink-text">competitions</span>; from friendly fun at the Knox Piano Awards to competing against top players at the UCSI International Semifinals. I've also done my share of <span class="orange-text">exams</span>; from AMEB and ABRSM grades to a gruelling Honours recital and thesis. Lifelong learning is a <span class="yellow-text">passion</span>. I am currently completing a <span class="blue-text">Master of Teaching</span> at The University of Melbourne. I hope to inspire my students to chase <span class="purple-text">knowledge</span> and <span class="green-text">skills</span> in the realms of the <span class="pink-text">arts</span> and the <span class="orange-text">sciences</span>.</p>
+    <p class="handlee white-text">My fondest memories of <span class="yellow-text">performing</span> include touring China with the Australian International Opera Company and soloing with the Monash Academy Orchestra while my worst is <span class="blue-text">definitely</span> attempting an audition underprepared. Working through <span class="purple-text">challenges</span> and <span class="green-text">doubt</span> makes the prizes and scholarships I've won so much more <span class="pink-text">meaningful</span>. Performance anxiety is a hot topic that I have <span class="orange-text">presented</span> on during the 2019 and 2020 VCE Conferences.</p>
+    <p class="handlee white-text">Travel, language, math, and <span class="yellow-text">great food</span> are all interests of mine. You may be surprised to learn how music is deeply <span class="blue-text">connected</span> to everything around you. My studio is a <span class="purple-text">safe space</span> for all learners to develop an <span class="green-text">open mind</span> and experience <span class="pink-text">growth</span>. I may be a piano teacher by trade but more generally, I am an <span class="orange-text">educator</span>.</p>
+    <p class="handlee white-text">We now live in a<span class="yellow-text"> world</span> where the <span class="blue-text">best gift</span> you can give someone is the skill of <span class="green-text">how to learn</span>.</p>
   </div>
 </div>
-<hr>
-<div data-wow-offset="200" data-wow-duration="0.7s" class="wow zoomInDown">
-  <div class="p-2 mx-0 my-5 py-4 rounded full-width-home-container-transparent row align-items-center justify-content-end">
-    <div class="row align-items-center p-4">
-        <div class="col-5"><img class="rounded" id="portraitHeadshot" src="../images/2020-portrait.jpg" alt=""></div>
-        <div class="col-7">
-            <h1 class=" mb-3 caveat blue-text" style="font-size: 5rem;">I am delighted...</h1>
-            <p class="white-text">To speak to you candidly. My own diverse journey has given me valuable opportunities to learn at local and international competitions; from friendly fun at the Knox Piano Awards to competing against top players at the UCSI International Semifinals. I've also done my share of exams; from AMEB and ABRSM grades to a gruelling Honours recital and thesis. Lifelong learning is a passion. I am going back to university for deeper study from 2021 to 2023. I hope to inspire my students to chase knowledge and skills in the realms of the arts and the sciences.</p>
-            <p class="white-text">My fondest memories of orchestral performances include touring China with the Australian International Opera Company and soloing with the Monash Academy Orchestra while my worst is definitely memory lapsing at an audition. Working through challenges and doubt makes the prizes and scholarships I've won so much more meaningful. Performance anxiety is a hot topic that I have presented on during the 2019 and 2020 VCE Conferences.</p>
-            <p class="white-text">Travel, language, math, and great food are all interests of mine. You may be surprised to learn how music is deeply connected to everything around you. My studio is a safe space for all learners to develop an open mind and experience growth. I may be a piano teacher by trade but more generally, I am an educator.</p>
-            <p class="white-text">We now live in a world where the best gift you can give someone is the skill of how to learn.</p>
-        </div>
+
+<!-- FEES -->
+<div id="fees" class="section mt-3 mb-5">
+  <div class="jumbotron-transparent py-4 mt-3 mb-0"><h1 class="px-5 display-2 recursive rainbowText text-center">2021 Service Rates</h1>
+    <h2 class="white-text text-center handlee pb-2 pt-0 mt-4">Hard-earned money well-spent!</h2></div>
+</div>
+<div id="priceRow" class="row mt-4 mb-5">
+  
+  <div class="col-4">
+      <div class="card">
+    <div class="card-header">
+      <h4 class="my-0">ACCOMPANIMENT</h4>
+    </div>
+    <div class="card-body">
+      <h1 class="pink-text card-title">ENQUIRE</h1>
+      <ul class="list-unstyled">
+        <li>AMEB, ABRSM, VCE</li>
+        <li>Exams and Recitals</li>
+        <li>Highly Experienced</li>
+        <li>Travel or In-Studio</li>
+      </ul>
     </div>
   </div>
-</div>
-<hr>
-<div data-wow-offset="200" data-wow-duration="2s" class="wow rubberBand">
-  <div style="padding-bottom: 70px;" class="pt-2 mx-0 my-5 rounded full-width-home-container-transparent row align-items-center justify-content-center">
-    <div class="p-4 row justify-content-center text-center">
-        <div class="col">
-            <h1 id="fees" class="mb-3 caveat pink-text" style="font-size: 5rem;">2021 Fees</h1>
-            <h3 class="white-text" style="font-size: 1.5rem;">Your money supports everyone's learning!</h3>
-        </div>
-    </div>
-    <div id="priceRow" class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                  <h4 class="my-0">Weekly Lessons</h4>
-                </div>
-                <div class="card-body">
-                  <h1 class="pink-text card-title">$84/hr</h1>
-                  <ul class="list-unstyled">
-                    <li>Guided progress</li>
-                    <li>Interactive approach</li>
-                    <li>Socratic styled</li>
-                    <li>Flexible learning</li>
-                  </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
+  </div>
+  <div class="col-4">
+      <div class="card">
           <div class="card-header">
-            <h4 class="my-0">Accompaniment</h4>
+            <h4 class="my-0">LESSONS</h4>
           </div>
           <div class="card-body">
-            <h1 class="pink-text card-title">Enquire</h1>
+            <h1 class="pink-text card-title">$84/HR</h1>
             <ul class="list-unstyled">
-              <li>AMEB, ABRSM, VCE</li>
-              <li>Exams and recitals</li>
-              <li>Highly experienced</li>
-              <li>Travel or in-studio</li>
+              <li>Expert Guidance</li>
+              <li>Interactive Approach</li>
+              <li>Socratic Styled</li>
+              <li>Flexible Learning</li>
             </ul>
-          </div>
-        </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                  <h4 class="my-0">Other</h4>
-                </div>
-                <div class="card-body">
-                  <h1 class="pink-text card-title">Free</h1>
-                  <ul class="list-unstyled">
-                    <li>Holiday programs</li>
-                    <li>Student recitals</li>
-                    <li>General advice</li>
-                    <li>Love and care</li>
-                  </ul>
-                </div>
-              </div>
-        </div>
-    </div>
-  </div>
-</div>
-
-  <hr>
-<div data-wow-offset="200" data-wow-duration="1.5s" class="wow flipInY">
-  <div class="p-2 mx-0 mb-4 rounded full-width-home-container-transparent row align-items-center justify-content-end">
-      <div class="row p-4">
-          <div class="col align-self-center text-center my-5">
-              <h1 id="persevere" class="mb-4 caveat" style="font-size: 4rem;">Practise. Persevere. Perform.</h1>
-              <p class="white-text mb-5">Always be kind to yourself but don't forget to aim high.<br>Make a start today!</p>
-              <a href="/contact" class="btn btn-lg btn-outline-warning">Book a trial lesson</a>
-          </div>
-          <div class= "col align-self-center">
-              <img class="rounded border" id="backstage" src="../images/backstage-hanford-lam-min.jpeg" alt="">
           </div>
       </div>
   </div>
+  <div class="col-4">
+      <div class="card">
+          <div class="card-header">
+            <h4 class="my-0">EXTRAS</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="pink-text card-title">FREE</h1>
+            <ul class="list-unstyled">
+              <li>Educational Excursions</li>
+              <li>Student Performances</li>
+              <li>Online Motivational Program</li>
+              <li>General Advice</li>
+            </ul>
+          </div>
+        </div>
+  </div>
 </div>
-
-<!-- REANIMATE -->
-<script>
-window.addEventListener('scroll', function(e) {
-  if( $(window).scrollTop() <= 0) {
-    $('.wow').removeClass('animated');
-    $('.wow').removeAttr('style');
-    new WOW().init();
-  }
-});
-</script>
-
+<a href="/contact" class="btn btn-block btn-lg btn-warning my-5"><strong>Ask about how to make a start today!</strong></a>
 
 <%- include('includes/footer') %>

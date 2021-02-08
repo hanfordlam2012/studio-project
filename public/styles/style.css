@@ -17,8 +17,13 @@ body,
     min-width: 70vw;
 }
 
+/* NAVIGATION */
 nav {
     box-shadow: 0px 0px 5px rgb(0, 0, 0);
+}
+
+.nav-active-text {
+    color:rgb(214, 214, 214);
 }
 
 /* center navbar list */
@@ -31,12 +36,17 @@ nav {
     }
 }
 
+/* FONTS */
 .poppins {
     font-family: 'Poppins', sans-serif;
 }
 
 .caveat {
     font-family: 'Caveat', cursive;
+}
+
+.handlee {
+    font-family: 'Handlee', cursive;
 }
 
 .langar {
@@ -81,6 +91,15 @@ nav {
     padding-right: 20%;
 }
 
+/* HOME */
+#blurb p {
+    font-size: 1.5rem;
+}
+
+#meet-hanford h2 {
+    font-size: 1.5rem;
+}
+
 #home-container-1 {
     min-height: 500px;
     min-width: 100%;
@@ -89,16 +108,6 @@ nav {
     background-repeat: no-repeat;
     background-position: center;
     box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
-}
-
-#brand {
-    background-color: rgba(0, 0, 0, 0.734);
-    box-shadow: 0px 0px 50px 20px rgba(0, 0, 0, 0.713);
-    padding: 10px 25px 25px 25px;
-}
-
-#brand h1 {
-    color: rgb(179, 255, 0);
 }
 
 #landscapeHeadshot {
@@ -128,12 +137,6 @@ nav {
     background-color: transparent;
 }
 
-.media-div {
-    min-height: 300px;
-    min-width: 100%;
-    background-color: transparent;
-}
-
 .card-header,
 .card-body {
     display: block;
@@ -143,8 +146,18 @@ nav {
     border: 1px solid white;
 }
 
+.card-body li {
+    font-family: 'Handlee', cursive;
+}
+
+.card-header {
+    font-family: 'Recursive', sans-serif;
+    font-size: 10rem;
+}
+
 .card {
     margin: 1px;
+    min-height: 100%;
 }
 
 #priceRow {
@@ -153,6 +166,13 @@ nav {
 
 .card-title {
     font-family: 'Recursive', sans-serif;
+}
+
+/* MEDIA */
+.media-div {
+    min-height: 300px;
+    min-width: 100%;
+    background-color: transparent;
 }
 
 .jumbotron {
@@ -237,7 +257,7 @@ h2 {
 }
 
 .purple-text {
-    color: #7e2dff;
+    color: #9c5eff;
 }
 
 .orange-text {
@@ -440,3 +460,10 @@ hr {
     margin-bottom: 1.5rem;
     text-shadow: 2px 2px 10px rgb(170, 0, 0);
 }
+
+/* REPORTS */
+#registerForm h2 {
+    font-family: 'Handlee', cursive;
+}
+
+/* CONTACT */

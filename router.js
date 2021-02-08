@@ -14,9 +14,6 @@ router.get('/', function(req, res) {
 router.get('/media', function(req, res) {
     res.render('media')
 })
-router.get('/blog', function(req, res) {
-    res.render('under-construction')
-})
 router.get('/contact', function(req, res) {
     res.render('contact', {status: req.flash('status')})
 })

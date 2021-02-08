@@ -1,24 +1,19 @@
 <%- include('includes/header') %>
-<!-- INITIALISE ANIMATION SCRIPT -->
-<script>
-  new WOW().init();
-</script>
+
 <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="dhMQZjlk"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="jKuJS7Hc"></script>
 <!-- CONTACT FORM -->
-<div id="contactForm" class="full-width-home-container-transparent py-3 my-4">
-
-  <div data-wow-duration="1s" class="wow tada">
-    <h1 class="text-center orange-text caveat display-1">Message Hanford</h1>
+<div id="contactForm" class="row justify-content-center">
+  <div class="my-3 w-100 section">
+    <div class="jumbotron-transparent py-4 mt-2 mb-0 mx-0"><h1 id="headingText" class="px-5 display-1 recursive rainbowText text-center">MESSAGE HANFORD</h1>
+    </div>
   </div>
-
-    <% if (status == 'fail') { %>
+<div class="col-10"><% if (status == 'fail') { %>
         <div class="alert alert-danger text-center small py-2">Sorry, your message couldn't be sent...maybe try the Facebook Page below instead?</div>
       <% } else if (status == 'success') { %>
         <div class="alert alert-success text-center small py-2">Your message has been sent successfully. Thanks for reaching out!</div>
       <% } %>
     <form id="contact-form" class="my-4 mx-5 px-3" action="/sendEmail" method="POST">
-        <h2 style="font-size: 20px;" class="text-center mt-4 mb-5">You will usually receive a reply within 24 hours.<br>Feel free to ask me anything!</h2>
         <div id="contactEmailDiv" class="input-group mb-3">
           <div id="contactEmailPrepend" class="input-group-prepend">
             <span id="contactEmailText" class="input-group-text">Your Email</span>
@@ -28,40 +23,41 @@
         <div id="contactMessageDiv" class="form-group">
           <textarea id="contactMessageInput" autocomplete="off" name="message" class="form-control" value="" placeholder="Schedule a free trial, enquire about exam accompaniment, ask for music learning advice, etc." rows="10"></textarea>
         </div>
-        <p class="mt-3 text-muted text-center">Please be patient ~ we are working hard behind the scenes for you.</p>
+        <p class="mt-3 text-muted text-center">Please be patient ~ it may take a few moments.</p>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-success btn-lg btn-block mt-3">Send</button>
-      </form>
+      </form></div>
+    
     </div>
 
 <!-- FACEBOOK -->
-<div class="full-width-home-container-transparent pt-3 mt-5 justify-content-center">
-  <h3 style="font-size: 20px;" class="white-text text-center mb-4">Or via Facebook Page</h3>
-  <div class="fb-page d-flex justify-content-center" data-href="https://www.facebook.com/hanfordlampiano/" data-tabs="messages" data-width="500" data-height="300" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/hanfordlampiano/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/hanfordlampiano/">Hanford Lam</a></blockquote></div>
-</div>
-
+<div class="row justify-content-center">
+  <div class="section my-3 w-100">
+    <div class="jumbotron-transparent py-4 my-4 mx-0">
+      <h1 id="headingText" class="px-5 display-1 recursive rainbowText text-center">FACEBOOK PAGE</h1>
+    </div>
+  </div>
+<div class="justify-content-center">
+  <div>
+  <div class="fb-page justify-content-center" data-href="https://www.facebook.com/hanfordlampiano" data-tabs="timeline" data-width="500" data-height="500" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/hanfordlampiano" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/hanfordlampiano">Hanford Lam</a></blockquote></div>
+  </div></div>
+    </div>
 
 <!-- GOOGLE MAPS -->
-<div class="full-width-home-container-transparent pb-3 mb-0 justify-content-center">
-    <h3 style="font-size: 20px;" class="white-text text-center mb-4">Studio located in Boronia, Melbourne, Australia</h3>
-    <div class="mapouter d-flex justify-content-center">
-        <div class="gmap_canvas">
-            <iframe width="699" height="285" id="gmap_canvas" src="https://maps.google.com/maps?q=boronia&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="auto">
-            </iframe>
-        </div>
-        <style>.mapouter{margin:auto; position:relative;text-align:center;height:320px;width:699px;}.gmap_canvas {overflow:hidden;background:none!important;height:320px;width:699px;}iframe {width:100%;height:100%;}</style>
+<div class="row justify-content-center mb-5">
+  <div class="section my-3 w-100">
+    <div class="jumbotron-transparent py-4 my-4 mx-0">
+      <h1 id="headingText" class="px-5 display-1 recursive rainbowText text-center">LOCATION</h1>
+      <h3 class="white-text text-center handlee pb-2 pt-0 mt-4">Studio in Boronia, Melbourne, Australia</h3>
     </div>
+  </div>
+  <div class="mapouter d-flex justify-content-center">
+    <div class="gmap_canvas">
+        <iframe width="699" height="285" id="gmap_canvas" src="https://maps.google.com/maps?q=boronia&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="auto">
+        </iframe>
+    </div>
+    <style>.mapouter{margin:auto; position:relative;text-align:center;height:320px;width:699px;}.gmap_canvas {overflow:hidden;background:none!important;height:320px;width:699px;}iframe {width:100%;height:100%;}</style>
 </div>
-    
-<!-- REANIMATE -->
-<script>
-  window.addEventListener('scroll', function(e) {
-    if( $(window).scrollTop() <= 0) {
-      $('.wow').removeClass('animated');
-      $('.wow').removeAttr('style');
-      new WOW().init();
-    }
-  });
-  </script>
+    </div>
 
 <%- include('includes/footer') %>
