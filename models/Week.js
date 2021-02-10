@@ -2,6 +2,12 @@ const weeksCollection = require('../db').db('studio-project').collection('weeks'
 const ObjectID = require('mongodb').ObjectID
 const sanitizeHTML = require('sanitize-html')
 
+// For timezones
+Date.prototype.addHours = function(h) {
+    this.setTime(this.getTime() + (h*60*60*1000))
+    return this
+}
+
 let Week = function(weekData, sessionData) {
     this.weekData = weekData
     this.sessionData = sessionData
@@ -22,6 +28,8 @@ Week.prototype.cleanUp = function() {
     if (typeof(this.weekData.techBScore) != "string") {this.weekData.techBScore = ""}
     if (typeof(this.weekData.comments) != "string") {this.weekData.comments = ""}
 
+    let createdDate = new Date()
+
     // get rid of bogus properties
     this.weekData = {
         studentId: this.weekData.studentId,
@@ -37,7 +45,7 @@ Week.prototype.cleanUp = function() {
         techBName: this.weekData.techBName.trim(),
         techBScore: this.weekData.techBScore,
         comments: sanitizeHTML(this.weekData.comments, {allowedTags: [], allowedAttributes: []}),
-        createdDate: new Date()
+        createdDate: createdDate.addHours(11)
     }
 }
 
