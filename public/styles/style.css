@@ -58,6 +58,10 @@ nav {
     color: rgb(99, 138, 157);
 }
 
+.cyrus-colour {
+    color: #fff200;
+}
+
 .recursive,
 .alert,
 .btn {
