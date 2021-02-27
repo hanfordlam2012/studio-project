@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/hanfordl/public_html/
+    - export DEPLOYPATH=/home/hanfordl/studio-project/
     - /bin/cp -R $DEPLOYPATH
