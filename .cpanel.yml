@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/hanfordl/studio-project/
-    - /bin/cp -R $DEPLOYPATH
+    - export DEPLOYPATH=/home/hanfordl/studio-project
+    - /bin/cp -r * $DEPLOYPATH
