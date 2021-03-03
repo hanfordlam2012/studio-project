@@ -114,7 +114,14 @@ User.prototype.login = function() {
         // then() handles resolve from mongo method
         usersCollection.findOne({username: this.data.username}).then((existingUser) => {
             if (existingUser && bcrypt.compareSync(this.data.password, existingUser.password)) {
-                resolve({fName: existingUser.fName, lName: existingUser.lName, parentName: existingUser.parentName, admin: existingUser.admin, userId: existingUser._id, secret: existingUser.secret})
+                resolve({
+                  fName: existingUser.fName, 
+                  lName: existingUser.lName, 
+                  parentName: existingUser.parentName, 
+                  admin: existingUser.admin, 
+                  userId: existingUser._id, 
+                  secret: existingUser.secret
+                })
             } else {
                 reject('Invalid username / password.')
             }
