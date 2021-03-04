@@ -1,6 +1,5 @@
 {
   "name": "studio-project",
-  "homepage": "https://www.hanfordlam.com",
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
