@@ -41,6 +41,7 @@ Message.sendEmail = function (data) {
                 resolve('success')
                 }
         } catch (err) {
+            console.log(err)
             reject('fail')
         }
         
