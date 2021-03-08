@@ -22,18 +22,18 @@ Message.sendEmail = function (data) {
                 </ul>`
                 // create reusable transporter object using the default SMTP transport
                 let transporter = nodemailer.createTransport({
-                    host: "smtp.live.com",
-                    port: 25,
-                    secure: false, // true for 465, false for other ports
+                    host: "sg1-ts3.a2hosting.com",
+                    port: 465,
+                    secure: true, // true for 465, false for other ports
                     auth: {
-                    user: process.env.EMAIL,
-                    pass: process.env.EMAILPASSWORD,
+                    user: process.env.A2EMAIL,
+                    pass: process.env.A2EMAILPASSWORD,
                     },
                 });
 
                 // send mail with defined transport object
                 await transporter.sendMail({
-                    from: process.env.EMAIL, // sender address
+                    from: process.env.A2EMAIL, // sender address
                     to: process.env.EMAIL, // list of receivers
                     subject: "Contact from hanfordlam.com", // Subject line
                     html: output, // html body
