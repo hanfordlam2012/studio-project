@@ -22,7 +22,7 @@ Message.sendEmail = function (data) {
                 </ul>`
                 // create reusable transporter object using the default SMTP transport
                 let transporter = nodemailer.createTransport({
-                    host: "localhost",
+                    host: "sg1-ts3.a2hosting.com",
                     port: 465,
                     secure: true, // true for 465, false for other ports
                     auth: {
