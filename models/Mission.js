@@ -34,7 +34,7 @@ Mission.getPracticeStatus = function(userId) {
         let lastSubmittedDate = userDoc.lastSubmittedDate
         let todaysDate = new Date()
         // set time-zone
-        todaysDate.addHours(11)
+        todaysDate.addHours(3)
         if (lastSubmittedDate.getDate() == todaysDate.getDate()) {
             resolve(true)
         } else {
@@ -49,7 +49,7 @@ Mission.updateLastSubmittedDateAndAddPoints = async function(points, userId) {
     let practicePoints = parseInt(points, 10)
     let todaysDate = new Date()
     // set time-zone
-    todaysDate.addHours(11)
+    todaysDate.addHours(3)
     await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"lastSubmittedDate": todaysDate, "leaderboardScore": leaderboardScore + practicePoints} })
 }
 

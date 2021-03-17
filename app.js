@@ -69,6 +69,7 @@ app.use(function(err, req, res, next) {
             req.session.save(() => res.redirect('/'))
         } else {
             res.render('404')
+            console.log(err)
         }
     }
 })

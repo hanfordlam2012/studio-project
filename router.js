@@ -6,6 +6,7 @@ const userController = require('./controllers/userController')
 const weekController = require('./controllers/weekController')
 const messageController = require('./controllers/messageController')
 const missionController = require('./controllers/missionController')
+const scoresbyController = require('./controllers/scoresbyController')
 
 // run this function for that route
 router.get('/', function(req, res) {
@@ -27,6 +28,10 @@ router.post('/doesUsernameExist', userController.doesUsernameExist)
 router.post('/doesEmailExist', userController.doesEmailExist)
 router.post('/isCorrect', userController.isCorrect)
 router.post('/submitQuiz', missionController.checkQuiz)
+
+// scoresby routes
+router.get('/scoresby', userController.mustBeLoggedIn, userController.mustBeAdmin, scoresbyController.getDataAndShowScoresbyPage)
+router.post('/logContributor', userController.mustBeLoggedIn, userController.mustBeAdmin, scoresbyController.logContributorAndRefresh)
 
 // game routes
 router.post('/saveScore', userController.mustBeLoggedIn, missionController.compareScoreAndSave)

@@ -26,7 +26,7 @@ Date.prototype.addHours = function(h) {
 exports.getRandomBPM = async function() {
     let userDoc = await usersCollection.findOne({"admin": true})
     let todaysDate = new Date()
-    todaysDate.addHours(11)
+    todaysDate.addHours(3)
     if (todaysDate.getDate() == userDoc.lastBPMUpdate.getDate()) {
         let randomBPM = userDoc.randomBPM
         return randomBPM
@@ -40,7 +40,7 @@ exports.getRandomBPM = async function() {
 exports.getBPMStatus = async function(userId) {
     let userDoc = await usersCollection.findOne({"_id": ObjectID(userId) })
     let todaysDate = new Date()
-    todaysDate.addHours(11)
+    todaysDate.addHours(3)
     if (todaysDate.getDate() == userDoc.lastBPMGuess.getDate()) {
         let BPMStatus = userDoc.BPMStatus
         return BPMStatus
@@ -53,7 +53,7 @@ exports.checkBPM = async function(req, res) {
     let adminDoc = await usersCollection.findOne({"admin": true})
     let studentDoc = await usersCollection.findOne({"_id": ObjectID(req.session.user.userId) })
     let todaysDate = new Date()
-    todaysDate.addHours(11)
+    todaysDate.addHours(3)
     if (adminDoc.randomBPM == req.body.bpmGuess) {
         let newScore = studentDoc.leaderboardScore + 15
         await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "success", "lastBPMGuess": todaysDate, "leaderboardScore": newScore} })
