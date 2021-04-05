@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="styles/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <title>Hanford Lam | Piano</title>
-    <!-- NEMO CURSOR -->
-    <style type="text/css">* {cursor: url(https://cur.cursors-4u.net/toons/too-11/too1008.ani), url(https://cur.cursors-4u.net/toons/too-11/too1008.png), auto !important;}</style><a href="https://www.cursors-4u.com/cursor/2011/11/30/nemo-wagging-tail.html" target="_blank" title="Nemo Wagging Tail"><img src="https://cur.cursors-4u.net/cursor.png" border="0" alt="Nemo Wagging Tail" style="position:absolute; top: 0px; right: 0px;" /></a>
+    <!-- CURSOR -->
+    <style>HTML,BODY{cursor: url("https://downloads.totallyfreecursors.com/cursor_files/fishgold.cur"), url("https://downloads.totallyfreecursors.com/thumbnails/fish-gold.gif"), auto;}</style>
   </head>
   <body>
     <div class="container-fluid">
@@ -51,14 +51,13 @@
           document.getElementById("homeTab").classList.add("border-bottom")
           document.getElementById("homeTabText").classList.add("nav-active-text")
           document.getElementById("homeTabText").classList.add("font-weight-bold")
-
           document.title = "Hanford Lam | Piano"
         } else if (currentPath == '/media') {
           document.getElementById("mediaTab").classList.add("border-bottom")
           document.getElementById("mediaTabText").classList.add("nav-active-text")
           document.getElementById("mediaTabText").classList.add("font-weight-bold")
           document.title = "Media - Hanford Lam | Piano"
-        } else if (currentPath == '/reports' || currentPath == '/create-week' || currentPath == '/admin-page') {
+        } else if (currentPath == '/practice' || currentPath == '/missions' || currentPath == '/leaderboard' || currentPath == '/parents' || currentPath == '/reports') {
           document.getElementById("reportsTab").classList.add("border-bottom")
           document.getElementById("reportsTabText").classList.add("nav-active-text")
           document.getElementById("reportsTabText").classList.add("font-weight-bold")

@@ -1,0 +1,148 @@
+<%- include('includes/header') %>
+
+<!-- ERRORS -->
+<% adErrors.forEach(function(message) { %>
+  <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
+<% }) %>
+
+<!-- GREETINGS -->
+<div class="text-center mb-2 mt-3">
+  <a href="/practice" type="button" class="mx-2 my-1 btn btn-outline-info btn-lg">Practice</a>
+  <a href="/missions" type="button" class="mx-2 my-1 btn btn-outline-danger btn-lg">Missions</a>
+  <a href="/leaderboard" type="button" class="mx-2 my-1 btn btn-outline-success btn-lg">Leaderboard</a>
+  <a href="/parents" type="button" class="mx-2 my-1 btn btn-outline-warning btn-lg">Parents</a>
+</div>
+
+<!-- MINI MISSIONS -->
+<!-- keep csrf token accessible -->
+<p id="csrf-landmark" data-value="<%= csrfToken %>"></p>
+<div id="mini-missions" class="section">
+  <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">MISSIONS</h1>
+    <h2 class="white-text text-center handlee pb-2 pt-0 mt-0">Activities to earn more Piano Points</h2></div>
+</div>
+<!-- Guess the Tempo -->
+<div class="purple-text text-center">#Guess the Tempo</div>
+<% if (BPMStatus == 'success') { %>
+  <div id="bpm-success" class="alert alert-success text-center mb-4 mt-2 pt-4">
+    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
+    <p>Spot on, <%= randomBPM %>! Your sense of timing is amazing.</p>
+    <p>The Piano Wizard has granted you a bunch of Piano Points for your achievement.</p>
+    <p>Guess again tomorrow!</p>
+  </div>
+<% } else if (BPMStatus == 'notQuite') { %>
+  <div id="bpm-almost" class="alert alert-warning text-center mb-4 mt-2 pt-4">
+    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
+    <p>Not quite! The tempo is <%= randomBPM %> beats per minute.</p>
+    <p>The Piano Wizard has granted you some encouragement Piano Points.</p>
+    <p>Guess again tomorrow!</p>
+  </div>
+<% } else { %>
+  <form action="/guessBPM" method="POST" class="alert alert-primary form-inline text-center mb-3 mt-3 justify-content-center">
+    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
+    <div class="form-group ml-4">
+      <label for="bpmGuess">I'm thinking... </label>
+      <input type="text" name="bpmGuess" id="bpmGuess" class="form-control input-lg mx-sm-3">
+      <small id="passwordHelpInline" class="text-muted">
+        beats per minute. 
+      </small>
+    </div>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit" class="btn btn-success ml-3">Guess!</button>
+  </form>
+<% } %>
+
+<!-- Technical Skills -->
+<div class="purple-text text-center mt-5 pt-5">#Technical Skills</div>
+<div class="text-center">
+  <% if (skillsStatuses[0]) { %>
+    <div class="py-3 mx-5 my-2 rounded task-div-complete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Play all major scales blindfolded</span></h3>
+    <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
+  </div>
+  <% } else { %>
+    <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Play all major scales blindfolded</span></h3>
+    <p>There are 12 of these!</p>
+    <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
+  </div>
+  <% }
+  if (skillsStatuses[1]) { %>
+  <div class="py-3 mx-5 my-2 rounded task-div-complete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Play all minor scales blindfolded</span></h3>
+    <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
+  </div> 
+  <% } else { %> 
+  <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Play all minor scales blindfolded</span></h3>
+    <p>There are 12 of these!</p>
+    <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
+  </div>
+  <% }
+  if (skillsStatuses[2]) { %>
+  <div class="py-3 mx-5 my-2 rounded task-div-complete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Play all major arpeggios blindfolded</span></h3>
+    <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
+  </div>
+  <% } else { %> 
+  <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Play all major arpeggios blindfolded</span></h3>
+    <p>There are 12 of these!</p>
+    <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
+  </div>
+  <% }
+  if (skillsStatuses[3]) { %>
+  <div class="py-3 mx-5 my-2 rounded task-div-complete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Play all minor arpeggios blindfolded</span></h3>
+    <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
+  </div> 
+  <% } else { %>  
+  <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Play all minor arpeggios blindfolded</span></h3>
+    <p>There are 12 of these!</p>
+    <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
+  </div>
+  <% }
+  if (skillsStatuses[4]) { %>
+  <div class="py-3 mx-5 my-2 rounded task-div-complete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Get a Black Belt in NinGenius</span></h3>
+    <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
+  </div> 
+  <% } else { %>   
+  <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
+    <h3 class="pink-text">50 Piano Points : <span class="small">Get a Black Belt in NinGenius</span></h3>
+    <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
+  </div>
+  <% } %>
+  </div>
+
+  <div class="purple-text text-center mt-5">#Something Else</div>
+  <div class="green-text text-center">Coming soon!</div>
+
+    <!--LOGOUT-->
+    <form id="logoutButton" class="mt-5" action="/logout" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Log Out</button>
+    </form>
+
+<script>
+  // Guess the tempo
+  var img = document.getElementById('blinking_image');
+
+  var interval = window.setInterval(function(){
+    if (img.style.visibility == 'hidden') {
+      img.style.visibility = 'visible';
+    } else{
+      img.style.visibility = 'hidden';
+    }
+  }, 30000/<%- randomBPM %>);
+
+// ADD CSRF TOKEN TO MISSION SUBMITS
+  if (document.getElementById('missionSubmitButton')) {
+    var d1 = document.getElementById('missionSubmitButton')
+    d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="_csrf" value="<%= csrfToken %>">')
+    d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="userId" value="<%= userId %>">')
+  }
+
+</script>
+
+<%- include('includes/footer') %>

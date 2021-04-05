@@ -180,17 +180,22 @@ User.doesEmailExist = function(email) {
     })
 }
 
-User.getMissionStatus = async (userId) => {
-    return new Promise (async(resolve, reject) => {
-        let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
-        resolve(userDoc.missionStatus)
-    })
+User.getSkillsStatuses = async (userId) => {
+  return new Promise (async(resolve, reject) => {
+      let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+      let skillsStatuses = userDoc.skillsStatuses
+      resolve(skillsStatuses)
+  })
 }
 
 User.getLeaderboard = function() {
     return new Promise (async(resolve, reject) => {
         let leaderboard = await usersCollection.find({"admin": false}).project({username: 1, leaderboardScore: 1, badges: 1, leaderboardColor: 1}).sort({leaderboardScore: -1}).toArray()
-        resolve(leaderboard)
+        let totalPianoPoints = 0
+        leaderboard.forEach((leader) => {
+          totalPianoPoints += leader.leaderboardScore
+        })
+        resolve({leaderboard: leaderboard, totalPianoPoints: totalPianoPoints})
     })
 }
 
@@ -268,6 +273,14 @@ User.getStudentWeeks = async function(userId) {
         let data = {studentWeeks, graphData}
         resolve(data)
     }).catch(function(err) {reject(err)})
+}
+
+// UNUSED
+User.getMissionStatus = async (userId) => {
+    return new Promise (async(resolve, reject) => {
+        let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+        resolve(userDoc.missionStatus)
+    })
 }
 
 User.getMissionCode = async function(userId) {
@@ -393,78 +406,6 @@ User.getMissionCode = async function(userId) {
 
             resolve (missionCode)
 
-            // 5 TASK MISSIONS
-        } else if (missionDoc.type == 'skill') {
-          // get current skill mission progress
-            let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
-            let skillsStatuses = userDoc.skillsStatuses
-
-            missionCode = `
-            <div class="alert alert-success text-center">There's a Skill mission. Begin upgrading your skills IRL today!</div>
-              <!-- Task 1 -->
-              <div id="skill-mission-container">
-                ${skillsStatuses[0] ? 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
-                  <h2 class="purple-text">1 Point : <span class="small">${missionDoc.task1}</span></h2>
-                  <h2 class="recursive correct-text">Completed! + 1 point</h2><img src="../images/check-mark.png">
-                </div>` : 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
-                  <h2 class="purple-text">1 Point : <span class="small">${missionDoc.task1}</span></h2>
-                  <p>${missionDoc.task1desc}</p>
-                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
-                </div>`
-                }
-              <!-- Task 2 -->
-              ${skillsStatuses[1] ? 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
-                  <h2 class="purple-text">5 Points : <span class="small">${missionDoc.task2}</span></h2>
-                  <h2 class="recursive correct-text">Completed! + 5 points</h2><img src="../images/check-mark.png">
-                </div>` : 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
-                  <h2 class="purple-text">5 Points : <span class="small">${missionDoc.task2}</span></h2>
-                  <p>${missionDoc.task2desc}</p>
-                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
-                </div>`
-                }
-              <!-- Task 3 -->
-              ${skillsStatuses[2] ? 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
-                  <h2 class="purple-text">5 Points : <span class="small">${missionDoc.task3}</span></h2>
-                  <h2 class="recursive correct-text">Completed! + 5 points</h2><img src="../images/check-mark.png">
-                </div>` : 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
-                  <h2 class="purple-text">5 Points : <span class="small">${missionDoc.task3}</span></h2>
-                  <p>${missionDoc.task3desc}</p>
-                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
-                </div>`
-                }
-              <!-- Task 4 -->
-              ${skillsStatuses[3] ? 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
-                  <h2 class="purple-text">10 Points : <span class="small">${missionDoc.task4}</span></h2>
-                  <h2 class="recursive correct-text">Completed! + 10 points</h2><img src="../images/check-mark.png">
-                </div>` : 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
-                  <h2 class="purple-text">10 Points : <span class="small">${missionDoc.task4}</span></h2>
-                  <p>${missionDoc.task4desc}</p>
-                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
-                </div>`
-                }
-              <!-- Task 5 -->
-              ${skillsStatuses[4] ? 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-complete">
-                  <h2 class="purple-text">20 Points : <span class="small">${missionDoc.task5}</span></h2>
-                  <h2 class="recursive correct-text">Completed! + 20 points</h2><img src="../images/check-mark.png">
-                </div>` : 
-                `<div class="py-3 mx-5 my-2 rounded border task-div-incomplete">
-                  <h2 class="purple-text">20 Points : <span class="small">${missionDoc.task5}</span></h2>
-                  <p>${missionDoc.task5desc}</p>
-                  <h2 class="recursive pink-text">Waiting for completion...</h2><img src="../images/chronometer.png">
-                </div>`
-                }
-                </div>`
-
-            resolve (missionCode)
         } else if (missionDoc.type == 'theCristoforiConnection') {
             missionCode = '<div class="alert alert-success text-center">There is a Game mission - put your thinking cap on and go for it!<br>What is the Cristofori Connection...?</div>' +
             '<iframe class="rounded" src="..\\..\\files\\TheCristoforiConnection\\index.html" frameborder="0" height="650px" width="100%"></iframe>'

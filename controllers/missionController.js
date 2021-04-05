@@ -3,7 +3,7 @@ const usersCollection = require('../db').db('studio-project').collection('users'
 const session = require('express-session')
 const ObjectID = require('mongodb').ObjectID
 
-// QUIZ MISSION
+// QUIZ MISSION UNUSED
 exports.checkQuiz = function(req, res) {
     Mission.checkQuiz(req.body).then(async(data) => {
         req.flash('missionResult', data.missionResult)
@@ -57,11 +57,11 @@ exports.checkBPM = async function(req, res) {
     if (adminDoc.randomBPM == req.body.bpmGuess) {
         let newScore = studentDoc.leaderboardScore + 15
         await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "success", "lastBPMGuess": todaysDate, "leaderboardScore": newScore} })
-        res.redirect('/reports#mini-missions')
+        res.redirect('/missions')
     } else {
         let newScore = studentDoc.leaderboardScore + getRndInt(1, 3)
         await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "notQuite", "lastBPMGuess": todaysDate, "leaderboardScore": newScore} })
-        res.redirect('/reports#mini-missions')
+        res.redirect('/missions')
     }
 }
 
@@ -81,7 +81,7 @@ exports.compareScoreAndSave = async function(req, res) {
 exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
     let randomInt = getRndInt(5, 10)
     await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
-    res.redirect('/reports#print-button')
+    res.redirect('/practice')
 }
 
 function getRndInt(min, max) {

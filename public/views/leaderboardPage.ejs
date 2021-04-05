@@ -1,0 +1,65 @@
+<%- include('includes/header') %>
+
+<!-- ERRORS -->
+<% adErrors.forEach(function(message) { %>
+  <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
+<% }) %>
+
+<!-- GREETINGS -->
+<div class="text-center mb-2 mt-3">
+  <a href="/practice" type="button" class="mx-2 my-1 btn btn-outline-info btn-lg">Practice</a>
+  <a href="/missions" type="button" class="mx-2 my-1 btn btn-outline-danger btn-lg">Missions</a>
+  <a href="/leaderboard" type="button" class="mx-2 my-1 btn btn-outline-success btn-lg">Leaderboard</a>
+  <a href="/parents" type="button" class="mx-2 my-1 btn btn-outline-warning btn-lg">Parents</a>
+</div>
+
+  <!-- LEADERBOARD -->
+  <div id="leaderboard" class="section">
+    <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">LEADERBOARD</h1>
+      <h2 class="white-text text-center handlee pb-2 pt-0 mt-0">Work together to earn group rewards</h2></div>
+  </div>
+
+  <div id="leaderboard-blurb" class="alert alert-secondary text-center mb-3 mt-3 pt-4">
+    <p class="recursive"><strong>Total Piano Points right now:</strong></p>
+    <p class="recursive"><strong class="pink-text" style="font-size:3rem;"><%= totalPianoPoints %></strong></p>
+    <p><strong>FREE</strong> : Change name colour</p>
+    <p><strong>10000</strong> : Pizza Party</p>
+    <p><strong>12000</strong> : Pizza Party + Movie</p>
+    <p><strong>15000</strong> : Pizza Party + Movie + Laser Tag</p>
+    <p><strong>20000</strong> : Pizza Party + Movie + Laser Tag + Theme Park</p>
+  </div>
+  <table class="mt-0 pt-0 table text-center table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Ranking</th>
+        <th scope="col">Name</th>
+        <th scope="col">Piano Points Contributed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% let i = 1 %>
+      <% leaderboard.forEach((leader) => { %>
+        <tr>
+          <th scope="row"><%= i %></th>
+          <td id="leader<%= i %>" class="langar">
+            <p class="<%= leader.leaderboardColor %> d-inline"><%= leader.username %></p>
+            <!--ADD BADGES HERE-->
+            <% if (leader.badges && leader.badges.includes("pioneer")) { %>
+              <img class="leaderboard-badge" src="../images/pioneer.png">
+            <% } %>
+          </td>
+          <td><%= leader.leaderboardScore %></td>
+        </tr>
+      <% i = i+1 %>
+      <% }) %>
+    </tbody>
+  </table>
+
+    <!--LOGOUT-->
+    <form id="logoutButton" class="mt-5" action="/logout" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Log Out</button>
+    </form>
+
+
+<%- include('includes/footer') %>

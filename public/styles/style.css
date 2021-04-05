@@ -404,16 +404,6 @@ hr {
     text-align: center;
 }
 
-#skill-mission-container {
-    margin-bottom: 4rem;
-    text-align: center;
-}
-
-#skill-mission-container img {
-    margin-bottom: 0.6rem;
-    margin-top: 0.6rem;
-}
-
 .task-div-complete {
     background-color: rgb(178, 255, 174);
     color: black;

@@ -29,6 +29,12 @@ router.post('/doesEmailExist', userController.doesEmailExist)
 router.post('/isCorrect', userController.isCorrect)
 router.post('/submitQuiz', missionController.checkQuiz)
 
+// student navigation
+router.get('/practice', userController.mustBeLoggedIn, userController.showPracticePage)
+router.get('/missions', userController.mustBeLoggedIn, userController.showMissionsPage)
+router.get('/leaderboard', userController.mustBeLoggedIn, userController.showLeaderboardPage)
+router.get('/parents', userController.mustBeLoggedIn, userController.showParentsPage)
+
 // scoresby routes
 router.get('/scoresby', userController.mustBeLoggedIn, userController.mustBeAdmin, scoresbyController.getDataAndShowScoresbyPage)
 router.post('/logContributor', userController.mustBeLoggedIn, userController.mustBeAdmin, scoresbyController.logContributorAndRefresh)
