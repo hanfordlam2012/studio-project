@@ -9,14 +9,29 @@ let Mission = function(data) {
 
 // Template to set fields (both existing or not)
 giveEveryoneASomething = async function() {
-    let d = new Date()
-    d.setHours(d.getHours() + 11)
+    //let d = new Date()
+    //d.setHours(d.getHours() + 11)
     await usersCollection.updateMany(
-      {fName: ""},
+      {},
       { $set:
          {
-           BPMStatus: "",
-           lastBPMGuess: new Date()
+           MissionStatuses: {
+               majorScales: false,
+               minorScales: false,
+               majorArpeggios: false,
+               minorArpeggios: false,
+               scaleModes: false,
+               arpeggioInversions: false,
+               chromatic: false,
+               ningenius: false,
+               sightReading: false,
+               oneTimeAuralMemory: false,
+               noteMemoryGame: false,
+               mastermind: false,
+               contributeStory: false,
+               recitalPerformer: false,
+               examTaker: false
+           }
          }
       }
    )

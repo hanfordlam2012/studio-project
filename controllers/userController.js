@@ -174,20 +174,22 @@ exports.showPracticePage = function(req, res) {
 
 exports.showMissionsPage = function(req, res) {
     User.getLeaderboard().then((leaderboardObject) => {
-        User.getSkillsStatuses(req.session.user.userId).then(async (skillsStatuses) => {
-            let randomBPM = await missionController.getRandomBPM()
-            let BPMStatus = await missionController.getBPMStatus(req.session.user.userId)
-            res.render('missionsPage', {
-                fName: req.session.user.fName,
-                userId: req.session.user.userId,
-                parentName: req.session.user.parentName,
-                admin: req.session.user.admin,
-                skillsStatuses: skillsStatuses,
-                leaderboard: leaderboardObject.leaderboard,
-                adErrors: req.flash('adErrors'),
-                randomBPM: randomBPM, // taken from admin acc
-                BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
-                totalPianoPoints: leaderboardObject.totalPianoPoints
+        User.getMissionStatuses(req.session.user.userId).then((missionStatuses) => {
+            missionController.getRandomBPM().then((randomBPM) => {
+                missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
+                    res.render('missionsPage', {
+                        fName: req.session.user.fName,
+                        userId: req.session.user.userId,
+                        parentName: req.session.user.parentName,
+                        admin: req.session.user.admin,
+                        missionStatuses: missionStatuses,
+                        leaderboard: leaderboardObject.leaderboard,
+                        adErrors: req.flash('adErrors'),
+                        randomBPM: randomBPM, // taken from admin acc
+                        BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
+                        totalPianoPoints: leaderboardObject.totalPianoPoints
+                    })
+                })
             })
         })
     })

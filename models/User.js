@@ -61,7 +61,23 @@ User.prototype.cleanUp = function() {
         admin: false,
         missionStatus: false,
         leaderboardScore: 0,
-        skillsStatuses: [false, false, false, false, false],
+        MissionStatuses: {
+          majorScales: false,
+          minorScales: false,
+          majorArpeggios: false,
+          minorArpeggios: false,
+          scaleModes: false,
+          arpeggioInversions: false,
+          chromatic: false,
+          ningenius: false,
+          sightReading: false,
+          oneTimeAuralMemory: false,
+          noteMemoryGame: false,
+          mastermind: false,
+          contributeStory: false,
+          recitalPerformer: false,
+          examTaker: false
+        },
         leaderboardColor: 'leaderboard-text',
         badges: [],
         lastSubmittedDate: new Date(),
@@ -180,14 +196,6 @@ User.doesEmailExist = function(email) {
     })
 }
 
-User.getSkillsStatuses = async (userId) => {
-  return new Promise (async(resolve, reject) => {
-      let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
-      let skillsStatuses = userDoc.skillsStatuses
-      resolve(skillsStatuses)
-  })
-}
-
 User.getLeaderboard = function() {
     return new Promise (async(resolve, reject) => {
         let leaderboard = await usersCollection.find({"admin": false}).project({username: 1, leaderboardScore: 1, badges: 1, leaderboardColor: 1}).sort({leaderboardScore: -1}).toArray()
@@ -275,11 +283,10 @@ User.getStudentWeeks = async function(userId) {
     }).catch(function(err) {reject(err)})
 }
 
-// UNUSED
-User.getMissionStatus = async (userId) => {
+User.getMissionStatuses = async (userId) => {
     return new Promise (async(resolve, reject) => {
         let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
-        resolve(userDoc.missionStatus)
+        resolve(userDoc.MissionStatuses)
     })
 }
 
