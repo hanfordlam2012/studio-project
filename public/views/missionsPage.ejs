@@ -9,7 +9,7 @@
 <div class="text-center mb-2 mt-3">
   <a href="/practice" type="button" class="mx-2 my-1 btn btn-outline-info btn-lg">Practice</a>
   <a href="/missions" type="button" class="mx-2 my-1 btn btn-outline-danger btn-lg">Missions</a>
-  <a href="/leaderboard" type="button" class="mx-2 my-1 btn btn-outline-success btn-lg">Leaderboard</a>
+  <a href="/leaderboard" type="button" class="mx-2 my-1 btn btn-outline-success btn-lg">Points</a>
   <a href="/parents" type="button" class="mx-2 my-1 btn btn-outline-warning btn-lg">Parents</a>
 </div>
 
@@ -18,7 +18,18 @@
 <p id="csrf-landmark" data-value="<%= csrfToken %>"></p>
 <div id="mini-missions" class="section">
   <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">MISSIONS</h1>
-    <h2 class="white-text text-center handlee pb-2 pt-0 mt-0">Activities to earn more Piano Points</h2></div>
+    <h2 class="white-text text-center handlee pb-2 pt-0 mt-0">
+      <% let i = 0;
+      Object.values(missionStatuses).forEach((value) => {
+        if(value){
+          i += 1;
+        }
+      })
+      if(i==1){ %>
+        1 mission complete
+      <% }else{ %>
+      <%= i %> missions complete
+      <% } %></h2></div>
 </div>
 <!-- Guess the Tempo -->
 <div class="green-text text-center">#Tempo And Pulse</div>
@@ -40,94 +51,93 @@
   <form action="/guessBPM" method="POST" class="alert alert-primary form-inline text-center mb-3 mt-3 justify-content-center">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
     <div class="form-group ml-4">
-      <label for="bpmGuess">I'm thinking... </label>
       <input type="text" name="bpmGuess" id="bpmGuess" class="form-control input-lg mx-sm-3">
       <small id="passwordHelpInline" class="text-muted">
-        beats per minute. 
+        beats per minute
       </small>
     </div>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-success ml-3">Guess!</button>
+    <button type="submit" class="btn btn-success ml-3">Guess</button>
   </form>
 <% } %>
 
 <!-- Technical Skills -->
 <div class="green-text text-center mt-5 pt-5">#Scales And Arpeggios</div>
 <div class="text-center">
-<% if (missionStatuses.majorScales) { console.log(missionStatuses); %>
+<% if (missionStatuses.majorScales) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play all major scales</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Major scales</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %>
   <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play all major scales</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Major scales</span></h3>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% }
 if (missionStatuses.minorScales) { %>
 <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play all minor scales</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Minor scales</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div> 
 <% } else { %> 
 <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play all minor scales</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Minor scales</span></h3>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% }
 if (missionStatuses.majorArpeggios) { %>
 <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play all major arpeggios</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Major arpeggios</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %> 
 <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play all major arpeggios</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Major arpeggios</span></h3>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% }
 if (missionStatuses.minorArpeggios) { %>
 <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play all minor arpeggios</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Minor arpeggios</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div> 
 <% } else { %>  
 <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play all minor arpeggios</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Minor arpeggios</span></h3>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% }
 if (missionStatuses.scaleModes) { %>
 <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play the modes of all the scales</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Scale modes</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div> 
 <% } else { %>   
 <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play the modes of all the scales</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Scale modes</span></h3>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% }
 if (missionStatuses.arpeggioInversions) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-    <h3 class="pink-text">50 Piano Points : <span class="small">Play the inversions of all the arpeggios</span></h3>
+    <h3 class="pink-text">50 Piano Points : <span class="small">Arpeggio inversions</span></h3>
     <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
   </div> 
 <% } else { %>   
 <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play the inversions of all the arpeggios</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Arpeggio inversions</span></h3>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% }
 if (missionStatuses.chromatic) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-    <h3 class="pink-text">50 Piano Points : <span class="small">Play chromatic scales starting on black and white keys</span></h3>
+    <h3 class="pink-text">50 Piano Points : <span class="small">Chromatic scales</span></h3>
     <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
   </div> 
 <% } else { %>   
 <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play chromatic scales starting on black and white keys</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Chromatic scales</span></h3>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% } %>
@@ -138,24 +148,24 @@ if (missionStatuses.chromatic) { %>
 <div class="text-center">
 <% if (missionStatuses.ningenius) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Get a Black Belt in NinGenius</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">NinGenius</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %>
   <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Get a Black Belt in NinGenius</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">NinGenius</span></h3>
   <p>This is a game on Hanford's iPad.</p>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% } %>
 <% if (missionStatuses.sightReading) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Sight-read a test without mistakes</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Sight-reading</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %>
   <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Sight-read a test without mistakes</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Sight-reading</span></h3>
   <p>Practice by reading any music you can get your hands on. <br>
     Online, old books, and Hanford's library are good places to start.</p>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
@@ -167,24 +177,24 @@ if (missionStatuses.chromatic) { %>
 <div class="text-center">
 <% if (missionStatuses.oneTimeAuralMemory) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Memorise and sing back a melody after only hearing it once</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Melodic memory</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %>
   <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Memorise and sing back a melody after only hearing it once</span></h3>
-  <p>Hanford will play a melody on the piano for you to hear once.</p>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Melodic memory</span></h3>
+  <p>Hanford will play a melody on the piano for you to sing back.</p>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% } %>
 <% if (missionStatuses.noteMemoryGame) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play a game of <em>Note Memory</em> with Hanford past 10 notes</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small"><em>Note Memory</em> game</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %>
   <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Play a game of <em>Note Memory</em> with Hanford past 10 notes</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small"><em>Note Memory</em> game</span></h3>
   <p>We take turns building up our sequence.</p>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
@@ -194,26 +204,25 @@ if (missionStatuses.chromatic) { %>
 <div class="green-text text-center mt-5">#Creative Skills</div>
 <% if (missionStatuses.mastermind) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Beat Hanford in a game of MasterMind</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">MasterMind</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %>
   <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Beat Hanford in a game of MasterMind</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">MasterMind</span></h3>
   <p>This is a game with some strategy and some luck.</p>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% } %>
 <% if (missionStatuses.contributeStory) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Contribute a short story to the wall</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Creative writing</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %>
   <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Contribute a short story to the wall</span></h3>
-  <p>Write a short story that is inspired by some music you are learning now. <br>
-    Share that with Hanford and he will put it up on the studio wall to showcase your work.</p>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Creative writing</span></h3>
+  <p>An imaginative writing task.</p>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% } %>
@@ -223,25 +232,25 @@ if (missionStatuses.chromatic) { %>
 <div class="text-center">
 <% if (missionStatuses.recitalPerformer) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Perform in a concert recital</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Perform in a recital</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %>
   <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Perform in a concert recital</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Perform in a recital</span></h3>
   <p>Everyone should give this a go.</p>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% } %>
 <% if (missionStatuses.examTaker) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Pass a formal exam with AMEB or an informal one with Hanford</span></h3>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Formal/Informal exam</span></h3>
   <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
 </div>
 <% } else { %>
   <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
-  <h3 class="pink-text">50 Piano Points : <span class="small">Pass a formal exam with AMEB or an informal one with Hanford</span></h3>
-  <p>Exams help tell us what we can do really well under pressure and what we can't.</p>
+  <h3 class="pink-text">50 Piano Points : <span class="small">Formal/Informal exam</span></h3>
+  <p>Exams help tell us what we can do really well under pressure and what we can't yet.</p>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% } %>

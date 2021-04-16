@@ -45,11 +45,9 @@ exports.getBPMStatus = async function(userId) {
     let userDoc = await usersCollection.findOne({"_id": ObjectID(userId) })
     let todaysDate = new Date()
     todaysDate.addHours(3)
-    console.log(userDoc)
 
     // compare today's date with student's last guess date
     if (todaysDate.getDate() == userDoc.lastBPMGuess.getDate()) {
-        console.log(userDoc)
         let BPMStatus = userDoc.BPMStatus
         return BPMStatus
     } else {
