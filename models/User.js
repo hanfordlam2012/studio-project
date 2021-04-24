@@ -5,6 +5,7 @@ const ObjectID = require('mongodb').ObjectID
 const usersCollection = require('../db').db('studio-project').collection('users')
 const weeksCollection = require('../db').db('studio-project').collection('weeks')
 const missionsCollection = require('../db').db('studio-project').collection('missions')
+const mainDb = require('../db').db('studio-project')
 // more convenient validation
 const validator = require("validator")
 
@@ -75,6 +76,7 @@ User.prototype.cleanUp = function() {
           noteMemoryGame: false,
           mastermind: false,
           contributeStory: false,
+          essayWriting: false,
           recitalPerformer: false,
           examTaker: false
         },
@@ -196,9 +198,14 @@ User.doesEmailExist = function(email) {
     })
 }
 
+// UNSUSED - for counting document based on query
+User.countLessons = async function(studentId) {
+    console.log(await weeksCollection.countDocuments( { studentId: ObjectID(studentId) } ))
+}
+
 User.getLeaderboard = function() {
     return new Promise (async(resolve, reject) => {
-        let leaderboard = await usersCollection.find({"admin": false}).project({username: 1, leaderboardScore: 1, badges: 1, leaderboardColor: 1}).sort({leaderboardScore: -1}).toArray()
+        let leaderboard = await usersCollection.find({"admin": false}).project({username: 1, MissionStatuses: 1, leaderboardScore: 1, badges: 1, leaderboardColor: 1, lessonCount: 1}).sort({leaderboardScore: -1}).toArray()
         let totalPianoPoints = 0
         leaderboard.forEach((leader) => {
           totalPianoPoints += leader.leaderboardScore

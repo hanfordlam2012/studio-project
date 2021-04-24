@@ -187,7 +187,8 @@ exports.showMissionsPage = function(req, res) {
                         adErrors: req.flash('adErrors'),
                         randomBPM: randomBPM, // taken from admin acc
                         BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
-                        totalPianoPoints: leaderboardObject.totalPianoPoints
+                        totalPianoPoints: leaderboardObject.totalPianoPoints,
+                        
                     })
                 })
             })

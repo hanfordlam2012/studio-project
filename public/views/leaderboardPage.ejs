@@ -41,10 +41,12 @@
   </div>
   <table class="mt-0 pt-0 table text-center table-dark">
     <thead>
-      <tr>
+      <tr class="blue-text">
         <th scope="col">Ranking</th>
         <th scope="col">Name</th>
-        <th scope="col">PP Contributed</th>
+        <th scope="col">Lessons</th>
+        <th scope="col">Missions</th>
+        <th scope="col">Points</th>
       </tr>
     </thead>
     <tbody>
@@ -59,7 +61,18 @@
               <img class="leaderboard-badge" src="../images/pioneer.png">
             <% } %>
           </td>
-          <td><%= leader.leaderboardScore %></td>
+          <td><%= leader.lessonCount %></td>
+          <% 
+            let missionsComplete = 0
+            // returns array of stringed key value pairs
+            for (const [key, value] of Object.entries(leader.MissionStatuses)) {
+              if (value) {
+                missionsComplete +=1
+              }
+            }
+          %>
+          <td><%= missionsComplete %></td>
+          <td class="pink-text"><%= leader.leaderboardScore %></td>
         </tr>
       <% i = i+1 %>
       <% }) %>

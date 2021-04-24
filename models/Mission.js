@@ -15,23 +15,7 @@ giveEveryoneASomething = async function() {
       {},
       { $set:
          {
-           MissionStatuses: {
-               majorScales: false,
-               minorScales: false,
-               majorArpeggios: false,
-               minorArpeggios: false,
-               scaleModes: false,
-               arpeggioInversions: false,
-               chromatic: false,
-               ningenius: false,
-               sightReading: false,
-               oneTimeAuralMemory: false,
-               noteMemoryGame: false,
-               mastermind: false,
-               contributeStory: false,
-               recitalPerformer: false,
-               examTaker: false
-           }
+            lessonCount: 0
          }
       }
    )

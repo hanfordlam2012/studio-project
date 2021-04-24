@@ -32,7 +32,7 @@
       <% } %></h2></div>
 </div>
 <!-- Guess the Tempo -->
-<div class="green-text text-center">#Tempo And Pulse</div>
+<div class="green-text text-center">#Tempo and Pulse</div>
 <% if (BPMStatus == 'success') { %>
   <div id="bpm-success" class="alert alert-success text-center mb-4 mt-2 pt-4">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
@@ -62,7 +62,7 @@
 <% } %>
 
 <!-- Technical Skills -->
-<div class="green-text text-center mt-5 pt-5">#Scales And Arpeggios</div>
+<div class="green-text text-center mt-5 pt-5">#Scales and Arpeggios</div>
 <div class="text-center">
 <% if (missionStatuses.majorScales) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
@@ -144,7 +144,7 @@ if (missionStatuses.chromatic) { %>
 </div>
 
 <!-- Sight Reading-->
-<div class="green-text text-center mt-5">#Reading Skills</div>
+<div class="green-text text-center mt-5">#Reading</div>
 <div class="text-center">
 <% if (missionStatuses.ningenius) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
@@ -173,7 +173,7 @@ if (missionStatuses.chromatic) { %>
 <% } %>
 
 <!-- Listening Skills-->
-<div class="green-text text-center mt-5">#Listening Skills</div>
+<div class="green-text text-center mt-5">#Listening</div>
 <div class="text-center">
 <% if (missionStatuses.oneTimeAuralMemory) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
@@ -201,7 +201,7 @@ if (missionStatuses.chromatic) { %>
 <% } %>
 
 <!-- Creative Skills-->
-<div class="green-text text-center mt-5">#Creative Skills</div>
+<div class="green-text text-center mt-5">#Creativity and Problem Solving</div>
 <% if (missionStatuses.mastermind) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
   <h3 class="pink-text">50 Piano Points : <span class="small">MasterMind</span></h3>
@@ -227,8 +227,23 @@ if (missionStatuses.chromatic) { %>
 </div>
 <% } %>
 
+<!-- Knowledge and Facts -->
+<div class="green-text text-center mt-5">#Knowledge and Facts</div>
+<% if (missionStatuses.essayWriting) { %>
+  <div class="py-3 mx-5 my-2 rounded task-div-complete">
+  <h3 class="pink-text">50 Piano Points : <span class="small">Essay Writing</span></h3>
+  <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
+</div>
+<% } else { %>
+  <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
+  <h3 class="pink-text">50 Piano Points : <span class="small">Essay Writing</span></h3>
+  <p>Your best research on a topic given by Hanford.</p>
+  <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
+</div>
+<% } %>
+
 <!-- Performance Skills-->
-<div class="green-text text-center mt-5">#Performance Skills</div>
+<div class="green-text text-center mt-5">#Performance</div>
 <div class="text-center">
 <% if (missionStatuses.recitalPerformer) { %>
   <div class="py-3 mx-5 my-2 rounded task-div-complete">
