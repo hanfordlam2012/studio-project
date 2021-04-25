@@ -54,7 +54,7 @@
         <tr>
           <th  class="blue-text" scope="row"><%= i %></th>
           <td id="leader<%= i %>" class="langar">
-            <p class="<%= leader.leaderboardColor %> d-inline"><%= leader.username %></p>
+            <p style="color: <%= leader.leaderboardColor %>" class="d-inline"><%= leader.username %></p>
             <!--ADD BADGES HERE-->
             <% if (leader.badges && leader.badges.includes("pioneer")) { %>
               <img class="leaderboard-badge" src="../images/pioneer.png">
