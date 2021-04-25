@@ -19,24 +19,41 @@
       <h2 class="white-text text-center handlee pb-2 pt-0 mt-0">Work together to unlock rewards</h2></div>
   </div>
 
-  <div id="leaderboard-blurb" class="alert alert-secondary text-center mb-3 mt-3 pt-4">
-    <p class="recursive"><strong>Total Piano Points:</strong></p>
-    <p class="recursive"><strong class="pink-text" style="font-size:3rem;"><%= totalPianoPoints %></strong></p>
-    <% if(totalPianoPoints >= 5000){ %>
-      <p><strong>**Unlocked 5000 tier rewards**</strong></p>
+  <div id="leaderboard-blurb" class="alert alert-success text-center mb-3 mt-3 pt-4">
+    <p class="recursive"><strong class="pink-text" style="font-size:5rem;"><%= totalPianoPoints %></strong></p>
+    <span class="poppins">
+      <% if(totalPianoPoints >= 5000){ %>
+      <p class="milestone-text"><strong>5000 Milestone - Unlock starting rewards</strong></p>
     <% } else { %>
-      <p><%= 5000 - totalPianoPoints %> Piano Points needed to unlock 5000 tier rewards</p>
+      <p class="nomilestone-text">5000 Milestone - Unlock starting rewards</p>
+    <% }
+    if(totalPianoPoints >= 7500){ %>
+      <p><strong>7500 Milestone - Free lollies for everyone</strong></p>
+    <% } else { %>
+      <p class="nomilestone-text">7500 Milestone - Free lollies for everyone</p>
     <% }
     if(totalPianoPoints >= 10000){ %>
-      <p><strong>**Unlocked 10000 tier rewards**</strong></p>
+      <p><strong>10000 Milestone - Unlock more rewards</strong></p>
     <% }else{ %>
-      <p><%= 10000 - totalPianoPoints %> Piano Points needed to unlock 10000 tier rewards</p>
+      <p class="nomilestone-text">10000 Milestone - Unlock more rewards</p>
+    <% }
+    if(totalPianoPoints >= 12500){ %>
+      <p><strong>12500 Milestone - Free movie excursion</strong></p>
+    <% } else { %>
+      <p class="nomilestone-text">12500 Milestone - Free movie excursion for everyone</p>
     <% }
     if(totalPianoPoints >= 15000){ %>
-      <p><strong>**Unlocked 15000 tier rewards**</strong></p>
+      <p><strong>15000 Milestone - Unlock top rewards</strong></p>
     <% }else{ %>
-      <p><%= 15000 - totalPianoPoints %> Piano Points needed to unlock 15000 tier rewards</p>
+      <p class="nomilestone-text">15000 Milestone - Unlock top rewards</p>
+    <% }
+    if(totalPianoPoints >= 17500){ %>
+      <p><strong>17500 Milestone - Free adventure room for everyone</strong></p>
+    <% }else{ %>
+      <p class="nomilestone-text">17500 Milestone - Free adventure room for everyone</p>
     <% } %>
+    </span>
+    
   </div>
   <table class="mt-0 pt-0 table text-center table-dark">
     <thead>
@@ -45,7 +62,7 @@
         <th scope="col">Name</th>
         <th scope="col">Lessons</th>
         <th scope="col">Missions</th>
-        <th scope="col">Points</th>
+        <th scope="col">Contribution</th>
       </tr>
     </thead>
     <tbody>

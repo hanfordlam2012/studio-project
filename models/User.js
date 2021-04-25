@@ -60,7 +60,6 @@ User.prototype.cleanUp = function() {
         password: this.data.password,
         secret: this.data.secret,
         admin: false,
-        missionStatus: false,
         leaderboardScore: 0,
         MissionStatuses: {
           majorScales: false,
@@ -80,7 +79,7 @@ User.prototype.cleanUp = function() {
           recitalPerformer: false,
           examTaker: false
         },
-        leaderboardColor: 'leaderboard-text',
+        leaderboardColor: '#000000',
         badges: [],
         lastSubmittedDate: new Date(),
         savedGameScore: 0,

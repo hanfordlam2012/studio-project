@@ -236,6 +236,14 @@ h2 {
     margin: 0;
 }
 
+.milestone-text {
+    color: #66128c;
+}
+
+.nomilestone-text {
+    color: #969696;
+}
+
 .pink-text {
     color: #e8226a;
 }
