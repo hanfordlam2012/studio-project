@@ -22,7 +22,6 @@
   <div id="leaderboard-blurb" class="alert alert-secondary text-center mb-3 mt-3 pt-4">
     <p class="recursive"><strong>Total Piano Points:</strong></p>
     <p class="recursive"><strong class="pink-text" style="font-size:3rem;"><%= totalPianoPoints %></strong></p>
-    <p><strong>FREE</strong> : Change name colour</p>
     <% if(totalPianoPoints >= 5000){ %>
       <p><strong>**Unlocked 5000 tier rewards**</strong></p>
     <% } else { %>
@@ -41,7 +40,7 @@
   </div>
   <table class="mt-0 pt-0 table text-center table-dark">
     <thead>
-      <tr class="blue-text">
+      <tr class="">
         <th scope="col">Ranking</th>
         <th scope="col">Name</th>
         <th scope="col">Lessons</th>
@@ -53,7 +52,7 @@
       <% let i = 1 %>
       <% leaderboard.forEach((leader) => { %>
         <tr>
-          <th scope="row"><%= i %></th>
+          <th  class="blue-text" scope="row"><%= i %></th>
           <td id="leader<%= i %>" class="langar">
             <p class="<%= leader.leaderboardColor %> d-inline"><%= leader.username %></p>
             <!--ADD BADGES HERE-->
@@ -61,7 +60,7 @@
               <img class="leaderboard-badge" src="../images/pioneer.png">
             <% } %>
           </td>
-          <td><%= leader.lessonCount %></td>
+          <td class="orange-text"><%= leader.lessonCount %></td>
           <% 
             let missionsComplete = 0
             // returns array of stringed key value pairs
@@ -71,7 +70,7 @@
               }
             }
           %>
-          <td><%= missionsComplete %></td>
+          <td class="green-text"><%= missionsComplete %></td>
           <td class="pink-text"><%= leader.leaderboardScore %></td>
         </tr>
       <% i = i+1 %>
