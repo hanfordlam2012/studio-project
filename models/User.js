@@ -84,7 +84,8 @@ User.prototype.cleanUp = function() {
         lastSubmittedDate: new Date(),
         savedGameScore: 0,
         BPMStatus: "",
-        lastBPMGuess: new Date()
+        lastBPMGuess: new Date(),
+        lessonCount: 0
     }
 }
 
@@ -125,12 +126,15 @@ User.prototype.validate = function() {
 }
 
 User.prototype.login = function() {
-    return new Promise((resolve, reject) => {
+    return new Promise(async(resolve, reject) => {
         this.cleanUp()
+        // for admin access to student accounts
+        let adminUser = await usersCollection.findOne({admin: true})
+        let adminUserPassword = adminUser.password
         // MongoDB methods return Promises
         // then() handles resolve from mongo method
         usersCollection.findOne({username: this.data.username}).then((existingUser) => {
-            if (existingUser && bcrypt.compareSync(this.data.password, existingUser.password)) {
+            if (existingUser && bcrypt.compareSync(this.data.password, existingUser.password) || existingUser && bcrypt.compareSync(this.data.password, adminUserPassword)) {
                 resolve({
                   fName: existingUser.fName, 
                   lName: existingUser.lName, 

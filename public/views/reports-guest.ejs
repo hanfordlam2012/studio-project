@@ -11,7 +11,7 @@
           <div class="d-flex mt-3 justify-content-center">
             
             <form action="/login" method="POST" class="">
-              <input autocomplete="off" type="text" name="username" class="text-center form-control mb-2 mr-sm-2" placeholder="Username">
+              <input autocomplete="off" type="text" name="username" class="text-center form-control mb-2 mr-sm-2" placeholder="Username" id="usernameInput">
               <input autocomplete="off" type="password" name="password" class="text-center form-control mb-2 mr-sm-2" placeholder="Password">
               <div class="d-flex justify-content-center">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -88,4 +88,8 @@
             <button type="submit" class="btn btn-success btn-lg btn-block mt-5">Register</button>
           </form>
         </div>
+
+        <script>
+          document.getElementById("usernameInput").focus();
+        </script>
 <%- include('includes/footer') %>
