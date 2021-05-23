@@ -31,7 +31,7 @@
 </script>
 
   <% latestComments.forEach((comment) => { %>
-      <div id="weeklySnapshot" class="mt-5 px-5"><%- filterUserHTML(comment.comments) %></div>
+      <div id="weeklySnapshot" class="mt-5 px-1"><%- filterUserHTML(comment.comments) %></div>
       <div id="print-button" class="text-center mt-5 pt-5 pb-2">
         <button class="mx-3 btn btn-outline-secondary btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print notes</button>
       </div>
