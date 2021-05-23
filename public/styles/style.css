@@ -434,8 +434,8 @@ hr {
 }
 
 #weeklySnapshot {
-    margin-left: 10rem;
-    margin-right: 10rem;
+    max-width: 1000px;
+    margin: auto;
 }
 
 #weeklySnapshot em {
