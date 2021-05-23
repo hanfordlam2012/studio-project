@@ -269,6 +269,18 @@ if (missionStatuses.chromatic) { %>
   <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
 </div>
 <% } %>
+<% if (missionStatuses.competitor) { %>
+  <div class="py-3 mx-5 my-2 rounded task-div-complete">
+  <h3 class="pink-text">50 Piano Points : <span class="small">Competition</span></h3>
+  <h3 class="recursive correct-text">Done!</h3><img src="../images/check-mark.png">
+</div>
+<% } else { %>
+  <div class="py-3 mx-5 my-2 rounded task-div-incomplete">
+  <h3 class="pink-text">50 Piano Points : <span class="small">Competition</span></h3>
+  <p>Face your fears to overcome them.</p>
+  <h3 class="recursive pink-text">Not yet...</h3><img src="../images/chronometer.png">
+</div>
+<% } %>
 
 <!-- Games-->
 <div class="green-text text-center mt-5">#Arcade Games</div>
