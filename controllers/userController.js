@@ -83,12 +83,16 @@ exports.login = function (req, res) {
         // session property added by express-session in app.js
         // session package recognises changes to session object and auto updates database
         req.session.user = { 
+            username: result.username,
             fName: result.fName, 
             lName: result.lName, 
             parentName: result.parentName, 
             admin: result.admin, 
             userId: result.userId, 
-            secret: result.secret 
+            secret: result.secret,
+            lessonCount: result.lessonCount,
+            paidLessons: result.paidLessons,
+            leaderboardColor: result.leaderboardColor 
         }
         // so we can manually save to ensure callback function is run after
         req.session.save(function () {
@@ -155,17 +159,30 @@ exports.editWeek = function (req, res) {
 exports.showPracticePage = function(req, res) {
     User.getLatestComments(req.session.user.userId).then(function (latestComments) {
         User.getLeaderboard().then((leaderboardObject) => {
-            Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
-                res.render('practicePage', {
-                    fName: req.session.user.fName,
-                    userId: req.session.user.userId,
-                    parentName: req.session.user.parentName,
-                    admin: req.session.user.admin,
-                    latestComments: latestComments,
-                    leaderboard: leaderboardObject.leaderboard,
-                    adErrors: req.flash('adErrors'),
-                    practiceStatus: practiceStatus, // true if already practised
-                    totalPianoPoints: leaderboardObject.totalPianoPoints
+            User.getPoints(req.session.user.userId).then((points) => {
+                Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
+                    missionController.getRandomBPM().then((randomBPM) => {
+                        missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
+                            res.render('practicePage', {
+                                username: req.session.user.username,
+                                fName: req.session.user.fName,
+                                userId: req.session.user.userId,
+                                parentName: req.session.user.parentName,
+                                admin: req.session.user.admin,
+                                randomBPM: randomBPM, // taken from admin acc
+                                BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
+                                latestComments: latestComments,
+                                leaderboard: leaderboardObject.leaderboard,
+                                adErrors: req.flash('adErrors'),
+                                practiceStatus: practiceStatus, // true if already practised
+                                points: points,
+                                totalPianoPoints: leaderboardObject.totalPianoPoints,
+                                lessonCount: req.session.user.lessonCount,
+                                paidLessons: req.session.user.paidLessons,
+                                leaderboardColor: req.session.user.leaderboardColor
+                            })
+                        })
+                    })
                 })
             })
         })
@@ -175,20 +192,27 @@ exports.showPracticePage = function(req, res) {
 exports.showMissionsPage = function(req, res) {
     User.getLeaderboard().then((leaderboardObject) => {
         User.getMissionStatuses(req.session.user.userId).then((missionStatuses) => {
-            missionController.getRandomBPM().then((randomBPM) => {
-                missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
-                    res.render('missionsPage', {
-                        fName: req.session.user.fName,
-                        userId: req.session.user.userId,
-                        parentName: req.session.user.parentName,
-                        admin: req.session.user.admin,
-                        missionStatuses: missionStatuses,
-                        leaderboard: leaderboardObject.leaderboard,
-                        adErrors: req.flash('adErrors'),
-                        randomBPM: randomBPM, // taken from admin acc
-                        BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
-                        totalPianoPoints: leaderboardObject.totalPianoPoints,
-                        
+            User.getPoints(req.session.user.userId).then((points) => {
+                missionController.getRandomBPM().then((randomBPM) => {
+                // function not yet written, need to return object with props BPMStatus, points
+                    missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
+                        res.render('missionsPage', {
+                            username: req.session.user.username,
+                            fName: req.session.user.fName,
+                            userId: req.session.user.userId,
+                            parentName: req.session.user.parentName,
+                            admin: req.session.user.admin,
+                            missionStatuses: missionStatuses,
+                            points: points,
+                            leaderboard: leaderboardObject.leaderboard,
+                            adErrors: req.flash('adErrors'),
+                            randomBPM: randomBPM, // taken from admin acc
+                            BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
+                            totalPianoPoints: leaderboardObject.totalPianoPoints,
+                            lessonCount: req.session.user.lessonCount,
+                            paidLessons: req.session.user.paidLessons,
+                            leaderboardColor: req.session.user.leaderboardColor
+                        })
                     })
                 })
             })
@@ -197,43 +221,61 @@ exports.showMissionsPage = function(req, res) {
 }
 
 exports.showLeaderboardPage = function(req, res) {
-    User.getLeaderboard().then((leaderboardObject) => {
-        res.render('leaderboardPage', {
+    User.getPrizeList().then((prizeList) => {
+      User.getLeaderboard().then((leaderboardObject) => {
+          User.getPoints(req.session.user.userId).then((points) => {
+            res.render('leaderboardPage', {
+            username: req.session.user.username,
             fName: req.session.user.fName,
             userId: req.session.user.userId,
             parentName: req.session.user.parentName,
             admin: req.session.user.admin,
             leaderboard: leaderboardObject.leaderboard,
             adErrors: req.flash('adErrors'),
-            totalPianoPoints: leaderboardObject.totalPianoPoints
-        })
+            totalPianoPoints: leaderboardObject.totalPianoPoints,
+            prizeList: prizeList,
+            lessonCount: req.session.user.lessonCount,
+            paidLessons: req.session.user.paidLessons,
+            leaderboardColor: req.session.user.leaderboardColor,
+            points: points
+            })
+          })
+        
+        })  
     })
 }
 
 exports.showParentsPage = function(req, res) {
-    User.getStudentWeeks(req.session.user.userId).then(function (data) {
-        let studentWeeks = data.studentWeeks
-        let dateLabels = data.graphData.dateLabels
-        let rhythmArray = data.graphData.componentsArray.rhythmArray
-        let coordinationArray = data.graphData.componentsArray.coordinationArray
-        let toneArray = data.graphData.componentsArray.toneArray
-        let dynamicsArray = data.graphData.componentsArray.dynamicsArray
-        let stylisticArray = data.graphData.componentsArray.stylisticArray
-        res.render('parentsPage', {
-            // general
-            fName: req.session.user.fName,
-            userId: req.session.user.userId,
-            parentName: req.session.user.parentName,
-            admin: req.session.user.admin,
-            // record
-            dateLabels: dateLabels,
-            rhythmArray: rhythmArray,
-            coordinationArray: coordinationArray,
-            toneArray: toneArray,
-            dynamicsArray: dynamicsArray,
-            stylisticArray: stylisticArray,
-            studentWeeks: studentWeeks,
-            adErrors: req.flash('adErrors')
+    User.getPoints(req.session.user.userId).then((points) => {
+        User.getStudentWeeks(req.session.user.userId).then(function (data) {
+            let studentWeeks = data.studentWeeks
+            let dateLabels = data.graphData.dateLabels
+            let rhythmArray = data.graphData.componentsArray.rhythmArray
+            let coordinationArray = data.graphData.componentsArray.coordinationArray
+            let toneArray = data.graphData.componentsArray.toneArray
+            let dynamicsArray = data.graphData.componentsArray.dynamicsArray
+            let stylisticArray = data.graphData.componentsArray.stylisticArray
+            res.render('parentsPage', {
+                // general
+                username: req.session.user.username,
+                fName: req.session.user.fName,
+                userId: req.session.user.userId,
+                parentName: req.session.user.parentName,
+                admin: req.session.user.admin,
+                // record
+                dateLabels: dateLabels,
+                rhythmArray: rhythmArray,
+                coordinationArray: coordinationArray,
+                toneArray: toneArray,
+                dynamicsArray: dynamicsArray,
+                stylisticArray: stylisticArray,
+                studentWeeks: studentWeeks,
+                adErrors: req.flash('adErrors'),
+                lessonCount: req.session.user.lessonCount,
+                paidLessons: req.session.user.paidLessons,
+                leaderboardColor: req.session.user.leaderboardColor,
+                points: points
+            })
         })
     })
 }

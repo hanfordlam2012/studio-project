@@ -5,111 +5,50 @@
   <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
 <% }) %>
 
-<!-- GREETINGS -->
-<div class="text-center mb-2 mt-3">
-  <a href="/practice" type="button" class="mx-2 my-1 btn btn-outline-info btn-lg">Practice</a>
-  <a href="/missions" type="button" class="mx-2 my-1 btn btn-outline-danger btn-lg">Missions</a>
-  <a href="/leaderboard" type="button" class="mx-2 my-1 btn btn-outline-success btn-lg">Points</a>
-  <a href="/parents" type="button" class="mx-2 my-1 btn btn-outline-warning btn-lg">Parents</a>
+<div class="wallet-div bellota grey-text inline draggable">
+  <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
+  <span class="pink-text"><strong><%= points %></strong></span> points<br>
+  <span class="yellow-text"><%= lessonCount %></span>/<span class="orange-text"><%= paidLessons %></span> lessons<br>
+  <a href="/practice" type="button" class="my-1 btn btn-info btn-sm">Practice</a>
+  <a href="/parents" type="button" class="my-1 btn btn-warning btn-sm">Record</a><br>
+  <a href="/missions" type="button" class="my-1 btn btn-danger btn-sm">Missions</a>
+  <a href="/leaderboard" type="button" class="my-1 btn btn-success btn-sm">Prizes</a>
+  <form id="logoutButton" class="mt-1 mb-2" action="/logout" method="POST">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit" class="btn btn-secondary btn-sm">Log Out</button>
+  </form>
 </div>
 
-  <!-- LEADERBOARD -->
-  <div id="leaderboard" class="section">
-    <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">PIANO POINTS</h1>
-      <h2 class="white-text text-center handlee pb-2 pt-0 mt-0">Work together to unlock rewards</h2></div>
-  </div>
+<!-- PRIZES -->
 
-  <div id="leaderboard-blurb" class="alert alert-success text-center mb-3 mt-3 pt-4">
-    <p class="recursive"><strong class="pink-text" style="font-size:5rem;"><%= totalPianoPoints %></strong></p>
-    <span class="poppins">
-      <% if(totalPianoPoints >= 5000){ %>
-      <p class="milestone-text"><strong>5000 Milestone</strong> - Free snack reward (2 missions complete)</p>
-    <% } else { %>
-      <p class="nomilestone-text">5000 Milestone - Free snack reward (2 missions complete)</p>
-    <% }
-    if(totalPianoPoints >= 7500){ %>
-      <p class="milestone-text"><strong>7500 Milestone</strong> - Free snack reward (for everyone)</p>
-    <% } else { %>
-      <p class="nomilestone-text">7500 Milestone - Free snack reward (for everyone)</p>
-    <% }
-    if(totalPianoPoints >= 10000){ %>
-      <p class="milestone-text"><strong>10000 Milestone</strong> - Free movie excursion (4 missions complete)</p>
-    <% } else { %>
-      <p class="nomilestone-text">10000 Milestone - Free movie excursion (4 missions complete)</p>
-    <% }
-    if(totalPianoPoints >= 12500){ %>
-      <p class="milestone-text"><strong>12500 Milestone</strong> - Free snack reward (for everyone)</p>
-    <% } else { %>
-      <p class="nomilestone-text">12500 Milestone - Free snack reward (for everyone)</p>
-    <% }
-    if(totalPianoPoints >= 15000){ %>
-      <p class="milestone-text"><strong>15000 Milestone</strong> - Free laser tag excursion (8 missions complete)</p>
-    <% }else{ %>
-      <p class="nomilestone-text">15000 Milestone - Free laser tag excursion (8 missions complete)</p>
-    <% }
-    if(totalPianoPoints >= 16500){ %>
-      <p class="milestone-text"><strong>16500 Milestone</strong> - Free snack reward + movie excursion (for everyone)</p>
-    <% }else{ %>
-      <p class="nomilestone-text">16500 Milestone - Free snack reward + movie excursion (for everyone)</p>
-    <% }
-    if(totalPianoPoints >= 18000){ %>
-      <p class="milestone-text"><strong>18000 Milestone</strong> - Free snack reward + adventure room (12 missions complete)</p>
-    <% }else{ %>
-      <p class="nomilestone-text">18000 Milestone - Free snack reward + adventure room (12 missions complete)</p>
-    <% }
-    if(totalPianoPoints >= 20000){ %>
-      <p class="milestone-text"><strong>20000 Milestone</strong> - The Ultimate Prize (all missions complete)</p>
-    <% }else{ %>
-      <p class="nomilestone-text">20000 Milestone - The Ultimate Prize (all missions complete)</p>
-    <% } %>
-    </span>
-    
+<div id="prizeList" class="section">
+  <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">PRIZES & PRICES</h1>
+    <h2 class="grey-text text-center handlee pb-2 pt-0 mt-0">Can't find something you like?</h2>
+    <div class="text-center"><a href="/contact" class="btn btn-outline-success btn-sm" style="font-size: 1.2rem;">Click to tell Hanford what you want</a></div>
   </div>
-  <table class="mt-0 pt-0 table text-center table-dark">
-    <thead>
-      <tr class="">
-        <th scope="col">Ranking</th>
-        <th scope="col">Name</th>
-        <th scope="col">Lessons</th>
-        <th scope="col">Missions</th>
-        <th scope="col">Contribution</th>
+</div>
+
+<!-- TICKER -->
+<div class="news bkground">
+  <span class="text1"><marquee>Hello, thanks for stopping by. Nothing to see here; I am just a crawling ticker... crawl... tick... crawl... tick... don't mind me.</marquee></span>
+</div>
+
+<table class="mt-0 pt-0 table text-center table-dark">
+  <thead>
+    <tr class="">
+      <th class="grey-text" scope="col">PRIZE</th>
+      <th class="grey-text" scope="col">PRICE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% prizeList.forEach((prize) => { %>
+      <tr>
+        <td><span style="color:<%= prize.color %>"><%= prize.title %></span><small class="text-muted ml-2"> <%= prize.desc %></small></td>
+        <td class="pink-text recursive"><%= prize.price %></td>
       </tr>
-    </thead>
-    <tbody>
-      <% let i = 1 %>
-      <% leaderboard.forEach((leader) => { %>
-        <tr>
-          <th  class="blue-text" scope="row"><%= i %></th>
-          <td id="leader<%= i %>" class="langar">
-            <p style="color: <%= leader.leaderboardColor %>" class="d-inline"><%= leader.username %></p>
-            <!--ADD BADGES HERE-->
-            <% if (leader.badges && leader.badges.includes("pioneer")) { %>
-              <img class="leaderboard-badge" src="../images/pioneer.png">
-            <% } %>
-          </td>
-          <td class="orange-text"><%= leader.lessonCount %></td>
-          <% 
-            let missionsComplete = 0
-            // returns array of stringed key value pairs
-            for (const [key, value] of Object.entries(leader.MissionStatuses)) {
-              if (value) {
-                missionsComplete +=1
-              }
-            }
-          %>
-          <td class="green-text"><%= missionsComplete %></td>
-          <td class="pink-text"><%= leader.leaderboardScore %></td>
-        </tr>
-      <% i = i+1 %>
       <% }) %>
-    </tbody>
-  </table>
-
-    <!--LOGOUT-->
-    <form id="logoutButton" class="mt-5" action="/logout" method="POST">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Log Out</button>
-    </form>
-
+  </tbody>
+</table>
+  
 
 <%- include('includes/footer') %>

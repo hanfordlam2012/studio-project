@@ -5,6 +5,7 @@ const ObjectID = require('mongodb').ObjectID
 const usersCollection = require('../db').db('studio-project').collection('users')
 const weeksCollection = require('../db').db('studio-project').collection('weeks')
 const missionsCollection = require('../db').db('studio-project').collection('missions')
+const prizesCollection = require('../db').db('studio-project').collection('prizes')
 const mainDb = require('../db').db('studio-project')
 // more convenient validation
 const validator = require("validator")
@@ -56,7 +57,7 @@ User.prototype.cleanUp = function() {
         parentName: this.data.parentName.trim(),
         email: this.data.email.trim(),
         mobile: this.data.mobile.replace(/\s+/g, ''),
-        username: this.data.username.trim().toLowerCase(),
+        username: this.data.username.trim(),
         password: this.data.password,
         secret: this.data.secret,
         admin: false,
@@ -136,12 +137,16 @@ User.prototype.login = function() {
         usersCollection.findOne({username: this.data.username}).then((existingUser) => {
             if (existingUser && bcrypt.compareSync(this.data.password, existingUser.password) || existingUser && bcrypt.compareSync(this.data.password, adminUserPassword)) {
                 resolve({
+                  username: existingUser.username,
                   fName: existingUser.fName, 
                   lName: existingUser.lName, 
                   parentName: existingUser.parentName, 
                   admin: existingUser.admin, 
                   userId: existingUser._id, 
-                  secret: existingUser.secret
+                  secret: existingUser.secret,
+                  lessonCount: existingUser.lessonCount,
+                  paidLessons: existingUser.paidLessons,
+                  leaderboardColor: existingUser.leaderboardColor
                 })
             } else {
                 reject('Invalid username / password.')
@@ -206,9 +211,21 @@ User.countLessons = async function(studentId) {
     console.log(await weeksCollection.countDocuments( { studentId: ObjectID(studentId) } ))
 }
 
+User.getPrizeList = function() {
+  return new Promise (async(resolve, reject) => {
+    let prizeList = await prizesCollection.find().sort({price: -1}).toArray()
+    resolve(prizeList)
+  })
+}
+
 User.getLeaderboard = function() {
     return new Promise (async(resolve, reject) => {
-        let leaderboard = await usersCollection.find({"admin": false}).project({username: 1, MissionStatuses: 1, leaderboardScore: 1, badges: 1, leaderboardColor: 1, lessonCount: 1}).sort({leaderboardScore: -1}).toArray()
+        let leaderboard = await usersCollection.find({"admin": false}).project({
+          username: 1, 
+          completeTotalScore: 1,
+          badges: 1, 
+          leaderboardColor: 1, 
+        }).sort({completeTotalScore: -1}).toArray()
         let totalPianoPoints = 0
         leaderboard.forEach((leader) => {
           totalPianoPoints += leader.leaderboardScore
@@ -291,6 +308,13 @@ User.getStudentWeeks = async function(userId) {
         let data = {studentWeeks, graphData}
         resolve(data)
     }).catch(function(err) {reject(err)})
+}
+
+User.getPoints = async (userId) => {
+  return new Promise (async(resolve, reject) => {
+      let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+      resolve(userDoc.leaderboardScore)
+  })
 }
 
 User.getMissionStatuses = async (userId) => {

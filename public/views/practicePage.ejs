@@ -5,18 +5,34 @@
   <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
 <% }) %>
 
-<!-- GREETINGS -->
-<div class="text-center mb-2 mt-3">
-  <a href="/practice" type="button" class="mx-2 my-1 btn btn-outline-info btn-lg">Practice</a>
-  <a href="/missions" type="button" class="mx-2 my-1 btn btn-outline-danger btn-lg">Missions</a>
-  <a href="/leaderboard" type="button" class="mx-2 my-1 btn btn-outline-success btn-lg">Points</a>
-  <a href="/parents" type="button" class="mx-2 my-1 btn btn-outline-warning btn-lg">Parents</a>
+<div class="wallet-div bellota grey-text inline draggable">
+  <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
+  <span class="pink-text"><strong><%= points %></strong></span> points<br>
+  <span class="yellow-text"><%= lessonCount %></span>/<span class="orange-text"><%= paidLessons %></span> lessons<br>
+  <a href="/practice" type="button" class="my-1 btn btn-info btn-sm">Practice</a>
+  <a href="/parents" type="button" class="my-1 btn btn-warning btn-sm">Record</a><br>
+  <a href="/missions" type="button" class="my-1 btn btn-danger btn-sm">Missions</a>
+  <a href="/leaderboard" type="button" class="my-1 btn btn-success btn-sm">Prizes</a>
+  <form id="logoutButton" class="mt-1 mb-2" action="/logout" method="POST">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit" class="btn btn-secondary btn-sm">Log Out</button>
+  </form>
 </div>
 
 <!-- PRACTICE HUB -->
 <div id="practice-guide" class="mt-2 mb-4 section">
-  <div class="py-4 my-4 mb-4 mx-0"><h1 id="headingText" class="px-5 display-2 recursive rainbowText text-center">PRACTICE</h1>
-    <h2 class="white-text text-center handlee pb-2 pt-0 mt-0">Can we do better? Yes, of course!</h2></div>
+  <div class="py-4 my-4 mb-2 mx-0"><h1 id="headingText" class="px-5 display-2 recursive rainbowText text-center">PRACTICE</h1>
+    <% if (practiceStatus) { %>
+    <div id="practice-success" class="green-text recursive text-center my-2">
+      <p>Nice! Some points have been added to your wallet.</p>
+    </div>
+  <% } else { %>
+    <form class="my-2 text-center" action="/updateLastSubmittedDateAndAddPoints" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit" class="btn btn-outline-success btn-sm" style="font-size: 1.2rem;">Click me after you've done today's practice</button>
+    </form>
+  <% } %></div>
+    
 </div>
 <script >
   // PRINT FEATURE PLAIN TEXT
@@ -33,28 +49,10 @@
   <% latestComments.forEach((comment) => { %>
       <div id="weeklySnapshot" class="mt-5 px-1"><%- filterUserHTML(comment.comments) %></div>
       <div id="print-button" class="text-center mt-5 pt-5 pb-2">
-        <button class="mx-3 btn btn-outline-secondary btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print notes</button>
+        <button class="mx-3 btn btn-outline-secondary btn-sm" href="#" onclick="printDiv('weeklySnapshot')">Print notes</button>
       </div>
     
   <% }) %>
-
-  <% if (practiceStatus) { %>
-    <div id="practice-success" class="alert alert-success text-center mb-4 mt-4 pt-4">
-      <p>Well done for practising today! Small steps every day add up to big improvements over time.</p>
-      <p>The Piano Wizard has granted you a handful of Piano Points for your dedication.</p>
-      <p>See you tomorrow!</p>
-    </div>
-  <% } else { %>
-    <form class="my-5 text-center" action="/updateLastSubmittedDateAndAddPoints" method="POST">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button type="submit" class="btn btn-success btn-lg" style="font-size: 1.5rem;">Collect my Piano Points</button>
-    </form>
-  <% } %>
-
-  <!--LOGOUT-->
-  <form id="logoutButton" class="mt-5" action="/logout" method="POST">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-primary btn-lg btn-block">Log Out</button>
-  </form>
+  
 
 <%- include('includes/footer') %>

@@ -22,18 +22,38 @@ nav {
     box-shadow: 0px 0px 5px rgb(0, 0, 0);
 }
 
+.custom-nav {
+    background-color: rgba(18, 46, 68, 0.713);
+}
+
+.nav-link, .navbar-brand {
+    color: rgb(182, 182, 182);
+}
+
+.nav-link:hover, .navbar-brand:hover {
+    color: rgb(50, 145, 84);
+}
+
 .nav-active-text {
     color:rgb(214, 214, 214);
 }
 
 /* center navbar list */
-@media (min-width: 993px) {
+@media (min-width: 990px) {
     .abs-center-x {
         position: absolute;
         top: 5px;
         left: 50%;
         transform: translateX(-50%);
     }
+}
+
+@media (max-width: 600px) {
+    .disappear {
+        display: none;
+    }
+
+    
 }
 
 /* FONTS */
@@ -147,7 +167,7 @@ nav {
     text-align: center;
     background-color: rgb(31, 31, 31);
     color: white;
-    border: 1px solid white;
+    border: 1px solid rgb(49, 49, 49);
 }
 
 .card-body li {
@@ -157,11 +177,13 @@ nav {
 .card-header {
     font-family: 'Recursive', sans-serif;
     font-size: 10rem;
+    border: 1px solid rgb(49, 49, 49);
 }
 
 .card {
     margin: 1px;
     min-height: 100%;
+    border: 1px solid rgb(49, 49, 49);
 }
 
 #priceRow {
@@ -250,6 +272,10 @@ h2 {
 
 .nomilestone-text {
     color: #969696;
+}
+
+.grey-text {
+    color:#969696;
 }
 
 .pink-text {
@@ -405,17 +431,42 @@ hr {
 }
 
 .task-div-complete {
-    background-color: rgb(178, 255, 174);
-    color: black;
-    padding-right: 20%;
-    padding-left: 20%;
+    display: inline-block;
+    position: relative;
+    background-color: rgba(178, 255, 174, 0.9);
+    padding: 1.5rem;
+    min-height: 11rem;
+    min-width: 11rem;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0.8rem 0.8rem;
+    color: rgb(17, 102, 0);
+}
+
+#missionsWrapper{
+    text-align: center;
+}
+
+.missionContent {
+    margin: 0;
+    position: absolute;               /* 2 */
+    top: 50%;                         /* 3 */
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .task-div-incomplete {
-    background-color: rgb(255, 204, 204);
-    color: black;
-    padding-right: 20%;
-    padding-left: 20%;
+    display: inline-block;
+    position: relative;
+    background-color: rgba(255, 204, 204, 0.9);
+    padding: 1.5rem;
+    min-height: 11rem;
+    min-width: 11rem;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0.8rem;
+    color: rgb(141, 0, 2);
 }
 
 .correct-text {
@@ -469,4 +520,48 @@ hr {
     font-family: 'Handlee', cursive;
 }
 
-/* CONTACT */
+/* WALLET */
+.wallet-div {
+    text-align: center;
+    border-radius: 5px;
+    border: 1px #505050 solid;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    margin-left: 0;
+    padding: 0.1rem 0.8rem;
+    position: fixed;
+    z-index: 9999;
+    background-color: rgba(84, 84, 84, 0.5);
+    cursor: move;
+}
+
+#logoutButton {
+    display: flex;
+    flex-direction: column;
+}
+
+/* TICKER */
+.bkground {
+    background: none;
+}
+
+.news {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+    -webkit-user-select: none;
+}
+
+.news span {
+    float: left;
+    color: rgb(0, 141, 192);
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none;
+    cursor: pointer;
+}
+
+.text1{
+    width: 100%;
+}

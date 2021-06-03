@@ -15,7 +15,7 @@ giveEveryoneASomething = async function() {
       {},
       { $set:
          {
-            lessonCount: 0
+            paidLessons: 0
          }
       }
    )
