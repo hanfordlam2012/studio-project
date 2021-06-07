@@ -2,9 +2,9 @@
 <!-- WELCOME -->
 <div id="welcome" class="my-3 section">
   <div class="py-4 mt-2 mb-0 mx-0"><h1 id="headingText" class="px-5 display-2 bellota rainbowText text-center">Looking for a teacher?</h1>
-    <h3 class="grey-text text-center handlee py-2 mt-0 mx-3">Come along on a music-learning journey with Hanford<img class="mb-3 mx-3" src="../images/smile.png"></h3></div>
+    <h3 class="grey-text subtitle text-center handlee py-2 mt-0 mx-3">Come along on a music-learning journey with Hanford<img class="mb-3 mx-3" src="../images/smile.png"></h3></div>
 </div>
-<div id="home-container-1" class="p-2 mx-0 my-5 rounded row align-items-center justify-content-center"></div>
+<img id="studio-image" src="../images/hanford-lam-studio-min.jpg">
 
 <!-- MEET HANFORD -->
 <div id="meet-hanford" class="section">
@@ -13,7 +13,7 @@
       The emotions, discipline, and beauty of this imaginative sonic art.</h2></div>
 </div>
 <div class="p-4 row justify-content-center">
-  <div class="col"><img class="rounded" src="../images/hanford-lam-portrait_d800-min.jpg" id="landscapeHeadshot" alt=""></div>
+  <div class="col"><img class="" src="../images/hanford-lam-portrait_d800-min.jpg" id="landscapeHeadshot" alt=""></div>
   <div class="w-100"></div>
   <div id="blurb" class="col-9 text-center">
     <p class="handlee grey-text mt-5">I am delighted to speak to <span class="yellow-text">you</span> candidly. My own <span class="blue-text">diverse</span> journey has given me valuable <span class="purple-text">opportunities</span> to <span class="green-text">learn</span> at local and international <span class="pink-text">competitions</span>; from friendly fun at the Knox Piano Awards to competing against top players at the UCSI International Semifinals. I've also done my share of <span class="orange-text">exams</span>; from AMEB and ABRSM grades to a gruelling Honours recital and thesis. Lifelong learning is a <span class="yellow-text">passion</span>. I am currently completing a <span class="blue-text">Master of Teaching</span> at The University of Melbourne. I hope to inspire my students to chase <span class="purple-text">knowledge</span> and <span class="green-text">skills</span> in the realms of the <span class="pink-text">arts</span> and the <span class="orange-text">sciences</span>.</p>
@@ -24,61 +24,75 @@
 </div>
 
 <!-- FEES -->
-<div id="fees" class="section mt-3 mb-5">
-  <div class="py-4 mt-3 mb-0"><h1 class="px-5 display-2 poppins rainbowText text-center">2022 Services</h1>
-    <h3 class="grey-text text-center handlee pb-2 pt-0 mt-4">Helping you learn and refine skills</h3></div>
-</div>
-<div id="priceRow" class="row mt-4 mb-5">
-  
-  <div class="col-4">
-      <div class="card">
-    <div class="card-header">
-      <h4 class="my-0">ACCOMPANIMENT</h4>
+<div id="accordion" class="my-5">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Accompaniment
+        </button>
+      </h5>
     </div>
-    <div class="card-body">
-      <h1 class="pink-text card-title">Enquire</h1>
-      <ul class="list-unstyled">
-        <li>Exams & Performances</li>
-        <li>Auditions & General Rehearsals</li>
-        <li>8+ years experience</li>
-        <li>All Levels & Instruments</li>
-      </ul>
-    </div>
-  </div>
-  </div>
-  <div class="col-4">
-      <div class="card">
-          <div class="card-header">
-            <h4 class="my-0">ONE-TO-ONE LESSONS</h4>
-          </div>
-          <div class="card-body">
-            <h1 class="pink-text card-title">$90/h</h1>
-            <ul class="list-unstyled">
-              <li>Expert Guidance</li>
-              <li>Interactive Approach</li>
-              <li>Student Recitals</li>
-              <li>Concert Excursions</li>
-            </ul>
-          </div>
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        <ul class="list-unstyled">
+          <li><span class="orange-text recursive">ENQUIRE FOR RATE</span></li>
+          <li>VCE, AMEB, and ABRSM exams</li>
+          <li>VCA and university auditions</li>
+          <li>Eisteddfods and other competitions</li>
+          <li>Student and professional performances</li>
+          <li>General ensemble rehearsals</li>
+          <li>All levels and instruments</li>
+          <li>8+ years experience</li>
+          <li class="mt-3 orange-text"><a href="/contact" class="btn btn-sm btn-outline-light">Message Hanford</a></li>
+        </ul>
       </div>
+    </div>
   </div>
-  <div class="col-4">
-      <div class="card">
-          <div class="card-header">
-            <h4 class="my-0">GROUP LESSONS</h4>
-          </div>
-          <div class="card-body">
-            <h1 class="pink-text card-title">Enquire</h1>
-            <ul class="list-unstyled">
-              <li>Siblings & Friends</li>
-              <li>Collaborative Learning</li>
-              <li>Holistic Progression</li>
-              <li>Theory + Technique</li>
-            </ul>
-          </div>
-        </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          One-on-one lessons
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        <ul class="list-unstyled">
+          <li><span class="orange-text recursive">$90/HOUR</span></li>
+          <li>Expert personalised guidance</li>
+          <li>Interactive approach</li>
+          <li>Student performance opportunities</li>
+          <li>Concert excursions</li>
+          <li>From beginners to advanced diplomas</li>
+          <li class="mt-3 orange-text"><a href="/contact" class="btn btn-sm btn-outline-light">Message Hanford</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Group classes
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        <ul class="list-unstyled">
+          <li><span class="orange-text recursive">$120/HOUR</span></li>
+          <li>Max group of three</li>
+          <li>Ideal for young beginners</li>
+          <li>Learn with your friends</li>
+          <li>Holistic progression</li>
+          <li>Group activities and games</li>
+          <li class="mt-3 orange-text"><a href="/contact" class="btn btn-sm btn-outline-light">Message Hanford</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
-<a href="/contact" class="btn btn-block btn-lg btn-warning my-5"><strong>Ask to make a start today</strong></a>
 
 <%- include('includes/footer') %>
