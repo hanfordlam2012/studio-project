@@ -13,6 +13,10 @@ body,
     padding-top: 20px;
 }
 
+input {
+    caret-color: #ac1010;
+}
+
 .container {
     min-width: 70vw;
 }
@@ -35,11 +39,11 @@ nav {
 }
 
 .nav-link:hover, .navbar-brand:hover {
-    color: rgb(50, 145, 84);
+    color: rgb(177, 77, 216);
 }
 
 .nav-active-text {
-    color:rgb(214, 214, 214);
+    color:rgb(199, 103, 255);
 }
 
 /* center navbar list */
@@ -101,21 +105,6 @@ nav {
 .alert {
     padding-left: 15%;
     padding-right: 15%;
-}
-
-.input-group-text {
-    background-color: black;
-    color: rgb(179, 255, 0);
-    border: 1px solid rgb(179, 255, 0);
-}
-
-.input-group-prepend {
-    border-right: 1px solid rgb(179, 255, 0);
-}
-
-#registerForm {
-    padding-left: 20%;
-    padding-right: 20%;
 }
 
 /* HOME */
@@ -459,6 +448,10 @@ hr {
     transform: translate(-50%, -50%);
 }
 
+.missionContent h3 {
+    font-size: 1.2rem;
+}
+
 .task-div-incomplete {
     display: inline-block;
     position: relative;
@@ -519,7 +512,22 @@ hr {
 }
 
 /* REPORTS */
+#pikachuMusic {
+    width: 15rem;
+}
+
+#pikachuDiv {
+    text-align: center;
+}
+
 #registerForm h2 {
+    font-family: 'Handlee', cursive;
+}
+
+#registration-form .form-control-lg {
+    width: 30rem;
+    margin: 0 auto;
+    display: block;
     font-family: 'Handlee', cursive;
 }
 

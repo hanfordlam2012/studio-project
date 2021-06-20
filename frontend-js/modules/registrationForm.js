@@ -1,61 +1,46 @@
 import axios from 'axios'
 import validator from 'validator'
 
+// UNUSED client side security
 export default class RegistrationForm {
     constructor() {
         this._csrf = document.querySelector('[name="_csrf"]').value
         this.form = document.querySelector("#registration-form")
-        this.allFields = document.querySelectorAll("#registerForm .input-group")
+        this.allFields = document.querySelectorAll("#registration-form .input-group")
         this.insertValidationElements()
         // fName
         this.fNameInput = document.querySelector("#fNameInput")
         this.fNameDiv = document.querySelector("#fNameDiv")
-        this.fNamePrepend = document.querySelector("#fNamePrepend")
-        this.fNameText = document.querySelector("#fNameText")
         this.fNameInput.previousValue = ""
         // lName
         this.lNameInput = document.querySelector("#lNameInput")
         this.lNameDiv = document.querySelector("#lNameDiv")
-        this.lNamePrepend = document.querySelector("#lNamePrepend")
-        this.lNameText = document.querySelector("#lNameText")
         this.lNameInput.previousValue = ""
         // parentName
         this.parentNameInput = document.querySelector("#parentNameInput")
         this.parentNameDiv = document.querySelector("#parentNameDiv")
-        this.parentNamePrepend = document.querySelector("#parentNamePrepend")
-        this.parentNameText = document.querySelector("#parentNameText")
         this.parentNameInput.previousValue = ""
         // email
         this.emailInput = document.querySelector("#emailInput")
         this.emailDiv = document.querySelector("#emailDiv")
-        this.emailPrepend = document.querySelector("#emailPrepend")
-        this.emailText = document.querySelector("#emailText")
         this.emailInput.previousValue = ""
         this.emailInput.isUnique = false
          // mobile
          this.mobileInput = document.querySelector("#mobileInput")
          this.mobileDiv = document.querySelector("#mobileDiv")
-         this.mobilePrepend = document.querySelector("#mobilePrepend")
-         this.mobileText = document.querySelector("#mobileText")
          this.mobileInput.previousValue = ""
         // username
         this.usernameInput = document.querySelector("#usernameInput")
         this.usernameDiv = document.querySelector("#usernameDiv")
-        this.usernamePrepend = document.querySelector("#usernamePrepend")
-        this.usernameText = document.querySelector("#usernameText")
         this.usernameInput.previousValue = ""
         this.usernameInput.isUnique = false
         // password
         this.passwordInput = document.querySelector("#passwordInput")
         this.passwordDiv = document.querySelector("#passwordDiv")
-        this.passwordPrepend = document.querySelector("#passwordPrepend")
-        this.passwordText = document.querySelector("#passwordText")
         this.passwordInput.previousValue = ""
         // secret
         this.secretInput = document.querySelector("#secretInput")
         this.secretDiv = document.querySelector("#secretDiv")
-        this.secretPrepend = document.querySelector("#secretPrepend")
-        this.secretText = document.querySelector("#secretText")
         this.secretInput.previousValue = ""
         this.secretInput.isCorrect = false
 
@@ -235,113 +220,107 @@ export default class RegistrationForm {
 
     fNameInputImmediately() {
         if (this.fNameInput.value != "" && !/^([a-zA-Z0-9]+)$/.test(this.fNameInput.value)) {
-            this.showValidationError(this.fNameDiv, this.fNamePrepend, this.fNameText, "Name can only contain letters and numbers.")
+            this.showValidationError(this.fNameDiv, "Name can only contain letters and numbers.")
         }
 
         if (this.fNameInput.value.length > 30) {
-            this.showValidationError(this.fNameDiv, this.fNamePrepend, this.fNameText,  "Name must be less than 30 characters.")
+            this.showValidationError(this.fNameDiv,  "Name must be less than 30 characters.")
         }
 
         if (!this.fNameDiv.errors) {
-            this.hideValidationError(this.fNameDiv, this.fNamePrepend, this.fNameText)
+            this.hideValidationError(this.fNameDiv)
         }
     }
 
     lNameInputImmediately() {
         if (this.lNameInput.value != "" && !/^([a-zA-Z0-9]+)$/.test(this.lNameInput.value)) {
-            this.showValidationError(this.lNameDiv, this.lNamePrepend, this.lNameText, "Name can only contain letters and numbers.")
+            this.showValidationError(this.lNameDiv, "Name can only contain letters and numbers.")
         }
 
         if (this.lNameInput.value.length > 30) {
-            this.showValidationError(this.lNameDiv, this.lNamePrepend, this.lNameText,  "Name must be less than 30 characters.")
+            this.showValidationError(this.lNameDiv, "Name must be less than 30 characters.")
         }
 
         if (!this.lNameDiv.errors) {
-            this.hideValidationError(this.lNameDiv, this.lNamePrepend, this.lNameText)
+            this.hideValidationError(this.lNameDiv)
         }
     }
 
     parentNameInputImmediately() {
         if (this.parentNameInput.value != "" && !/^([a-zA-Z0-9]+)$/.test(this.parentNameInput.value)) {
-            this.showValidationError(this.parentNameDiv, this.parentNamePrepend, this.parentNameText, "Name can only contain letters and numbers.")
+            this.showValidationError(this.parentNameDiv, "Name can only contain letters and numbers.")
         }
 
         if (this.parentNameInput.value.length > 30) {
-            this.showValidationError(this.parentNameDiv, this.parentNamePrepend, this.parentNameText,  "Name must be less than 30 characters.")
+            this.showValidationError(this.parentNameDiv, "Name must be less than 30 characters.")
         }
 
         if (!this.parentNameDiv.errors) {
-            this.hideValidationError(this.parentNameDiv, this.parentNamePrepend, this.parentNameText)
+            this.hideValidationError(this.parentNameDiv)
         }
     }
 
     usernameInputImmediately() {
         if (this.usernameInput.value != "" && !/^([a-zA-Z0-9]+)$/.test(this.usernameInput.value)) {
-            this.showValidationError(this.usernameDiv, this.usernamePrepend, this.usernameText, "Username can only contain letters and numbers.")
+            this.showValidationError(this.usernameDiv, "Username can only contain letters and numbers.")
         }
 
         if (this.usernameInput.value.length > 30) {
-            this.showValidationError(this.usernameDiv, this.usernamePrepend, this.usernameText,  "Username must be less than 30 characters.")
+            this.showValidationError(this.usernameDiv, "Username must be less than 30 characters.")
         }
 
         if (!this.usernameDiv.errors) {
-            this.hideValidationError(this.usernameDiv, this.usernamePrepend, this.usernameText)
+            this.hideValidationError(this.usernameDiv)
         }
     }
 
     passwordInputImmediately() {
         if (this.passwordInput.value.length > 50) {
-            this.showValidationError(this.passwordDiv, this.passwordPrepend, this.passwordText,  "Password must be less than 50 characters.")
+            this.showValidationError(this.passwordDiv, "Password must be less than 50 characters.")
         }
 
         if (!this.passwordDiv.errors) {
-            this.hideValidationError(this.passwordDiv, this.passwordPrepend, this.passwordText)
+            this.hideValidationError(this.passwordDiv)
         }
     }
 
-    hideValidationError(element1, element2, element3) {
+    hideValidationError(element1) {
         element1.previousElementSibling.classList.add('d-none')
-        element2.style.borderRight = "1px solid rgb(179, 255, 0)"
-        element3.style.color = "rgb(179, 255, 0)"
-        element3.style.border = "1px solid rgb(179, 255, 0)"
     }
 
-    showValidationError(element1, element2, element3, msg) {
+    showValidationError(element1, msg) {
         element1.previousElementSibling.innerHTML = msg
         element1.previousElementSibling.classList.remove('d-none')
         element1.errors = true
-        element2.style.borderRight = "1px solid red"
-        element3.style.color = "red"
-        element3.style.border = "1px solid red"
     }
 
     fNameInputAfterDelay() {
         if (this.fNameInput.value.length < 2) {
-            this.showValidationError(this.fNameDiv, this.fNamePrepend, this.fNameText,  "Name must be at least 2 characters.")
+            this.showValidationError(this.fNameDiv, "Name must be at least 2 characters.")
         }
     }
 
     lNameInputAfterDelay() {
         if (this.lNameInput.value.length < 2) {
-            this.showValidationError(this.lNameDiv, this.lNamePrepend, this.lNameText,  "Name must be at least 2 characters.")
+            this.showValidationError(this.lNameDiv, "Name must be at least 2 characters.")
         }
     }
 
     parentNameInputAfterDelay() {
         if (this.parentNameInput.value.length < 2) {
-            this.showValidationError(this.parentNameDiv, this.parentNamePrepend, this.parentNameText,  "Name must be at least 2 characters.")
+            this.showValidationError(this.parentNameDiv, "Name must be at least 2 characters.")
         }
     }
 
     usernameInputAfterDelay() {
         if (this.usernameInput.value.length < 3) {
-            this.showValidationError(this.usernameDiv, this.usernamePrepend, this.usernameText,  "Username name must be at least 3 characters.")
+            this.showValidationError(this.usernameDiv, "Username name must be at least 3 characters.")
         }
 
         if (!this.usernameDiv.errors) {
             axios.post('/doesUsernameExist', {_csrf: this._csrf, username: this.usernameInput.value}).then((response) => {
                 if (response.data) {
-                    this.showValidationError(this.usernameDiv, this.usernamePrepend, this.usernameText,  "This username name is already taken.")
+                    this.showValidationError(this.usernameDiv, "This username name is already taken.")
                     this.usernameInput.isUnique = false
                 } else {
                     this.usernameInput.isUnique = true
@@ -354,23 +333,23 @@ export default class RegistrationForm {
 
     passwordInputAfterDelay() {
         if (this.passwordInput.value.length < 8) {
-            this.showValidationError(this.passwordDiv, this.passwordPrepend, this.passwordText,  "Password must be at least 8 characters.")
+            this.showValidationError(this.passwordDiv, "Password must be at least 8 characters.")
         }
     }
 
     emailInputAfterDelay() {
         if (!/^\S+@\S+$/.test(this.emailInput.value)) {
-            this.showValidationError(this.emailDiv, this.emailPrepend, this.emailText,  "You must provide a valid email.")
+            this.showValidationError(this.emailDiv, "You must provide a valid email.")
         }
 
         if (!this.emailDiv.errors) {
             axios.post('/doesEmailExist', {_csrf: this._csrf, email: this.emailInput.value}).then((response) => {
                 if (response.data) {
                     this.emailInput.isUnique = false
-                    this.showValidationError(this.emailDiv, this.emailPrepend, this.emailText,  "This email is already taken.")
+                    this.showValidationError(this.emailDiv, "This email is already taken.")
                 } else {
                     this.emailInput.isUnique = true
-                    this.hideValidationError(this.emailDiv, this.emailPrepend, this.emailText)
+                    this.hideValidationError(this.emailDiv)
                 }
             }).catch(() => {
                 console.log("Please try again later.")
@@ -380,9 +359,9 @@ export default class RegistrationForm {
 
     mobileInputAfterDelay() {
         if (!validator.isMobilePhone(this.mobileInput.value, 'en-AU')) {
-            this.showValidationError(this.mobileDiv, this.mobilePrepend, this.mobileText,  "You must provide a valid Australian mobile (without spaces).")
+            this.showValidationError(this.mobileDiv, "You must provide a valid Australian mobile (without spaces).")
         } else {
-            this.hideValidationError(this.mobileDiv, this.mobilePrepend, this.mobileText)
+            this.hideValidationError(this.mobileDiv)
         }
     }
 
@@ -390,9 +369,9 @@ export default class RegistrationForm {
         axios.post('/isCorrect', {_csrf: this._csrf, secret: this.secretInput.value}).then((response) => {
             if (response.data) {
                 this.secretInput.isCorrect = true
-                this.hideValidationError(this.secretDiv, this.secretPrepend, this.secretText)
+                this.hideValidationError(this.secretDiv)
             } else {
-                this.showValidationError(this.secretDiv, this.secretPrepend, this.secretText,  "Maybe you need to ask Hanford again.")
+                this.showValidationError(this.secretDiv, "Maybe you need to ask Hanford again.")
             }
         }).catch(() => {
             console.log("Please try again later.")

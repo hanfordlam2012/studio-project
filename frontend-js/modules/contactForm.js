@@ -54,6 +54,7 @@ export default class ContactForm {
         if (this.contactMessageInput.value == "") {
             this.contactMessageDiv.previousElementSibling.classList.remove('d-none')
             this.contactMessageDiv.previousElementSibling.innerHTML = "You need to include a message."
+            this.contactMessageDiv.errors = true
         }
     }
 
@@ -95,9 +96,9 @@ export default class ContactForm {
 
     hideValidationError(element1, element2, element3) {
         try {
-            element2.style.borderRight = "1px solid rgb(179, 255, 0)"
-            element3.style.color = "rgb(179, 255, 0)"
-            element3.style.border = "1px solid rgb(179, 255, 0)"
+            element2.style.borderRight = "1.5px solid green"
+            element3.style.color = "green"
+            element3.style.border = "1.5px solid green"
         } finally {
             element1.previousElementSibling.classList.add('d-none')
         }
@@ -105,9 +106,9 @@ export default class ContactForm {
 
     showValidationError(element1, element2, element3, msg) {
         try {
-            element2.style.borderRight = "1px solid red"
+            element2.style.borderRight = "1.5px solid red"
             element3.style.color = "red"
-            element3.style.border = "1px solid red"
+            element3.style.border = "1.5px solid red"
             element1.previousElementSibling.innerHTML = msg
             element1.previousElementSibling.classList.remove('d-none')
             element1.errors = true

@@ -16,14 +16,13 @@
     <form id="contact-form" class="my-4 px-3" action="/sendEmail" method="POST">
         <div id="contactEmailDiv" class="input-group mb-3">
           <div id="contactEmailPrepend" class="input-group-prepend">
-            <span id="contactEmailText" class="input-group-text">Your Email</span>
+            <span id="contactEmailText" class="input-group-text">Your email</span>
           </div>
-          <input id="contactEmailInput" autocomplete="off" type="email" name="email" class="form-control" value="" placeholder=" eg. abc@123.com">
+          <input id="contactEmailInput" autocomplete="off" type="email" name="email" class="form-control" value="" placeholder=" abc@123.com">
         </div>
         <div id="contactMessageDiv" class="form-group">
           <textarea id="contactMessageInput" autocomplete="off" name="message" class="form-control" value="" placeholder="Schedule a free consultation, enquire about accompaniment, ask for educational advice, etc." rows="10"></textarea>
         </div>
-        <p class="mt-3 text-muted text-center">Please be patient ~ it may take a few moments.</p>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-success btn-lg btn-block mt-3">Send</button>
       </form></div>
