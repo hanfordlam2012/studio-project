@@ -1,5 +1,5 @@
 <%- include('includes/header') %>
-<form class="mt-3" action="/logout" method="POST">
+<form class="mt-3 mb-5" action="/logout" method="POST">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <button type="submit" class="btn btn-secondary btn-lg btn-block">Log Out</button>
 </form>
@@ -8,7 +8,6 @@
 <% success.forEach(function(message) { %>
   <div class="alert alert-success mt-2 text-center small py-1"><%= message %></div>
 <% }) %>
-<div class="jumbotron p-3 my-4"><h1 class="display-4 text-center">Progress Logging</h1></div>
 <!-- Form Element-->
 <form action="/create-week" method="POST" id="create-week" autocomplete="off">
   <!-- Select Student -->
@@ -46,156 +45,92 @@
       </div>
     </div>
     <div class="row text-center m-0 eagle row-border">
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="rhythm" value="5" id="rhythmEagle"><label for="rhythmEagle">Very steady pulse with even and precise rhythmic subdivisions throughout.</label>
+      <div class="col-sm iconContainer eagle">
+        <input required autocomplete="off" type="radio" name="rhythm" value="5" id="rhythmEagle"><label for="rhythmEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="coordination" value="5" id="coordinationEagle"><label for="coordinationEagle">Relaxed and precise coordination with exact unisons, independent rhythms, and highly accurate pitch.</label>
+      <div class="col-sm iconContainer eagle">
+        <input required autocomplete="off" type="radio" name="coordination" value="5" id="coordinationEagle"><label for="coordinationEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="tone" value="5" id="toneEagle"><label for="toneEagle">Very accurate with appropriate use of fingers, wrist, and arm, producing a warm tone.</label>
+      <div class="col-sm iconContainer eagle">
+        <input required autocomplete="off" type="radio" name="tone" value="5" id="toneEagle"><label for="toneEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="dynamics" value="5" id="dynamicsEagle"><label for="dynamicsEagle">All dynamics executed precisely with all parts very well balanced.</label>
+      <div class="col-sm iconContainer eagle">
+        <input required autocomplete="off" type="radio" name="dynamics" value="5" id="dynamicsEagle"><label for="dynamicsEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="stylistic" value="5" id="stylisticEagle"><label for="stylisticEagle">Convincing musical style very well conveyed with confidence and nuance.</label>
-      </div>
-    </div>
-    <div class="row m-0 text-center row-border">
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="rhythm" value="4.5" id="rhythmOctopusBonus"><label for="rhythmOctopusBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="coordination" value="4.5" id="coordinationOctopusBonus"><label for="coordinationOctopusBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="tone" value="4.5" id="toneOctopusBonus"><label for="toneOctopusBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="dynamics" value="4.5" id="dynamicsOctopusBonus"><label for="dynamicsOctopusBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="stylistic" value="4.5" id="stylisticOctopusBonus"><label for="stylisticOctopusBonus">As below + bonus!</label>
+      <div class="col-sm iconContainer eagle">
+        <input required autocomplete="off" type="radio" name="stylistic" value="5" id="stylisticEagle"><label for="stylisticEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""></label>
       </div>
     </div>
+    
     <div class="row m-0 text-center octopus row-border">
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="rhythm" value="4" id="rhythmOctopus"><label for="rhythmOctopus">Steady pulse with mostly even and precise rhythmic subdivision.</label>
+      <div class="col-sm iconContainer octopus">
+        <input required autocomplete="off" type="radio" name="rhythm" value="4" id="rhythmOctopus"><label for="rhythmOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="coordination" value="4" id="coordinationOctopus"><label for="coordinationOctopus">Precise coordination with exact unisons, mostly independent rhythms, and mostly accurate pitch.</label>
+      <div class="col-sm iconContainer octopus">
+        <input required autocomplete="off" type="radio" name="coordination" value="4" id="coordinationOctopus"><label for="coordinationOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="tone" value="4" id="toneOctopus"><label for="toneOctopus">Accurate with appropriate use of fingers, wrist, and arm, producing a warm tone.</label>
+      <div class="col-sm iconContainer octopus">
+        <input required autocomplete="off" type="radio" name="tone" value="4" id="toneOctopus"><label for="toneOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="dynamics" value="4" id="dynamicsOctopus"><label for="dynamicsOctopus">Most dynamics executed precisely with most parts well balanced.</label>
+      <div class="col-sm iconContainer octopus">
+        <input required autocomplete="off" type="radio" name="dynamics" value="4" id="dynamicsOctopus"><label for="dynamicsOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="stylistic" value="4" id="stylisticOctopus"><label for="stylisticOctopus">General sense of musical style well conveyed with confidence.</label>
-      </div>
-    </div>
-    <div class="row m-0 text-center row-border">
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="rhythm" value="3.5" id="rhythmKoalaBonus"><label for="rhythmKoalaBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="coordination" value="3.5" id="coordinationKoalaBonus"><label for="coordinationKoalaBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="tone" value="3.5" id="toneKoalaBonus"><label for="toneKoalaBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="dynamics" value="3.5" id="dynamicsKoalaBonus"><label for="dynamicsKoalaBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="stylistic" value="3.5" id="stylisticKoalaBonus"><label for="stylisticKoalaBonus">As below + bonus!</label>
+      <div class="col-sm iconContainer octopus">
+        <input required autocomplete="off" type="radio" name="stylistic" value="4" id="stylisticOctopus"><label for="stylisticOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""></label>
       </div>
     </div>
+   
     <div class="row m-0 text-center koala row-border">
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="rhythm" value="3" id="rhythmKoala"><label for="rhythmKoala">Quite steady pulse with mostly even rhythmic subdivision.</label>
+      <div class="col-sm iconContainer koala">
+        <input required autocomplete="off" type="radio" name="rhythm" value="3" id="rhythmKoala"><label for="rhythmKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="coordination" value="3" id="coordinationKoala"><label for="coordinationKoala">Coordination with some tension, approximate unisons, mostly independent rhythms, and mostly accurate pitch.</label>
+      <div class="col-sm iconContainer koala">
+        <input required autocomplete="off" type="radio" name="coordination" value="3" id="coordinationKoala"><label for="coordinationKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="tone" value="3" id="toneKoala"><label for="toneKoala">Mostly accurate with some use of fingers, wrist, and arm in tone production.</label>
+      <div class="col-sm iconContainer koala">
+        <input required autocomplete="off" type="radio" name="tone" value="3" id="toneKoala"><label for="toneKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="dynamics" value="3" id="dynamicsKoala"><label for="dynamicsKoala">Most dynamics executed well with some balance in the parts.</label>
+      <div class="col-sm iconContainer koala">
+        <input required autocomplete="off" type="radio" name="dynamics" value="3" id="dynamicsKoala"><label for="dynamicsKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="stylistic" value="3" id="stylisticKoala"><label for="stylisticKoala">General sense of musical style conveyed with minor details needing attention.</label>
-      </div>
-    </div>
-    <div class="row m-0 text-center row-border">
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="rhythm" value="2.5" id="rhythmJellyfishBonus"><label for="rhythmJellyfishBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="coordination" value="2.5" id="coordinationJellyfishBonus"><label for="coordinationJellyfishBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="tone" value="2.5" id="toneJellyfishBonus"><label for="toneJellyfishBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="dynamics" value="2.5" id="dynamicsJellyfishBonus"><label for="dynamicsJellyfishBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="stylistic" value="2.5" id="stylisticJellyfishBonus"><label for="stylisticJellyfishBonus">As below + bonus!</label>
+      <div class="col-sm iconContainer koala">
+        <input required autocomplete="off" type="radio" name="stylistic" value="3" id="stylisticKoala"><label for="stylisticKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""></label>
       </div>
     </div>
+   
     <div class="row m-0 text-center jellyfish row-border">
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="rhythm" value="2" id="rhythmJellyfish"><label for="rhythmJellyfish">Fluctuating pulse with rhythm subdivisions generally lacking precision.</label>
+      <div class="col-sm iconContainer jellyfish">
+        <input required autocomplete="off" type="radio" name="rhythm" value="2" id="rhythmJellyfish"><label for="rhythmJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="coordination" value="2" id="coordinationJellyfish"><label for="coordinationJellyfish">Tense coordination with some rough unisons, somewhat compromised independent rhythms, and somewhat inaccurate pitch.
+      <div class="col-sm iconContainer jellyfish">
+        <input required autocomplete="off" type="radio" name="coordination" value="2" id="coordinationJellyfish"><label for="coordinationJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="tone" value="2" id="toneJellyfish"><label for="toneJellyfish">Mostly accurate with little use of fingers, wrist, and arm in tone production.
+      <div class="col-sm iconContainer jellyfish">
+        <input required autocomplete="off" type="radio" name="tone" value="2" id="toneJellyfish"><label for="toneJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="dynamics" value="2" id="dynamicsJellyfish"><label for="dynamicsJellyfish">Dynamics executed imprecisely with little balance in the parts.
+      <div class="col-sm iconContainer jellyfish">
+        <input required autocomplete="off" type="radio" name="dynamics" value="2" id="dynamicsJellyfish"><label for="dynamicsJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="stylistic" value="2" id="stylisticJellyfish"><label for="stylisticJellyfish">Sense of musical style somewhat present with important details needing attention.
-      </div>
-    </div>
-    <div class="row m-0 text-center row-border">
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="rhythm" value="1.5" id="rhythmBearBonus"><label for="rhythmBearBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="coordination" value="1.5" id="coordinationBearBonus"><label for="coordinationBearBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="tone" value="1.5" id="toneBearBonus"><label for="toneBearBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="dynamics" value="1.5" id="dynamicsBearBonus"><label for="dynamicsBearBonus">As below + bonus!</label>
-      </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="stylistic" value="1.5" id="stylisticBearBonus"><label for="stylisticBearBonus">As below + bonus!</label>
+      <div class="col-sm iconContainer jellyfish">
+        <input required autocomplete="off" type="radio" name="stylistic" value="2" id="stylisticJellyfish"><label for="stylisticJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""></label>
       </div>
     </div>
+  
     <div class="row m-0 text-center bear row-border">
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="rhythm" value="1" id="rhythmBear"><label for="rhythmBear">Sporadic pulse and loose rhythmic subdivisions.</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="rhythm" value="1" id="rhythmBear"><label for="rhythmBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="coordination" value="1" id="coordinationBear"><label for="coordinationBear">Highly tense coordination with rough unisons, generally compromised independent rhythms, and generally inaccurate pitch.</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="coordination" value="1" id="coordinationBear"><label for="coordinationBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="tone" value="1" id="toneBear"><label for="toneBear">General inaccuracy with generally harsh tone.</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="tone" value="1" id="toneBear"><label for="toneBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="dynamics" value="1" id="dynamicsBear"><label for="dynamicsBear">Dynamics not observed with a lack of balance in the parts.</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="dynamics" value="1" id="dynamicsBear"><label for="dynamicsBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""></label>
       </div>
-      <div class="col-sm">
-        <input required autocomplete="off" type="radio" name="stylistic" value="1" id="stylisticBear"><label for="stylisticBear">Musical style not conveyed.</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="stylistic" value="1" id="stylisticBear"><label for="stylisticBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""></label>
       </div>
     </div>
   </div>
@@ -203,27 +138,27 @@
   <hr>
   <div class="input-group input-group-lg">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-lg">Name of Tech A</span>
+      <span class="input-group-text" id="inputGroup-sizing-lg">Task A</span>
     </div>
     <input required type="text" class="form-control" name="techAName" autocomplete="off">
   </div>
   <br>
   <div class="rubric-grid">
     <div class="row row-border m-0 text-center">
-      <div class="col-sm bear">
-        <input required autocomplete="off" type="radio" name="techAScore" value="1" id="techABear"><label for="techABear">Uneven and rough coordination, inconsistent articulation and dynamics, and generally inaccurate pitch, at a slow tempo.</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techAScore" value="1" id="techABear"><label for="techABear"><img class="interactiveIcon" src="../images/bear.ico" alt=""></label>
       </div>
-      <div class="col-sm jellyfish">
-        <input required autocomplete="off" type="radio" name="techAScore" value="2" id="techAjellyfish"><label for="techAjellyfish">Some unevenness and compromised coordination, inconsistent articulation and dynamics, and somewhat inaccurate pitch, at a reasonable tempo.</label>
+      <div class="col-sm iconContainer jellyfish">
+        <input required autocomplete="off" type="radio" name="techAScore" value="2" id="techAjellyfish"><label for="techAjellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""></label>
       </div>
-      <div class="col-sm koala">
-        <input required autocomplete="off" type="radio" name="techAScore" value="3" id="techAKoala"><label for="techAKoala">Even and mostly coordinated, appropriate articulation and dynamics, and mostly accurate pitch, at a reasonable tempo.</label>
+      <div class="col-sm iconContainer koala">
+        <input required autocomplete="off" type="radio" name="techAScore" value="3" id="techAKoala"><label for="techAKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""></label>
       </div>
-      <div class="col-sm octopus">
-        <input required autocomplete="off" type="radio" name="techAScore" value="4" id="techAOctopus"><label for="techAOctopus">Very even and well-coordinated, appropriate articulation and dynamics, and mostly accurate pitch, at a reasonable tempo.</label>
+      <div class="col-sm iconContainer octopus">
+        <input required autocomplete="off" type="radio" name="techAScore" value="4" id="techAOctopus"><label for="techAOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""></label>
       </div>
-      <div class="col-sm eagle">
-        <input required autocomplete="off" type="radio" name="techAScore" value="5" id="techAEagle"><label for="techAEagle">Exceptional evenness and coordination, precise articulation and dynamics, and highly accurate pitch, at a fast tempo.</label>
+      <div class="col-sm iconContainer eagle">
+        <input required autocomplete="off" type="radio" name="techAScore" value="5" id="techAEagle"><label for="techAEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""></label>
       </div>
     </div>
   </div>
@@ -231,27 +166,27 @@
   <!-- Tech B-->
   <div class="input-group input-group-lg">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-lg">Name of Tech B</span>
+      <span class="input-group-text" id="inputGroup-sizing-lg">Task B</span>
     </div>
     <input required type="text" class="form-control" name="techBName" autocomplete="off">
   </div>
   <br>
   <div class="rubric-grid">
     <div class="row row-border m-0 text-center">
-      <div class="col-sm bear">
-        <input required autocomplete="off" type="radio" name="techBScore" value="1" id="techBBear"><label for="techBBear">Uneven and rough coordination, inconsistent articulation and dynamics, and generally inaccurate pitch, at a slow tempo.</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techBScore" value="1" id="techBBear"><label for="techBBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""></label>
       </div>
-      <div class="col-sm jellyfish">
-        <input required autocomplete="off" type="radio" name="techBScore" value="2" id="techBjellyfish"><label for="techBjellyfish">Some unevenness and compromised coordination, inconsistent articulation and dynamics, and somewhat inaccurate pitch, at a reasonable tempo.</label>
+      <div class="col-sm iconContainer jellyfish">
+        <input required autocomplete="off" type="radio" name="techBScore" value="2" id="techBjellyfish"><label for="techBjellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""></label>
       </div>
-      <div class="col-sm koala">
-        <input required autocomplete="off" type="radio" name="techBScore" value="3" id="techBKoala"><label for="techBKoala">Even and mostly coordinated, appropriate articulation and dynamics, and mostly accurate pitch, at a reasonable tempo.</label>
+      <div class="col-sm iconContainer koala">
+        <input required autocomplete="off" type="radio" name="techBScore" value="3" id="techBKoala"><label for="techBKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""></label>
       </div>
-      <div class="col-sm octopus">
-        <input required autocomplete="off" type="radio" name="techBScore" value="4" id="techBOctopus"><label for="techBOctopus">Very even and well-coordinated, appropriate articulation and dynamics, and mostly accurate pitch, at a reasonable tempo.</label>
+      <div class="col-sm iconContainer octopus">
+        <input required autocomplete="off" type="radio" name="techBScore" value="4" id="techBOctopus"><label for="techBOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""></label>
       </div>
-      <div class="col-sm eagle">
-        <input required autocomplete="off" type="radio" name="techBScore" value="5" id="techBEagle"><label for="techBEagle">Exceptional evenness and coordination, precise articulation and dynamics, and highly accurate pitch, at a fast tempo.</label>
+      <div class="col-sm iconContainer eagle">
+        <input required autocomplete="off" type="radio" name="techBScore" value="5" id="techBEagle"><label for="techBEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""></label>
       </div>
     </div>
   </div>
@@ -259,7 +194,7 @@
   <!-- General Comments -->
   <h2 class="text-center display-4 mb-4">Lesson Notes</h2>
   <div class="form-group">
-    <textarea required autocomplete="off" name="comments" class="form-control" placeholder="General comments and suggestions for home practice; feel free to drag the bottom-right corner to expand" id="comments" rows="50"></textarea>
+    <textarea required autocomplete="off" name="comments" class="form-control" placeholder="General comments and suggestions for home practice; feel free to drag the bottom-right corner to expand" id="comments" rows="15"></textarea>
   </div>
   <hr>
 
@@ -268,4 +203,61 @@
   <!-- Submit Button-->
   <button class="btn my-4 btn-success btn-block" type="submit">Create Week</button>
 </form>
+<script>
+  // select all radio inputs
+  // check if checked then update parent div accordingly
+  document.addEventListener('click', function() {
+    let allRadio = document.querySelectorAll('input[type=radio]')
+    allRadio.forEach(function(input) {
+      if (input.checked) {
+        switch (input.value) {
+        case '1': 
+          input.parentElement.classList.remove('bear')
+          input.parentElement.classList.add('bearSelected')
+          break
+        case '2':
+          input.parentElement.classList.remove('jellyfish')
+          input.parentElement.classList.add('jellyfishSelected')
+          break
+        case '3':
+          input.parentElement.classList.remove('koala')
+          input.parentElement.classList.add('koalaSelected')
+          break
+        case '4':
+          input.parentElement.classList.remove('octopus')
+          input.parentElement.classList.add('octopusSelected')
+          break
+        case '5':
+          input.parentElement.classList.remove('eagle')
+          input.parentElement.classList.add('eagleSelected')
+          break
+        }
+      } else {
+        switch (input.value) {
+        case '1': 
+          input.parentElement.classList.add('bear')
+          input.parentElement.classList.remove('bearSelected')
+          break
+        case '2':
+          input.parentElement.classList.add('jellyfish')
+          input.parentElement.classList.remove('jellyfishSelected')
+          break
+        case '3':
+          input.parentElement.classList.add('koala')
+          input.parentElement.classList.remove('koalaSelected')
+          break
+        case '4':
+          input.parentElement.classList.add('octopus')
+          input.parentElement.classList.remove('octopusSelected')
+          break
+        case '5':
+          input.parentElement.classList.add('eagle')
+          input.parentElement.classList.remove('eagleSelected')
+          break
+        }
+      }
+      
+    })
+  })
+</script>
 <%- include('includes/footer') %>

@@ -247,7 +247,7 @@ h2 {
 }
 
 .col-sm {
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -294,6 +294,10 @@ h2 {
     color: #ff810c;
 }
 
+.dark-orange-text {
+    color: #bd5b00;
+}
+
 .blue-text {
     color: #45cdff;
 }
@@ -326,21 +330,13 @@ h2 {
     background-color: rgba(200, 173, 253, 0.9);
 }
 
-.bonus {
-    background-color: rgb(226, 226, 226);
-}
-
-.eagle {
-    background-color: #b6dcff;
-}
-
 .rubric-icon {
     height: 40px;
     width: 40px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
+
 
 .practiceSuccessIcon {
     margin-left: 25px;
@@ -348,12 +344,16 @@ h2 {
     margin-bottom: 25px;
 }
 
+.eagle {
+    background-color: #d8ffc5;
+}
+
 .octopus {
-    background-color: #ffd5bd;
+    background-color: #b6dcff;
 }
 
 .koala {
-    background-color: #d8ffc5;
+    background-color: #ffd5bd;
 }
 
 .jellyfish {
@@ -361,12 +361,29 @@ h2 {
 }
 
 .bear {
-    background-color: #ffd7d7;
-}
-
-.bear-simplified {
     background-color: #cacaca;
 }
+
+.eagleSelected {
+    background-color: #a1f179;
+}
+
+.octopusSelected {
+    background-color: #79baf7;
+}
+
+.koalaSelected {
+    background-color: #f0a579;
+}
+
+.jellyfishSelected {
+    background-color: #f1d580;
+}
+
+.bearSelected {
+    background-color: #969696;
+}
+
 
 /* ASSESSMENT GRID */
 
@@ -374,9 +391,6 @@ h2 {
     background-color: rgb(226, 226, 226);
     border: 1px solid white;
     padding: 0;
-}
-
-.rubric-grid {
     margin: 0;
 }
 
@@ -384,26 +398,33 @@ h2 {
     border: 1px solid white;
 }
 
+.iconContainer {
+    min-height: 9rem;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.interactiveIcon {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
 .rubric-grid input[type="radio"] {
-    display: none;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
-.rubric-grid label {
-    display: inline-block;
+.rubric-grid input[type="radio"] + label img {
     cursor: pointer;
+    transition: width 0.2s, height 0.2s;
 }
 
-.rubric-grid input[type="radio"]:checked+label {
-    font-weight: bold;
-}
-
-.answer-options input[type="radio"]:checked {
-    font-weight: bold;
-}
-
-.row .col-sm {
-    display: block;
-}
+.rubric-grid input[type="radio"]:checked + label img {
+    width: 5rem;
+    height: 5rem;
+}  
 
 hr {
     background-color: transparent;
@@ -506,9 +527,9 @@ hr {
 #weeklySnapshot h1 {
     font-family: 'Belgrano', serif;
     font-size: 3rem;
-    color: #4eb348;
+    color: #ffb03a;
     margin-bottom: 1.5rem;
-    text-shadow: 2px 2px 10px rgb(0, 130, 22);
+    text-shadow: 2px 2px 10px rgb(130, 0, 0);
 }
 
 /* REPORTS */

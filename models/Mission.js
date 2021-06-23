@@ -1,6 +1,7 @@
 const missionsCollection = require('../db').db('studio-project').collection('missions')
 const usersCollection = require('../db').db('studio-project').collection('users')
 const ObjectID = require('mongodb').ObjectID
+const Message = require('./Message')
 
 let Mission = function(data) {
     this.data = data
@@ -15,7 +16,8 @@ giveEveryoneASomething = async function() {
       {},
       { $set:
          {
-            paidLessons: 0
+            practiceConversation: "",
+            practiceReply: ""
          }
       }
    )
@@ -40,6 +42,18 @@ Mission.getPracticeStatus = function(userId) {
             resolve(false)
         }
     })
+}
+
+Mission.getPracticeReply = function(userId) {
+    return new Promise(async(resolve, reject) => {
+        let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+        resolve(userDoc.practiceReply)
+    })
+}
+
+Mission.updatePracticeConversationAndEmailHanford = async function(convo, userId, username) {
+    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"practiceConversation": convo} })
+    Message.sendEmail({message:convo, email:username})
 }
 
 Mission.updateLastSubmittedDateAndAddPoints = async function(points, userId) {

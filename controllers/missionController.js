@@ -86,10 +86,11 @@ exports.compareScoreAndSave = async function(req, res) {
     }
 }
 
-// PRACTICE LOTTERY
+// PRACTICE CONVERSATION
 exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
     let randomInt = getRndInt(5, 10)
     await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
+    await Mission.updatePracticeConversationAndEmailHanford(req.body.practiceConversation, req.session.user.userId, req.session.user.username)
     res.redirect('/practice')
 }
 

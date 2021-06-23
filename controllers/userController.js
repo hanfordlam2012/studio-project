@@ -161,25 +161,28 @@ exports.showPracticePage = function(req, res) {
         User.getLeaderboard().then((leaderboardObject) => {
             User.getPoints(req.session.user.userId).then((points) => {
                 Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
-                    missionController.getRandomBPM().then((randomBPM) => {
-                        missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
-                            res.render('practicePage', {
-                                username: req.session.user.username,
-                                fName: req.session.user.fName,
-                                userId: req.session.user.userId,
-                                parentName: req.session.user.parentName,
-                                admin: req.session.user.admin,
-                                randomBPM: randomBPM, // taken from admin acc
-                                BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
-                                latestComments: latestComments,
-                                leaderboard: leaderboardObject.leaderboard,
-                                adErrors: req.flash('adErrors'),
-                                practiceStatus: practiceStatus, // true if already practised
-                                points: points,
-                                totalPianoPoints: leaderboardObject.totalPianoPoints,
-                                lessonCount: req.session.user.lessonCount,
-                                paidLessons: req.session.user.paidLessons,
-                                leaderboardColor: req.session.user.leaderboardColor
+                    Mission.getPracticeReply(req.session.user.userId).then((practiceReply) => {
+                        missionController.getRandomBPM().then((randomBPM) => {
+                            missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
+                                res.render('practicePage', {
+                                    username: req.session.user.username,
+                                    fName: req.session.user.fName,
+                                    userId: req.session.user.userId,
+                                    parentName: req.session.user.parentName,
+                                    admin: req.session.user.admin,
+                                    randomBPM: randomBPM, // taken from admin acc
+                                    BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
+                                    latestComments: latestComments,
+                                    leaderboard: leaderboardObject.leaderboard,
+                                    adErrors: req.flash('adErrors'),
+                                    practiceStatus: practiceStatus, // true if already practised
+                                    points: points,
+                                    totalPianoPoints: leaderboardObject.totalPianoPoints,
+                                    lessonCount: req.session.user.lessonCount,
+                                    paidLessons: req.session.user.paidLessons,
+                                    leaderboardColor: req.session.user.leaderboardColor,
+                                    practiceReply: practiceReply
+                                })
                             })
                         })
                     })

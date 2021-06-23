@@ -20,21 +20,35 @@
 </div>
 
 <!-- PRACTICE HUB -->
+<!-- linebreaks are rendered in textarea placeholder -->
 <div id="practice-guide" class="mt-2 mb-4 section">
   <div class="py-4 my-4 mb-2 mx-0"><h1 id="headingText" class="px-5 display-2 recursive rainbowText text-center">PRACTICE</h1>
     <% if (practiceStatus) { %>
-    <div id="practice-success" class="green-text recursive text-center my-2">
-      <p>Nice! Some points have been added to your wallet.</p>
+    <div id="practice-success" class="recursive text-center my-2">
+      <p><span class="green-text">Come back tomorrow for Hanford's reply!</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
     </div>
   <% } else { %>
     <form class="my-2 text-center" action="/updateLastSubmittedDateAndAddPoints" method="POST">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button type="submit" class="btn btn-outline-success btn-sm" style="font-size: 1.2rem;">Click me after you've done today's practice</button>
+      <div class="form-group" style="width:60%;min-width:27rem;margin:0 auto;">
+        <textarea autocomplete="off" name="practiceConversation" class="form-control" style="background-color: rgb(30, 20, 51);color:chartreuse;" 
+        placeholder="What did you fix this practice session? Any challenges?
+      
+Hanford's latest reply:
+&#10132; <%= practiceReply %>" id="practiceConversation" rows="6"></textarea>
+      </div>
+      <button type="submit" class="btn btn-outline-success btn-sm mt-4" style="font-size: 1.2rem;">Tell Hanford</button>
     </form>
   <% } %></div>
-    
 </div>
-<script >
+  <% latestComments.forEach((comment) => { %>
+      <div id="weeklySnapshot" class="mt-5 px-1"><%- filterUserHTML(comment.comments) %></div>
+      <div id="print-button" class="text-center mt-5 pt-5 pb-2">
+        <button class="mx-3 btn btn-outline-secondary btn-sm" href="#" onclick="printDiv('weeklySnapshot')">Print notes</button>
+      </div>
+    
+  <% }) %>
+  <script >
   // PRINT FEATURE PLAIN TEXT
   function printDiv(elementId) {
     var prtContent = document.getElementById(elementId);
@@ -44,15 +58,12 @@
     WinPrint.focus();
     WinPrint.print();
   }
+  try {
+    document.getElementById('practiceConversation').focus()
+  } catch(err) {
+    console.log(err)
+  }
+  document.querySelectorAll('h1').forEach(h1 => h1.classList.add('text-center'))
 </script>
-
-  <% latestComments.forEach((comment) => { %>
-      <div id="weeklySnapshot" class="mt-5 px-1"><%- filterUserHTML(comment.comments) %></div>
-      <div id="print-button" class="text-center mt-5 pt-5 pb-2">
-        <button class="mx-3 btn btn-outline-secondary btn-sm" href="#" onclick="printDiv('weeklySnapshot')">Print notes</button>
-      </div>
-    
-  <% }) %>
-  
 
 <%- include('includes/footer') %>

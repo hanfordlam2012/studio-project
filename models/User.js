@@ -86,7 +86,8 @@ User.prototype.cleanUp = function() {
         savedGameScore: 0,
         BPMStatus: "",
         lastBPMGuess: new Date(),
-        lessonCount: 0
+        lessonCount: 0,
+        practiceConversation: ""
     }
 }
 
@@ -276,7 +277,7 @@ User.findWeekAndUpdate = function(editData) {
 User.getStudentWeeks = async function(userId) {
     return new Promise(async(resolve, reject) => {
         // create studentWeeks object
-        let studentWeeks = await weeksCollection.find({"studentId": ObjectID(userId)}).sort({createdDate: 1}).toArray()
+        let studentWeeks = await weeksCollection.find({"studentId": ObjectID(userId)}).sort({createdDate: 1}).limit(40).toArray()
         // create graphData object
         let dateLabels = []
         let rhythmArray = []
