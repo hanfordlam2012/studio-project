@@ -159,6 +159,49 @@ User.prototype.login = function() {
     })
 }
 
+// retrieve props from db
+// returns object with requested props and values
+getThesePropertyValuesForUser = function(arrayOfProperties,userId) {
+  return new Promise(async(resolve, reject) => {
+    try {
+      let returnObject = {}
+      let userDoc = await usersCollection.findOne({'_id': ObjectID(userId)})
+      arrayOfProperties.forEach((prop) => {
+        if (userDoc.hasOwnProperty(prop)) {
+          returnObject[prop] = userDoc[prop]
+        } else {
+          console.log(prop + "not found for this user.")
+        }
+      })
+      resolve(returnObject)
+    } catch (err) {
+      console.log(err)
+      reject(err)
+    }
+  })
+}
+
+getFromAdmin = function(arrayOfProperties) {
+  return new Promise(async(resolve, reject) => {
+    try {
+      let returnObject = {}
+      let adminDoc = await usersCollection.findOne({'admin': true})
+      arrayOfProperties.forEach((prop) => {
+        if (adminDoc.hasOwnProperty(prop)) {
+          returnObject[prop] = adminDoc[prop]
+        } else {
+          console.log(prop + "not found for admin.")
+        }
+      })
+      resolve(returnObject)
+    } catch(err) {
+      console.log(err)
+      reject(err)
+    }
+  })
+}
+
+
 User.getStudentList = async function(secret, userId) {
     return new Promise(async (resolve, reject) => {
         let studentList = await usersCollection.find({"_id": {$ne: ObjectID(userId)},"secret": secret}).project({fName: 1, lName: 1}).toArray()
@@ -219,6 +262,7 @@ User.getPrizeList = function() {
   })
 }
 
+// unused
 User.getLeaderboard = function() {
     return new Promise (async(resolve, reject) => {
         let leaderboard = await usersCollection.find({"admin": false}).project({
@@ -309,13 +353,6 @@ User.getStudentWeeks = async function(userId) {
         let data = {studentWeeks, graphData}
         resolve(data)
     }).catch(function(err) {reject(err)})
-}
-
-User.getPoints = async (userId) => {
-  return new Promise (async(resolve, reject) => {
-      let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
-      resolve(userDoc.leaderboardScore)
-  })
 }
 
 User.getMissionStatuses = async (userId) => {

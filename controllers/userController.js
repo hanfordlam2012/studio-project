@@ -157,32 +157,42 @@ exports.editWeek = function (req, res) {
 
 // STUDENT NAVIGATION FUNCTIONS
 exports.showPracticePage = function(req, res) {
-    User.getLatestComments(req.session.user.userId).then(function (latestComments) {
-        User.getLeaderboard().then((leaderboardObject) => {
-            User.getPoints(req.session.user.userId).then((points) => {
+    getThesePropertyValuesForUser([
+        'leaderboardScore',
+        'practiceReply'
+        ],req.session.user.userId).then((userProps) => {
+        getFromAdmin([
+        'interestingVideoURL', 
+        'interestingVideoPrompt', 
+        'readingPracticePDFPath', 
+        'readingPracticePrompt',
+        'practicePrompt'
+        ]).then((adminProps) => {
+            User.getLatestComments(req.session.user.userId).then(function (latestComments) {
                 Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
-                    Mission.getPracticeReply(req.session.user.userId).then((practiceReply) => {
-                        missionController.getRandomBPM().then((randomBPM) => {
-                            missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
-                                res.render('practicePage', {
-                                    username: req.session.user.username,
-                                    fName: req.session.user.fName,
-                                    userId: req.session.user.userId,
-                                    parentName: req.session.user.parentName,
-                                    admin: req.session.user.admin,
-                                    randomBPM: randomBPM, // taken from admin acc
-                                    BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
-                                    latestComments: latestComments,
-                                    leaderboard: leaderboardObject.leaderboard,
-                                    adErrors: req.flash('adErrors'),
-                                    practiceStatus: practiceStatus, // true if already practised
-                                    points: points,
-                                    totalPianoPoints: leaderboardObject.totalPianoPoints,
-                                    lessonCount: req.session.user.lessonCount,
-                                    paidLessons: req.session.user.paidLessons,
-                                    leaderboardColor: req.session.user.leaderboardColor,
-                                    practiceReply: practiceReply
-                                })
+                    missionController.getRandomBPM().then((randomBPM) => {
+                        missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
+                            res.render('practicePage', {
+                                username: req.session.user.username,
+                                fName: req.session.user.fName,
+                                userId: req.session.user.userId,
+                                parentName: req.session.user.parentName,
+                                admin: req.session.user.admin,
+                                randomBPM: randomBPM, // taken from admin acc + other operations performed, don't modify!
+                                BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
+                                latestComments: latestComments,
+                                adErrors: req.flash('adErrors'),
+                                practiceStatus: practiceStatus, // true if already practised
+                                points: userProps.leaderboardScore,
+                                lessonCount: req.session.user.lessonCount,
+                                paidLessons: req.session.user.paidLessons,
+                                leaderboardColor: req.session.user.leaderboardColor,
+                                practiceReply: userProps.practiceReply,
+                                practicePrompt: adminProps.practicePrompt,
+                                interestingVideoURL: adminProps.interestingVideoURL,
+                                interestingVideoPrompt: adminProps.interestingVideoPrompt,
+                                readingPracticePDFPath: adminProps.readingPracticePDFPath,
+                                readingPracticePrompt: adminProps.readingPracticePrompt
                             })
                         })
                     })
@@ -193,29 +203,27 @@ exports.showPracticePage = function(req, res) {
 }
 
 exports.showMissionsPage = function(req, res) {
-    User.getLeaderboard().then((leaderboardObject) => {
-        User.getMissionStatuses(req.session.user.userId).then((missionStatuses) => {
-            User.getPoints(req.session.user.userId).then((points) => {
-                missionController.getRandomBPM().then((randomBPM) => {
-                // function not yet written, need to return object with props BPMStatus, points
-                    missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
-                        res.render('missionsPage', {
-                            username: req.session.user.username,
-                            fName: req.session.user.fName,
-                            userId: req.session.user.userId,
-                            parentName: req.session.user.parentName,
-                            admin: req.session.user.admin,
-                            missionStatuses: missionStatuses,
-                            points: points,
-                            leaderboard: leaderboardObject.leaderboard,
-                            adErrors: req.flash('adErrors'),
-                            randomBPM: randomBPM, // taken from admin acc
-                            BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
-                            totalPianoPoints: leaderboardObject.totalPianoPoints,
-                            lessonCount: req.session.user.lessonCount,
-                            paidLessons: req.session.user.paidLessons,
-                            leaderboardColor: req.session.user.leaderboardColor
-                        })
+    User.getMissionStatuses(req.session.user.userId).then((missionStatuses) => {
+        getThesePropertyValuesForUser([
+            'leaderboardScore'
+            ],req.session.user.userId).then((userProps) => {
+            missionController.getRandomBPM().then((randomBPM) => {
+            // function not yet written, need to return object with props BPMStatus, points
+                missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
+                    res.render('missionsPage', {
+                        username: req.session.user.username,
+                        fName: req.session.user.fName,
+                        userId: req.session.user.userId,
+                        parentName: req.session.user.parentName,
+                        admin: req.session.user.admin,
+                        missionStatuses: missionStatuses,
+                        points: userProps.leaderboardScore,
+                        adErrors: req.flash('adErrors'),
+                        randomBPM: randomBPM, // taken from admin acc
+                        BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
+                        lessonCount: req.session.user.lessonCount,
+                        paidLessons: req.session.user.paidLessons,
+                        leaderboardColor: req.session.user.leaderboardColor
                     })
                 })
             })
@@ -226,7 +234,9 @@ exports.showMissionsPage = function(req, res) {
 exports.showLeaderboardPage = function(req, res) {
     User.getPrizeList().then((prizeList) => {
       User.getLeaderboard().then((leaderboardObject) => {
-          User.getPoints(req.session.user.userId).then((points) => {
+        getThesePropertyValuesForUser([
+            'leaderboardScore'
+            ],req.session.user.userId).then((userProps) => {
             res.render('leaderboardPage', {
             username: req.session.user.username,
             fName: req.session.user.fName,
@@ -240,7 +250,7 @@ exports.showLeaderboardPage = function(req, res) {
             lessonCount: req.session.user.lessonCount,
             paidLessons: req.session.user.paidLessons,
             leaderboardColor: req.session.user.leaderboardColor,
-            points: points
+            points: userProps.leaderboardScore
             })
           })
         
@@ -249,7 +259,9 @@ exports.showLeaderboardPage = function(req, res) {
 }
 
 exports.showParentsPage = function(req, res) {
-    User.getPoints(req.session.user.userId).then((points) => {
+    getThesePropertyValuesForUser([
+        'leaderboardScore'
+        ],req.session.user.userId).then((userProps) => {
         User.getStudentWeeks(req.session.user.userId).then(function (data) {
             let studentWeeks = data.studentWeeks
             let dateLabels = data.graphData.dateLabels
@@ -277,7 +289,7 @@ exports.showParentsPage = function(req, res) {
                 lessonCount: req.session.user.lessonCount,
                 paidLessons: req.session.user.paidLessons,
                 leaderboardColor: req.session.user.leaderboardColor,
-                points: points
+                points: userProps.leaderboardScore
             })
         })
     })
