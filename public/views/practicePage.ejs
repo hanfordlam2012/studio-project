@@ -32,10 +32,7 @@
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <div class="form-group" style="width:60%;min-width:27rem;margin:0 auto;">
         <textarea autocomplete="off" name="practiceConversation" class="form-control" style="background-color: rgb(30, 20, 51);color:chartreuse;" 
-        placeholder="<%= practicePrompt %>
-      
-Hanford's latest reply:
-&#10132; <%= practiceReply %>" id="practiceConversation" rows="6"></textarea>
+        placeholder="<%= practicePrompt %>&#10; &#10; Hanford's latest reply:&#10; &#10132; <%= practiceReply %>" id="practiceConversation" rows="6"></textarea>
       </div>
       <button type="submit" class="btn btn-outline-success btn-sm mt-4" style="font-size: 1.2rem;">Tell Hanford</button>
     </form>
@@ -76,9 +73,24 @@ Hanford's latest reply:
 <!-- READING PRACTICE -->
 <% if(readingPracticePDFPath){ %>
 <h3 class="text-center dark-orange-text my-5">Refreshed? Let's do some reading practice.</h3>
-<p class="text-center grey-text mb-5"><%= readingPracticePrompt %></p>
+<p class="text-center grey-text"><%= readingPracticePrompt %></p>
+<p class="text-center grey-text mb-5"><a href="<%= readingPracticePDFPath %>" target="_blank">Link</a> to PDF if below does not display correctly on mobile devices.</p>
 <iframe src="<%= readingPracticePDFPath %>" width="100%" height="1500px"></iframe>
 <% } %>
 
+<!-- dev data -->
+<script>
+  console.log(
+    'scrwidth:'+screen.width,
+    'scrheight:'+screen.height,
+    'scravailWidth:'+screen.availWidth,
+    'scravailHeight:'+screen.availHeight,
+    'scrcolorDepth:'+screen.colorDepth,
+    'scrpixelDepth:'+screen.pixelDepth,
+    'userAgent:'+navigator.userAgent,
+    'platform:'+navigator.platform,
+    'username:'+'<%= username %>'
+    )
+</script>
 
 <%- include('includes/footer') %>
