@@ -30,9 +30,7 @@ router.post('/isCorrect', userController.isCorrect)
 router.post('/submitQuiz', missionController.checkQuiz)
 
 // routes for holiday coding
-router.get('/sampleStudent', function(req, res) {
-    res.render('cssWebsite')
-})
+
 
 // student navigation
 router.get('/practice', userController.mustBeLoggedIn, userController.showPracticePage)
