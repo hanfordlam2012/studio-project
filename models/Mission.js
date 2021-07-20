@@ -44,9 +44,9 @@ Mission.getPracticeStatus = function(userId) {
     })
 }
 
-Mission.updatePracticeConversationAndEmailHanford = async function(convo, userId, username) {
-    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"practiceConversation": convo} })
-    Message.sendEmail({message:convo, email:username})
+Mission.updatePracticeConversationAndEmailHanford = async function(data, userId, username) {
+    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"practiceConversation": data.practiceConversation} })
+    Message.sendEmail({message:JSON.stringify(data), email:username})
 }
 
 Mission.updateLastSubmittedDateAndAddPoints = async function(points, userId) {

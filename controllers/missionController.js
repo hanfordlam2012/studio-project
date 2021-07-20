@@ -90,7 +90,7 @@ exports.compareScoreAndSave = async function(req, res) {
 exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
     let randomInt = getRndInt(5, 10)
     await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
-    await Mission.updatePracticeConversationAndEmailHanford(req.body.practiceConversation, req.session.user.userId, req.session.user.username)
+    await Mission.updatePracticeConversationAndEmailHanford(req.body, req.session.user.userId, req.session.user.username)
     res.redirect('/practice')
 }
 
