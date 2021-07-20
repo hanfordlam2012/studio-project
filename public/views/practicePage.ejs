@@ -1,6 +1,8 @@
 <%- include('includes/header') %>
 <!-- FONT AWESOME -->
 <script src="https://kit.fontawesome.com/25ae9b8317.js" crossorigin="anonymous"></script>
+<!--typed.js-->
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <!--SNOWFLAKES FOR WINTER-->
 <div class="snowflakes" aria-hidden="true">
   <div class="snowflake">
@@ -79,8 +81,11 @@
         <% }) %>
         <div class="form-group text-center" style="width:80%;margin:0 auto;">
           <textarea autocomplete="off" name="practiceConversation" class="form-control" style="background-color: rgb(30, 20, 51);color:chartreuse;" 
-          placeholder="<%= practicePrompt %>&#10; &#10; Hanford's latest reply:&#10; &#10132; <%= practiceReply %>" id="practiceConversation" rows="6"></textarea>
-          <button  type="submit" class="btn btn-outline-success btn-lg mt-4" style="font-size: 1.2rem;">Click here to earn your daily points!</button>
+          placeholder="<%= practicePrompt %>&#10; &#10;" id="practiceConversation" rows="3"></textarea>
+          <div style="min-height: 7rem" class="mt-3">
+            <span id="typed" class="pink-text"></span>
+          </div>
+          <button  type="submit" class="btn btn-outline-success btn-lg mt-4" style="font-size: 1.2rem;">Send to Hanford</button>
         </div>
       </form>
     <% } %>
@@ -164,6 +169,17 @@
   } catch(err) {
     console.log(err);
   }
+
+  //typed.js
+  var options = {
+  strings: ["Hanford's latest reply: ^1500", "<%= practiceReply %> ^2000"],
+  typeSpeed: 60,
+  backSpeed: 60,
+  loop: true,
+  loopCount: Infinity
+  };
+
+  var typed = new Typed('#typed', options);
 
   // prevent multisubmits
   try {

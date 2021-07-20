@@ -747,6 +747,11 @@ hr {
     animation-delay:3s,1.5s
 }
 
+/*TYPED.JS*/
+.typed-cursor{
+    color: #e8226a;
+}
+
 /* REPORTS */
 #pikachuMusic {
     width: 15rem;
