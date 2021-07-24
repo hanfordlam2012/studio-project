@@ -505,15 +505,13 @@ hr {
 }
 
 /*CHECKED*/
-#weeklySnapshot p, ul, li{
+#weeklySnapshot {
     font-family: 'Bellota', cursive;
     font-size: 1.5rem;
     color: rgb(208, 208, 208);
-}
-
-#weeklySnapshot {
     max-width: 1000px;
     margin: auto;
+    counter-reset: item; /*set counter because flex does not work with list-style*/
 }
 
 #weeklySnapshot em {
@@ -541,7 +539,24 @@ hr {
 }
 
 #weeklySnapshot input[type=checkbox] {
-    visibility: hidden;
+    display: none;
+}
+
+#weeklySnapshot li {
+    margin-left: 2rem;
+    display: flex;
+}
+
+#weeklySnapshot ol > li::before {
+    counter-increment: item;
+    content: counter(item) ".";
+    margin-right: 2rem;
+}
+
+#weeklySnapshot ul > li::before {
+    content: "-";
+    margin-right: 2rem;
+    margin-left: 3rem;
 }
 
 #weeklySnapshot label {
@@ -770,6 +785,18 @@ hr {
     margin: 0 auto;
     display: block;
     font-family: 'Handlee', cursive;
+}
+
+#registration-form input {
+    background-color: #000000;
+    border: none;
+    color:#ac1010;
+}
+
+#loginForm input, input:focus {
+    background-color: #1f003d;
+    border: none;
+    color:#5cc035;
 }
 
 /* WALLET */

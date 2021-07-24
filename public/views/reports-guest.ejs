@@ -11,7 +11,7 @@
   <% }) %>
   <div class="d-flex mt-3 justify-content-center">
     
-    <form action="/login" method="POST" class="">
+    <form id="loginForm" action="/login" method="POST" class="">
       <input autocomplete="off" type="text" name="username" class="text-center form-control-lg d-block mb-2 mr-sm-2" placeholder="USERNAME" id="mainUsernameInput">
       <input autocomplete="off" type="password" name="password" class="text-center form-control-lg d-block mb-2 mr-sm-2" placeholder="PASSWORD">
       <div class="d-flex justify-content-center">
@@ -56,7 +56,7 @@
       <input id="secretInput" autocomplete="off" type="text" name="secret" class="text-center form-control-lg" value="" placeholder="Hanford's secret">
     </div>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-success btn-lg mt-3">Register</button>
+    <button type="submit" class="btn btn-secondary btn-lg mt-3">Register</button>
   </form>
 </div>
 
