@@ -87,7 +87,8 @@
   <form action="/guessBPM" method="POST" class="form-inline text-center mb-3 mt-3 justify-content-center">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
     <div class="form-group ml-4">
-      <input type="number" step="10" name="bpmGuess" id="bpmGuess" class="form-control input-lg mx-sm-3">
+      <input type="range" min="20" max="200" step="10" name="bpmGuess" id="bpmGuess" class="input-lg mx-sm-3" oninput="num.value = this.value">
+      <output style="width:3rem;" class="mr-0 pr-0 white-text" id="num">110</output>
       <small id="passwordHelpInline" class="text-muted">
         beats per minute
       </small>
