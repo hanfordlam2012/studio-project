@@ -97,6 +97,18 @@
     <button type="submit" class="btn btn-outline-success ml-3">Guess</button>
   </form>
 <% } %>
+<script>
+  // Guess the tempo
+  var img = document.getElementById('blinking_image');
+
+  var interval = window.setInterval(function(){
+    if (img.style.visibility == 'hidden') {
+      img.style.visibility = 'visible';
+    } else{
+      img.style.visibility = 'hidden';
+    }
+  }, 30000/<%- randomBPM %>);
+</script>
 
 <div class="mt-5" id="missionsWrapper">
 <!-- Technical Skills -->
@@ -385,24 +397,12 @@ if (missionStatuses.chromatic) { %>
 </div>
 
 <script>
-  // Guess the tempo
-  var img = document.getElementById('blinking_image');
-
-  var interval = window.setInterval(function(){
-    if (img.style.visibility == 'hidden') {
-      img.style.visibility = 'visible';
-    } else{
-      img.style.visibility = 'hidden';
-    }
-  }, 30000/<%- randomBPM %>);
-
 // ADD CSRF TOKEN TO MISSION SUBMITS
   if (document.getElementById('missionSubmitButton')) {
     var d1 = document.getElementById('missionSubmitButton')
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="_csrf" value="<%= csrfToken %>">')
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="userId" value="<%= userId %>">')
   }
-
 </script>
 
 <%- include('includes/footer') %>

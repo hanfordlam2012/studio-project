@@ -262,20 +262,15 @@ User.getPrizeList = function() {
   })
 }
 
-// unused
 User.getLeaderboard = function() {
     return new Promise (async(resolve, reject) => {
         let leaderboard = await usersCollection.find({"admin": false}).project({
           username: 1, 
-          completeTotalScore: 1,
+          leaderboardScore: 1,
           badges: 1, 
           leaderboardColor: 1, 
-        }).sort({completeTotalScore: -1}).toArray()
-        let totalPianoPoints = 0
-        leaderboard.forEach((leader) => {
-          totalPianoPoints += leader.leaderboardScore
-        })
-        resolve({leaderboard: leaderboard, totalPianoPoints: totalPianoPoints})
+        }).sort({leaderboardScore: -1}).toArray()
+        resolve({leaderboard: leaderboard})
     })
 }
 
@@ -362,129 +357,13 @@ User.getMissionStatuses = async (userId) => {
     })
 }
 
-User.getMissionCode = async function(userId) {
+User.getMissionCode = async function() {
     return new Promise(async(resolve, reject) => {
         let missionCode = ""
-        let missionDoc = await missionsCollection.findOne({name: "skill1"})
+        let missionDoc = await missionsCollection.findOne({name: "quiz1"})
         if (!missionDoc) {
             resolve (false)
             // 5 QUESTION QUIZZES
-        } else if (missionDoc.type == 'quiz') {
-            missionCode = `<div class="alert alert-success text-center">There's a Quiz mission worth 50 points. Time to think hard!</div>
-            <form id="quiz-form" class="text-center px-5 my-4 white-text" action="/submitQuiz" method="POST">
-              <!-- Question 1 -->
-              <div class="question-div">
-                <h2><span class="orange-text">Let's begin : </span><span class="blue-text small">${missionDoc.q1}</span></h2>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q1r" id="q1o1" value="${missionDoc.q1o1}">
-                <label class="form-check-label" for="q1o1">
-                ${missionDoc.q1o1}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q1r" id="q1o2" value="${missionDoc.q1o2}">
-                <label class="form-check-label" for="q1o2">
-                  ${missionDoc.q1o2}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q1r" id="q1o3" value="${missionDoc.q1o3}">
-                <label class="form-check-label" for="q1o3">
-                  ${missionDoc.q1o3}
-                </label>
-              </div>
-              </div>
-              <!-- Question 2 -->
-              <div class="question-div">
-                <h2><span class="orange-text">How about this : </span><span class="blue-text small">${missionDoc.q2}</span></h2>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q2r" id="q2o1" value="${missionDoc.q2o1}">
-                <label class="form-check-label" for="q2o1">
-                  ${missionDoc.q2o1}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q2r" id="q2o2" value="${missionDoc.q2o2}">
-                <label class="form-check-label" for="q2o2">
-                  ${missionDoc.q2o2}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q2r" id="q2o3" value="${missionDoc.q2o3}">
-                <label class="form-check-label" for="q2o3">
-                  ${missionDoc.q2o3}
-                </label>
-              </div></div>
-              <!-- Question 3 -->
-              <div class="question-div">
-                <h2><span class="orange-text">Halfway there now : </span><span class="blue-text small">${missionDoc.q3}</span></h2>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q3r" id="q3o1" value="${missionDoc.q3o1}">
-                <label class="form-check-label" for="q3o1">
-                  ${missionDoc.q3o1}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q3r" id="q3o2" value="${missionDoc.q3o2}">
-                <label class="form-check-label" for="q3o2">
-                  ${missionDoc.q3o2}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q3r" id="q3o3" value="${missionDoc.q3o3}">
-                <label class="form-check-label" for="q3o3">
-                  ${missionDoc.q3o3}
-                </label>
-              </div></div>
-              <!-- Question 4 -->
-              <div class="question-div">
-                <h2><span class="orange-text">And this : </span><span class="blue-text small">${missionDoc.q4}</span></h2>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q4r" id="q4o1" value="${missionDoc.q4o1}">
-                <label class="form-check-label" for="q4o1">
-                  ${missionDoc.q4o1}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q4r" id="q4o2" value="${missionDoc.q4o2}">
-                <label class="form-check-label" for="q4o2">
-                  ${missionDoc.q4o2}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q4r" id="q4o3" value="${missionDoc.q4o3}">
-                <label class="form-check-label" for="q4o3">
-                  ${missionDoc.q4o3}
-                </label>
-              </div></div>
-              <!-- Question 5 -->
-              <div class="question-div">
-                <h2><span class="orange-text">A final tricky question : </span><span class="blue-text small">${missionDoc.q5}</span></h2>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q5r" id="q5o1" value="${missionDoc.q5o1}">
-                <label class="form-check-label" for="q5o1">
-                  ${missionDoc.q5o1}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q5r" id="q5o2" value="${missionDoc.q5o2}">
-                <label class="form-check-label" for="q5o2">
-                  ${missionDoc.q5o2}
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="q5r" id="q5o3" value="${missionDoc.q5o3}">
-                <label class="form-check-label" for="q5o3">
-                  ${missionDoc.q5o3}
-                </label>
-              </div></div>
-              <input type="hidden" name="name" value="${missionDoc.name}">
-              <input type="hidden" name="type" value="${missionDoc.type}">
-              <button id="missionSubmitButton" class="btn btn-success btn-lg my-1" type="submit">Submit Quick Quiz</button>
-            </form>`
-
-            resolve (missionCode)
-
         } else if (missionDoc.type == 'theCristoforiConnection') {
             missionCode = '<div class="alert alert-success text-center">There is a Game mission - put your thinking cap on and go for it!<br>What is the Cristofori Connection...?</div>' +
             '<iframe class="rounded" src="..\\..\\files\\TheCristoforiConnection\\index.html" frameborder="0" height="650px" width="100%"></iframe>'

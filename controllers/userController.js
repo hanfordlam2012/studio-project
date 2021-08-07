@@ -245,7 +245,6 @@ exports.showLeaderboardPage = function(req, res) {
             admin: req.session.user.admin,
             leaderboard: leaderboardObject.leaderboard,
             adErrors: req.flash('adErrors'),
-            totalPianoPoints: leaderboardObject.totalPianoPoints,
             prizeList: prizeList,
             lessonCount: req.session.user.lessonCount,
             paidLessons: req.session.user.paidLessons,
