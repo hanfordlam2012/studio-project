@@ -820,31 +820,6 @@ hr {
 }
 
 /* TICKER */
-.bkground {
-    background: none;
-}
-
-.news {
-    width: 100%;
-    margin: 0 auto;
-    overflow: hidden;
-    padding: 0;
-    -webkit-user-select: none;
-}
-
-.news span {
-    float: left;
-    color: rgb(0, 141, 192);
-    position: relative;
-    -webkit-font-smoothing: antialiased;
-    -webkit-user-select: none;
-    cursor: pointer;
-}
-
-.text1{
-    width: 100%;
-}
-
 .marquee {
     width: 100%;
 	line-height: 50px;
