@@ -3,7 +3,8 @@
 <script src="https://kit.fontawesome.com/25ae9b8317.js" crossorigin="anonymous"></script>
 <!--typed.js-->
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-<!--SNOWFLAKES FOR WINTER-->
+
+<!--SNOWFLAKES FOR WINTER
 <div class="snowflakes" aria-hidden="true">
   <div class="snowflake">
   ❅
@@ -34,6 +35,39 @@
   </div>
   <div class="snowflake">
   ❄
+  </div>
+</div>-->
+<!--Flowers FOR Spring-->
+<div class="snowflakes" aria-hidden="true">
+  <div class="snowflake">
+  🌸
+  </div>
+  <div class="snowflake">
+  🌸
+  </div>
+  <div class="snowflake">
+  🍀
+  </div>
+  <div class="snowflake">
+  🌺
+  </div>
+  <div class="snowflake">
+  🌸
+  </div>
+  <div class="snowflake">
+  🍀
+  </div>
+  <div class="snowflake">
+  🌸
+  </div>
+  <div class="snowflake">
+  🍀
+  </div>
+  <div class="snowflake">
+  🌺
+  </div>
+  <div class="snowflake">
+  🌸
   </div>
 </div>
 
@@ -101,11 +135,14 @@
 </div>
 
 <!-- INTERESTING VIDEO -->
-<% if(interestingVideoURL){ %>
-<h3 id="interestingVideo" class="text-center dark-orange-text my-5">Tired? Relax with an interesting video.</h3>
-<p class="text-center grey-text mb-5"><%= interestingVideoPrompt %></p>
-<iframe class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<% } %>
+<div id="interestingVideoContainer">
+  <% if(interestingVideoURL){ %>
+  <h3 id="interestingVideo" class="text-center dark-orange-text my-5">Tired? Relax with an interesting video.</h3>
+  <p class="text-center grey-text mb-5"><%= interestingVideoPrompt %></p>
+  <iframe style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <% } %>
+</div>
+
 
 <div class="arrowcontainer">
   <div class="arrow-holder">
@@ -116,12 +153,15 @@
 </div>
 
 <!-- READING PRACTICE -->
-<% if(readingPracticePDFPath){ %>
-<h3 class="text-center dark-orange-text my-5">Refreshed? Let's do some reading practice.</h3>
-<p class="text-center grey-text"><%= readingPracticePrompt %></p>
-<p class="text-center grey-text mb-5"><a href="<%= readingPracticePDFPath %>" target="_blank">Link</a> to PDF if below does not display correctly on mobile devices.</p>
-<iframe src="<%= readingPracticePDFPath %>" width="100%" height="1500px"></iframe>
-<% } %>
+<div id="readingPracticeContainer">
+  <% if(readingPracticePDFPath){ %>
+  <h3 class="text-center dark-orange-text my-5">Refreshed? Let's do some reading practice.</h3>
+  <p class="text-center grey-text"><%= readingPracticePrompt %></p>
+  <p class="text-center grey-text mb-5"><a href="<%= readingPracticePDFPath %>" target="_blank">Link</a> to PDF if below does not display correctly on mobile devices.</p>
+  <iframe src="<%= readingPracticePDFPath %>" width="100%" height="1500px"></iframe>
+  <% } %>
+</div>
+
 
 <script>
   // PRINT FEATURE PLAIN TEXT
