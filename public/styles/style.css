@@ -64,6 +64,10 @@ nav {
 }
 
 /* FONTS */
+.maShanZheng {
+    font-family: 'Ma Shan Zheng', cursive;
+}
+
 .poppins {
     font-family: 'Poppins', sans-serif;
 }

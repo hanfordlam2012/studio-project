@@ -18,6 +18,11 @@ router.get('/media', function(req, res) {
 router.get('/contact', function(req, res) {
     res.render('contact', {status: req.flash('status')})
 })
+router.get('/blackboard', function(req, res) {
+    res.render('blackboard')
+})
+
+
 // user routes
 router.get('/reports', userController.reports)
 router.post('/register', userController.register)
@@ -38,7 +43,7 @@ router.get('/missions', userController.mustBeLoggedIn, userController.showMissio
 router.get('/leaderboard', userController.mustBeLoggedIn, userController.showLeaderboardPage)
 router.get('/parents', userController.mustBeLoggedIn, userController.showParentsPage)
 
-// scoresby routes
+// scoresby routes unused
 router.get('/scoresby', userController.mustBeLoggedIn, userController.mustBeAdmin, scoresbyController.getDataAndShowScoresbyPage)
 router.post('/logContributor', userController.mustBeLoggedIn, userController.mustBeAdmin, scoresbyController.logContributorAndRefresh)
 

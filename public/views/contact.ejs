@@ -5,26 +5,27 @@
 <!-- CONTACT FORM -->
 <div id="contactForm" class="row justify-content-center mb-5">
   <div class="my-3 w-100 section">
-    <div class="pt-4 mt-4 mb-0 mx-0"><h1 style="font-size: 4rem" class="text-center yellow-text bellota">MESSAGE ME</h1>
+    <div class="pt-4 mt-4 mb-0 mx-0"><h1 style="font-size: 4rem" class="text-center yellow-text bellota">MESSAGE ME <span class="maShanZheng">给我发消息</span></h1>
     </div>
   </div>
 <div class="col-10"><% if (status == 'fail') { %>
-        <div class="alert alert-danger text-center small py-2">Sorry, your message couldn't be sent...maybe try the Facebook Page below instead?</div>
+        <div class="alert alert-danger text-center small py-2">Sorry, your message couldn't be sent...maybe try the Facebook Page below instead? <span class="maShanZheng">抱歉，无法发送您的消息...可以试试下面的 Facebook 页面吗？</span></div>
       <% } else if (status == 'success') { %>
-        <div class="alert alert-success text-center small py-2">Your message has been sent successfully. Thanks for reaching out!</div>
+        <div class="alert alert-success text-center small py-2">Your message has been sent successfully. Thanks for reaching out! <span class="maShanZheng">您的消息已成功发送。感谢您伸出援手！</span></div>
       <% } %>
     <form id="contact-form" class="my-4 px-3" action="/sendEmail" method="POST">
         <div id="contactEmailDiv" class="input-group mb-3">
           <div id="contactEmailPrepend" class="input-group-prepend">
-            <span id="contactEmailText" class="input-group-text">Your email</span>
+            <span id="contactEmailText" class="input-group-text">Your email<span class="mx-1"></span><span class="maShanZheng">您的邮箱</span></span>
           </div>
           <input id="contactEmailInput" autocomplete="off" type="email" name="email" class="form-control" value="" placeholder=" abc@123.com">
         </div>
         <div id="contactMessageDiv" class="form-group">
-          <textarea id="contactMessageInput" autocomplete="off" name="message" class="form-control" value="" placeholder="Schedule a free consultation, enquire about accompaniment, ask for educational advice, etc." rows="10"></textarea>
+          <textarea id="contactMessageInput" autocomplete="off" name="message" class="form-control" value="" placeholder="Schedule a free consultation, enquire about accompaniment, ask for educational advice, etc. 
+安排免费咨询，询问伴奏，寻求教育建议等。" rows="10"></textarea>
         </div>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-success btn-lg btn-block mt-3">Send</button>
+        <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-success btn-lg btn-block mt-3">Send <span class="maShanZheng">发送</span></button>
       </form></div>
     
     </div>
@@ -47,7 +48,7 @@
 <div class="row justify-content-center mb-5">
   <div class="section my-3 w-100">
     <div class="pt-4 mt-4 mx-0">
-      <h1 style="font-size: 4rem" class="text-center yellow-text bellota">LOCATION</h1>
+      <h1 style="font-size: 4rem" class="text-center yellow-text bellota">LOCATION <span class="maShanZheng">地点</span></h1>
       <h3 class="grey-text text-center handlee pb-2 pt-0 mt-4">Boronia, Melbourne, Australia</h3>
     </div>
   </div>
