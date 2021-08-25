@@ -122,13 +122,15 @@
   <thead>
     <tr class="">
       <th class="grey-text" scope="col">STUDENT</th>
+      <th class="grey-text" scope="col">PIANO GRADE</th>
       <th class="grey-text" scope="col">POINTS</th>
     </tr>
   </thead>
   <tbody>
-    <% leaderboard.forEach((student) => { %>
+    <% leaderboard.forEach((student) => { console.log(student) %>
       <tr>
         <td><span style="color:<%= student.leaderboardColor %>"><%= student.username %></span></td>
+        <td class="grey-text recursive"><%= student.grade %></td>
         <td class="pink-text recursive"><%= student.leaderboardScore %></td>
       </tr>
       <% }) %>

@@ -16,8 +16,7 @@ giveEveryoneASomething = async function() {
       {},
       { $set:
          {
-            practiceConversation: "",
-            practiceReply: ""
+            grade: ""
          }
       }
    )

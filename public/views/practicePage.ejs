@@ -39,34 +39,34 @@
 </div>-->
 <!--Flowers FOR Spring-->
 <div class="snowflakes" aria-hidden="true">
-  <div class="snowflake">
+  <div class="snowflake" id="1" onmouseover="a.hide('1')">
   🌸
   </div>
-  <div class="snowflake">
+  <div class="snowflake" id="2" onmouseover="a.hide('2')">
   🌸
   </div>
-  <div class="snowflake">
+  <div class="snowflake" id="3" onmouseover="a.hide('3')">
   🍀
   </div>
-  <div class="snowflake">
+  <div class="snowflake" id="4" onmouseover="a.hide('4')">
   🌺
   </div>
-  <div class="snowflake">
+  <div class="snowflake" id="5" onmouseover="a.hide('5')">
   🌸
   </div>
-  <div class="snowflake">
+  <div class="snowflake" id="6" onmouseover="a.hide('6')">
   🍀
   </div>
-  <div class="snowflake">
+  <div class="snowflake" id="7" onmouseover="a.hide('7')">
   🌸
   </div>
-  <div class="snowflake">
+  <div class="snowflake" id="8" onmouseover="a.hide('8')">
   🍀
   </div>
-  <div class="snowflake">
+  <div class="snowflake" id="9" onmouseover="a.hide('9')">
   🌺
   </div>
-  <div class="snowflake">
+  <div class="snowflake" id="10" onmouseover="a.hide('10')">
   🌸
   </div>
 </div>
@@ -169,6 +169,17 @@
 
 
 <script>
+  // hide falling divs
+  // encapsulated in a variable
+  a = {
+        show: function (elem) {
+            document.getElementById(elem).style.visibility = 'visible';
+        },
+        hide: function (elem) {
+            document.getElementById(elem).style.visibility = 'hidden';
+        }
+      }
+
   // PRINT FEATURE PLAIN TEXT
   function printDiv(elementId) {
     var prtContent = document.getElementById(elementId);

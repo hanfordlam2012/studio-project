@@ -22,45 +22,53 @@ input {
 }
 
 /* NAVIGATION */
-nav {
-    box-shadow: 0px 0px 5px rgb(0, 0, 0);
+#myNav a:hover, #myNav a:focus, #myNav a:active {
+    color: rgb(177, 77, 216);
+    text-decoration: none;
 }
 
-.custom-nav {
+#myNav {
+    font-family: 'Handlee', cursive;
+    position: fixed;
+    top: 0;
+    left:0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
     background-color: rgba(18, 46, 68, 0.713);
+    box-shadow: 0px 0px 5px rgb(0, 0, 0);
+    z-index: 300;
 }
 
-.navbar-toggler {
-    background-color: transparent;
+#navLinkBlock {
+    text-align: center;
 }
 
-.nav-link, .navbar-brand {
+#navIcon {
+    text-align: center;
+    margin: 10px 25px;
     color: rgb(182, 182, 182);
 }
 
-.nav-link:hover, .navbar-brand:hover {
-    color: rgb(177, 77, 216);
+.navLink {
+    margin: 10px 25px;
+    color: rgb(182, 182, 182);
 }
 
-.nav-active-text {
-    color:rgb(199, 103, 255);
+/* 2048 */
+#game2048 {
+    margin: 0 auto;
+    height: 1000px;
+    width: 100%;
 }
 
-/* center navbar list */
-@media (min-width: 990px) {
-    .abs-center-x {
-        position: absolute;
-        top: 5px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
-@media (max-width: 600px) {
-    .disappear {
-        display: none;
-    }
-    
+/* pacman */
+#gamepacman {
+    margin: 0 auto;
+    height: 1000px;
+    width: 100%;
 }
 
 /* FONTS */

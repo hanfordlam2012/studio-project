@@ -16,8 +16,19 @@
     <style>HTML,BODY{cursor: url("https://downloads.totallyfreecursors.com/cursor_files/fishgold.cur"), url("https://downloads.totallyfreecursors.com/thumbnails/fish-gold.gif"), auto;}</style>
   </head>
   <body>
+    <!-- NAVBAR -->
+    <nav id="myNav" class="">
+      <a id="navIcon" href='/'>Hanford Lam | Piano <span class="maShanZheng">钢琴老师</span></a>
+      <div id="navLinkBlock">
+        <a id="homeTab" class="navLink" href='/'>HOME <span class="maShanZheng">家</span></a>
+        <a id="mediaTab" class="navLink" href="/media">MEDIA <span class="maShanZheng">介质</span></a>
+        <a id="reportsTab" class="navLink" href="/reports">PORTAL <span class="maShanZheng">学生门户</span></a>
+        <a id="contactTab" class="navLink" href="/contact">CONTACT <span class="maShanZheng">留言</span></a>
+      </div>
+    </nav>
     <div class="container-fluid">
-      <!-- NAVBAR -->
+      
+      <!-- NAVBAR OLD
       <nav class="rounded-bottom navbar fixed-top navbar-expand-lg custom-nav mb-4">
         <a class="navbar-brand ml-3 recursive" href='/'>Hanford Lam | Piano <span class="maShanZheng">钢琴老师</span></a>
         <button class="navbar-toggler grey-text" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -40,30 +51,22 @@
           </ul>
         </div>
         <a id="navbarMessageButton" class="disappear btn btn-light mr-3" href="/contact">Message Hanford <span class="maShanZheng">留言</span></a>
-      </nav>
+      </nav>-->
       <!-- DYNAMIC NAVBAR AND TITLE -->
       <script>
         let currentPath = window.location.pathname
         if (currentPath == '/') {
-          document.getElementById("homeTab").classList.add("border-bottom")
-          document.getElementById("homeTabText").classList.add("nav-active-text")
-          document.getElementById("homeTabText").classList.add("font-weight-bold")
-          document.title = "Hanford Lam | Piano"
+          document.getElementById("homeTab").classList.add("orange-text")
+          document.title = "Hanford Lam | Piano 钢琴老师"
         } else if (currentPath == '/media') {
-          document.getElementById("mediaTab").classList.add("border-bottom")
-          document.getElementById("mediaTabText").classList.add("nav-active-text")
-          document.getElementById("mediaTabText").classList.add("font-weight-bold")
-          document.title = "Media - Hanford Lam | Piano"
+          document.getElementById("mediaTab").classList.add("orange-text")
+          document.title = "Media 介质 - Hanford Lam | Piano"
         } else if (currentPath == '/practice' || currentPath == '/missions' || currentPath == '/leaderboard' || currentPath == '/parents' || currentPath == '/reports') {
-          document.getElementById("reportsTab").classList.add("border-bottom")
-          document.getElementById("reportsTabText").classList.add("nav-active-text")
-          document.getElementById("reportsTabText").classList.add("font-weight-bold")
-          document.title = "Reports - Hanford Lam | Piano"
+          document.getElementById("reportsTab").classList.add("orange-text")
+          document.title = "Portal 学生门户 - Hanford Lam | Piano"
         } else if (currentPath = '/contact') {
-          document.getElementById("contactTab").classList.add("border-bottom")
-          document.getElementById("contactTabText").classList.add("nav-active-text")
-          document.getElementById("contactTabText").classList.add("font-weight-bold")
-          document.title = "Contact - Hanford Lam | Piano"
+          document.getElementById("contactTab").classList.add("orange-text")
+          document.title = "Contact 留言 - Hanford Lam | Piano"
         }
       </script>
     <div id="container" class="container">

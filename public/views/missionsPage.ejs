@@ -71,7 +71,7 @@
   <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
 <% }) %>
 
-<div class="wallet-div bellota grey-text inline draggable">
+<div class="wallet-div bellota grey-text inline draggable pb-5">
   <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
   <span class="pink-text"><strong><%= points %></strong></span> points<br>
   <span class="yellow-text"><%= lessonCount %></span>/<span class="orange-text"><%= paidLessons %></span> lessons<br>
@@ -83,6 +83,7 @@
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <button type="submit" class="btn btn-secondary btn-sm">Log Out</button>
   </form>
+  <p class="text-center green-text mt-1" onclick="lockScreen()" id="lockScreenText">Screen unlocked</p>
 </div>
 
 <!-- MINI MISSIONS -->
@@ -429,6 +430,12 @@ if (missionStatuses.chromatic) { %>
 <% } %>
 </div>
 
+<!--2048-->
+<iframe class="rounded mt-5" id="game2048" src="..//files//2048//index.html" frameborder="0"></iframe>
+
+<!--pacman-->
+<iframe class="rounded mt-5" id="gamepacman" src="..//files//pacman//index.htm" frameborder="0"></iframe>
+
 <script>
 // ADD CSRF TOKEN TO MISSION SUBMITS
   if (document.getElementById('missionSubmitButton')) {
@@ -436,6 +443,19 @@ if (missionStatuses.chromatic) { %>
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="_csrf" value="<%= csrfToken %>">')
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="userId" value="<%= userId %>">')
   }
+// make game playable
+lockScreen = function(){
+  if(document.getElementById('lockScreenText').innerHTML === "Screen locked"){
+    document.getElementById('lockScreenText').classList.remove('pink-text')
+    document.getElementById('lockScreenText').classList.add('green-text')
+    document.getElementById('lockScreenText').innerHTML = "Screen unlocked"
+  } else {
+    document.getElementById('lockScreenText').classList.remove('green-text')
+    document.getElementById('lockScreenText').classList.add('pink-text')
+    document.getElementById('lockScreenText').innerHTML = "Screen locked"
+  }
+  document.body.style.overflowY = document.body.style.overflowY === '' ? 'hidden' : ''
+}
 </script>
 
 <%- include('includes/footer') %>
