@@ -14,3 +14,11 @@ exports.sendEmail = async function(req, res) {
         })
     })
 }
+
+exports.sendQuizToHanford = function(req, res) {
+    Message.sendQuizToHanford(req.body).then((response) => {
+        res.send("Thank you very much! Your responses have been sent to Hanford.")
+    }).catch((err) => {
+        res.send(err)
+    })
+}

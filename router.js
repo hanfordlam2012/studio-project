@@ -18,9 +18,15 @@ router.get('/media', function(req, res) {
 router.get('/contact', function(req, res) {
     res.render('contact', {status: req.flash('status')})
 })
+
+// general teaching tools
 router.get('/blackboard', function(req, res) {
     res.render('blackboard')
 })
+router.get('/quiz', function(req, res) {
+    res.render('quiz')
+})
+router.post('/sendQuizToHanford', messageController.sendQuizToHanford)
 
 
 // user routes
@@ -33,8 +39,6 @@ router.post('/doesUsernameExist', userController.doesUsernameExist)
 router.post('/doesEmailExist', userController.doesEmailExist)
 router.post('/isCorrect', userController.isCorrect)
 router.post('/submitQuiz', missionController.checkQuiz)
-
-// routes for holiday coding
 
 
 // student navigation
