@@ -13,6 +13,8 @@ export default class ContactForm {
         this.contactMessageInput = document.querySelector("#contactMessageInput")
         this.contactMessageDiv = document.querySelector("#contactMessageDiv")
         this.contactMessageInput.previousValue = ""
+        // add recaptcha token
+        this.recaptchaTokenInput = document.querySelector("#recaptchaTokenInput")
         this.events()
     }
 
@@ -39,14 +41,21 @@ export default class ContactForm {
     formSubmitHandler() {
         this.contactEmailInputAfterDelay()
         this.contactMessageOnlyOnSubmit()
+        let self = this // SOLVE SCOPE PROBLEM
 
         if (
             !this.contactEmailDiv.errors &&
             !this.contactMessageDiv.errors
             ) {
-            document.getElementById("contactFormSubmit").innerHTML = "Sending..."
-            document.getElementById("contactFormSubmit").disabled = true
-            this.form.submit()
+            grecaptcha.ready(function(){
+                grecaptcha.execute('6LdmwyccAAAAAAeyi3pmB9GFe7CqpJgEuqutQqVL', {action: 'submit'}).then(function(token){
+                    document.getElementById("contactFormSubmit").innerHTML = "Sending..."
+                    document.getElementById("contactFormSubmit").disabled = true
+                    document.getElementById("recaptchaTokenInput").value = token // add token to form submit
+                    self.form.submit() // use self instead of this to refer beyond scope
+                })
+            })
+            
         }
     }
 

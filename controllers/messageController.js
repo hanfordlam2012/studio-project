@@ -1,7 +1,13 @@
 const Message = require('../models/Message')
 const session = require('express-session')
+const axios = require('axios')
 
 exports.sendEmail = async function(req, res) {
+    // CHANGE FRONTEND TO v2 first because v3 gives no fallback for failures
+    // axios to verify grecaptcha
+    // send a POST request
+    // chain next actions via Promise
+    console.log(req.body)
     Message.sendEmail(req.body).then((response) => {
         req.flash("status", response)
         req.session.save(function() {

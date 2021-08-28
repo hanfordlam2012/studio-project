@@ -2,6 +2,9 @@
 
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v9.0" nonce="jKuJS7Hc"></script>
+<!--recaptcha v3 only client side for now-->
+<script src="https://www.google.com/recaptcha/api.js?render=6LdmwyccAAAAAAeyi3pmB9GFe7CqpJgEuqutQqVL"></script>
+
 <!-- CONTACT FORM -->
 <div id="contactForm" class="row justify-content-center mb-5">
   <div class="my-3 w-100 section">
@@ -25,7 +28,9 @@
 安排免费咨询，询问伴奏，寻求教育建议等。" rows="10"></textarea>
         </div>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-success btn-lg btn-block mt-3">Send <span class="maShanZheng">发送</span></button>
+        <input type="hidden" name="recaptchaTokenInput" id="recaptchaTokenInput" value="">
+        <!--recaptcha v3 only client side for now-->
+        <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-success btn-lg btn-block mt-3 g-recaptcha">Send <span class="maShanZheng">发送</span></button>
       </form></div>
     
     </div>
@@ -58,9 +63,9 @@
         </iframe>
     </div>
     <style>.mapouter{margin:auto; position:relative;text-align:center;height:auto;width:100%;}.gmap_canvas {overflow:hidden;background:none!important;height:auto;width:100%;}iframe {width:100%;height:450px;border-radius:10px;}</style>
+  </div>
 </div>
-    </div>
-    <script>
-      document.getElementById("contactEmailInput").focus();
-    </script>
+<script>
+  document.getElementById("contactEmailInput").focus();
+</script>
 <%- include('includes/footer') %>
