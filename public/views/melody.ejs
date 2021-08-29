@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Bootstrap CSS and Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Langar&family=Handlee&family=Rye&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>MELODY</title>
+  </head>
+  <body>
+    <div class="container-fluid"> 
+    <div id="quizContainer70" class="">
+
+<!-- WELCOME -->
+<h1 class="display-6 mb-5 bellota text-center" style="background-image: url('../images/scoresby/melody.gif');background-size: contain;"><span class="px-2 white-text" style="background-color:rgba(0, 0, 0, 0.871); line-height: 1.5;">Five characteristics of a</span><br><span class="px-2 white-text" style="background-color:rgba(0, 0, 0, 0.871); line-height: 1.5;">great melody</span></h1>
+
+<p class="text-center grey-text my-5">Virtual keyboard provided for you to play with: <a href="https://www.onlinepianist.com/virtual-piano" target="_blank">Virtual keyboard</a></p>
+
+<form style="line-height: 2.5;" class="text-center mb-5" action="/sendMelodyToHanford" method="POST">
+
+  <div class="quizQuestionContainer"><p class="white-text my-5"><span style="font-size: 2.5rem;"><span class="green-text">Characteristic 1</span></span><br>Most good melodies restrict their basic range to no more than an octave-and-a-half.</p>
+    <div class="responsive-container mb-5" style="height:350px;"></div>
+    <a href="https://youtu.be/q0hyYWKXF0Q?t=23" target="_blank">Australian music example: Dance Monkey - Tones and I</a>
+    <textarea class="d-block w-100 mb-3 text-center" placeholder="In your own words, write a reflection on what this characteristic means, and why it is a good characteristic to have!" name="RangeReflection" id="RangeReflection" rows="8" required></textarea>
+  </div>
+
+  <div class="quizQuestionContainer2"><p class="white-text my-5"><span style="font-size: 2.5rem;"><span class="green-text">Characteristic 2</span></span><br>Most good melodies use repeating elements.</p>
+    <div class="responsive-container mb-5" style="height:350px;"></div>
+    <a href="https://youtu.be/pk6dgf0EnmU?t=101" target="_blank">Australian music example: Little Things - Ziggy Ramo ft. Paul Kelly</a>
+    <textarea class="d-block w-100 mb-3 text-center" placeholder="In your own words, write a reflection on what this characteristic means, and why it is a good characteristic to have!" name="RepeatReflection" id="RepeatReflection" rows="8" required></textarea>
+  </div>
+
+  <div class="quizQuestionContainer"><p class="white-text my-5"><span style="font-size: 2.5rem;"><span class="green-text">Characteristic 3</span></span><br>Most good melodies are comprised of stepwise motion (i.e., move by scale steps), with occasional leaps.</p>
+    <div class="responsive-container mb-5" style="height:350px;"></div>
+    <a href="https://youtu.be/Nt0NcaxmGHo?t=18" target="_blank">Australian music example: Don't be Rama Rama - Warburton Community</a>
+    <textarea class="d-block w-100 mb-3 text-center" placeholder="In your own words, write a reflection on what this characteristic means, and why it is a good characteristic to have!" name="MotionReflection" id="MotionReflection" rows="8" required></textarea>
+  </div>
+
+  <div class="quizQuestionContainer2"><p class="white-text my-5"><span style="font-size: 2.5rem;"><span class="green-text">Characteristic 4</span></span><br>Most good melodies have a discernible relationship with the bass line.</p>
+    <div class="responsive-container mb-5" style="height:350px;"></div>
+    <a href="https://youtu.be/KVN_0qvuhhw?t=344" target="_blank">Australian music example: Prejudice - Tim Minchen</a>
+    <textarea class="d-block w-100 mb-3 text-center" placeholder="In your own words, write a reflection on what this characteristic means, and why it is a good characteristic to have!" name="BasslineReflection" id="BasslineReflection" rows="8" required></textarea>
+  </div>
+
+  <div class="quizQuestionContainer"><p class="white-text my-5"><span style="font-size: 2.5rem;"><span class="green-text">Characteristic 5</span></span><br>Most good melodies have a climactic point.</p>
+    <div class="responsive-container mb-5" style="height:350px;"></div>
+    <a href="https://youtu.be/ryX2xEjf3wQ?t=1670" target="_blank">Australian music example: Choral Symphony - Carl Vine</a>
+    <textarea class="d-block w-100 mb-3 text-center" placeholder="In your own words, write a reflection on what this characteristic means, and why it is a good characteristic to have!" name="ClimaxReflection" id="ClimaxReflection" rows="8" required></textarea>
+  </div>
+
+  <div class="quizQuestionContainer text-center">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input class="mx-3 my-3 text-center" type="text" name="Student" placeholder="Your name" required></input>
+    <input class="mx-3 my-3" type="submit"></input>
+  </div>
+</form>
+
+</div><!-- close out MAIN div -->
+</div> <!-- close out page container div -->
+<!-- jQuery and Bootstrap Bundle (includes Popper) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script>$(function () {$('[data-toggle="tooltip"]').tooltip()})</script>
+<script src="../../main-bundled.js"></script>
+</body>
+</html>

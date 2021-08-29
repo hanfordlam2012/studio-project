@@ -87,8 +87,8 @@
 </div>
 
 <!-- MINI MISSIONS -->
-<!-- keep csrf token accessible -->
-<span id="csrf-landmark" data-value="<%= csrfToken %>"></span>
+<!-- keep csrf token accessible, use lowercase for dataset entries! -->
+<span id="csrf-landmark" data-value="<%= csrfToken %>" data-studentid="<%= userId %>"></span>
 <div id="mini-missions" class="section">
   <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">MISSIONS</h1>
     <h2 class="grey-text text-center handlee pb-2 pt-0 mt-0">

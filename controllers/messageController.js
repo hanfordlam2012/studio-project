@@ -28,3 +28,19 @@ exports.sendQuizToHanford = function(req, res) {
         res.send(err)
     })
 }
+
+exports.sendMelodyToHanford = function(req, res) {
+    Message.sendMelodyToHanford(req.body).then((response) => {
+        res.send("Thank you very much! Your responses have been sent to Hanford.")
+    }).catch((err) => {
+        res.send(err)
+    })
+}
+
+exports.sendPacmanToHanford = function(req, res) {
+    Message.sendPacmanToHanford(req.body).then((response) => {
+        res.send("Thank you very much! Your responses have been sent to Hanford.")
+    }).catch((err) => {
+        res.send(err)
+    })
+}

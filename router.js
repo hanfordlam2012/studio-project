@@ -20,13 +20,11 @@ router.get('/contact', function(req, res) {
 })
 
 // general teaching tools
-router.get('/blackboard', function(req, res) {
-    res.render('blackboard')
-})
-router.get('/quiz', function(req, res) {
-    res.render('quiz')
-})
+router.get('/blackboard', function(req, res) {res.render('blackboard')})
+router.get('/quiz', function(req, res) {res.render('quiz')})
 router.post('/sendQuizToHanford', messageController.sendQuizToHanford)
+router.get('/melody', function(req, res) {res.render('melody')})
+router.post('/sendMelodyToHanford', messageController.sendMelodyToHanford)
 
 
 // user routes
@@ -53,6 +51,7 @@ router.post('/logContributor', userController.mustBeLoggedIn, userController.mus
 
 // game routes
 router.post('/saveScore', userController.mustBeLoggedIn, missionController.compareScoreAndSave)
+router.post('/sendPacmanHighScores', messageController.sendPacmanToHanford)
 
 // practice routes
 router.post('/updateLastSubmittedDateAndAddPoints', userController.mustBeLoggedIn, missionController.updateLastSubmittedDateAndAddPoints)

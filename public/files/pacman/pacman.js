@@ -1,4 +1,3 @@
-
 // Copyright 2012 Shaun Williams
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -367,10 +366,10 @@ var scores = [
     0,0, // otto
     0 ];
 var highScores = [
-    10000,10000, // pacman
-    10000,10000, // mspac
-    10000,10000, // cookie
-    10000,10000, // otto
+    5000,5000, // pacman
+    5000,5000, // mspac
+    5000,5000, // cookie
+    5000,5000, // otto
     ];
 
 var getScoreIndex = function() {
@@ -435,6 +434,7 @@ var saveHighScores = function() {
         localStorage.highScores = JSON.stringify(highScores);
     }
 };
+
 //@line 1 "src/direction.js"
 //////////////////////////////////////////////////////////////////////////////////////
 // Directions
@@ -11123,6 +11123,26 @@ var overState = (function() {
     return {
         init: function() {
             frames = 0;
+            //SEND HIGHSCORE TO SERVER
+            var sendHighScores = function() {
+                var csrfSpan = window.parent.document.getElementById('csrf-landmark');
+                var url = "/sendPacmanHighScores";
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url);
+
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+                xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    //console.log(xhr.status);
+                    //console.log(xhr.responseText);
+                }};
+                var data = '{"highscores": [' + highScores + '], "_csrf": ' + JSON.stringify(csrfSpan.dataset.value) + ', "studentId": ' + JSON.stringify(csrfSpan.dataset.studentid) + '}';
+                xhr.send(data);
+            }
+            sendHighScores();
         },
         draw: function() {
             renderer.blitMap();
@@ -11138,6 +11158,7 @@ var overState = (function() {
         },
     };
 })();
+
 
 //@line 1 "src/input.js"
 //////////////////////////////////////////////////////////////////////////////////////
