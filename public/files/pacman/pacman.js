@@ -366,10 +366,10 @@ var scores = [
     0,0, // otto
     0 ];
 var highScores = [
-    5000,5000, // pacman
-    5000,5000, // mspac
-    5000,5000, // cookie
-    5000,5000, // otto
+    3000,3000, // pacman
+    3000,3000, // mspac
+    3000,3000, // cookie
+    3000,3000, // otto
     ];
 
 var getScoreIndex = function() {
@@ -11139,7 +11139,7 @@ var overState = (function() {
                     //console.log(xhr.status);
                     //console.log(xhr.responseText);
                 }};
-                var data = '{"highscores": [' + highScores + '], "_csrf": ' + JSON.stringify(csrfSpan.dataset.value) + ', "studentId": ' + JSON.stringify(csrfSpan.dataset.studentid) + '}';
+                var data = '{"highscores": [' + highScores + '], "_csrf": ' + JSON.stringify(csrfSpan.dataset.value) + ', "username": ' + JSON.stringify(csrfSpan.dataset.username) + '}';
                 xhr.send(data);
             }
             sendHighScores();

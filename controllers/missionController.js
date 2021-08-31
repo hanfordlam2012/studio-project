@@ -3,19 +3,6 @@ const usersCollection = require('../db').db('studio-project').collection('users'
 const session = require('express-session')
 const ObjectID = require('mongodb').ObjectID
 
-// QUIZ MISSION UNUSED
-exports.checkQuiz = function(req, res) {
-    Mission.checkQuiz(req.body).then(async(data) => {
-        req.flash('missionResult', data.missionResult)
-        let userDoc = await usersCollection.findOne({"_id": ObjectID(req.body.userId)})
-        let newScore = userDoc.leaderboardScore + data.quizScore
-        usersCollection.updateOne({"_id": ObjectID(req.body.userId)}, { $set: {"leaderboardScore": newScore} })
-        req.session.save(function() {
-            res.redirect('/reports#mini-missions')
-        })
-    })
-}
-
 // For timezones
 Date.prototype.addHours = function(h) {
     this.setTime(this.getTime() + (h*60*60*1000))
@@ -96,4 +83,19 @@ exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
 
 function getRndInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+// PACMAN HIGHSCORES
+exports.updatePacmanHighscores = async function(req, res) {
+    let userDoc = await usersCollection.findOne({"admin": true})
+    let userHighscores = req.body.highscores
+    let studentUsername = req.body.username
+    let currentHighscores = userDoc.pacmanHighscores
+    for (let i = 0; i < userHighscores.length; i++){
+        if (userHighscores[i] > currentHighscores[i][1]){
+            currentHighscores[i][0] = studentUsername
+            currentHighscores[i][1] = userHighscores[i]
+        }
+    }
+    await usersCollection.updateOne({"admin": true}, { $set: {"pacmanHighscores": currentHighscores }})
 }

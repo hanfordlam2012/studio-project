@@ -207,23 +207,28 @@ exports.showMissionsPage = function(req, res) {
         getThesePropertyValuesForUser([
             'leaderboardScore'
             ],req.session.user.userId).then((userProps) => {
-            missionController.getRandomBPM().then((randomBPM) => {
-            // function not yet written, need to return object with props BPMStatus, points
-                missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
-                    res.render('missionsPage', {
-                        username: req.session.user.username,
-                        fName: req.session.user.fName,
-                        userId: req.session.user.userId,
-                        parentName: req.session.user.parentName,
-                        admin: req.session.user.admin,
-                        missionStatuses: missionStatuses,
-                        points: userProps.leaderboardScore,
-                        adErrors: req.flash('adErrors'),
-                        randomBPM: randomBPM, // taken from admin acc
-                        BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
-                        lessonCount: req.session.user.lessonCount,
-                        paidLessons: req.session.user.paidLessons,
-                        leaderboardColor: req.session.user.leaderboardColor
+                getFromAdmin([
+                'pacmanHighscores'
+                ]).then((adminProps) => {
+                    missionController.getRandomBPM().then((randomBPM) => {
+                    // function not yet written, need to return object with props BPMStatus, points
+                    missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
+                        res.render('missionsPage', {
+                            username: req.session.user.username,
+                            fName: req.session.user.fName,
+                            userId: req.session.user.userId,
+                            parentName: req.session.user.parentName,
+                            admin: req.session.user.admin,
+                            missionStatuses: missionStatuses,
+                            points: userProps.leaderboardScore,
+                            adErrors: req.flash('adErrors'),
+                            randomBPM: randomBPM, // taken from admin acc
+                            BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
+                            lessonCount: req.session.user.lessonCount,
+                            paidLessons: req.session.user.paidLessons,
+                            leaderboardColor: req.session.user.leaderboardColor,
+                            pacmanHighscores: adminProps.pacmanHighscores
+                        })
                     })
                 })
             })

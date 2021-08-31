@@ -148,40 +148,4 @@ Message.sendMelodyToHanford = function(data) {
     })
 }
 
-Message.sendPacmanToHanford = function(data) {
-    return new Promise(async(resolve, reject) => {
-        try {
-            let student = data.studentId
-            let highscores = data.highscores
-            //JSON.stringify(highscores)
-            let output = `
-            <p>Student: <strong style="color:#FF0000;">${student}</strong></p>
-            <p>Highscores: ${highscores}</p>
-            `
-            // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
-                host: "sg1-ts3.a2hosting.com",
-                port: 465,
-                secure: true, // true for 465, false for other ports
-                auth: {
-                user: process.env.A2EMAIL,
-                pass: process.env.A2EMAILPASSWORD,
-                },
-            });
-
-            // send mail with defined transport object
-            await transporter.sendMail({
-                from: process.env.A2EMAIL, // sender address
-                to: process.env.EMAIL, // list of receivers
-                subject: `Melody reflections submitted by ${student}`, // Subject line
-                html: output, // html body
-            });
-            resolve()
-        } catch (err) {
-            console.log(err)
-            reject('Failed to submit. Please let Mr Gunn or Hanford know!')
-        }
-    })
-}
-
 module.exports = Message
