@@ -7,66 +7,37 @@
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <!-- Bootstrap CSS and Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Langar&family=Handlee&family=Rye&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Handlee&family=Rye&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <title>Hanford Lam | Piano 钢琴老师</title>
+    <title>Hanford Lam | Piano Teacher</title>
     <!-- CURSOR -->
     <style>HTML,BODY{cursor: url("https://downloads.totallyfreecursors.com/cursor_files/fishgold.cur"), url("https://downloads.totallyfreecursors.com/thumbnails/fish-gold.gif"), auto;}</style>
   </head>
   <body>
     <!-- NAVBAR -->
-    <nav id="myNav" class="">
-      <a id="navIcon" href='/'>Hanford Lam | Piano <span class="maShanZheng">钢琴老师</span></a>
-      <div id="navLinkBlock">
-        <a id="homeTab" class="navLink" href='/'>HOME <span class="maShanZheng">家</span></a>
-        <a id="mediaTab" class="navLink" href="/media">MEDIA <span class="maShanZheng">介质</span></a>
-        <a id="reportsTab" class="navLink" href="/reports">PORTAL <span class="maShanZheng">学生门户</span></a>
-        <a id="contactTab" class="navLink" href="/contact">CONTACT <span class="maShanZheng">留言</span></a>
+    <nav id="myNav" class="rounded recursive row text-center py-2">
+      <div class="col-lg-7">
+        <a id="navIcon" href='/'>Hanford Lam | Piano Teacher</a>
+      </div>
+      <div class="col-lg-5">
+        <a id="homeTab" class="navLink" href="/">HOME</a> | 
+        <a id="reportsTab" class="navLink" href="/reports">PORTAL</a> | 
+        <button class="btn btn-small btn-info" onclick="location.href='/#ratesRow'">CONTACT</button>
       </div>
     </nav>
     <div class="container-fluid">
-      
-      <!-- NAVBAR OLD
-      <nav class="rounded-bottom navbar fixed-top navbar-expand-lg custom-nav mb-4">
-        <a class="navbar-brand ml-3 recursive" href='/'>Hanford Lam | Piano <span class="maShanZheng">钢琴老师</span></a>
-        <button class="navbar-toggler grey-text" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-          more <span class="maShanZheng">更多</span> ▼
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav abs-center-x">
-            <li id="homeTab" class="mx-3 nav-item">
-              <a class="nav-link nav-border handlee" href='/'><span id="homeTabText">HOME <span class="maShanZheng">家</span></span></a>
-            </li>
-            <li id="mediaTab" class="mx-3 nav-item">
-              <a class="nav-link handlee" href="/media"><span id="mediaTabText">MEDIA <span class="maShanZheng">介质</span></span></a>
-            </li>
-            <li id="reportsTab" class="mx-3 nav-item">
-              <a class="nav-link handlee" href="/reports"><span id="reportsTabText">PORTAL <span class="maShanZheng">学生门户</span></span></a>
-            </li>
-            <li id="contactTab" class="mx-3 nav-item">
-              <a class="nav-link handlee" href="/contact"><span id="contactTabText">CONTACT <span class="maShanZheng">联系</span></span></a>
-            </li>
-          </ul>
-        </div>
-        <a id="navbarMessageButton" class="disappear btn btn-light mr-3" href="/contact">Message Hanford <span class="maShanZheng">留言</span></a>
-      </nav>-->
+
       <!-- DYNAMIC NAVBAR AND TITLE -->
       <script>
         let currentPath = window.location.pathname
         if (currentPath == '/') {
           document.getElementById("homeTab").classList.add("orange-text")
-          document.title = "Hanford Lam | Piano 钢琴老师"
-        } else if (currentPath == '/media') {
-          document.getElementById("mediaTab").classList.add("orange-text")
-          document.title = "Media 介质 - Hanford Lam | Piano"
+          document.title = "Hanford Lam"
         } else if (currentPath == '/practice' || currentPath == '/missions' || currentPath == '/leaderboard' || currentPath == '/parents' || currentPath == '/reports') {
           document.getElementById("reportsTab").classList.add("orange-text")
-          document.title = "Portal 学生门户 - Hanford Lam | Piano"
-        } else if (currentPath = '/contact') {
-          document.getElementById("contactTab").classList.add("orange-text")
-          document.title = "Contact 留言 - Hanford Lam | Piano"
+          document.title = "Portal - Hanford Lam"
         }
       </script>
     <div id="container" class="container">

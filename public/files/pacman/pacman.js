@@ -366,10 +366,10 @@ var scores = [
     0,0, // otto
     0 ];
 var highScores = [
-    3000,3000, // pacman
-    3000,3000, // mspac
-    3000,3000, // cookie
-    3000,3000, // otto
+    0,0, // pacman
+    0,0, // mspac
+    0,0, // cookie
+    0,0, // otto
     ];
 
 var getScoreIndex = function() {
@@ -13531,7 +13531,7 @@ var vcr = (function() {
 // Entry Point
 
 window.addEventListener("load", function() {
-    loadHighScores();
+    //loadHighScores();
     initRenderer();
     atlas.create();
     initSwipe();

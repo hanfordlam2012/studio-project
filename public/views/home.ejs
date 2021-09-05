@@ -1,104 +1,181 @@
 <%- include('includes/header') %>
+<!--recaptcha v3 only client side for now-->
+<script src="https://www.google.com/recaptcha/api.js?render=6LdmwyccAAAAAAeyi3pmB9GFe7CqpJgEuqutQqVL"></script>
+
+
+
 <!-- WELCOME -->
-<div id="welcome" class="my-3 section">
-  <div class="py-4 mt-2 mb-0 mx-0"><h1 id="headingText" class="px-5 display-2 bellota rainbowText text-center">Looking for a teacher?</h1>
-    <h3 class="grey-text subtitle text-center handlee py-2 mt-0 mx-3">Come along on a music-learning journey with me</h3>
-    <h3 class="grey-text subtitle text-center maShanZheng py-2 mt-0 mx-3">和我一起踏上音乐学习之旅<img class="mb-3 mx-3" src="../images/smile.png"></h3>
+<div id="biographyContainer">
+  <h1 id="hello" class="px-5 display-2 bellota rainbowText my-5 text-center">Hello, I'm Hanford!</h1>
+  <div class="w-100 text-center"><button data-lang="en" id="languageToggleButton" onclick="languageToggle()" class="btn btn-small btn-secondary text-center mt-3">EN/ZH</button>  </div>
+  <!--BIO-->
+  <div class="row" id="bioRow">
+    <div class="col-xl-8 my-auto">
+      <img id="photo1" class="mr-5" src="../images/photo1.jpg">
+    </div>
+    <div class="col-xl-4 my-auto">
+      <h1 id="bioh1" class="bioTitle mt-3">Bio</h1>
+      <p id="biop" class="mt-3 recursive white-text">I am in interested in how science, discipline, and art come together in piano playing. Since beginning my studies in Singapore, I have amassed over two decades of practice and thought about this skill. Music is fun because of the places it can take you. From deep within our own minds, to where great experiences are created, both locally and internationally. To me, music represents an essential part of the human experience.</p>
+    </div>
   </div>
-</div>
-<img id="studio-image" src="../images/hanford-lam-studio-min.jpg">
+  <!--FEATUREVIDEO-->
+  <div class="row" id="featureVideoRow">
+    <div class="col"><img id="youtubeShowcase" class="w-100" src="../images/photo1.jpg"></div>
+  </div>
+  <!--EXPERIENCE-->
+  <div class="row" id="experienceRow">
+    <div class="col-xl-5 my-auto">
+      <h1 id="experienceh1" class="bioTitle">Experience</h1>
+      <p id="experiencep" class="mt-3 recursive white-text">Currently, I am completing a Master of Teaching at the University of Melbourne. Additionally, I hold a First Class Honours in Music from the Sir Zelman Cowen School of Music, Monash University. My accolades include awards from local Eisteddfods, multiple university prizes, academic and musical scholarships, as well as being semifinalist at the UCSI International Piano Competition. I've delivered performances at venues including the Melbourne Town Hall, Melbourne Recital Centre, Hamer Hall, Duneira Estate, live on 3MBS, 16 major theatres on tour with the Australian International Opera Company, Robert Blackwood Hall as organ soloist with the Monash Academy Orchestra, and numerous community events. My presentations at the 2019 and 2020 VCE Music conferences have been successfully turned into student workshops across Melbourne.</p>
+    </div>
+    <div class="col-xl-7 my-auto">
+      <img class="" id="hanford-lam-studio-min" src="../images/hanford-lam-studio-min.jpg">
+    </div>
+  </div>
+  <!--PEDAGOGY-->
+  <div class="row" id="pedagogyRow">
+    <div class="col-lg-4 my-auto">
+      <img id="photo2" class="mr-5" src="../images/photo2.jpg">
+    </div>
+    <div class="col-lg-8 my-auto">
+      <h1 id="pedagogyh1" class="bioTitle mt-3">Pedagogy</h1>
+      <p id="pedagogyp" class="mt-3 recursive white-text">With almost ten years’ of teaching experience, I strive to discover and match my students’ natural learning styles, appreciating the strengths and remedying the weaknesses of each unique individual. It is through positive interaction and honest dialogue that I endeavour to engage my students in learning. As a believer in multidisciplinary education, I also regularly design broader educational programs for my students. I teach students to understand piano playing as an amalgamation of three components. The science of reality, discipline of the mind and body, and artistry of humanity.</p>
+      <iframe style="max-height:166px;" class="my-5" width="100%" height="166px" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/330611534&color=%23ff5500&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>
+    </div>
+  </div>  
+  <!-- FEES -->
+  <div id="ratesRow" class="row pt-5">
+    <div class="col-lg-4 my-auto">
+      <div id="rateCard" class="text-center mx-auto">
+        <div class="recursive">
+          <h1 id="ratesh1" class="bioTitle mb-3">2022 Services</h1>
+        </div>
+        <ul class="list-unstyled">
+          <li id="ratesli1" class="bellota orange-text">Private Lessons</li>
+          <li id="ratesli2"class="bellota">$150/h pro rata</li>
+          <li id="ratesli3"class="bellota orange-text">Accompaniment</li>
+          <li id="ratesli4"class="bellota">Please enquire</li>
+          <li id="ratesli5"class="bellota orange-text">VCE workshops</li>
+          <li id="ratesli6"class="bellota">Please enquire</li>
+          <li id="ratesli7"class="small mt-5"><mark class="px-4">Studio in Boronia, Melbourne</mark></li>
+          <li id="ratesli8">Facebook page <a target="_blank" href="https://www.facebook.com/hanfordlampiano">here</a></li>
+        </ul>
+      </div>
+    </div>
+      <div id="contactForm" class="col-lg-8 my-auto">
+        <% if (status == 'fail') { %>
+          <div id="contacterror" class="alert alert-danger text-center small py-2">Sorry, your message couldn't be sent...maybe try my Facebook Page instead?</div>
+        <% } else if (status == 'success') { %>
+          <div id="contactsuccess" class="alert alert-success text-center small py-2">Your message has been sent successfully. Thanks for reaching out!</div>
+        <% } %>
+        <form id="contact-form" class="my-4 px-3" action="/sendEmail" method="POST">
+          <div id="contactEmailDiv" class="input-group mb-3">
+            <div id="contactEmailPrepend" class="input-group-prepend">
+              <span id="contactEmailText" class="input-group-text">Your email</span>
+            </div>
+            <input id="contactEmailInput" autocomplete="off" type="email" name="email" class="form-control" value="" placeholder=" abc@123.com">
+          </div>
+          <div id="contactMessageDiv" class="form-group">
+            <textarea id="contactMessageInput" autocomplete="off" name="message" class="form-control" value="" placeholder="Schedule a free consultation, enquire about accompaniment, ask for educational advice, etc." rows="10"></textarea>
+          </div>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="recaptchaTokenInput" id="recaptchaTokenInput" value="">
+          <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-success btn-lg btn-block mt-3 g-recaptcha">Send</button>
+        </form>
+      </div>
+  </div>
 
-<!-- MEET HANFORD -->
-<div id="meet-hanford" class="section">
-  <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 caveat rainbowText text-center">Hi, I'm Hanford</h1>
-    <h2 class="grey-text text-center handlee py-2 mt-3 px-5">I look forward to sharing with you all that I know about music and lifelong learning. The emotions, discipline, and beauty of this imaginative sonic art. <span class="maShanZheng">我期待与您分享我对音乐和终身学习的所有了解。这种富有想象力的声音艺术的情感、纪律和美感。</span></h2>
-  </div>
-</div>
-<div class="p-4 row justify-content-center">
-  <div class="col"><img class="" src="../images/hanford-lam-portrait_d800-min.jpg" id="landscapeHeadshot" alt=""></div>
-  <div class="w-100"></div>
-  <div id="blurb" class="col-9 text-center">
-    <p class="handlee grey-text mt-5">I am delighted to speak to <span class="yellow-text">you</span> candidly. My own <span class="blue-text">diverse</span> journey has given me valuable <span class="purple-text">opportunities</span> to <span class="green-text">learn</span> at local and international <span class="pink-text">competitions</span>; from friendly fun at the Knox Piano Awards to competing against top players at the UCSI International Semifinals. I've also done my share of <span class="orange-text">exams</span>; from AMEB and ABRSM grades to a gruelling Honours recital and thesis. Lifelong learning is a <span class="yellow-text">passion</span>. I am currently completing a <span class="blue-text">Master of Teaching</span> at The University of Melbourne. I hope to inspire my students to chase <span class="purple-text">knowledge</span> and <span class="green-text">skills</span> in the realms of the <span class="pink-text">arts</span> and the <span class="orange-text">sciences</span>.</p>
-    <p class="handlee grey-text">My fondest memories of <span class="yellow-text">performing</span> include touring China with the Australian International Opera Company and soloing with the Monash Academy Orchestra while my worst is <span class="blue-text">definitely</span> attempting an audition underprepared. Working through <span class="purple-text">challenges</span> and <span class="green-text">doubt</span> makes the prizes and scholarships I've won so much more <span class="pink-text">meaningful</span>. Performance anxiety is a hot topic that I have <span class="orange-text">presented</span> on during the 2019 and 2020 VCE Conferences.</p>
-    <p class="handlee grey-text">Travel, language, math, and <span class="yellow-text">great food</span> are all interests of mine. You may be surprised to learn how music is deeply <span class="blue-text">connected</span> to everything around you. My studio is a <span class="purple-text">safe space</span> for all learners to develop an <span class="green-text">open mind</span> and experience <span class="pink-text">growth</span>. I may be a piano teacher by trade but more generally, I am an <span class="orange-text">educator</span>.</p>
-    <p class="handlee grey-text">We now live in a<span class="yellow-text"> world</span> where the <span class="blue-text">best gift</span> you can give someone is the skill of <span class="green-text">how to learn</span>.</p>
-    <p class="maShanZheng grey-text mt-5">我很高兴与<span class="yellow-text">您</span>坦诚交谈。我自己<span class="blue-text">多元化</span>的旅程给了我在本地和国际<span class="purple-text">比赛</span>中<span class="green-text">学习</span>的宝贵<span class="pink-text">机会</span>；从诺克斯钢琴奖的友好乐趣到在 UCSI 国际半决赛中与顶级球员竞争。我也完成了我应得的<span class="orange-text">考试</span>；从 AMEB 和 ABRSM 成绩到艰苦的荣誉演奏会和论文。终身学习是一种<span class="yellow-text">激情</span>。我目前正在墨尔本大学攻读<span class="blue-text">教学硕士</span>学位。我希望激励我的学生去追求<span class="purple-text">艺术</span>和<span class="green-text">科学</span>领域的<span class="pink-text">知识</span>和<span class="orange-text">技能</span>。</p>
-    <p class="maShanZheng grey-text">我对<span class="yellow-text">表演</span>最美好的回忆包括与澳大利亚国际歌剧团一起巡演中国以及与莫纳什学院管弦乐团一起独奏，而我最糟糕的<span class="blue-text">肯定</span>是在准备不足的情况下尝试试镜。克服<span class="purple-text">挑战</span>和<span class="green-text">怀疑</span>使我赢得的奖品和奖学金更有<span class="pink-text">意义</span>。表现焦虑是我在 2019 年和 2020 年 VCE 会议期间<span class="orange-text">提出</span>的一个热门话题。</p>
-    <p class="maShanZheng grey-text">旅行、语言、数学和<span class="yellow-text">美食</span>都是我的兴趣。您可能会惊讶地发现音乐如何与您周围的一切事物<span class="blue-text">紧密相连</span>。我的工作室是所有学习者发展<span class="purple-text">开放心态</span>和体验<span class="green-text">成长</span>的<span class="pink-text">安全空间</span>。我可能是一名钢琴教师，但更一般地说，我是一名<span class="orange-text">教育家</span>。</p>
-    <p class="maShanZheng grey-text">我们现在生活在这样一个<span class="yellow-text">世界</span>里，你可以给某人<span class="blue-text">最好的礼物</span>是<span class="green-text">如何学习</span>的技能。</p>
+  <!--MAP-->
+  <div class="row" id="mapRow">
+    <div class="col">
+      <div class="mapouter d-flex justify-content-center">
+        <div class="gmap_canvas">
+          <iframe width="100%" height="auto" id="gmap_canvas" src="https://maps.google.com/maps?q=boronia&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="auto">
+          </iframe>
+        </div>
+        <style>.mapouter{margin:auto; position:relative;text-align:center;height:auto;width:100%;}.gmap_canvas {overflow:hidden;background:none!important;height:auto;width:100%;}iframe {width:100%;height:450px;border-radius:10px;}</style>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- FEES -->
-<div id="accordion" class="my-5">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Accompaniment <span class="mx-1"></span><span class="maShanZheng">伴奏</span>
-        </button>
-      </h5>
-    </div>
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-        <ul class="list-unstyled">
-          <li><span class="orange-text recursive">ENQUIRE FOR RATE <span class="mx-1"></span><span class="maShanZheng">查询价格</span></span></li>
-          <li>VCE, AMEB, and ABRSM exams <span class="mx-1"></span><span class="maShanZheng">VCE、AMEB 和 ABRSM 考试</span></li>
-          <li>VCA and university auditions <span class="mx-1"></span><span class="maShanZheng">VCA和大学试镜</span></li>
-          <li>Eisteddfods and other competitions <span class="mx-1"></span><span class="maShanZheng">Eisteddfods 和其他比赛</span></li>
-          <li>Student and professional performances <span class="mx-1"></span><span class="maShanZheng">学生和专业表演</span></li>
-          <li>General ensemble rehearsals <span class="mx-1"></span><span class="maShanZheng">一般合奏排练</span></li>
-          <li>All levels and instruments <span class="mx-1"></span><span class="maShanZheng">所有级别和乐器</span></li>
-          <li>9+ years of experience <span class="mx-1"></span><span class="maShanZheng">超过九年的经验</span></li>
-          <li class="mt-3 orange-text"><a href="/contact" class="btn btn-sm btn-outline-light">Message Hanford <span class="mx-1"></span><span class="maShanZheng">发送消息</span></a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          One-on-one lessons <span class="mx-1"></span><span class="maShanZheng">私人课程</span>
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-      <div class="card-body">
-        <ul class="list-unstyled">
-          <li><span class="orange-text recursive">$90/HOUR</span></li>
-          <li>Expert personalised guidance <span class="mx-1"></span><span class="maShanZheng">专家个性化指导</span></li>
-          <li>Interactive approach <span class="mx-1"></span><span class="maShanZheng">互动方式</span></li>
-          <li>Student performance opportunities <span class="mx-1"></span><span class="maShanZheng">学生表演机会</span></li>
-          <li>Concert excursions <span class="mx-1"></span><span class="maShanZheng">音乐会游览</span></li>
-          <li>From beginners to advanced diplomas <span class="mx-1"></span><span class="maShanZheng">从初学者到高级文凭</span></li>
-          <li class="mt-3 orange-text"><a href="/contact" class="btn btn-sm btn-outline-light">Message Hanford <span class="mx-1"></span><span class="maShanZheng">发送消息</span></a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Blended learning <span class="mx-1"></span><span class="maShanZheng">混合学习</span>
-        </button>
-      </h5>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-      <div class="card-body">
-        <ul class="list-unstyled">
-          <li><span class="orange-text recursive">ENQUIRE FOR RATE <span class="mx-1"></span><span class="maShanZheng">查询价格</span></span></li>
-          <li>Max group of three <span class="mx-1"></span><span class="maShanZheng">最多三人一组</span></li>
-          <li>Alternating private lesson and group class each week <span class="mx-1"></span><span class="maShanZheng">每周交替进行私人课程和小组课程</span></li>
-          <li>Learn with your friends <span class="mx-1"></span><span class="maShanZheng">和你的朋友一起学习</span></li>
-          <li>Holistic progression <span class="mx-1"></span><span class="maShanZheng">整体进步</span></li>
-          <li>Group activities and games <span class="mx-1"></span><span class="maShanZheng">团体活动和游戏</span></li>
-          <li class="mt-3 orange-text"><a href="/contact" class="btn btn-sm btn-outline-light">Message Hanford <span class="mx-1"></span><span class="maShanZheng">发送消息</span></a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+
+<script>
+  //TRANSLATION
+  let languageToggle = function() {
+    let languageToggleButton = document.getElementById('languageToggleButton')
+    if(languageToggleButton.dataset.lang == 'en') {
+      languageToggleButton.dataset.lang = 'cn'
+      //hello
+      document.getElementById('hello').innerHTML = "你好，我叫 Hanford!"
+      generateRainbowText(document.getElementById('hello'))
+      //bioh1
+      document.getElementById('bioh1').innerHTML = "<span class='zcool'>短传</span>"
+      //biop
+      document.getElementById('biop').innerHTML = "<span class='zcool'>我对科学、学科和艺术如何在钢琴演奏中融合感兴趣。自从在新加坡开始学习以来，我已经积累了二十多年的实践和思考这项技能。音乐很有趣，因为它可以带你去很多地方。从我们内心深处，到在本地和国际上创造伟大体验的地方。对我来说，音乐代表了人类体验的重要组成部分。</span>"
+      //experienceh1
+      document.getElementById('experienceh1').innerHTML = "<span class='zcool'>经验</span>"
+      //experiencep
+      document.getElementById('experiencep').innerHTML = "<span class='zcool'>目前，我正在墨尔本大学攻读教学硕士学位。此外，我还获得了莫纳什大学泽尔曼考恩爵士音乐学院的音乐一等荣誉学位。我的荣誉包括来自当地 Eisteddfods 的奖项、多项大学奖项、学术和音乐奖学金，以及成为 UCSI 国际钢琴比赛的半决赛选手。我曾在墨尔本市政厅、墨尔本演奏中心、哈默音乐厅、杜内拉庄园等场所演出，在 3MBS 现场演出，与澳大利亚国际歌剧公司一起在 16 个主要剧院巡回演出，罗伯特布莱克伍德音乐厅作为莫纳什学院管弦乐团的管风琴独奏家，以及众多的社区活动。我在 2019 年和 2020 年 VCE 音乐会议上的演讲已成功转变为整个墨尔本的学生研讨会。</span>"
+      //pedagogyh1
+      document.getElementById('pedagogyh1').innerHTML = "<span class='zcool'>教育学</span>"
+      //pedagogyp
+      document.getElementById('pedagogyp').innerHTML = "<span class='zcool'>凭借近十年的教学经验，我努力发现和匹配学生的自然学习方式，欣赏每个独特个体的长处并弥补其短处。通过积极的互动和诚实的对话，我努力让我的学生参与学习。作为多学科教育的信徒，我还定期为我的学生设计更广泛的教育计划。我教学生将钢琴演奏理解为三个部分的结合。现实的科学，身心的纪律，以及人类的艺术。</span>"
+      //ratesh1
+      document.getElementById('ratesh1').innerHTML = "<span class='zcool'>2022 服务</span>"
+      //ratesli1
+      document.getElementById('ratesli1').innerHTML = "<span class='zcool'>私人课程</span>"
+      //ratesli2
+      document.getElementById('ratesli2').innerHTML = "<span class='zcool'>$150/h 按比例</span>"
+      //ratesli3
+      document.getElementById('ratesli3').innerHTML = "<span class='zcool'>伴奏</span>"
+      //ratesli4
+      document.getElementById('ratesli4').innerHTML = "<span class='zcool'>请咨询</span>"
+      //ratesli5
+      document.getElementById('ratesli5').innerHTML = "<span class='zcool'>VCE 工作坊</span>"
+      //ratesli6
+      document.getElementById('ratesli6').innerHTML = "<span class='zcool'>请咨询</span>"
+      //ratesli7
+      document.getElementById('ratesli7').innerHTML = "<span class='zcool'>墨尔本博罗尼亚的工作室</span>"
+      //ratesli8
+      document.getElementById('ratesli8').innerHTML = "<span class='zcool'>Facebook页面在<a target='_blank' href='https://www.facebook.com/hanfordlampiano'>这里</a></span>"
+
+    } else {
+      languageToggleButton.dataset.lang = 'en'
+      document.getElementById('hello').innerText = "Hello, I'm Hanford!"
+      generateRainbowText(document.getElementById('hello'))
+      //bioh1
+      document.getElementById('bioh1').innerHTML = "Bio"
+      //biop
+      document.getElementById('biop').innerHTML = "I am in interested in how science, discipline, and art come together in piano playing. Since beginning my studies in Singapore, I have amassed over two decades of practice and thought about this skill. Music is fun because of the places it can take you. From deep within our own minds, to where great experiences are created, both locally and internationally. To me, music represents an essential part of the human experience."
+      //experienceh1
+      document.getElementById('experienceh1').innerHTML = "Experience"
+      //experiencep
+      document.getElementById('experiencep').innerHTML = "Currently, I am completing a Master of Teaching at the University of Melbourne. Additionally, I hold a First Class Honours in Music from the Sir Zelman Cowen School of Music, Monash University. My accolades include awards from local Eisteddfods, multiple university prizes, academic and musical scholarships, as well as being semifinalist at the UCSI International Piano Competition. I've delivered performances at venues including the Melbourne Town Hall, Melbourne Recital Centre, Hamer Hall, Duneira Estate, live on 3MBS, 16 major theatres on tour with the Australian International Opera Company, Robert Blackwood Hall as organ soloist with the Monash Academy Orchestra, and numerous community events. My presentations at the 2019 and 2020 VCE Music conferences have been successfully turned into student workshops across Melbourne."
+      //pedagogyh1
+      document.getElementById('pedagogyh1').innerHTML = "Pedagogy"
+      //pedagogyp
+      document.getElementById('pedagogyp').innerHTML = "With almost ten years’ of teaching experience, I strive to discover and match my students’ natural learning styles, appreciating the strengths and remedying the weaknesses of each unique individual. It is through positive interaction and honest dialogue that I endeavour to engage my students in learning. As a believer in multidisciplinary education, I also regularly design broader educational programs for my students. I teach students to understand piano playing as an amalgamation of three components. The science of reality, discipline of the mind and body, and artistry of humanity."
+      //ratesh1
+      document.getElementById('ratesh1').innerHTML = "2022 Services"
+      //ratesli1
+      document.getElementById('ratesli1').innerHTML = "Private Lessons"
+      //ratesli2
+      document.getElementById('ratesli2').innerHTML = "$150/h pro rata"
+      //ratesli3
+      document.getElementById('ratesli3').innerHTML = "Accompaniment"
+      //ratesli4
+      document.getElementById('ratesli4').innerHTML = "Please enquire"
+      //ratesli5
+      document.getElementById('ratesli5').innerHTML = "VCE workshops"
+      //ratesli6
+      document.getElementById('ratesli6').innerHTML = "Please enquire"
+      //ratesli7
+      document.getElementById('ratesli7').innerHTML = "Studio in Boronia, Melbourne"
+      //ratesli8
+      document.getElementById('ratesli8').innerHTML = "Facebook page <a target=' blank' href='https://www.facebook.com/hanfordlampiano'>here</a>"
+    }
+  }
+</script>
 
 <%- include('includes/footer') %>

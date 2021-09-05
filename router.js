@@ -7,16 +7,11 @@ const weekController = require('./controllers/weekController')
 const messageController = require('./controllers/messageController')
 const missionController = require('./controllers/missionController')
 const scoresbyController = require('./controllers/scoresbyController')
+const performanceController = require('./controllers/performanceController')
 
 // run this function for that route
 router.get('/', function(req, res) {
-    res.render('home')
-})
-router.get('/media', function(req, res) {
-    res.render('media')
-})
-router.get('/contact', function(req, res) {
-    res.render('contact', {status: req.flash('status')})
+    res.render('home', {status: req.flash('status')})
 })
 
 // general teaching tools
@@ -25,7 +20,8 @@ router.get('/quiz', function(req, res) {res.render('quiz')})
 router.post('/sendQuizToHanford', messageController.sendQuizToHanford)
 router.get('/melody', function(req, res) {res.render('melody')})
 router.post('/sendMelodyToHanford', messageController.sendMelodyToHanford)
-
+router.get('/showcase', userController.mustBeLoggedIn, performanceController.showShowcasePage)
+router.post('/addPerformanceComment', userController.mustBeLoggedIn, performanceController.addPerformanceComment)
 
 // user routes
 router.get('/reports', userController.reports)

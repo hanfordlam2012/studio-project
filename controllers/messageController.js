@@ -11,12 +11,12 @@ exports.sendEmail = async function(req, res) {
     Message.sendEmail(req.body).then((response) => {
         req.flash("status", response)
         req.session.save(function() {
-            res.redirect('/contact')
+            res.redirect('/#ratesRow')
         })
     }).catch((err) => {
         req.flash("status", err)
         req.session.save(function() {
-            res.redirect('/contact')
+            res.redirect('/#ratesRow')
         })
     })
 }
