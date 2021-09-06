@@ -1,39 +1,7 @@
 <%- include('includes/header') %>
 <!-- PS2P font -->
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-<!--SNOWFLAKES FOR WINTER
-<div class="snowflakes" aria-hidden="true">
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❆
-  </div>
-  <div class="snowflake">
-  ❄
-  </div>
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❆
-  </div>
-  <div class="snowflake">
-  ❄
-  </div>
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❆
-  </div>
-  <div class="snowflake">
-  ❄
-  </div>
-</div>-->
+
 <!--Flowers FOR Spring-->
 <div class="snowflakes" aria-hidden="true">
   <div class="snowflake">
@@ -435,14 +403,17 @@ if (missionStatuses.chromatic) { %>
 <!--2048-->
 <div style="margin: 0 auto; max-width:800px;"><iframe class="rounded mt-5" id="game2048" src="..//files//2048//index.html" frameborder="0"></iframe></div>
 
-
 <!--pacman-->
 <div class="white-text text-center mt-5 mb-0 pt-4 pb-0 ps2p" style="background-color:#000; max-width: 800px; margin: 0 auto;">
   <p class="my-3 purple-text">GLOBAL HIGHSCORES</p>
   <p>Pac-man: <span class="orange-text"><%= pacmanHighscores[0][0]%></span> <span class="green-text"><%= pacmanHighscores[0][1]%></span><br>Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[1][0]%></span> <span class="green-text"><%= pacmanHighscores[1][1]%></span></p>
   <p>Ms Pac-man <span class="orange-text"><%= pacmanHighscores[2][0]%></span> <span class="green-text"><%= pacmanHighscores[2][1]%></span><br>Ms Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[3][0]%></span> <span class="green-text"><%= pacmanHighscores[3][1]%></span></p>
   <p class="mb-0 pb-0">Cookie-man <span class="orange-text"><%= pacmanHighscores[4][0]%></span> <span class="green-text"><%= pacmanHighscores[4][1]%></span><br>Cookie-man Turbo <span class="orange-text"><%= pacmanHighscores[5][0]%></span> <span class="green-text"><%= pacmanHighscores[5][1]%></span></p>
-<iframe class="mt-0 pt-0" id="gamepacman" src="..//files//pacman//index.htm" style="border: 0;display:block;"></iframe></div>
+  <iframe class="mt-0 pt-0" id="gamepacman" src="..//files//pacman//index.htm" style="border: 0;display:block;"></iframe>
+</div>
+
+<!--QUAVER ATTACK-->
+<iframe class="mt-5 mx-auto" height="800" width="450" id="gamequaverattack" src="..//files//QuaverAttack//index.html" style="border: 0;display:block;"></iframe>
 
 <script>
 // ADD CSRF TOKEN TO MISSION SUBMITS
