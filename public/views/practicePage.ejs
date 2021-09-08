@@ -42,7 +42,7 @@
       </div>
     </div>
     <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS-->
-    <% if (practiceStatus) { %>
+    <% if (!practiceStatus) { %>
       <form id="PracticeConvo" class="my-2" action="/updateLastSubmittedDateAndAddPoints" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div class="form-group text-center" style="width:60%;margin:0 auto;">
