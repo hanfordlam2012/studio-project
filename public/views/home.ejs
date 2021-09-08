@@ -5,13 +5,13 @@
 
 
 <!-- WELCOME -->
-<div id="biographyContainer">
+<div id="biographyContainer" class="">
   <h1 id="hello" class="px-5 display-2 bellota rainbowText my-5 text-center">Hello, I'm Hanford!</h1>
-  <div class="w-100 text-center"><button data-lang="en" id="languageToggleButton" onclick="languageToggle()" class="btn btn-small btn-secondary text-center mt-3">EN/<span class='zcool'>中文</span></button>  </div>
+  <div class="w-100 text-center"><button data-lang="en" id="languageToggleButton" onclick="languageToggle()" class="btn btn-lg btn-secondary text-center mt-3">EN/<span class='zcool' style="font-size: 1.2rem;">中文</span></button>  </div>
   <!--BIO-->
   <div class="row" id="bioRow">
-    <div class="col-xl-8 my-auto">
-      <img id="photo1" class="mr-5" src="../images/photo1.jpg">
+    <div class="col-xl-8 px-5 my-auto">
+      <img id="photo1" class="" src="../images/photo1.jpg">
     </div>
     <div class="col-xl-4 my-auto">
       <h1 id="bioh1" class="bioTitle mt-3">Bio</h1>
@@ -28,14 +28,14 @@
       <h1 id="experienceh1" class="bioTitle">Experience</h1>
       <p id="experiencep" class="mt-3 recursive white-text">Currently, I am completing a Master of Teaching at the University of Melbourne. Additionally, I hold a First Class Honours in Music from the Sir Zelman Cowen School of Music, Monash University. My accolades include awards from local Eisteddfods, multiple university prizes, academic and musical scholarships, as well as being semifinalist at the UCSI International Piano Competition. I've delivered performances at venues including the Melbourne Town Hall, Melbourne Recital Centre, Hamer Hall, Duneira Estate, live on 3MBS, 16 major theatres on tour with the Australian International Opera Company, Robert Blackwood Hall as organ soloist with the Monash Academy Orchestra, and numerous community events. My presentations at the 2019 and 2020 VCE Music conferences have been successfully turned into student workshops across Melbourne.</p>
     </div>
-    <div class="col-xl-7 my-auto">
+    <div class="col-xl-7 px-5 my-auto">
       <img class="" id="hanford-lam-studio-min" src="../images/hanford-lam-studio-min.jpg">
     </div>
   </div>
   <!--PEDAGOGY-->
   <div class="row" id="pedagogyRow">
-    <div class="col-lg-4 my-auto">
-      <img id="photo2" class="mr-5" src="../images/photo2.jpg">
+    <div class="col-lg-4 px-5 my-auto">
+      <img id="photo2" class="" src="../images/photo2.jpg">
     </div>
     <div class="col-lg-8 my-auto">
       <h1 id="pedagogyh1" class="bioTitle mt-3">Pedagogy</h1>
@@ -62,7 +62,7 @@
         </ul>
       </div>
     </div>
-      <div id="contactForm" class="col-lg-8 my-auto">
+      <div id="contactForm" class="col-lg-8 my-auto px-auto">
         <% if (status == 'fail') { %>
           <div id="contacterror" class="alert alert-danger text-center small py-2">Sorry, your message couldn't be sent...maybe try my Facebook Page instead?</div>
         <% } else if (status == 'success') { %>
@@ -76,7 +76,7 @@
             <input id="contactEmailInput" autocomplete="off" type="email" name="email" class="form-control" value="" placeholder=" abc@123.com">
           </div>
           <div id="contactMessageDiv" class="form-group">
-            <textarea id="contactMessageInput" autocomplete="off" name="message" class="form-control" value="" placeholder="Schedule a free consultation, enquire about accompaniment, ask for educational advice, etc." rows="10"></textarea>
+            <textarea id="contactMessageInput" autocomplete="off" name="message" class="form-control" value="" placeholder="Schedule a consultation, enquire about accompaniment, etc." rows="10"></textarea>
           </div>
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <input type="hidden" name="recaptchaTokenInput" id="recaptchaTokenInput" value="">
@@ -136,7 +136,7 @@
       //ratesli6
       document.getElementById('ratesli6').innerHTML = "<span class='zcool'>请咨询</span>"
       //ratesli7
-      document.getElementById('ratesli7').innerHTML = "<span class='zcool'>墨尔本博罗尼亚(Boronia)的工作室</span>"
+      document.getElementById('ratesli7').innerHTML = "<span class='zcool'><mark class='px-4'>墨尔本博罗尼亚(Boronia)的工作室</mark></span>"
       //ratesli8
       document.getElementById('ratesli8').innerHTML = "<span class='zcool'>Facebook页面在<a target='_blank' href='https://www.facebook.com/hanfordlampiano'>这里</a></span>"
 
@@ -171,7 +171,7 @@
       //ratesli6
       document.getElementById('ratesli6').innerHTML = "Please enquire"
       //ratesli7
-      document.getElementById('ratesli7').innerHTML = "Studio in Boronia, Melbourne"
+      document.getElementById('ratesli7').innerHTML = "<mark class='px-4'>Studio in Boronia, Melbourne</mark>"
       //ratesli8
       document.getElementById('ratesli8').innerHTML = "Facebook page <a target=' blank' href='https://www.facebook.com/hanfordlampiano'>here</a>"
     }

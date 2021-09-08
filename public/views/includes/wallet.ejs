@@ -1,0 +1,21 @@
+<div class="wallet-div bellota grey-text inline draggable pb-3">
+  <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
+  <span class="pink-text"><strong><%= points %></strong></span> points<br>
+  <span class="yellow-text"><%= lessonCount %></span>/<span class="orange-text"><%= paidLessons %></span> lessons<br>
+  <p class="text-center green-text mt-1" onclick="lockScreen()" id="lockScreenText">Screen unlocked</p>
+</div>
+<script>
+  // make game playable
+  lockScreen = function(){
+    if(document.getElementById('lockScreenText').innerHTML === "Screen locked"){
+      document.getElementById('lockScreenText').classList.remove('pink-text')
+      document.getElementById('lockScreenText').classList.add('green-text')
+      document.getElementById('lockScreenText').innerHTML = "Screen unlocked"
+    } else {
+      document.getElementById('lockScreenText').classList.remove('green-text')
+      document.getElementById('lockScreenText').classList.add('pink-text')
+      document.getElementById('lockScreenText').innerHTML = "Screen locked"
+    }
+    document.body.style.overflowY = document.body.style.overflowY === '' ? 'hidden' : ''
+  }
+</script>

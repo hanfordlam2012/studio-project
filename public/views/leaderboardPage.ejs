@@ -1,99 +1,25 @@
-<%- include('includes/header') %>
-<!--SNOWFLAKES FOR WINTER
-<div class="snowflakes" aria-hidden="true">
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❆
-  </div>
-  <div class="snowflake">
-  ❄
-  </div>
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❆
-  </div>
-  <div class="snowflake">
-  ❄
-  </div>
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❆
-  </div>
-  <div class="snowflake">
-  ❄
-  </div>
-</div>-->
+<%- include('includes/headerLoggedIn') %>
+
 <!--Flowers FOR Spring-->
-<div class="snowflakes" aria-hidden="true">
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🍀
-  </div>
-  <div class="snowflake">
-  🌺
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🍀
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🍀
-  </div>
-  <div class="snowflake">
-  🌺
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-</div>
+<%- include('includes/falling') %>
 
 <!-- ERRORS -->
 <% adErrors.forEach(function(message) { %>
   <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
 <% }) %>
 
-<div class="wallet-div bellota grey-text inline draggable">
-  <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
-  <span class="pink-text"><strong><%= points %></strong></span> points<br>
-  <span class="yellow-text"><%= lessonCount %></span>/<span class="orange-text"><%= paidLessons %></span> lessons<br>
-  <a href="/practice" type="button" class="my-1 btn btn-info btn-sm">Practice</a>
-  <a href="/parents" type="button" class="my-1 btn btn-warning btn-sm">Record</a><br>
-  <a href="/missions" type="button" class="my-1 btn btn-danger btn-sm">Missions</a>
-  <a href="/leaderboard" type="button" class="my-1 btn btn-success btn-sm">Prizes</a>
-  <form id="logoutButton" class="mt-1 mb-2" action="/logout" method="POST">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-secondary btn-sm">Log Out</button>
-  </form>
-</div>
+<!--WALLET-->
+<%- include('includes/wallet') %>
 
 <!-- PRIZES -->
 
-<div id="prizeList" class="section">
+<div id="prizeList" class="aboveFalling section">
   <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">PRIZES</h1>
   </div>
 </div>
 
 <!-- TICKER -->
-<div class="marquee">
+<div class="marquee aboveFalling">
 	<div>
 		<span>Get rewarded for your engagement!</span>
 		<span>Work hard, learn lots, have fun.</span>
@@ -101,7 +27,7 @@
 	</div>
 </div>
 
-<table class="mt-0 pt-0 table text-center table-dark">
+<table class="mt-0 pt-0 table text-center table-dark aboveFalling">
   <thead>
     <tr class="">
       <th class="grey-text" scope="col">PRIZE</th>
@@ -118,7 +44,7 @@
   </tbody>
 </table>
 
-<table class="mt-5 pt-0 table text-center table-dark">
+<table class="mt-5 pt-0 table text-center table-dark aboveFalling">
   <thead>
     <tr class="">
       <th class="grey-text" scope="col">STUDENT</th>
@@ -127,7 +53,7 @@
     </tr>
   </thead>
   <tbody>
-    <% leaderboard.forEach((student) => { console.log(student) %>
+    <% leaderboard.forEach((student) => { %>
       <tr>
         <td><span style="color:<%= student.leaderboardColor %>"><%= student.username %></span></td>
         <td class="grey-text recursive"><%= student.grade %></td>

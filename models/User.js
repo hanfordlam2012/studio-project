@@ -63,31 +63,21 @@ User.prototype.cleanUp = function() {
         admin: false,
         leaderboardScore: 0,
         MissionStatuses: {
-          majorScales: false,
-          minorScales: false,
-          majorArpeggios: false,
-          minorArpeggios: false,
-          scaleModes: false,
-          arpeggioInversions: false,
-          chromatic: false,
-          ningenius: false,
-          sightReading: false,
-          oneTimeAuralMemory: false,
-          noteMemoryGame: false,
-          mastermind: false,
-          contributeStory: false,
-          essayWriting: false,
-          recitalPerformer: false,
-          examTaker: false
+          technical: false,
+          reading: false,
+          literacy: false,
+          perform: false,
+          exam: false,
+          compete: false
         },
         leaderboardColor: '#000000',
-        badges: [],
         lastSubmittedDate: new Date(),
         savedGameScore: 0,
         BPMStatus: "",
         lastBPMGuess: new Date(),
         lessonCount: 0,
-        practiceConversation: ""
+        paidLessons: 0,
+        practiceConversations: []
     }
 }
 

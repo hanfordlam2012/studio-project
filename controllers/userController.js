@@ -159,13 +159,9 @@ exports.editWeek = function (req, res) {
 exports.showPracticePage = function(req, res) {
     getThesePropertyValuesForUser([
         'leaderboardScore',
-        'practiceReply'
+        'practiceConversations'
         ],req.session.user.userId).then((userProps) => {
         getFromAdmin([
-        'interestingVideoURL', 
-        'interestingVideoPrompt', 
-        'readingPracticePDFPath', 
-        'readingPracticePrompt',
         'practicePrompt'
         ]).then((adminProps) => {
             User.getLatestComments(req.session.user.userId).then(function (latestComments) {
@@ -187,12 +183,9 @@ exports.showPracticePage = function(req, res) {
                                 lessonCount: req.session.user.lessonCount,
                                 paidLessons: req.session.user.paidLessons,
                                 leaderboardColor: req.session.user.leaderboardColor,
-                                practiceReply: userProps.practiceReply,
+                                practiceConversation: userProps.practiceConversations,
                                 practicePrompt: adminProps.practicePrompt,
-                                interestingVideoURL: adminProps.interestingVideoURL,
-                                interestingVideoPrompt: adminProps.interestingVideoPrompt,
-                                readingPracticePDFPath: adminProps.readingPracticePDFPath,
-                                readingPracticePrompt: adminProps.readingPracticePrompt
+                                recordedLessonURL: adminProps.interestingVideoURL
                             })
                         })
                     })
@@ -208,7 +201,11 @@ exports.showMissionsPage = function(req, res) {
             'leaderboardScore'
             ],req.session.user.userId).then((userProps) => {
                 getFromAdmin([
-                'pacmanHighscores'
+                'pacmanHighscores',
+                'interestingVideoURL', 
+                'interestingVideoPrompt', 
+                'readingPracticePDFPath', 
+                'readingPracticePrompt',
                 ]).then((adminProps) => {
                     missionController.getRandomBPM().then((randomBPM) => {
                     // function not yet written, need to return object with props BPMStatus, points
@@ -227,7 +224,11 @@ exports.showMissionsPage = function(req, res) {
                             lessonCount: req.session.user.lessonCount,
                             paidLessons: req.session.user.paidLessons,
                             leaderboardColor: req.session.user.leaderboardColor,
-                            pacmanHighscores: adminProps.pacmanHighscores
+                            pacmanHighscores: adminProps.pacmanHighscores,
+                            readingPracticePDFPath: adminProps.readingPracticePDFPath,
+                            readingPracticePrompt: adminProps.readingPracticePrompt,
+                            interestingVideoURL: adminProps.interestingVideoURL,
+                            interestingVideoPrompt: adminProps.interestingVideoPrompt
                         })
                     })
                 })

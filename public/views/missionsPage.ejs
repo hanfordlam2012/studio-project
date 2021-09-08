@@ -1,94 +1,41 @@
-<%- include('includes/header') %>
+<%- include('includes/headerLoggedIn') %>
+<!-- FONT AWESOME BOUNCING ARROW-->
+<script src="https://kit.fontawesome.com/25ae9b8317.js" crossorigin="anonymous"></script>
 <!-- PS2P font -->
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <!--Flowers FOR Spring-->
-<div class="snowflakes" aria-hidden="true">
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🍀
-  </div>
-  <div class="snowflake">
-  🌺
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🍀
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🍀
-  </div>
-  <div class="snowflake">
-  🌺
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-</div>
+<%- include('includes/falling') %>
 
 <!-- ERRORS -->
 <% adErrors.forEach(function(message) { %>
   <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
 <% }) %>
 
-<div class="wallet-div bellota grey-text inline draggable pb-5">
-  <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
-  <span class="pink-text"><strong><%= points %></strong></span> points<br>
-  <span class="yellow-text"><%= lessonCount %></span>/<span class="orange-text"><%= paidLessons %></span> lessons<br>
-  <a href="/practice" type="button" class="my-1 btn btn-info btn-sm">Practice</a>
-  <a href="/parents" type="button" class="my-1 btn btn-warning btn-sm">Record</a><br>
-  <a href="/missions" type="button" class="my-1 btn btn-danger btn-sm">Missions</a>
-  <a href="/leaderboard" type="button" class="my-1 btn btn-success btn-sm">Prizes</a>
-  <form id="logoutButton" class="mt-1 mb-2" action="/logout" method="POST">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-secondary btn-sm">Log Out</button>
-  </form>
-  <p class="text-center green-text mt-1" onclick="lockScreen()" id="lockScreenText">Screen unlocked</p>
-</div>
+<!--WALLET-->
+<%- include('includes/wallet') %>
 
 <!-- MINI MISSIONS -->
 <!-- keep csrf token accessible, use lowercase for dataset entries! -->
 <span id="csrf-landmark" data-value="<%= csrfToken %>" data-username="<%= username %>" data-studentid="<%= userId %>"></span>
-<div id="mini-missions" class="section">
-  <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">MISSIONS</h1>
-    <h2 class="grey-text text-center handlee pb-2 pt-0 mt-0">
-      <% let i = 0;
-      Object.values(missionStatuses).forEach((value) => {
-        if(value){
-          i += 1;
-        }
-      })
-      if(i==1){ %>
-        1 mission complete
-      <% }else{ %>
-      <%= i %> missions complete
-      <% } %></h2></div>
+<div id="mini-missions" class="section aboveFalling">
+  <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">MISSIONS</h1></div>
 </div>
 <!-- Guess the Tempo -->
 <% if (BPMStatus == 'success') { %>
-  <div id="bpm-success" class="green-text text-center mb-4 mt-2 pt-4">
+  <div id="bpm-success" class="aboveFalling green-text text-center mb-4 mt-2 pt-4">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
     <p>Spot on, <%= randomBPM %>! Your sense of timing is amazing.</p>
     <p>The Piano Wizard has put some points in your wallet.</p>
   </div>
 <% } else if (BPMStatus == 'notQuite') { %>
-  <div id="bpm-almost" class="pink-text text-center mb-4 mt-2 pt-4">
+  <div id="bpm-almost" class="aboveFalling pink-text text-center mb-4 mt-2 pt-4">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
     <p>Not quite! The tempo is <%= randomBPM %> beats per minute.<br>
     The Piano Wizard has put some points in your wallet.</p>
   </div>
 <% } else { %>
-  <form action="/guessBPM" method="POST" class="form-inline text-center mb-3 mt-3 justify-content-center">
+  <form action="/guessBPM" method="POST" class="aboveFalling form-inline text-center mb-3 mt-3 justify-content-center">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
     <div class="form-group ml-4">
       <input type="range" min="20" max="200" step="10" name="bpmGuess" id="bpmGuess" class="input-lg mx-sm-3" oninput="num.value = this.value">
@@ -114,43 +61,43 @@
   }, 30000/<%- randomBPM %>);
 </script>
 
-<div class="mt-5" id="missionsWrapper">
+<div class="mt-5 aboveFalling" id="missionsWrapper">
 <!-- Technical Skills -->
-
-<% if (missionStatuses.majorScales) { %>
+<% if (missionStatuses.technical) { %>
   <div class="rounded task-div-complete">
     <div class="missionContent">
-      <h3 class="">Major<br>Scales</h3>
+      <h3 class=""><span class="dark-orange-text">Month</span><br>Technical<br>50</h3>
       <img src="../images/check-mark.png">
     </div>
   </div>
 <% } else { %>
   <div class="rounded task-div-incomplete">
     <div class="missionContent">
-      <h3 class="">Major<br>Scales</h3>
+      <h3 class=""><span class="dark-orange-text">Month</span><br>Technical<br>50</h3>
       <img src="../images/chronometer.png">
     </div> 
   </div>
 <% }
-if (missionStatuses.minorScales) { %>
+
+if (missionStatuses.game) { %>
 <div class="rounded task-div-complete">
   <div class="missionContent">
-    <h3 class="">Minor<br>Scales</h3>
+    <h3 class=""><span class="dark-orange-text">Month</span><br>Reading<br>50</h3>
     <img src="../images/check-mark.png">
   </div>
 </div> 
 <% } else { %> 
 <div class="rounded task-div-incomplete">
   <div class="missionContent">
-    <h3 class="">Minor<br>Scales</h3>
+    <h3 class=""><span class="dark-orange-text">Month</span><br>Reading<br>50</h3>
     <img src="../images/chronometer.png">
   </div>  
 </div>
 <% }
-if (missionStatuses.majorArpeggios) { %>
+if (missionStatuses.literacy) { %>
 <div class="rounded task-div-complete">
   <div class="missionContent">
-<h3 class="">Major<br>Arpeggios</h3>
+<h3 class=""><span class="dark-orange-text">Month</span><br>Literacy<br>50</h3>
   <img src="../images/check-mark.png">
   </div>
   
@@ -158,15 +105,15 @@ if (missionStatuses.majorArpeggios) { %>
 <% } else { %> 
 <div class="rounded task-div-incomplete">
   <div class="missionContent">
-    <h3 class="">Major<br>Arpeggios</h3>
+    <h3 class=""><span class="dark-orange-text">Month</span><br>Literacy<br>50</h3>
     <img src="../images/chronometer.png">
   </div>  
 </div>
 <% }
-if (missionStatuses.minorArpeggios) { %>
+if (missionStatuses.perform) { %>
 <div class="rounded task-div-complete">
   <div class="missionContent">
-<h3 class="">Minor<br>Arpeggios</h3>
+<h3 class=""><span class="dark-orange-text">Term</span><br>Perform<br>300</h3>
   <img src="../images/check-mark.png">
   </div>
   
@@ -174,15 +121,15 @@ if (missionStatuses.minorArpeggios) { %>
 <% } else { %>  
 <div class="rounded task-div-incomplete">
   <div class="missionContent">
-    <h3 class="">Minor<br>Arpeggios</h3>
+    <h3 class=""><span class="dark-orange-text">Term</span><br>Perform<br>300</h3>
     <img src="../images/chronometer.png">
   </div>  
 </div>
 <% }
-if (missionStatuses.scaleModes) { %>
+if (missionStatuses.exam) { %>
 <div class="rounded task-div-complete">
   <div class="missionContent">
-<h3 class="">Scale<br>Modes</h3>
+<h3 class=""><span class="dark-orange-text">Year</span><br>Exam<br>500</h3>
   <img src="../images/check-mark.png">
   </div>
   
@@ -190,15 +137,15 @@ if (missionStatuses.scaleModes) { %>
 <% } else { %>   
 <div class="rounded task-div-incomplete">
   <div class="missionContent">
-    <h3 class="">Scale<br>Modes</h3>
+    <h3 class=""><span class="dark-orange-text">Year</span><br>Exam<br>500</h3>
     <img src="../images/chronometer.png">
   </div>  
 </div>
 <% }
-if (missionStatuses.arpeggioInversions) { %>
+if (missionStatuses.compete) { %>
   <div class="rounded task-div-complete">
     <div class="missionContent">
-<h3 class="">Arpeggio<br>Inversions</h3>
+<h3 class=""><span class="dark-orange-text">Year</span><br>Compete<br>500</h3>
     <img src="../images/check-mark.png">
     </div>
     
@@ -206,205 +153,72 @@ if (missionStatuses.arpeggioInversions) { %>
 <% } else { %>   
 <div class="rounded task-div-incomplete">
   <div class="missionContent">
-    <h3 class="">Arpeggio<br>Inversions</h3>
-    <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% }
-if (missionStatuses.chromatic) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-<h3 class="">Chromatic</h3>
-    <img src="../images/check-mark.png">
-    </div>
-    
-  </div> 
-<% } else { %>   
-<div class="rounded task-div-incomplete">
-  <div class="missionContent">
-    <h3 class="">Chromatic</h3>
+    <h3 class=""><span class="dark-orange-text">Year</span><br>Compete<br>500</h3>
     <img src="../images/chronometer.png">
   </div>  
 </div>
 <% } %>
 
-
-<% if (missionStatuses.ningenius) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-<h3 class="">Ningenius</h3>
-  <img src="../images/check-mark.png">
-    </div>
-  
-</div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-  <h3 class="">Ningenius</h3>
-  <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
-<% if (missionStatuses.sightReading) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-<h3 class="">Sight<br>Reading</h3>
-  <img src="../images/check-mark.png">
-    </div>
-  
-</div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-  <h3 class="">Sight<br>Reading</h3>
-  <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
-
-<!-- Listening Skills-->
-
-<% if (missionStatuses.oneTimeAuralMemory) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-<h3 class="">Melodic<br>Memory</h3>
-  <img src="../images/check-mark.png">
-    </div>
-  
-</div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-  <h3 class="">Melodic<br>Memory</h3>
-  <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
-<% if (missionStatuses.noteMemoryGame) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-<h3 class=""><em>Note Memory</em><br>Game</h3>
-  <img src="../images/check-mark.png">
-    </div>
-  
-</div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-  <h3 class=""><em>Note Memory</em><br>Game</h3>
-  <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
-
-<!-- Creative Skills-->
-<% if (missionStatuses.mastermind) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-<h3 style="display: table-cell;vertical-align: middle;" class="">Master<br>Mind</h3>
-  <img src="../images/check-mark.png">
-    </div>
-  
-</div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-  <h3 style="vertical-align: middle" class="">Master<br>Mind</h3>
-  <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
-<% if (missionStatuses.contributeStory) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
- <h3 class="">Creative<br>Writing</h3>
-  <img src="../images/check-mark.png">
-    </div>
- 
-</div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-  <h3 class="">Creative<br>Writing</h3>
-  <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
-
-<!-- Knowledge and Facts -->
-
-<% if (missionStatuses.essayWriting) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-<h3 class="">Essay<br>Writing</h3>
-  <img src="../images/check-mark.png">
-    </div>
-  
-</div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-  <h3 class="">Essay<br>Writing</h3>
-  <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
-
-<!-- Performance Skills-->
-<% if (missionStatuses.recitalPerformer) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
- <h3 class="">Performer</h3>
-  <img src="../images/check-mark.png">
-    </div>
- 
-</div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-  <h3 class="">Performer</h3>
-  <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
-<% if (missionStatuses.examTaker) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-<h3 class="">Exam</h3>
-  <img src="../images/check-mark.png">
-    </div>
-  
-</div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-  <h3 class="">Exam</h3>
-  <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
-<% if (missionStatuses.competitor) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-      <h3 class="">Competitor</h3>
-      <img src="../images/check-mark.png">
+<!--BOUNCING ARROW-->
+<div class="aboveFalling arrowcontainer">
+  <div class="arrow-holder">
+    <div id="arrow" class="circle bounce">
+        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
     </div>
   </div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-      <h3 class="">Competitor</h3>
-      <img src="../images/chronometer.png">
-    </div>  
+</div>
+
+<!-- INTERESTING VIDEO -->
+<div id="interestingVideoContainer" class="aboveFalling">
+  <% if(interestingVideoURL){ %>
+  <p class="text-center grey-text mb-5"><%= interestingVideoPrompt %></p>
+  <div class="responsive-container">
+    <iframe style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
-<% } %>
+  <% } %>
+</div>
+
+<!--BOUNCING ARROW-->
+<div class="aboveFalling arrowcontainer">
+  <div class="arrow-holder">
+    <div id="arrow" class="circle bounce">
+        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+    </div>
+  </div>
+</div>
+
+<!-- READING PRACTICE -->
+<div id="readingPracticeContainer" class="aboveFalling">
+  <% if(readingPracticePDFPath){ %>
+  <p class="text-center grey-text"><%= readingPracticePrompt %></p>
+  <p class="text-center grey-text mb-5">Here is the <a href="<%= readingPracticePDFPath %>" target="_blank">PDF</a> file.</p>
+  <iframe src="<%= readingPracticePDFPath %>" width="100%" height="1000px"></iframe>
+  <% } %>
+</div>
+
+<!--BOUNCING ARROW-->
+<div class="aboveFalling arrowcontainer">
+  <div class="arrow-holder">
+    <div id="arrow" class="circle bounce">
+        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+    </div>
+  </div>
 </div>
 
 <!--2048-->
-<div style="margin: 0 auto; max-width:800px;"><iframe class="rounded mt-5" id="game2048" src="..//files//2048//index.html" frameborder="0"></iframe></div>
+<div style="margin: 0 auto; max-width:800px;"><iframe class="aboveFalling rounded mt-5" id="game2048" src="..//files//2048//index.html" frameborder="0"></iframe></div>
+
+<!--BOUNCING ARROW-->
+<div class="aboveFalling arrowcontainer">
+  <div class="arrow-holder">
+    <div id="arrow" class="circle bounce">
+        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+    </div>
+  </div>
+</div>
 
 <!--pacman-->
-<div class="white-text text-center mt-5 mb-0 pt-4 pb-0 ps2p" style="background-color:#000; max-width: 800px; margin: 0 auto;">
+<div class="aboveFalling white-text text-center mt-5 mb-0 pt-4 pb-0 ps2p" style="background-color:#000; max-width: 800px; margin: 0 auto;">
   <p class="my-3 purple-text">GLOBAL HIGHSCORES</p>
   <p>Pac-man: <span class="orange-text"><%= pacmanHighscores[0][0]%></span> <span class="green-text"><%= pacmanHighscores[0][1]%></span><br>Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[1][0]%></span> <span class="green-text"><%= pacmanHighscores[1][1]%></span></p>
   <p>Ms Pac-man <span class="orange-text"><%= pacmanHighscores[2][0]%></span> <span class="green-text"><%= pacmanHighscores[2][1]%></span><br>Ms Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[3][0]%></span> <span class="green-text"><%= pacmanHighscores[3][1]%></span></p>
@@ -412,8 +226,17 @@ if (missionStatuses.chromatic) { %>
   <iframe class="mt-0 pt-0" id="gamepacman" src="..//files//pacman//index.htm" style="border: 0;display:block;"></iframe>
 </div>
 
+<!--BOUNCING ARROW-->
+<div class="aboveFalling arrowcontainer">
+  <div class="arrow-holder">
+    <div id="arrow" class="circle bounce">
+        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+    </div>
+  </div>
+</div>
+
 <!--QUAVER ATTACK-->
-<iframe class="mt-5 mx-auto" height="800" width="450" id="gamequaverattack" src="..//files//QuaverAttack//index.html" style="border: 0;display:block;"></iframe>
+<iframe class="aboveFalling mt-5 mx-auto" height="800" width="450" id="gamequaverattack" src="..//files//QuaverAttack//index.html" style="border: 0;display:block;"></iframe>
 
 <script>
 // ADD CSRF TOKEN TO MISSION SUBMITS
@@ -422,19 +245,6 @@ if (missionStatuses.chromatic) { %>
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="_csrf" value="<%= csrfToken %>">')
     d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="userId" value="<%= userId %>">')
   }
-// make game playable
-lockScreen = function(){
-  if(document.getElementById('lockScreenText').innerHTML === "Screen locked"){
-    document.getElementById('lockScreenText').classList.remove('pink-text')
-    document.getElementById('lockScreenText').classList.add('green-text')
-    document.getElementById('lockScreenText').innerHTML = "Screen unlocked"
-  } else {
-    document.getElementById('lockScreenText').classList.remove('green-text')
-    document.getElementById('lockScreenText').classList.add('pink-text')
-    document.getElementById('lockScreenText').innerHTML = "Screen locked"
-  }
-  document.body.style.overflowY = document.body.style.overflowY === '' ? 'hidden' : ''
-}
 </script>
 
 <%- include('includes/footer') %>

@@ -1,186 +1,65 @@
-<%- include('includes/header') %>
-<!-- FONT AWESOME -->
-<script src="https://kit.fontawesome.com/25ae9b8317.js" crossorigin="anonymous"></script>
-<!--typed.js-->
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-
-<!--SNOWFLAKES FOR WINTER
-<div class="snowflakes" aria-hidden="true">
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❆
-  </div>
-  <div class="snowflake">
-  ❄
-  </div>
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❆
-  </div>
-  <div class="snowflake">
-  ❄
-  </div>
-  <div class="snowflake">
-  ❅
-  </div>
-  <div class="snowflake">
-  ❆
-  </div>
-  <div class="snowflake">
-  ❄
-  </div>
-</div>-->
+<%- include('includes/headerLoggedIn') %>
 <!--Flowers FOR Spring-->
-<div class="snowflakes" aria-hidden="true">
-  <div class="snowflake" id="1" onmouseover="a.hide('1')">
-  🌸
-  </div>
-  <div class="snowflake" id="2" onmouseover="a.hide('2')">
-  🌸
-  </div>
-  <div class="snowflake" id="3" onmouseover="a.hide('3')">
-  🍀
-  </div>
-  <div class="snowflake" id="4" onmouseover="a.hide('4')">
-  🌺
-  </div>
-  <div class="snowflake" id="5" onmouseover="a.hide('5')">
-  🌸
-  </div>
-  <div class="snowflake" id="6" onmouseover="a.hide('6')">
-  🍀
-  </div>
-  <div class="snowflake" id="7" onmouseover="a.hide('7')">
-  🌸
-  </div>
-  <div class="snowflake" id="8" onmouseover="a.hide('8')">
-  🍀
-  </div>
-  <div class="snowflake" id="9" onmouseover="a.hide('9')">
-  🌺
-  </div>
-  <div class="snowflake" id="10" onmouseover="a.hide('10')">
-  🌸
-  </div>
-</div>
+<%- include('includes/falling') %>
 
 <!-- ERRORS -->
 <% adErrors.forEach(function(message) { %>
   <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
 <% }) %>
 
-<div class="wallet-div bellota grey-text inline draggable">
-  <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
-  <span class="pink-text"><strong><%= points %></strong></span> points<br>
-  <span class="yellow-text"><%= lessonCount %></span>/<span class="orange-text"><%= paidLessons %></span> lessons<br>
-  <a href="/practice" type="button" class="my-1 btn btn-info btn-sm">Practice</a>
-  <a href="/parents" type="button" class="my-1 btn btn-warning btn-sm">Record</a><br>
-  <a href="/missions" type="button" class="my-1 btn btn-danger btn-sm">Missions</a>
-  <a href="/leaderboard" type="button" class="my-1 btn btn-success btn-sm">Prizes</a>
-  <form id="logoutButton" class="mt-1 mb-2" action="/logout" method="POST">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-secondary btn-sm">Log Out</button>
-  </form>
-</div>
-
-<!--MONTHLY GOALS-->
-<div id="monthlyGoal">
-  <!--some slowly spinning plank with goal written on both sides-->
-</div>
+<!--WALLET-->
+<%- include('includes/wallet') %>
 
 <!-- PRACTICE HUB -->
 <!-- linebreaks are rendered in textarea placeholder -->
-<div id="practice-guide" class="mt-2 mb-4 section">
+<div id="practice-guide" class="aboveFalling transparentBG mt-2 mb-4 section">
   <div class="py-4 my-4 mb-2 mx-0"><h1 id="headingText" class="px-5 display-2 recursive rainbowText text-center">PRACTICE</h1>
-    <% if (practiceStatus) { %>
-    <div id="practice-success" class="recursive text-center my-2">
-      <p><span class="green-text">Come back tomorrow for Hanford's reply!</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
-    </div>
+    <!--DISPLAY WEEKLY COMMENTS-->
     <% latestComments.forEach((comment) => { %>
-      <div id="weeklySnapshotUnchecked" class="mt-5 px-1"><%- filterUserHTML(comment.comments) %></div>  
-      <div id="print-button" class="text-center my-5 pt-5 pb-2">
-        <button class="mx-3 btn btn-outline-secondary btn-sm" href="#" onclick="printDiv('weeklySnapshotUnchecked')">Print notes</button>
+      <div id="weeklySnapshot" class="mt-5 px-1"><%- filterUserHTML(comment.comments) %></div>  
+      <div id="print-button" class="text-center mt-5 pt-5 pb-2">
+        <button class="mx-3 my-5 btn btn-outline-secondary btn-sm" href="#" onclick="printDiv('weeklySnapshot')">Print notes</button>
       </div>
     <% }) %>
-    <% } else { %>
+    <!--RECORDED LESSON-->
+    <div id="recordedLesson" class="aboveFalling mb-5 rounded">
+      <% if(recordedLessonURL){ %>
+      <div class="responsive-container">
+        <iframe style="z-index: 99999;" class="" width="100%" height="500px" src="<%= recordedLessonURL %>" title="Latest lesson recording" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <% } %>
+    </div>
+    <!--DISPLAY CONVERSATION-->
+    <div class="w-100 d-flex topShadow rounded" style="z-index: -2;overflow-y: auto;height:300px;">
+      <div id="practiceConversation" class="mx-auto pt-4 px-4" style="z-index: -1;">
+        <% practiceConversation.forEach((entry) => { 
+          if(entry[0] == 'You') { %>
+            <p class="grey-text"><span class="orange-text"><%= entry[0] %></span> : <%= entry[1] %></p>
+          <% } else if(entry[0] == 'Hanford') { %>
+            <p class="grey-text"><span class="purple-text"><%= entry[0] %></span> : <%= entry[1] %></p>
+          <% }
+        }) %>
+      </div>
+    </div>
+    <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS-->
+    <% if (practiceStatus) { %>
       <form id="PracticeConvo" class="my-2" action="/updateLastSubmittedDateAndAddPoints" method="POST">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <% latestComments.forEach((comment) => { %>
-          <div id="weeklySnapshot" class="mt-5 px-1"><%- filterUserHTML(comment.comments) %></div>  
-          <div id="print-button" class="text-center mt-5 pt-5 pb-2">
-            <button class="mx-3 my-5 btn btn-outline-secondary btn-sm" href="#" onclick="printDiv('weeklySnapshot')">Print notes</button>
-          </div>
-        <% }) %>
         <div class="form-group text-center" style="width:60%;margin:0 auto;">
           <textarea autocomplete="off" name="practiceConversation" class="form-control" style="background-color: rgb(30, 20, 51);color:chartreuse;" 
           placeholder="<%= practicePrompt %>&#10; &#10;" id="practiceConversation" rows="6"></textarea>
-          <div style="min-height: 7rem" class="mt-3">
-            <span id="typed" class="pink-text"></span>
-          </div>
-          <button  type="submit" class="btn btn-outline-success btn-lg mt-4" style="font-size: 1.2rem;">Send to Hanford</button>
+          <button  type="submit" class="btn btn-outline-success btn-lg mt-4" style="font-size: 1.2rem;">Reply</button>
         </div>
       </form>
+    <% } else { %>
+      <div id="practice-success" class="recursive text-center mt-5 my-2">
+        <p><span class="green-text">Come back tomorrow for Hanford's reply!</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
+      </div>
     <% } %>
   </div>
 </div>
 
-<div class="arrowcontainer">
-  <div class="arrow-holder">
-    <div id="arrow" class="circle bounce">
-        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
-    </div>
-  </div>
-</div>
-
-<!-- INTERESTING VIDEO -->
-<div id="interestingVideoContainer">
-  <% if(interestingVideoURL){ %>
-  <p class="text-center grey-text mb-5"><%= interestingVideoPrompt %></p>
-  <div class="responsive-container">
-    <iframe style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </div>
-  <% } %>
-</div>
-
-
-<div class="arrowcontainer">
-  <div class="arrow-holder">
-    <div id="arrow" class="circle bounce">
-        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
-    </div>
-  </div>
-</div>
-
-<!-- READING PRACTICE -->
-<div id="readingPracticeContainer">
-  <% if(readingPracticePDFPath){ %>
-  <h3 class="text-center dark-orange-text my-5">Refreshed? Let's do some reading practice.</h3>
-  <p class="text-center grey-text"><%= readingPracticePrompt %></p>
-  <p class="text-center grey-text mb-5"><a href="<%= readingPracticePDFPath %>" target="_blank">Link</a> to PDF if below does not display correctly on mobile devices.</p>
-  <iframe src="<%= readingPracticePDFPath %>" width="100%" height="1500px"></iframe>
-  <% } %>
-</div>
-
-
 <script>
-  // hide falling divs
-  // encapsulated in a variable
-  a = {
-        show: function (elem) {
-            document.getElementById(elem).style.visibility = 'visible';
-        },
-        hide: function (elem) {
-            document.getElementById(elem).style.visibility = 'hidden';
-        }
-      }
-
   // PRINT FEATURE PLAIN TEXT
   function printDiv(elementId) {
     var prtContent = document.getElementById(elementId);
@@ -190,46 +69,6 @@
     WinPrint.focus();
     WinPrint.print();
   }
-
-  //placing headings
-  try {
-    document.getElementById("weeklySnapshotUnchecked").querySelectorAll('h1').forEach(h1 => h1.classList.add('ml-5'))
-  } catch(err) {
-    console.log(err);
-  }
-  try {
-    document.getElementById("weeklySnapshot").querySelectorAll('h1').forEach(h1 => h1.classList.add('ml-5'))
-  } catch(err) {
-    console.log(err);
-  }
-
-  //add or remove checks
-  let re = /c(\d+) (.*) c\d+/g;
-  try {
-    let commentsDiv = document.getElementById("weeklySnapshot");
-    let newstr = commentsDiv.innerHTML.replace(re, '<input type="checkbox" id="c'+'$1'+'" name="c'+'$1'+'" value="'+'$2'+'"><label for="c'+'$1'+'">'+'$2'+'</label>');
-    commentsDiv.innerHTML = newstr
-  } catch(err) {
-    console.log(err);
-  }
-  try {
-    let commentsDivUnchecked = document.getElementById("weeklySnapshotUnchecked");
-    let newUncheckedStr = commentsDivUnchecked.innerHTML.replace(re, '$2');
-    commentsDivUnchecked.innerHTML = newUncheckedStr
-  } catch(err) {
-    console.log(err);
-  }
-
-  //typed.js
-  var options = {
-  strings: ["Hanford's latest reply: ^1000", "<%= practiceReply %> ^10000"],
-  typeSpeed: 50,
-  backSpeed: 30,
-  loop: true,
-  loopCount: Infinity
-  };
-
-  var typed = new Typed('#typed', options);
 
   // prevent multisubmits
   try {

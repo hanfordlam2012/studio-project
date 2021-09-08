@@ -13,10 +13,14 @@ giveEveryoneASomething = async function() {
     //let d = new Date()
     //d.setHours(d.getHours() + 11)
     await usersCollection.updateMany(
-      {},
-      { $set:
+      {"admin": false},
+      { $unset:
          {
-            grade: ""
+            practiceConversation: "",
+            skillsStatuses: "",
+            completeTotalScore: "",
+            practiceReply: "",
+            badges: ""
          }
       }
    )
@@ -44,7 +48,16 @@ Mission.getPracticeStatus = function(userId) {
 }
 
 Mission.updatePracticeConversationAndEmailHanford = async function(data, userId, username) {
-    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"practiceConversation": data.practiceConversation} })
+    //used plural to distinguish from existing practiceConversation, smooth implementation from current
+    let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+    let practiceConversation = userDoc.practiceConversations
+    if(practiceConversation.length > 20) {
+        practiceConversation.shift()
+        practiceConversation.push(['You', data.practiceConversation])
+    } else {
+        practiceConversation.push(['You', data.practiceConversation])
+    }
+    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"practiceConversations": practiceConversation} })
     Message.sendEmail({message:JSON.stringify(data), email:username})
 }
 

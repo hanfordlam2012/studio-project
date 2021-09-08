@@ -1,5 +1,4 @@
 // router's job is to handle a list of routes
-
 const express = require('express')
 const router = express.Router()
 const userController = require('./controllers/userController')
@@ -39,12 +38,8 @@ router.get('/missions', userController.mustBeLoggedIn, userController.showMissio
 router.get('/leaderboard', userController.mustBeLoggedIn, userController.showLeaderboardPage)
 router.get('/parents', userController.mustBeLoggedIn, userController.showParentsPage)
 
-// scoresby routes unused
-//router.get('/scoresby', userController.mustBeLoggedIn, userController.mustBeAdmin, scoresbyController.getDataAndShowScoresbyPage)
-//router.post('/logContributor', userController.mustBeLoggedIn, userController.mustBeAdmin, scoresbyController.logContributorAndRefresh)
-
 // game routes
-router.post('/saveScore', userController.mustBeLoggedIn, missionController.compareScoreAndSave)
+//router.post('/saveScore', userController.mustBeLoggedIn, missionController.compareScoreAndSave) FOR LEGATO SMOOTH
 router.post('/sendPacmanHighScores', missionController.updatePacmanHighscores)
 
 // practice routes
