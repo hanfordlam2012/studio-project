@@ -13,13 +13,12 @@
 
 <!-- PRIZES -->
 
-<div id="prizeList" class="aboveFalling section">
-  <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">PRIZES</h1>
-  </div>
+<div id="prizeList" class="my-5 text-center aboveFalling section">
+  <h1 class="py-5 mx-auto display-2 recursive rainbowText">PRIZES</h1>
 </div>
 
 <!-- TICKER -->
-<div class="marquee aboveFalling">
+<div class="marquee recursive aboveFalling">
 	<div>
 		<span>Get rewarded for your engagement!</span>
 		<span>Work hard, learn lots, have fun.</span>
@@ -27,41 +26,46 @@
 	</div>
 </div>
 
-<table class="mt-0 pt-0 table text-center table-dark aboveFalling">
-  <thead>
-    <tr class="">
-      <th class="grey-text" scope="col">PRIZE</th>
-      <th class="grey-text" scope="col">PRICE</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% prizeList.forEach((prize) => { %>
-      <tr>
-        <td><span style="color:<%= prize.color %>"><%= prize.title %></span><small class="text-muted ml-2"> <%= prize.desc %></small></td>
-        <td class="green-text recursive"><%= prize.price %></td>
+<div class="table-responsive">
+  <table class="mt-0 pt-0 table text-center table-hover table-dark aboveFalling">
+    <thead>
+      <tr class="">
+        <th class="grey-text" scope="col">PRIZE</th>
+        <th class="grey-text" scope="col">PRICE</th>
       </tr>
-      <% }) %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% prizeList.forEach((prize) => { %>
+        <tr>
+          <td><span style="color:<%= prize.color %>"><%= prize.title %></span><small class="text-muted ml-2"> <%= prize.desc %></small></td>
+          <td class="green-text recursive"><%= prize.price %></td>
+        </tr>
+        <% }) %>
+    </tbody>
+  </table>
+</div>
 
-<table class="mt-5 pt-0 table text-center table-dark aboveFalling">
-  <thead>
-    <tr class="">
-      <th class="grey-text" scope="col">STUDENT</th>
-      <th class="grey-text" scope="col">PIANO GRADE</th>
-      <th class="grey-text" scope="col">POINTS</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% leaderboard.forEach((student) => { %>
-      <tr>
-        <td><span style="color:<%= student.leaderboardColor %>"><%= student.username %></span></td>
-        <td class="grey-text recursive"><%= student.grade %></td>
-        <td class="pink-text recursive"><%= student.leaderboardScore %></td>
+<div class="table-responsive">
+  <table class="mt-5 pt-0 table table-sm text-center table-hover table-dark aboveFalling">
+    <thead>
+      <tr class="">
+        <th class="grey-text" scope="col">STUDENT</th>
+        <th class="grey-text" scope="col">PIANO GRADE</th>
+        <th class="grey-text" scope="col">POINTS</th>
       </tr>
-      <% }) %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% leaderboard.forEach((student) => { %>
+        <tr data-toggle="tooltip" data-html="true" title="<%= student. studentBio %>">
+          <td><span style="color:<%= student.leaderboardColor %>"><%= student.username %></span></td>
+          <td class="grey-text recursive"><%= student.grade %></td>
+          <td class="pink-text recursive"><%= student.leaderboardScore %></td>
+        </tr>
+        <% }) %>
+    </tbody>
+  </table>
+</div>
+
   
 
 <%- include('includes/footer') %>

@@ -37,7 +37,6 @@ input {
 }
 
 #navIcon, .navLink {
-    margin: 10px 25px;
     color: rgb(182, 182, 182);
 }
 
@@ -527,7 +526,7 @@ hr {
 #weeklySnapshot {
     font-family: 'Bellota', cursive;
     font-size: 1.5rem;
-    color: rgb(208, 208, 208);
+    color: rgb(235, 235, 235);
     max-width: 1000px;
     margin: auto;
     counter-reset: item; /*set counter because flex does not work with list-style*/
@@ -552,16 +551,6 @@ hr {
     text-shadow: 2px 2px 10px rgb(130, 0, 0);
 }
 
-#weeklySnapshot input[type=checkbox]:checked + label {
-    text-decoration: line-through;
-    color: #68c923;
-    text-shadow: 2px 2px 2px rgb(23, 123, 14);
-}
-
-#weeklySnapshot input[type=checkbox] {
-    display: none;
-}
-
 #weeklySnapshot li {
     margin-left: 2rem;
     display: flex;
@@ -579,39 +568,6 @@ hr {
     margin-left: 3rem;
 }
 
-#weeklySnapshot label {
-    cursor: pointer;
-}
-
-/*UNCHECKED*/
-#weeklySnapshotUnchecked p, ul, li{
-    font-family: 'Bellota', cursive;
-    font-size: 1.5rem;
-    color: rgb(208, 208, 208);
-}
-
-#weeklySnapshotUnchecked {
-    max-width: 1000px;
-    margin: auto;
-}
-
-#weeklySnapshotUnchecked em {
-    color: rgb(42, 152, 255);
-    font-family: 'Recursive', sans-serif;
-}
-
-#weeklySnapshotUnchecked strong {
-    color: rgb(71, 208, 105);
-}
-
-#weeklySnapshotUnchecked h1 {
-    font-family: 'Belgrano', serif;
-    font-size: 3rem;
-    color: #ffb03a;
-    margin-bottom: 1.5rem;
-    margin-top: 5rem;
-    text-shadow: 2px 2px 10px rgb(130, 0, 0);
-}
 
 .topShadow {
     box-shadow: inset 0px 25px 19px -18px #000000;
@@ -864,8 +820,8 @@ hr {
 .marquee {
     width: 100%;
 	line-height: 50px;
-	background-color: #ffde24;
-	color: rgb(128, 0, 255);
+	background-color: #ffde2467;
+	color: rgb(255, 184, 32);
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;

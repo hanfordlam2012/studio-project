@@ -14,13 +14,10 @@ giveEveryoneASomething = async function() {
     //d.setHours(d.getHours() + 11)
     await usersCollection.updateMany(
       {"admin": false},
-      { $unset:
+      { $set:
          {
-            practiceConversation: "",
-            skillsStatuses: "",
-            completeTotalScore: "",
-            practiceReply: "",
-            badges: ""
+            studentBio: "",
+            lessonVideoURL: ""
          }
       }
    )

@@ -159,7 +159,8 @@ exports.editWeek = function (req, res) {
 exports.showPracticePage = function(req, res) {
     getThesePropertyValuesForUser([
         'leaderboardScore',
-        'practiceConversations'
+        'practiceConversations',
+        'lessonVideoURL'
         ],req.session.user.userId).then((userProps) => {
         getFromAdmin([
         'practicePrompt'
@@ -185,7 +186,7 @@ exports.showPracticePage = function(req, res) {
                                 leaderboardColor: req.session.user.leaderboardColor,
                                 practiceConversation: userProps.practiceConversations,
                                 practicePrompt: adminProps.practicePrompt,
-                                recordedLessonURL: adminProps.interestingVideoURL
+                                recordedLessonURL: userProps.lessonVideoURL
                             })
                         })
                     })

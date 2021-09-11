@@ -25,12 +25,12 @@
     <div id="recordedLesson" class="aboveFalling mb-5 rounded">
       <% if(recordedLessonURL){ %>
       <div class="responsive-container">
-        <iframe style="z-index: 99999;" class="" width="100%" height="500px" src="<%= recordedLessonURL %>" title="Latest lesson recording" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe style="z-index: 99999;" class="" width="100%" height="500px" src="https://www.youtube.com/embed/<%= recordedLessonURL %>" title="Latest lesson recording" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <% } %>
     </div>
     <!--DISPLAY CONVERSATION-->
-    <div class="w-100 d-flex topShadow rounded" style="z-index: -2;overflow-y: auto;height:300px;">
+    <div id="practiceConversationContainer" class="w-100 d-flex topShadow rounded mb-5" style="z-index: -2;overflow-y: auto;height:300px;">
       <div id="practiceConversation" class="mx-auto pt-4 px-4" style="z-index: -1;">
         <% practiceConversation.forEach((entry) => { 
           if(entry[0] == 'You') { %>
@@ -41,6 +41,10 @@
         }) %>
       </div>
     </div>
+    <script>
+      let practiceConversationContainer = document.getElementById('practiceConversationContainer')
+      practiceConversationContainer.scrollTop = practiceConversationContainer.scrollHeight
+    </script>
     <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS-->
     <% if (!practiceStatus) { %>
       <form id="PracticeConvo" class="my-2" action="/updateLastSubmittedDateAndAddPoints" method="POST">

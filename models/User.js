@@ -259,7 +259,8 @@ User.getLeaderboard = function() {
           leaderboardScore: 1,
           badges: 1, 
           leaderboardColor: 1, 
-          grade: 1
+          grade: 1,
+          studentBio: 1
         }).sort({leaderboardScore: -1}).toArray()
         resolve({leaderboard: leaderboard})
     })

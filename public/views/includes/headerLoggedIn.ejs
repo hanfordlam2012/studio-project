@@ -17,15 +17,15 @@
   </head>
   <body>
     <!-- NAVBAR -->
-    <nav id="myNav" class="rounded recursive row text-center py-2">
-      <div class="col-lg-6">
-        <a id="navIcon" href='/'>Hanford Lam | Piano Teacher</a>
+    <nav id="myNav" class="rounded recursive row align-items-center text-center py-2">
+      <div class="col-lg-5">
+        <a id="navIcon" class="my-2 d-block" href='/'>Hanford Lam | Piano Teacher</a>
       </div>
-      <div class="col-lg-6">
-        <a id="practiceTab" href="/practice" class="navLink">PRACTICE</a>
-        <a id="missionsTab" href="/missions" class="navLink">MISSIONS</a>
-        <a id="leaderboardTab" href="/leaderboard" class="navLink">LEADERBOARD</a>
-        <form id="logoutButton" style="display: inline;" class="" action="/logout" method="POST">
+      <div class="col-lg-7">
+        <a id="practiceTab" href="/practice" class="mx-4 my-2 d-inline-block navLink">PRACTICE</a>
+        <a id="missionsTab" href="/missions" class="mx-4 my-2 d-inline-block navLink">MISSIONS</a>
+        <a id="leaderboardTab" href="/leaderboard" class="mx-4 my-2 d-inline-block navLink">LEADERBOARD</a>
+        <form id="logoutButton" class="mx-4 my-2 d-inline-block" action="/logout" method="POST">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit" class="btn btn-sm btn-secondary">LOG OUT</button>
         </form>        
