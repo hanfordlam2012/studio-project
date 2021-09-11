@@ -78,22 +78,6 @@
     </div> 
   </div>
 <% }
-
-if (missionStatuses.game) { %>
-<div class="rounded task-div-complete">
-  <div class="missionContent">
-    <h3 class=""><span class="dark-orange-text">Month</span><br>Reading<br>50</h3>
-    <img src="../images/check-mark.png">
-  </div>
-</div> 
-<% } else { %> 
-<div class="rounded task-div-incomplete">
-  <div class="missionContent">
-    <h3 class=""><span class="dark-orange-text">Month</span><br>Reading<br>50</h3>
-    <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% }
 if (missionStatuses.literacy) { %>
 <div class="rounded task-div-complete">
   <div class="missionContent">
@@ -110,6 +94,22 @@ if (missionStatuses.literacy) { %>
   </div>  
 </div>
 <% }
+if (missionStatuses.reading) { %>
+<div class="rounded task-div-complete">
+  <div class="missionContent">
+    <h3 class=""><span class="dark-orange-text">Month</span><br>Reading<br>50</h3>
+    <img src="../images/check-mark.png">
+  </div>
+</div> 
+<% } else { %> 
+<div class="rounded task-div-incomplete">
+  <div class="missionContent">
+    <h3 class=""><span class="dark-orange-text">Month</span><br>Reading<br>50</h3>
+    <img src="../images/chronometer.png">
+  </div>  
+</div>
+<% }
+
 if (missionStatuses.perform) { %>
 <div class="rounded task-div-complete">
   <div class="missionContent">
