@@ -12,6 +12,20 @@ body,
     margin: 0 auto;
 }
 
+h1 {
+    color: #efcb00;
+    font-weight: 500;
+}
+
+h2 {
+    color: white;
+}
+
+.alert {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
 input {
     caret-color: #ac1010;
 }
@@ -98,20 +112,8 @@ input {
     font-family: 'Recursive', sans-serif;
 }
 
-.tight-header {
-    display: table;
-    margin: 0 auto;
-    border: 1px solid #e8226a;
-    border-radius: 3px;
-}
-
-.alert {
-    padding-left: 15%;
-    padding-right: 15%;
-}
-
 /* HOME */
-#biographyContainer p {
+#biographyContainer p, #ratesRow li {
     line-height: 1.8;
     font-size: 1.2rem;
     text-align: center;
@@ -125,7 +127,7 @@ input {
     text-align: center;
 }
 
-#photo1 {
+#photo1, #photo2, #hanford-lam-studio-min, #youtubeShowcase {
     width: 100%;
     border-radius: 20px;
     box-shadow: 0 0 10px #ffffff;
@@ -138,111 +140,7 @@ input {
     height: 100%;
 }
 
-#photo2 {
-    width: 100%;
-    border-radius: 20px;
-    box-shadow: 0 0 10px #ffffff;
-    border: 1px solid black;
-}
-
-#youtubeShowcase {
-    width: 100%;
-    border-radius: 20px;
-    box-shadow: 0 0 10px #ffffff;
-    border: 1px solid black;
-}
-
-#hanford-lam-studio-min {
-    width: 100%;
-    border-radius: 20px;
-    box-shadow: 0 0 10px #ffffff;
-    border: 1px solid black;
-}
-
-#blurb p {
-    font-size: 1.5rem;
-}
-
-#meet-hanford h2 {
-    font-size: 1.5rem;
-}
-
-#studio-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 10px 10px 20px black;
-}
-
-#landscapeHeadshot {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 10px 10px 20px black;
-    border-radius: 50%;
-}
-
-#portraitHeadshot {
-    max-width: 100%;
-    max-height: 100%;
-    box-shadow: 10px 10px 20px black;
-}
-
-#backstage {
-    max-width: 100%;
-    max-height: 100%;
-    box-shadow: 10px 10px 20px black;
-}
-
-.full-width-home-container-transparent {
-    min-height: 500px;
-    min-width: 100%;
-    background-color: transparent;
-}
-
-
-
-/* MEDIA */
-.media-div {
-    height: auto;
-    min-width: 100%;
-    background-color: transparent;
-}
-
-.jumbotron {
-    background-color: rgb(37, 2, 61);
-    border: 1px solid white;
-    box-shadow: 0px 0px 100px 30px rgba(0, 0, 0, 0.713);
-}
-
-.jumbotron-transparent {
-    background-color: #1c0024;
-    border: none;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 10px 10px rgb(80, 60, 133);
-}
-
-.jumbotron-transparent-greeting {
-    background-color: transparent;
-    border: none;
-    border-radius: 10px;
-}
-
-.jumbotron p {
-    color: white;
-}
-
-h1 {
-    color: #efcb00;
-    font-weight: 500;
-}
-
-h2 {
-    color: white;
-}
-
+/*IN PARENTS PAGE*/
 .modal-body pre {
     white-space: pre-wrap;
     /* Since CSS 2.1 */
@@ -274,14 +172,6 @@ h2 {
 
 .col-sm p {
     margin: 0;
-}
-
-.milestone-text {
-    color: #66128c;
-}
-
-.nomilestone-text {
-    color: #969696;
 }
 
 .grey-text {
@@ -449,18 +339,6 @@ hr {
     border-top: 1px solid white;
 }
 
-.question-div {
-    margin-bottom: 2rem;
-    border-radius: 5px;
-    border: 1px solid white;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-left: 10%;
-    padding-right: 10%;
-    color: white;
-    text-align: center;
-}
-
 .task-div-complete {
     display: inline-block;
     position: relative;
@@ -504,15 +382,6 @@ hr {
     color: rgb(141, 0, 2);
 }
 
-.correct-text {
-    color: rgb(24, 141, 0)
-}
-
-.leaderboard-badge {
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-}
-
 .section::before {
     display: block;
     content: " ";
@@ -522,7 +391,7 @@ hr {
     pointer-events: none;
 }
 
-/*CHECKED*/
+/*PRACTICE PAGE*/
 #weeklySnapshot {
     font-family: 'Bellota', cursive;
     font-size: 1.5rem;
@@ -643,6 +512,7 @@ hr {
     transform: translateY(-15px);
   }
 }
+
 /* customizable snowflake styling */
 .snowflakes {
     color: #fff;
@@ -757,11 +627,6 @@ hr {
     left:90%;
     -webkit-animation-delay:9s,1.5s;
     animation-delay:9s,1.5s
-}
-
-/*TYPED.JS*/
-.typed-cursor{
-    color: #e8226a;
 }
 
 /* REPORTS */
