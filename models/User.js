@@ -268,7 +268,7 @@ User.getLeaderboard = function() {
 
 User.getLatestComments = function(userId) {
   return new Promise (async(resolve, reject) => {
-    let latestComments = await weeksCollection.find({"studentId": ObjectID(userId)}).sort({createdDate: -1}).limit(1).project({comments: 1}).toArray()
+    let latestComments = await weeksCollection.find({studentId: ObjectID(userId)}).sort({createdDate: -1}).limit(1).project({comments: 1}).toArray() //removed "studentId" quotations
     resolve(latestComments)
   })
 }
@@ -308,7 +308,8 @@ User.findWeekAndUpdate = function(editData) {
 User.getStudentWeeks = async function(userId) {
     return new Promise(async(resolve, reject) => {
         // create studentWeeks object
-        let studentWeeks = await weeksCollection.find({"studentId": ObjectID(userId)}).sort({createdDate: 1}).limit(40).toArray()
+        let studentWeeks = await weeksCollection.find({"studentId": ObjectID(userId)}).sort({createdDate: -1}).limit(36).toArray()
+        studentWeeks.reverse() // Array method reverses in place
         // create graphData object
         let dateLabels = []
         let rhythmArray = []

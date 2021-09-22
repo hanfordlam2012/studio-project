@@ -118,9 +118,26 @@ exports.logout = function (req, res) {
 }
 
 // ADMIN FUNCTIONS
+exports.getStudentData = function (req, res) {
+    console.log(req.body)
+    getThesePropertyValuesForUser(['practiceConversations'], req.body.studentId).then((practiceConversations) => {
+        User.getLatestComments(req.body.studentId).then((lastLessonComments) => {
+            res.json(
+                {
+                    practiceConversations: practiceConversations,
+                    lastLessonComments: lastLessonComments
+                }
+            )
+        })
+    })    
+}
+
 exports.viewCreateWeekPage = function (req, res) {
     User.getStudentList(req.session.user.secret, req.session.user.userId).then(function (studentList) {
-        res.render('create-week', { studentList: studentList, success: req.flash('success') })
+        res.render('create-week', { 
+            studentList: studentList, 
+            success: req.flash('success') 
+        })
     }).catch(function () {
         res.send("Student list didn't build sucessfully.")
     })

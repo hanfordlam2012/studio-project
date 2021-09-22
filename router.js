@@ -52,6 +52,8 @@ router.post('/create-week', userController.mustBeLoggedIn, userController.mustBe
 router.get('/choose-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewChooseWeekPage)
 router.post('/choose-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewEditWeekPage)
 router.post('/edit-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.editWeek)
+router.post('/getStudentData', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.getStudentData)
+router.post('/replyToStudent', userController.mustBeLoggedIn, userController.mustBeAdmin, missionController.replyToStudent)
 
 // sitemap
 router.get('/sitemap.xml', function(req, res) {

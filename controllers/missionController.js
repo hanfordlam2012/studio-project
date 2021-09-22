@@ -85,6 +85,11 @@ function getRndInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
+exports.replyToStudent = async function(req, res) {
+    await Mission.replyToStudent(req.body.studentId, req.body.reply)
+    res.redirect('/create-week')
+}
+
 // PACMAN HIGHSCORES
 exports.updatePacmanHighscores = async function(req, res) {
     let userDoc = await usersCollection.findOne({"admin": true})

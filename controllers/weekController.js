@@ -3,6 +3,7 @@ const usersCollection = require('../db').db('studio-project').collection('users'
 const ObjectID = require('mongodb').ObjectID
 
 exports.createWeek = function(req, res) {
+	console.log(req.body)
 	let week = new Week(req.body, req.session.user)
 	week.createWeek().then(async function(msg) {
 		// find and update student

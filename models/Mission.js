@@ -44,6 +44,18 @@ Mission.getPracticeStatus = function(userId) {
     })
 }
 
+Mission.replyToStudent = async function(studentId, reply) {
+    let userDoc = await usersCollection.findOne({"_id": ObjectID(studentId)})
+    let practiceConversation = userDoc.practiceConversations
+    if(practiceConversation.length > 20) {
+        practiceConversation.shift()
+        practiceConversation.push(['Hanford', reply])
+    } else {
+        practiceConversation.push(['Hanford', reply])
+    }
+    await usersCollection.updateOne({"_id": ObjectID(studentId)}, { $set: {"practiceConversations": practiceConversation} })
+}
+
 Mission.updatePracticeConversationAndEmailHanford = async function(data, userId, username) {
     //used plural to distinguish from existing practiceConversation, smooth implementation from current
     let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
