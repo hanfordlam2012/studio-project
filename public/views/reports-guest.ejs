@@ -1,66 +1,126 @@
-<%- include('includes/header') %>
-<!-- LOGIN FORM -->
+<!doctype html>
+<html lang="en" id="reports-guest-html">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Bootstrap CSS and Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Handlee&family=Rye&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Hanford Lam | Piano Teacher</title>
+    <!-- CURSOR -->
+    <style>HTML,BODY{cursor: url("../../images/cursor.cur"), auto;}</style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7KLNXVSDD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-<div class="justify-content-center text-center py-5 my-4">
-  <p class="text-center grey-text h2 handlee">"Believe you can and<br>you're halfway there."</p>
-  <p class="text-muted">~ Theodore Roosevelt</p>
-  <br>
-  <div id="pikachuDiv"><img class="ml-5" id="pikachuMusic" src="../images/pikachu.gif" data-source="https://imgur.com/75tvQck?nc=1" alt="cute pikachu bouncing to music"></div>
-  <% errors.forEach(function(message) { %>
-    <div class="alert alert-danger text-center d-inline small mb-3 py-1"><%= message %></div>
-  <% }) %>
-  <div class="d-flex mt-3 justify-content-center">
-    
-    <form id="loginForm" action="/login" method="POST" class="">
-      <input autocomplete="off" type="text" name="username" class="text-center form-control-lg d-block mb-2 mr-sm-2" placeholder="USERNAME" id="mainUsernameInput">
-      <input autocomplete="off" type="password" name="password" class="text-center form-control-lg d-block mb-2 mr-sm-2" placeholder="PASSWORD">
-      <div class="d-flex justify-content-center">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <button type="submit" id="login-button" class="btn btn-info btn-lg mt-2 mb-3">Log in</button>
+      gtag('config', 'G-S7KLNXVSDD');
+    </script>
+  </head>
+  <body id="reports-guest-body">
+    <!-- NAVBAR -->
+    <nav id="myNav" class="rounded recursive row align-items-center text-center py-2">
+      <div class="col-lg-7">
+        <a id="navIcon" class="my-2 d-block" href='/'>Hanford Lam | Piano Teacher</a>
       </div>
-    </form>
-  </div>
-</div>
+      <div class="col-lg-5">
+        <a id="homeTab" class="mx-4 my-2 d-inline-block navLink" href="/">HOME</a>
+        <button class="mx-4 my-2 d-inline-block btn btn-sm btn-info" onclick="location.href='/#ratesRow'">CONTACT</button>
+        <a id="reportsTab" class="mx-4 my-2 d-inline-block navLink" href="/reports">PORTAL</a>
+      </div>
+    </nav>
+
+    <!-- DYNAMIC NAVBAR AND TITLE -->
+    <script>
+      let currentPath = window.location.pathname
+      if (currentPath == '/') {
+        document.getElementById("homeTab").classList.add("orange-text")
+        document.title = "Hanford Lam"
+      } else if (currentPath == '/practice' || currentPath == '/missions' || currentPath == '/leaderboard' || currentPath == '/parents' || currentPath == '/reports') {
+        document.getElementById("reportsTab").classList.add("orange-text")
+        document.title = "Portal - Hanford Lam"
+      }
+    </script>
+    <!-- LOGIN FORM -->
+    <div class="justify-content-center text-center py-5 my-4">
+      <p class="text-center grey-text h2 handlee">"Believe you can and<br>you're halfway there."</p>
+      <p class="text-muted">~ Theodore Roosevelt</p>
+      <br>
+      <div id="pikachuDiv"><img class="ml-5" id="pikachuMusic" src="../images/pikachu.gif" data-source="https://imgur.com/75tvQck?nc=1" alt="cute pikachu bouncing to music"></div>
+      <% errors.forEach(function(message) { %>
+        <div class="alert alert-danger text-center d-inline small mb-3 py-1"><%= message %></div>
+      <% }) %>
+      <div class="d-flex mt-3 justify-content-center">
+        
+        <form id="loginForm" action="/login" method="POST" class="">
+          <input autocomplete="off" type="text" name="username" class="text-center form-control-lg d-block mb-2 mr-sm-2" placeholder="USERNAME" id="mainUsernameInput">
+          <input autocomplete="off" type="password" name="password" class="text-center form-control-lg d-block mb-2 mr-sm-2" placeholder="PASSWORD">
+          <div class="d-flex justify-content-center">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" id="login-button" class="btn btn-danger btn-lg mt-2 mb-3">Log in</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
 
 
-<!-- REGISTER FORM 
-<hr>
-<form id="registration-form" class="text-center justify-content-center my-5 mx-5 px-3" action="/register" method="POST">
-    <% regErrors.forEach(function(message) { %>
-      <div class="alert alert-danger small py-1"><%= message %></div>
-    <% }) %>
-    <h2 class="caveat text-center grey-text mt-4 mb-3">Fill these out to make an account</h2>
-    <div id="fNameDiv" class="input-group mb-3">
-      <input id="fNameInput" autocomplete="off" type="text" name="fName" class="text-center form-control-lg" value="" placeholder="Student's first name">
-    </div>
-    <div id="lNameDiv" class="input-group mb-3">
-      <input id="lNameInput" autocomplete="off" type="text" name="lName" class="text-center form-control-lg" value="" placeholder="Student's last name">
-    </div>
-    <div id="parentNameDiv" class="input-group mb-3">
-      <input id="parentNameInput" autocomplete="off" type="text" name="parentName" class="text-center form-control-lg" value="" placeholder="Parent's first name">
-    </div>
-    <div id="emailDiv" class="input-group mb-3">
-      <input id="emailInput" autocomplete="off" type="email" name="email" class="text-center form-control-lg" value="" placeholder="Email address">
-    </div>
-    <div id="mobileDiv" class="input-group mb-3">
-      <input id="mobileInput" autocomplete="off" type="tel" name="mobile" class="text-center form-control-lg" value="" placeholder="Mobile number (eg. 0412345678)">
-    </div>
-    <div id="usernameDiv" class="input-group mb-3">
-      <input id="usernameInput" autocomplete="off" type="text" name="username" class="text-center form-control-lg" value="" placeholder="Make a username">
-    </div>
-    <div id="passwordDiv" class="input-group mb-3">
-      <input id="passwordInput" autocomplete="off" type="password" name="password" class="text-center form-control-lg" value="" placeholder="Create a password">
-    </div>
-    <div id="secretDiv" class="input-group mb-3">
-      <input id="secretInput" autocomplete="off" type="text" name="secret" class="text-center form-control-lg" value="" placeholder="Hanford's secret">
-    </div>
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-secondary btn-lg mt-3">Register</button>
-  </form>-->
-</div>
+    <!-- REGISTER FORM 
+    <hr>
+    <form id="registration-form" class="text-center justify-content-center my-5 mx-5 px-3" action="/register" method="POST">
+        <% regErrors.forEach(function(message) { %>
+          <div class="alert alert-danger small py-1"><%= message %></div>
+        <% }) %>
+        <h2 class="caveat text-center grey-text mt-4 mb-3">Fill these out to make an account</h2>
+        <div id="fNameDiv" class="input-group mb-3">
+          <input id="fNameInput" autocomplete="off" type="text" name="fName" class="text-center form-control-lg" value="" placeholder="Student's first name">
+        </div>
+        <div id="lNameDiv" class="input-group mb-3">
+          <input id="lNameInput" autocomplete="off" type="text" name="lName" class="text-center form-control-lg" value="" placeholder="Student's last name">
+        </div>
+        <div id="parentNameDiv" class="input-group mb-3">
+          <input id="parentNameInput" autocomplete="off" type="text" name="parentName" class="text-center form-control-lg" value="" placeholder="Parent's first name">
+        </div>
+        <div id="emailDiv" class="input-group mb-3">
+          <input id="emailInput" autocomplete="off" type="email" name="email" class="text-center form-control-lg" value="" placeholder="Email address">
+        </div>
+        <div id="mobileDiv" class="input-group mb-3">
+          <input id="mobileInput" autocomplete="off" type="tel" name="mobile" class="text-center form-control-lg" value="" placeholder="Mobile number (eg. 0412345678)">
+        </div>
+        <div id="usernameDiv" class="input-group mb-3">
+          <input id="usernameInput" autocomplete="off" type="text" name="username" class="text-center form-control-lg" value="" placeholder="Make a username">
+        </div>
+        <div id="passwordDiv" class="input-group mb-3">
+          <input id="passwordInput" autocomplete="off" type="password" name="password" class="text-center form-control-lg" value="" placeholder="Create a password">
+        </div>
+        <div id="secretDiv" class="input-group mb-3">
+          <input id="secretInput" autocomplete="off" type="text" name="secret" class="text-center form-control-lg" value="" placeholder="Hanford's secret">
+        </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="btn btn-secondary btn-lg mt-3">Register</button>
+      </form>-->
 
-<script>
-  document.getElementById("mainUsernameInput").focus();
-</script>
-<%- include('includes/footer') %>
+    <script>
+      document.getElementById("mainUsernameInput").focus();
+    </script>
+    
+    <!-- Footer -->
+    <footer class="footer text-center small py-3">
+        <p class="m-0 raleway black-text">Copyright &copy; <script>document.write(new Date().getFullYear());</script> <a href='/' class="black-text raleway">hanfordlam.com</a>. All rights reserved.</p>
+    </footer>
+    <!-- BOOTSTRAP 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- jQuery and Bootstrap Bundle (includes Popper) 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>-->
+    <script>$(function () {$('[data-toggle="tooltip"]').tooltip()})</script>
+    <script src="../../main-bundled.js"></script>
+  </body>
+</html>

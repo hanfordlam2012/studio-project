@@ -36,6 +36,10 @@ input {
 }
 
 /* NAVIGATION */
+#myNav a {
+    text-decoration: none;
+}
+
 #myNav a:hover, #myNav a:focus, #myNav a:active {
     color: rgb(177, 77, 216);
     text-decoration: none;
@@ -114,6 +118,24 @@ input {
 }
 
 /* HOME */
+#home-html {
+    background-image: url("../images/piano-background.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+}
+
+.home-display {
+    background-color: rgba(18, 46, 68, 0.713);
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.background-transparent {
+    background-color: transparent;
+}
+
 #biographyContainer p, #ratesRow li {
     line-height: 1.8;
     font-size: 1.2rem;
@@ -174,6 +196,10 @@ input {
 .col-sm p {
     margin: 0;
 }
+
+.black-text {
+ color: #000000;
+} 
 
 .grey-text {
     color:#969696;
@@ -631,6 +657,21 @@ hr {
 }
 
 /* REPORTS */
+#reports-guest-html {
+    margin:0;
+    padding:0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+#reports-guest-body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url("../images/scene.jpg");
+    background-size: cover;
+}
+
 #pikachuMusic {
     width: 15rem;
 }
@@ -651,15 +692,19 @@ hr {
 }
 
 #registration-form input {
-    background-color: #000000;
+    background-color: #00000054;
     border: none;
     color:#ac1010;
 }
 
 #loginForm input, input:focus {
-    background-color: #1f003d;
+    background-color: #1e003d77;
     border: none;
     color:#5cc035;
+}
+
+#loginForm ::placeholder {
+    color:rgba(255, 141, 165, 0.9);
 }
 
 /* WALLET */
