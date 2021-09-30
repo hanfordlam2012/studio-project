@@ -2,20 +2,35 @@
   <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
   <span class="pink-text"><strong><%= points %></strong></span> points<br>
   <strong class="dark-orange-text"><%= lessonCount %></strong> / <strong class="orange-text"><%= paidLessons %></strong> lessons<br>
-  <p class="text-center dark-green-text mt-1" onclick="lockScreen()" id="lockScreenText"><strong>Screen unlocked</strong></p>
+  <p class="text-center dark-green-text mt-1" onclick="lockScreen()" ><strong id="lockScreenText">Screen unlocked</strong></p>
 </div>
 <script>
   // make game playable
   lockScreen = function(){
-    if(document.getElementById('lockScreenText').innerHTML === "Screen locked"){
+    if(document.getElementById('lockScreenText').innerText === "Screen locked"){
       document.getElementById('lockScreenText').classList.remove('pink-text')
-      document.getElementById('lockScreenText').classList.add('green-text')
-      document.getElementById('lockScreenText').innerHTML = "Screen unlocked"
+      document.getElementById('lockScreenText').classList.add('dark-green-text')
+      document.getElementById('lockScreenText').innerText = "Screen unlocked"
+      enableScroll()
     } else {
-      document.getElementById('lockScreenText').classList.remove('green-text')
+      document.getElementById('lockScreenText').classList.remove('dark-green-text')
       document.getElementById('lockScreenText').classList.add('pink-text')
-      document.getElementById('lockScreenText').innerHTML = "Screen locked"
+      document.getElementById('lockScreenText').innerText = "Screen locked"
+      disableScroll()
     }
-    document.body.style.overflowY = document.body.style.overflowY === '' ? 'hidden' : ''
+    function disableScroll() {
+      // Get the current page scroll position
+      scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+  
+      // if any scroll is attempted, set this to the previous value
+      window.onscroll = function() {
+          window.scrollTo(scrollLeft, scrollTop);
+        };
+      }
+        
+    function enableScroll() {
+      window.onscroll = function() {};
+    }
   }
 </script>
