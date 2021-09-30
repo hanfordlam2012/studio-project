@@ -60,8 +60,8 @@
       <div class="d-flex mt-3 justify-content-center">
         
         <form id="loginForm" action="/login" method="POST" class="">
-          <input autocomplete="off" type="text" name="username" class="text-center form-control-lg d-block mb-2 mr-sm-2" placeholder="USERNAME" id="mainUsernameInput">
-          <input autocomplete="off" type="password" name="password" class="text-center form-control-lg d-block mb-2 mr-sm-2" placeholder="PASSWORD">
+          <input autocomplete="off" type="text" name="username" class="text-center form-control-lg d-block mb-2 mr-sm-2" style="max-width: 150px;" placeholder="USERNAME" id="mainUsernameInput">
+          <input autocomplete="off" type="password" name="password" class="text-center form-control-lg d-block mb-2 mr-sm-2" style="max-width: 150px;" placeholder="PASSWORD">
           <div class="d-flex justify-content-center">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button type="submit" id="login-button" class="btn btn-danger btn-lg mt-2 mb-3">Log in</button>
