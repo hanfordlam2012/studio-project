@@ -2,8 +2,8 @@ html,
 body,
 .container-fluid {
     background-color: #1c1c1c;
-    min-height: 100vh;
-    min-width: 70vw;
+    min-height: 98vh;
+    width:100%;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -11,6 +11,11 @@ body,
     position: static;
     margin: 0 auto;
     scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    background-color: transparent;
 }
 
 h1 {
@@ -53,6 +58,7 @@ input {
     background-color: rgba(18, 46, 68, 0.713);
     box-shadow: 0px 0px 5px rgb(0, 0, 0);
     z-index: 300;
+    width: 100%;
 }
 
 #navIcon, .navLink {
@@ -123,6 +129,7 @@ input {
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
+    background-position: center;
     overflow-x: hidden;
 }
 
@@ -211,6 +218,10 @@ input {
 
 .green-text {
     color: #8cff2f;
+}
+
+.dark-green-text {
+    color: #6abf25;
 }
 
 .red-text {
@@ -366,6 +377,16 @@ hr {
     border-top: 1px solid white;
 }
 
+/* MISSIONS PAGE */
+#missions-html {
+    background-image: url("../images/mars.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow-x: hidden;
+}
+
 .task-div-complete {
     display: inline-block;
     position: relative;
@@ -419,51 +440,42 @@ hr {
 }
 
 /*PRACTICE PAGE*/
+#practice-html {
+    background-image: url("../images/volcano.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow-x: hidden;
+}
+
 #weeklySnapshot {
-    font-family: 'Bellota', cursive;
     font-size: 1.5rem;
-    color: rgb(235, 235, 235);
+    color: rgb(0, 0, 0);
     max-width: 1000px;
-    margin: auto;
-    counter-reset: item; /*set counter because flex does not work with list-style*/
+    margin: 0 auto;
+    background-color: rgba(144, 218, 218, 0.796);
 }
 
-#weeklySnapshot em {
-    color: rgb(42, 152, 255);
-    font-family: 'Recursive', sans-serif;
-}
-
-#weeklySnapshot strong {
-    color: rgb(71, 208, 105);
+.blue-box {
+    margin: 0 auto;
+    background-color: rgba(144, 218, 218, 0.796);
+    color: rgb(0, 0, 0);
+    font-size: 1.5rem;
+    padding: 4px 5px;
 }
 
 #weeklySnapshot h1 {
     font-family: 'Belgrano', serif;
     font-size: 3rem;
-    color: #ffb03a;
+    color: #ff3a5e;
     margin-bottom: 1.5rem;
-    margin-top: 5rem;
-    text-align: center;
-    text-shadow: 2px 2px 10px rgb(130, 0, 0);
+    text-shadow: 1px 1px 3px rgb(0, 0, 0);
 }
 
-#weeklySnapshot li {
-    margin-left: 2rem;
-    display: flex;
+#weeklySnapshot ol li::marker {
+    font-weight: bold;
 }
-
-#weeklySnapshot ol > li::before {
-    counter-increment: item;
-    content: counter(item) ".";
-    margin-right: 2rem;
-}
-
-#weeklySnapshot ul > li::before {
-    content: "-";
-    margin-right: 2rem;
-    margin-left: 3rem;
-}
-
 
 .topShadow {
     box-shadow: inset 0px 25px 19px -18px #000000;
@@ -658,18 +670,12 @@ hr {
 
 /* REPORTS */
 #reports-guest-html {
-    margin:0;
-    padding:0;
-    width: 100%;
-    overflow-x: hidden;
-}
-
-#reports-guest-body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
     background-image: url("../images/scene.jpg");
     background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow-x: hidden;
 }
 
 #pikachuMusic {
@@ -718,7 +724,7 @@ hr {
     padding: 0.1rem 0.8rem;
     position: fixed;
     z-index: 9999;
-    background-color: rgba(84, 84, 84, 0.5);
+    background-color: rgba(255, 255, 255, 0.85);
     cursor: move;
 }
 
@@ -732,7 +738,7 @@ hr {
     width: 100%;
 	line-height: 50px;
 	background-color: #ffde2467;
-	color: rgb(255, 184, 32);
+	color: rgb(0, 0, 0);
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
@@ -823,4 +829,18 @@ hr {
     border: 1px dashed rgb(255, 255, 0);
     padding: 0px 25px 0px 25px;
     margin-top: 25px;
+}
+
+/* LEADERBOARD PAGE */
+#leaderboard-html {
+    background-image: url("../images/buildings.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow-x: hidden;
+}
+
+#leaderboard-table {
+    background-color: rgba(201, 201, 201, 0.666);
 }

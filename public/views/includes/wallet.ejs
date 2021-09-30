@@ -1,8 +1,8 @@
-<div class="wallet-div bellota grey-text inline draggable pb-3">
+<div class="wallet-div bellota black-text inline draggable pb-3">
   <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
   <span class="pink-text"><strong><%= points %></strong></span> points<br>
-  <span class="yellow-text"><%= lessonCount %></span>/<span class="orange-text"><%= paidLessons %></span> lessons<br>
-  <p class="text-center green-text mt-1" onclick="lockScreen()" id="lockScreenText">Screen unlocked</p>
+  <strong class="dark-orange-text"><%= lessonCount %></strong> / <strong class="orange-text"><%= paidLessons %></strong> lessons<br>
+  <p class="text-center dark-green-text mt-1" onclick="lockScreen()" id="lockScreenText"><strong>Screen unlocked</strong></p>
 </div>
 <script>
   // make game playable

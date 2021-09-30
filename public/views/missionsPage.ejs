@@ -1,11 +1,67 @@
-<%- include('includes/headerLoggedIn') %>
+<!doctype html>
+<html lang="en" id="missions-html">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Handlee&family=Rye&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <!-- bootstrap5-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <title>Hanford Lam | Piano Teacher</title>
+    <!-- CURSOR -->
+    <style>HTML,BODY{cursor: url("../../images/cursor.cur"), auto;}</style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7KLNXVSDD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S7KLNXVSDD');
+    </script>
+  </head>
+  <body class="container-fluid background-transparent">
+    <!-- NAVBAR -->
+    <nav id="myNav" class="rounded recursive row align-items-center text-center py-2 w-auto">
+      <div class="col-lg-5">
+        <a id="navIcon" class="my-2 d-block" href='/'>Hanford Lam | Piano Teacher</a>
+      </div>
+      <div class="col-lg-7">
+        <a id="practiceTab" href="/practice" class="mx-4 my-2 d-inline-block navLink">PRACTICE</a>
+        <a id="missionsTab" href="/missions" class="mx-4 my-2 d-inline-block navLink">MISSIONS</a>
+        <a id="leaderboardTab" href="/leaderboard" class="mx-4 my-2 d-inline-block navLink">LEADERBOARD</a>
+        <form id="logoutButton" class="mx-4 my-2 d-inline-block" action="/logout" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit" class="btn btn-sm btn-secondary">LOG OUT</button>
+        </form>        
+      </div>
+    </nav>
+    
+
+      <!-- DYNAMIC NAVBAR AND TITLE -->
+      <script>
+        let currentPath = window.location.pathname
+        if (currentPath == '/practice') {
+          document.getElementById("practiceTab").classList.add("orange-text")
+          document.title = "Portal - Hanford Lam"
+        } else if (currentPath == '/missions') {
+          document.getElementById("missionsTab").classList.add("orange-text")
+          document.title = "Portal - Hanford Lam"
+        } else if (currentPath == '/leaderboard') {
+          document.getElementById("leaderboardTab").classList.add("orange-text")
+          document.title = "Portal - Hanford Lam"
+        }
+      </script>
+      <div id="container" class="container">
 <!-- FONT AWESOME BOUNCING ARROW-->
 <script src="https://kit.fontawesome.com/25ae9b8317.js" crossorigin="anonymous"></script>
 <!-- PS2P font -->
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-<!--Flowers FOR Spring-->
-<%- include('includes/falling') %>
 
 <!-- ERRORS -->
 <% adErrors.forEach(function(message) { %>
@@ -23,19 +79,19 @@
 </div>
 <!-- Guess the Tempo -->
 <% if (BPMStatus == 'success') { %>
-  <div id="bpm-success" class="aboveFalling green-text text-center mb-4 mt-2 pt-4">
+  <div id="bpm-success" class="aboveFalling green-text text-center mb-4 mt-4 pt-4">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
     <p>Spot on, <%= randomBPM %>! Your sense of timing is amazing.</p>
     <p>The Piano Wizard has put some points in your wallet.</p>
   </div>
 <% } else if (BPMStatus == 'notQuite') { %>
-  <div id="bpm-almost" class="aboveFalling pink-text text-center mb-4 mt-2 pt-4">
+  <div id="bpm-almost" class="aboveFalling pink-text text-center mb-4 mt-4 pt-4">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
     <p>Not quite! The tempo is <%= randomBPM %> beats per minute.<br>
     The Piano Wizard has put some points in your wallet.</p>
   </div>
 <% } else { %>
-  <form action="/guessBPM" method="POST" class="aboveFalling form-inline text-center mb-3 mt-3 justify-content-center">
+  <form action="/guessBPM" method="POST" class="aboveFalling form-inline text-center mb-4 mt-4 justify-content-center">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
     <div class="form-group ml-4">
       <input type="range" min="20" max="200" step="10" name="bpmGuess" id="bpmGuess" class="input-lg mx-sm-3" oninput="num.value = this.value">
@@ -43,9 +99,9 @@
       <small id="passwordHelpInline" class="text-muted">
         beats per minute
       </small>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit" class="btn btn-success ms-3">Guess</button>
     </div>
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-outline-success ml-3">Guess</button>
   </form>
 <% } %>
 <script>
@@ -171,7 +227,7 @@ if (missionStatuses.compete) { %>
 <!-- INTERESTING VIDEO -->
 <div id="interestingVideoContainer" class="aboveFalling">
   <% if(interestingVideoURL){ %>
-  <p class="text-center grey-text mb-5"><%= interestingVideoPrompt %></p>
+  <p class="blue-box text-center mb-5 rounded recursive"><%= interestingVideoPrompt %></p>
   <div class="responsive-container">
     <iframe style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
@@ -190,8 +246,8 @@ if (missionStatuses.compete) { %>
 <!-- READING PRACTICE -->
 <div id="readingPracticeContainer" class="aboveFalling">
   <% if(readingPracticePDFPath){ %>
-  <p class="text-center grey-text"><%= readingPracticePrompt %></p>
-  <p class="text-center grey-text mb-5">Here is the <a href="<%= readingPracticePDFPath %>" target="_blank">PDF</a> file.</p>
+  <p class="blue-box text-center rounded recursive"><%= readingPracticePrompt %></p>
+  <p class="blue-box text-center rounded recursive mb-5">Here is the <a href="<%= readingPracticePDFPath %>" target="_blank">PDF</a> file.</p>
   <iframe src="<%= readingPracticePDFPath %>" width="100%" height="1000px"></iframe>
   <% } %>
 </div>
