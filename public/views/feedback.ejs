@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" id="feedback-html">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Bootstrap CSS and Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Langar&family=Handlee&family=Rye&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>FEEDBACK TIME</title>
+  </head>
+  <body>
+    <div class="container-fluid background-transparent"> 
+    <div id="quizContainer70" class="">
+
+<p class="text-center grey-text my-5 p-3 rounded" style="background-color: black;">There are no right/wrong answers.<br>This helps me understand how you learn.</p>
+
+<form style="line-height: 2.5;" class="text-center mb-5 handlee" action="/sendFeedbackToHanford" method="POST">
+
+  <div class="quizQuestionContainer2 my-5" style="border-color: salmon;background-color: rgba(23, 23, 94, 0.871);"><p class="white-text my-5"><span style="font-size: 2.5rem;"><span class="green-text">Question 1: </span></span><br>How do you find Hanford's talking speed?<br>
+    <input style="line-height: 1;" class="mx-1" type="radio" name="feedback1" id="feedback1o1" value="talk too fast" required></input><label class="orange-text mx-2" for="feedback1o1">Hanford talks <strong>too quickly</strong> for me.</label><br>
+    <input style="line-height: 1;" class="mx-1" type="radio" name="feedback1" id="feedback1o2" value="talk good" required></input><label class="orange-text mx-2" for="feedback1o2">Hanford talks at a <strong>good speed</strong> for me.</label><br>
+    <input style="line-height: 1;" class="mx-1" type="radio" name="feedback1" id="feedback1o3" value="talk too slow" required></input><label class="orange-text mx-2" for="feedback1o3">Hanford talks <strong>too slowly</strong> for me.</label></p>
+  </div>
+
+  <div class="quizQuestionContainer2 my-5" style="border-color: salmon;background-color: rgba(23, 23, 94, 0.871);"><p class="white-text my-5"><span style="font-size: 2.5rem;"><span class="green-text">Question 2: </span></span><br>How do you find Hanford's repetition (repeating things)?<br>
+    <input style="line-height: 1;" class="mx-1" type="radio" name="feedback2" id="feedback2o1" value="repeat too much" required></input><label class="orange-text mx-2" for="feedback2o1">Hanford repeats himself <strong>too much</strong> for me.</label><br>
+    <input style="line-height: 1;" class="mx-1" type="radio" name="feedback2" id="feedback2o2" value="repeat good" required></input><label class="orange-text mx-2" for="feedback2o2">Hanford repeats himself a <strong>good amount</strong> for me.</label><br>
+    <input style="line-height: 1;" class="mx-1" type="radio" name="feedback2" id="feedback2o3" value="repeat too little" required></input><label class="orange-text mx-2" for="feedback2o3">Hanford repeats himself <strong>too little</strong> for me.</label></p>
+  </div>
+
+  <div class="quizQuestionContainer2 my-5" style="border-color: salmon;background-color: rgba(23, 23, 94, 0.871);"><p class="white-text my-5"><span style="font-size: 2.5rem;"><span class="green-text">Question 3: </span></span><br>How do you find the ideas you are being taught?<br>
+    <input style="line-height: 1;" class="mx-1" type="radio" name="feedback3" id="feedback3o1" value="idea too hard" required></input><label class="orange-text mx-2" for="feedback3o1">The ideas are <strong>too advanced</strong> for me and I <strong>struggle</strong> to understand them.</label><br>
+    <input style="line-height: 1;" class="mx-1" type="radio" name="feedback3" id="feedback3o2" value="idea good" required></input><label class="orange-text mx-2" for="feedback3o2">The ideas are at a <strong>good level</strong> for me and I <strong>comfortably</strong> understand them.</label><br>
+    <input style="line-height: 1;" class="mx-1" type="radio" name="feedback3" id="feedback3o3" value="idea too simple" required></input><label class="orange-text mx-2" for="feedback3o3">The ideas are <strong>too simple</strong> for me and it is <strong>boring</strong>.</label></p>
+  </div>
+
+  <div class="quizQuestionContainer text-center my-5" style="border-color: purple;background-color: rgba(23, 23, 94, 0.871);">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input class="mx-3 my-3 text-center" type="text" name="Student" placeholder="Student name" style="background-color: rgba(0, 0, 0, 0.6);" required></input>
+    <input class="mx-3 my-3" type="submit"></input>
+  </div>
+</form>
+
+</div><!-- close out MAIN div -->
+</div> <!-- close out page container div -->
+<!-- jQuery and Bootstrap Bundle (includes Popper) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script>$(function () {$('[data-toggle="tooltip"]').tooltip()})</script>
+<script src="../../main-bundled.js"></script>
+</body>
+</html>

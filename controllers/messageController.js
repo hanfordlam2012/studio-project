@@ -23,7 +23,15 @@ exports.sendEmail = async function(req, res) {
 
 exports.sendQuizToHanford = function(req, res) {
     Message.sendQuizToHanford(req.body).then((response) => {
-        res.send("Thank you very much! Your responses have been sent to Hanford.")
+        res.send("Thank you very much! Your responses have been sent to Hanford. You can close this page now!")
+    }).catch((err) => {
+        res.send(err)
+    })
+}
+
+exports.sendFeedbackToHanford = function(req, res) {
+    Message.sendFeedbackToHanford(req.body).then(() => {
+        res.send("Thank you very much! Your feedback has been sent to Hanford. You can close this page now!")
     }).catch((err) => {
         res.send(err)
     })
@@ -31,7 +39,7 @@ exports.sendQuizToHanford = function(req, res) {
 
 exports.sendMelodyToHanford = function(req, res) {
     Message.sendMelodyToHanford(req.body).then((response) => {
-        res.send("Thank you very much! Your responses have been sent to Hanford.")
+        res.send("Thank you very much! Your responses have been sent to Hanford. You can close this page now!")
     }).catch((err) => {
         res.send(err)
     })

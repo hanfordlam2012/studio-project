@@ -855,3 +855,14 @@ hr {
     background-position: center;
     overflow-x: hidden;
 }
+
+/* FEEDBACK PAGE */
+#feedback-html {
+    background-image: url("../images/moon.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow-x: hidden;
+    font-size: 1.5rem;
+}

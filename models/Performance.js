@@ -19,7 +19,7 @@ Performance.addPerformanceComment = function(performanceId, studentName, comment
     newComment.push(studentName, comment)
     performance.comments.push(newComment)
     await performancesCollection.updateOne({"_id": ObjectID(performanceId)}, { $set: {"comments": performance.comments} })
-   resolve()
+    resolve()
   })
 }
 

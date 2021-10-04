@@ -48,6 +48,45 @@ Message.sendEmail = function (data) {
     })
 }
 
+Message.sendFeedbackToHanford = function(data) {
+    return new Promise(async(resolve, reject) => {
+        try {
+            let response1 = data.feedback1
+            let response2 = data.feedback2
+            let response3 = data.feedback3
+            let student = data.Student
+            let output = `
+            student: ${student}
+            feedback1: ${response1}
+            feedback2: ${response2}
+            feedback3: ${response3}
+            `
+            // create reusable transporter object using the default SMTP transport
+            let transporter = nodemailer.createTransport({
+                host: "sg1-ts3.a2hosting.com",
+                port: 465,
+                secure: true, // true for 465, false for other ports
+                auth: {
+                user: process.env.A2EMAIL,
+                pass: process.env.A2EMAILPASSWORD,
+                },
+            });
+
+            // send mail with defined transport object
+            await transporter.sendMail({
+                from: process.env.A2EMAIL, // sender address
+                to: process.env.EMAIL, // list of receivers
+                subject: `Feedback submitted by ${student}`, // Subject line
+                html: output, // html body
+            });
+            resolve()
+        } catch (e) {
+            console.log(e)
+            reject("Oh no, your feedback could not be sent. Please let Hanford know!")
+        }
+    })
+}
+
 Message.sendQuizToHanford = function(data) {
     return new Promise(async(resolve, reject) => {
         try {

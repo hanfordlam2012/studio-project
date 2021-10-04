@@ -10,8 +10,7 @@ exports.showShowcasePage = function(req, res) {
 }
 
 exports.addPerformanceComment = function(req, res) {
-  console.log(req.body)
   Performance.addPerformanceComment(req.body.performanceId, req.body.studentName, req.body.comment).then(() => {
-    res.redirect('/showcase')
+    res.send("success")
   })
 }
