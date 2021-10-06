@@ -1,5 +1,6 @@
 const missionsCollection = require('../db').db('studio-project').collection('missions')
 const usersCollection = require('../db').db('studio-project').collection('users')
+const weeksCollection = require('../db').db('studio-project').collection('weeks')
 const ObjectID = require('mongodb').ObjectID
 const Message = require('./Message')
 
@@ -12,8 +13,8 @@ let Mission = function(data) {
 giveEveryoneASomething = async function() {
     //let d = new Date()
     //d.setHours(d.getHours() + 11)
-    await usersCollection.updateMany(
-      {"admin": false},
+    await weeksCollection.deleteMany(
+      {"": ""},
       { $set:
          {
             studentBio: "",
@@ -21,6 +22,10 @@ giveEveryoneASomething = async function() {
          }
       }
    )
+}
+
+deleteThese = async function() {
+    await weeksCollection.deleteMany({"": ObjectID('')})
 }
 
 // For timezones
