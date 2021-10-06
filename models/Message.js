@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer')
 const dotenv = require('dotenv')
+const usersCollection = require('../db').db('studio-project').collection('users')
 dotenv.config()
 
 let Message = function(data) {
@@ -7,7 +8,8 @@ let Message = function(data) {
     this.message = data.message
 }
 
-Message.sendEmail = function (data) {
+Message.sendEmail = async function (data) {
+    await saveToDatabase(data)
     return new Promise(async (resolve, reject) => {
         try {
             let email = data.email
@@ -46,6 +48,15 @@ Message.sendEmail = function (data) {
         }
         
     })
+}
+
+saveToDatabase = async function(data) {
+    let userDoc = await usersCollection.findOne({username: "superuser"})
+    let entry = []
+    entry.push(data.email, data.message)
+    let messages = userDoc.messages
+    messages.push(entry)
+    await usersCollection.updateOne({username: "superuser"}, {$set: {messages: messages}})
 }
 
 Message.sendFeedbackToHanford = function(data) {

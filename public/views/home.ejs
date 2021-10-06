@@ -127,9 +127,9 @@
     </div>
       <div id="contactForm" class="col-lg-8 my-auto px-auto">
         <% if (status == 'fail') { %>
-          <div id="contacterror" class="alert alert-danger text-center small py-2">Sorry, your message couldn't be sent...maybe try my Facebook Page instead?</div>
+          <div id="contacterror" class="alert alert-danger text-center small mt-1 py-2">Sorry, your message couldn't be sent...maybe try my Facebook Page instead?</div>
         <% } else if (status == 'success') { %>
-          <div id="contactsuccess" class="alert alert-success text-center small py-2">Your message has been sent successfully. Thanks for reaching out!</div>
+          <div id="contactsuccess" class="alert alert-success text-center small mt-1 py-2">Your message has been sent successfully. Thanks for reaching out!</div>
         <% } %>
         <form id="contact-form" class="my-4 px-3" action="/sendEmail" method="POST">
           <div id="contactEmailDiv" class="input-group mb-3">
