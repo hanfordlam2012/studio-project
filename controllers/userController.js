@@ -172,6 +172,12 @@ exports.editWeek = function (req, res) {
     })
 }
 
+exports.showFeedbackPage = function(req, res) {
+    res.render('feedback', {
+        fName: req.session.user.fName
+    })
+}
+
 // STUDENT NAVIGATION FUNCTIONS
 exports.showPracticePage = function(req, res) {
     getThesePropertyValuesForUser([

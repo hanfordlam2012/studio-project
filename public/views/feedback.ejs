@@ -16,7 +16,7 @@
     <div class="container-fluid background-transparent"> 
     <div id="quizContainer70" class="">
 
-<p class="text-center grey-text my-5 p-3 rounded" style="background-color: black;">There are no right/wrong answers.<br>This helps me understand how you learn.</p>
+<p class="text-center grey-text my-5 p-3 rounded" style="background-color: black;">This helps me understand how you learn 😊<br>You can also tell me more using the conversation box!</p>
 
 <form style="line-height: 2.5;" class="text-center mb-5 handlee" action="/sendFeedbackToHanford" method="POST">
 
@@ -40,8 +40,8 @@
 
   <div class="quizQuestionContainer text-center my-5" style="border-color: purple;background-color: rgba(23, 23, 94, 0.871);">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <input class="mx-3 my-3 text-center" type="text" name="Student" placeholder="Student name" style="background-color: rgba(0, 0, 0, 0.6);" required></input>
-    <input class="mx-3 my-3" type="submit"></input>
+    <input type="hidden" name="Student" value="<%= fName %>">
+    <input class="mx-3 my-3 btn" type="submit"></input>
   </div>
 </form>
 

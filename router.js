@@ -19,9 +19,9 @@ router.get('/quiz', function(req, res) {res.render('quiz')})
 router.post('/sendQuizToHanford', messageController.sendQuizToHanford)
 router.get('/melody', function(req, res) {res.render('melody')})
 router.post('/sendMelodyToHanford', messageController.sendMelodyToHanford)
-router.get('/showcase', userController.mustBeLoggedIn, performanceController.showShowcasePage)
-router.post('/addPerformanceComment', userController.mustBeLoggedIn, performanceController.addPerformanceComment)
-router.get('/feedback', function(req, res) {res.render('feedback')})
+//router.get('/showcase', userController.mustBeLoggedIn, performanceController.showShowcasePage)
+//router.post('/addPerformanceComment', userController.mustBeLoggedIn, performanceController.addPerformanceComment)
+router.get('/feedback', userController.mustBeLoggedIn, userController.showFeedbackPage)
 router.post('/sendFeedbackToHanford', messageController.sendFeedbackToHanford)
 
 // user routes
