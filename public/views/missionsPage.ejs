@@ -80,14 +80,14 @@
 <!-- Guess the Tempo -->
 <% if (BPMStatus == 'success') { %>
   <div id="bpm-success" class="aboveFalling green-text text-center mb-4 mt-4 pt-4">
-    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
-    <p>Spot on, <%= randomBPM %>! Your sense of timing is amazing.</p>
-    <p>The Piano Wizard has put some points in your wallet.</p>
+    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
+    <p class="black-bg d-inline-block px-2">Spot on, <%= randomBPM %>! Your sense of timing is amazing.
+    <br>The Piano Wizard has put some points in your wallet.</p>
   </div>
 <% } else if (BPMStatus == 'notQuite') { %>
   <div id="bpm-almost" class="aboveFalling pink-text text-center mb-4 mt-4 pt-4">
-    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4"/>
-    <p>Not quite! The tempo is <%= randomBPM %> beats per minute.<br>
+    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
+    <p class="black-bg d-inline-block px-2">Not quite! The tempo is <%= randomBPM %> beats per minute.<br>
     The Piano Wizard has put some points in your wallet.</p>
   </div>
 <% } else { %>
@@ -229,7 +229,7 @@ if (missionStatuses.compete) { %>
   <% if(interestingVideoURL){ %>
   <p class="blue-box text-center mb-5 rounded recursive"><%= interestingVideoPrompt %></p>
   <div class="responsive-container">
-    <iframe style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe loading="lazy" style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
   <% } %>
 </div>
@@ -248,7 +248,7 @@ if (missionStatuses.compete) { %>
   <% if(readingPracticePDFPath){ %>
   <p class="blue-box text-center rounded recursive"><%= readingPracticePrompt %></p>
   <p class="blue-box text-center rounded recursive mb-5">Here is the <a href="<%= readingPracticePDFPath %>" target="_blank">PDF</a> file.</p>
-  <iframe src="<%= readingPracticePDFPath %>" width="100%" height="1000px"></iframe>
+  <iframe loading="lazy" src="<%= readingPracticePDFPath %>" width="100%" height="1000px"></iframe>
   <% } %>
 </div>
 
@@ -261,26 +261,43 @@ if (missionStatuses.compete) { %>
   </div>
 </div>
 
-<!--2048-->
-<div style="margin: 0 auto; max-width:800px;"><iframe class="aboveFalling rounded mt-5" id="game2048" src="..//files//2048//index.html" frameborder="0"></iframe></div>
+<!-- CLUMSY BIRD -->
+<div class="responsive-container-3-2">
+  <iframe loading="lazy" class="aboveFalling rounded responsive-iframe" src="..//files//ClumsyBird//clumsy-bird//index.html" frameborder="0"></iframe>
+</div>
 
-<!--BOUNCING ARROW-->
+<!--2048
+<div style="margin: 0 auto; max-width:800px;"><iframe loading="lazy" class="aboveFalling rounded mt-5" id="game2048" src="..//files//2048//index.html" frameborder="0"></iframe></div>-->
+
+<!--BOUNCING ARROW
 <div class="aboveFalling arrowcontainer">
   <div class="arrow-holder">
     <div id="arrow" class="circle bounce">
         <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
     </div>
   </div>
-</div>
+</div>-->
 
-<!--pacman-->
+<!--pacman
 <div class="aboveFalling white-text text-center mt-5 mb-0 pt-4 pb-0 ps2p" style="background-color:#000; max-width: 800px; margin: 0 auto;">
   <p class="my-3 purple-text">GLOBAL HIGHSCORES</p>
   <p>Pac-man: <span class="orange-text"><%= pacmanHighscores[0][0]%></span> <span class="green-text"><%= pacmanHighscores[0][1]%></span><br>Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[1][0]%></span> <span class="green-text"><%= pacmanHighscores[1][1]%></span></p>
   <p>Ms Pac-man <span class="orange-text"><%= pacmanHighscores[2][0]%></span> <span class="green-text"><%= pacmanHighscores[2][1]%></span><br>Ms Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[3][0]%></span> <span class="green-text"><%= pacmanHighscores[3][1]%></span></p>
   <p class="mb-0 pb-0">Cookie-man <span class="orange-text"><%= pacmanHighscores[4][0]%></span> <span class="green-text"><%= pacmanHighscores[4][1]%></span><br>Cookie-man Turbo <span class="orange-text"><%= pacmanHighscores[5][0]%></span> <span class="green-text"><%= pacmanHighscores[5][1]%></span></p>
-  <iframe class="mt-0 pt-0" id="gamepacman" src="..//files//pacman//index.htm" style="border: 0;display:block;"></iframe>
-</div>
+  <iframe loading="lazy" class="mt-0 pt-0" id="gamepacman" src="..//files//pacman//index.htm" style="border: 0;display:block;"></iframe>
+</div>-->
+
+<!--BOUNCING ARROW
+<div class="aboveFalling arrowcontainer">
+  <div class="arrow-holder">
+    <div id="arrow" class="circle bounce">
+        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+    </div>
+  </div>
+</div>-->
+
+<!--QUAVER ATTACK
+<iframe loading="lazy" class="aboveFalling mt-5 mx-auto" height="800" width="450" id="gamequaverattack" src="..//files//QuaverAttack//index.html" style="border: 0;display:block;"></iframe>-->
 
 <!--BOUNCING ARROW-->
 <div class="aboveFalling arrowcontainer">
@@ -291,8 +308,14 @@ if (missionStatuses.compete) { %>
   </div>
 </div>
 
-<!--QUAVER ATTACK-->
-<iframe class="aboveFalling mt-5 mx-auto" height="800" width="450" id="gamequaverattack" src="..//files//QuaverAttack//index.html" style="border: 0;display:block;"></iframe>
+<!-- HEXTRIS -->
+<div style="max-width: 801px; margin:0 auto;">
+  <div class="responsive-container-1-1">
+    <iframe loading="lazy" class="aboveFalling responsive-iframe" src="https://hextris.io/"></iframe>
+  </div>
+</div>
+
+
 
 <script>
 // ADD CSRF TOKEN TO MISSION SUBMITS
@@ -303,4 +326,109 @@ if (missionStatuses.compete) { %>
   }
 </script>
 
-<%- include('includes/footer') %>
+<script>
+  // DRAGGABLE WALLET
+  var dragItem = document.querySelector(".draggable");
+  var container = document.querySelector("#container");
+
+  var active = false;
+  var currentX;
+  var currentY;
+  var initialX;
+  var initialY;
+  var xOffset = 0;
+  var yOffset = 0;
+
+  container.addEventListener("touchstart", dragStart, false);
+  container.addEventListener("touchend", dragEnd, false);
+  container.addEventListener("touchmove", drag, false);
+
+  container.addEventListener("mousedown", dragStart, false);
+  container.addEventListener("mouseup", dragEnd, false);
+  container.addEventListener("mousemove", drag, false);
+
+  function dragStart(e) {
+    if (e.type === "touchstart") {
+      initialX = e.touches[0].clientX - xOffset;
+      initialY = e.touches[0].clientY - yOffset;
+    } else {
+      initialX = e.clientX - xOffset;
+      initialY = e.clientY - yOffset;
+    }
+
+    if (e.target === dragItem) {
+      active = true;
+    }
+  }
+
+  function dragEnd(e) {
+    initialX = currentX;
+    initialY = currentY;
+
+    active = false;
+  }
+
+  function drag(e) {
+    if (active) {
+    
+      e.preventDefault();
+    
+      if (e.type === "touchmove") {
+        currentX = e.touches[0].clientX - initialX;
+        currentY = e.touches[0].clientY - initialY;
+      } else {
+        currentX = e.clientX - initialX;
+        currentY = e.clientY - initialY;
+      }
+
+      xOffset = currentX;
+      yOffset = currentY;
+
+      setTranslate(currentX, currentY, dragItem);
+    }
+  }
+
+  function setTranslate(xPos, yPos, el) {
+    el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+  }
+
+  // rainbow headings
+    window.addEventListener("load", function() {
+    let elements = document.getElementsByClassName("rainbowText");
+    for (let i = 0; i < elements.length; i++) {
+      generateRainbowText(elements[i]);
+    }
+  })
+  
+  function generateRainbowText(element) {
+    let text = element.innerText;
+    element.innerHTML = "";
+    for (let i = 0; i < text.length; i++) {
+      let charElem = document.createElement("span");
+      charElem.style.color = "hsl(" + (360 * i / text.length) + ",100%,50%)";
+      charElem.style.fontWeight = "bold";
+      charElem.style.textShadow = "0px 4px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), -4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 0px -4px 5px hsl(" + (360 * i / text.length) + ",80%,20%)";
+      charElem.innerHTML = text[i];
+      element.appendChild(charElem);
+    }
+  }
+  </script>
+</div>
+    <!-- Footer -->
+    <footer class="footer text-center small white-text py-3">
+        <p class="m-0 raleway">Copyright &copy; <script>document.write(new Date().getFullYear());</script> <a href='/' class="white-text raleway">hanfordlam.com</a>. All rights reserved.</p>
+        <p class="m-0">Background drawn by sweetcutiepie</p>
+    </footer>
+  </div> <!-- close out page container div -->
+  <!-- BOOTSTRAP 5 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <!-- TOOLTIPS -->
+  <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    </script>
+    <script src="../../main-bundled.js"></script>
+  </body>
+</html>

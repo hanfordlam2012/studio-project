@@ -125,7 +125,7 @@ input {
 
 /* HOME */
 #home-html {
-    background-image: url("../images/piano-background.jpg");
+    background-image: url("../images/buildings.jpg");
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -134,7 +134,7 @@ input {
 }
 
 .home-display {
-    background-color: rgba(18, 46, 68, 0.713);
+    background-color: rgba(255, 255, 255, 0.939);
     padding: 5px 10px;
     border-radius: 15px;
 }
@@ -150,7 +150,7 @@ input {
 }
 
 .bioTitle {
-    border-bottom: solid 2px white;
+    border-bottom: solid 2px rgb(55, 55, 55);
     display: table;
     margin-top: 30px;
     margin: auto;
@@ -221,7 +221,7 @@ input {
 }
 
 .dark-green-text {
-    color: #6abf25;
+    color: #64ac29;
 }
 
 .red-text {
@@ -241,7 +241,7 @@ input {
 }
 
 .dark-orange-text {
-    color: #bd5b00;
+    color: #dc6a00;
 }
 
 .blue-text {
@@ -379,7 +379,7 @@ hr {
 
 /* MISSIONS PAGE */
 #missions-html {
-    background-image: url("../images/mars.jpg");
+    background-image: url("../images/sunset-bird.jpeg");
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -441,12 +441,16 @@ hr {
 
 /*PRACTICE PAGE*/
 #practice-html {
-    background-image: url("../images/volcano.jpg");
+    background-image: url("../images/hamsters.jpeg");
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: center;
     overflow-x: hidden;
+}
+
+#PracticeConvo ::placeholder {
+    color:rgb(206, 255, 72);
 }
 
 #weeklySnapshot {
@@ -737,7 +741,7 @@ hr {
 .marquee {
     width: 100%;
 	line-height: 50px;
-	background-color: #ffde2467;
+	background-color: #ffde24a4;
 	color: rgb(0, 0, 0);
     font-weight: bold;
     white-space: nowrap;
@@ -758,11 +762,34 @@ hr {
 }
 
 /*QUIZ*/
+.responsive-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .responsive-container {
+    width: 100%;
 	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 0px;
-	height: 0;
+	padding-top: 56.25%; /* 16:9 */
+	overflow: hidden;
+}
+
+.responsive-container-1-1 {
+    width: 100%;
+	position: relative;
+	padding-top: 100%; /* 1:1 Aspect Ratio */
+	overflow: hidden;
+
+}
+.responsive-container-3-2 {
+    width: 100%;
+	position: relative;
+	padding-top: 66.66%; /* 3:2 Aspect Ratio */
 	overflow: hidden;
 }
 
@@ -834,7 +861,7 @@ hr {
 
 /* LEADERBOARD PAGE */
 #leaderboard-html {
-    background-image: url("../images/buildings.jpg");
+    background-image: url("../images/road.jpeg");
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -865,4 +892,8 @@ hr {
     background-position: center;
     overflow-x: hidden;
     font-size: 1.5rem;
+}
+
+.black-bg {
+    background-color: black;
 }
