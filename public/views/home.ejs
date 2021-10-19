@@ -60,8 +60,16 @@
   
   <div class="w-100 text-center"><button data-lang="en" id="languageToggleButton" onclick="languageToggle()" class="btn btn-lg btn-warning text-center mt-3">EN/<span class='zcool' style="font-size: 1.2rem;">中文</span></button>  </div>
   <div class="text-center">
-    <h1 id="hello" class="p-5 d-inline-block mx-auto display-2 bellota black-bg my-5">Hello, I'm Hanford!</h1>
+    <h1 id="hello" class="p-5 d-inline-block mx-auto display-2 bellota rainbowText black-bg my-5">Hello, I'm Hanford!</h1>
   </div>
+  <script>
+    // rainbow headings even with lazy loading
+    let elements = document.getElementsByClassName("rainbowText");
+    for (let i = 0; i < elements.length; i++) {
+      generateRainbowText(elements[i]);
+    }
+  </script>
+  
   <!--BIO-->
   <div class="row gy-3" id="bioRow">
     <div class="col-xl-8 px-5 my-auto">
@@ -119,7 +127,7 @@
           <li id="ratesli9" class="bellota black-text"><strong>Casual Piano Lessons</strong></li>
           <li id="ratesli10" class="dark-orange-text ">$150 / hour</li>
           <li id="ratesli1" class="bellota black-text"><strong>Piano Education Program</strong></li>
-          <li id="ratesli2" class="dark-orange-text">Please enquire ~ Beginners welcome!</li>
+          <li id="ratesli2" class="dark-orange-text">$150 / week ~ Beginners welcome 😊</li>
           <li id="ratesli3" class="bellota black-text"><strong>Piano Accompaniment</strong></li>
           <li id="ratesli4" class="dark-orange-text">Please enquire</li>
           <li id="ratesli5" class="bellota black-text"><strong>VCE Workshops</strong></li>
@@ -196,7 +204,7 @@
       //ratesli1
       document.getElementById('ratesli1').innerHTML = "<span class='zcool'>钢琴教育项目</span>"
       //ratesli2
-      document.getElementById('ratesli2').innerHTML = "<span class='zcool'>请咨询  ~  欢迎初学者！</span>"
+      document.getElementById('ratesli2').innerHTML = "<span class='zcool'>每周 $150  ~  欢迎初学者 😊</span>"
       //ratesli3
       document.getElementById('ratesli3').innerHTML = "<span class='zcool'>钢琴伴奏</span>"
       //ratesli4
@@ -235,7 +243,7 @@
       //ratesli1
       document.getElementById('ratesli1').innerHTML = "<strong>Piano Education Program</strong>"
       //ratesli2
-      document.getElementById('ratesli2').innerHTML = "Please Enquire ~ Beginners welcome!"
+      document.getElementById('ratesli2').innerHTML = "$150 / week ~ Beginners welcome 😊"
       //ratesli3
       document.getElementById('ratesli3').innerHTML = "<strong>Piano Accompaniment</strong>"
       //ratesli4
