@@ -124,15 +124,18 @@
           <h2 id="ratesh1" class="bioTitle dark-orange-text my-3">2022 Services</h2>
         </div>
         <ul class="list-unstyled">
-          <li id="ratesli9" class="bellota black-text"><strong>Casual Piano Lessons</strong></li>
-          <li id="ratesli10" class="dark-orange-text ">$150 / hour</li>
-          <li id="ratesli1" class="bellota black-text"><strong>Piano Education Program</strong></li>
-          <li id="ratesli2" class="dark-orange-text">$150 / week ~ Beginners welcome 😊</li>
-          <li id="ratesli3" class="bellota black-text"><strong>Piano Accompaniment</strong></li>
-          <li id="ratesli4" class="dark-orange-text">Please enquire</li>
-          <li id="ratesli5" class="bellota black-text"><strong>VCE Workshops</strong></li>
-          <li id="ratesli6" class="dark-orange-text">Please enquire</li>
-          <li id="ratesli7" class="small mt-5 mb-2"><mark class="px-4">Studio in Boronia, Melbourne</mark></li>
+          <li id="ratesli9" class="mt-3 bellota black-text"><strong>Casual Piano Lessons ($150 / hour)</strong></li>
+          <li id="ratesli10" class="dark-orange-text ">Flexible and on-demand coaching</li>
+          <li id="ratesli1" class="mt-3 bellota black-text"><strong>Piano Education Program ($150 / week)</strong></li>
+          <li id="ratesli2" class="dark-orange-text">Holistic learning 😊</li>
+          <li id="ratesli3" class="dark-orange-text">Ongoing support and mentorship</li>
+          <li id="ratesli4" class="dark-orange-text">Weekly piano and musicianship lessons</li>
+          <li id="ratesli5" class="dark-orange-text">Monthly performance workshops</li>
+          <li id="ratesli6" class="dark-orange-text">Annual student showcase</li>
+          <li id="ratesli11" class="dark-orange-text">Piano points rewards program</li>
+          <li id="ratesli12" class="dark-orange-text">Musica Viva digital concerts</li>
+          <li id="ratesli13" class="dark-orange-text">Extra-curricular experiences</li>
+          <li id="ratesli7" class="small mt-3 mb-3"><mark class="px-4">Studio in Boronia, Melbourne</mark></li>
           <li id="ratesli8" class="grey-text bellota">Facebook page <a target="_blank" href="https://www.facebook.com/hanfordlampiano">here</a></li>
         </ul>
       </div>
@@ -156,7 +159,7 @@
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <input type="hidden" name="recaptchaTokenInput" id="recaptchaTokenInput" value="">
           <div class="d-grid gap-2">
-            <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-warning mt-3 g-recaptcha">Send</button>
+            <button type="submit" id="contactFormSubmit" value="submit" class="btn btn-primary mt-3 g-recaptcha">Send</button>
           </div>
           
         </form>
@@ -202,25 +205,31 @@
       //ratesh1
       document.getElementById('ratesh1').innerHTML = "<span class='zcool'>2022 服务</span>"
       //ratesli1
-      document.getElementById('ratesli1').innerHTML = "<span class='zcool'>钢琴教育项目</span>"
+      document.getElementById('ratesli1').innerHTML = "<span class='zcool'>钢琴教育项目 (每周 $150)</span>"
       //ratesli2
-      document.getElementById('ratesli2').innerHTML = "<span class='zcool'>每周 $150  ~  欢迎初学者 😊</span>"
+      document.getElementById('ratesli2').innerHTML = "<span class='zcool'>整体学习 😊</span>"
       //ratesli3
-      document.getElementById('ratesli3').innerHTML = "<span class='zcool'>钢琴伴奏</span>"
+      document.getElementById('ratesli3').innerHTML = "<span class='zcool'>持续的支持和指导</span>"
       //ratesli4
-      document.getElementById('ratesli4').innerHTML = "<span class='zcool'>请咨询</span>"
+      document.getElementById('ratesli4').innerHTML = "<span class='zcool'>每周钢琴和音乐课程</span>"
       //ratesli5
-      document.getElementById('ratesli5').innerHTML = "<span class='zcool'>VCE 工作坊</span>"
+      document.getElementById('ratesli5').innerHTML = "<span class='zcool'>每月表演工作坊</span>"
       //ratesli6
-      document.getElementById('ratesli6').innerHTML = "<span class='zcool'>请咨询</span>"
+      document.getElementById('ratesli6').innerHTML = "<span class='zcool'>年度学生展示</span>"
       //ratesli7
       document.getElementById('ratesli7').innerHTML = "<span class='zcool'><mark class='px-4'>墨尔本博罗尼亚(Boronia)的工作室</mark></span>"
       //ratesli8
       document.getElementById('ratesli8').innerHTML = "<span class='zcool'>Facebook页面在<a target='_blank' href='https://www.facebook.com/hanfordlampiano'>这里</a></span>"
       //ratesli9
-      document.getElementById('ratesli9').innerHTML = "<span class='zcool'>休闲钢琴课</span>"
+      document.getElementById('ratesli9').innerHTML = "<span class='zcool'>休闲钢琴课 ($150 / 小时)</span>"
       //ratesli10
-      document.getElementById('ratesli10').innerHTML = "<span class='zcool'>$150 / 小时</span>"
+      document.getElementById('ratesli10').innerHTML = "<span class='zcool'>灵活的按需辅导</span>"
+      //ratesli11
+      document.getElementById('ratesli11').innerHTML = "<span class='zcool'>钢琴积分奖励计划</span>"
+      //ratesli12
+      document.getElementById('ratesli12').innerHTML = "<span class='zcool'>Musica Viva 广播音乐会</span>"
+      //ratesli13
+      document.getElementById('ratesli13').innerHTML = "<span class='zcool'>课外经历</span>"
 
     } else {
       languageToggleButton.dataset.lang = 'en'
@@ -241,25 +250,31 @@
       //ratesh1
       document.getElementById('ratesh1').innerHTML = "2022 Services"
       //ratesli1
-      document.getElementById('ratesli1').innerHTML = "<strong>Piano Education Program</strong>"
+      document.getElementById('ratesli1').innerHTML = "<strong>Piano Education Program ($150 / week)</strong>"
       //ratesli2
-      document.getElementById('ratesli2').innerHTML = "$150 / week ~ Beginners welcome 😊"
+      document.getElementById('ratesli2').innerHTML = "Holistic learning 😊"
       //ratesli3
-      document.getElementById('ratesli3').innerHTML = "<strong>Piano Accompaniment</strong>"
+      document.getElementById('ratesli3').innerHTML = "Ongoing support and mentorship"
       //ratesli4
-      document.getElementById('ratesli4').innerHTML = "Please enquire"
+      document.getElementById('ratesli4').innerHTML = "Weekly piano and musicianship lessons"
       //ratesli5
-      document.getElementById('ratesli5').innerHTML = "<strong>VCE Workshops</strong>"
+      document.getElementById('ratesli5').innerHTML = "Monthly performance workshops"
       //ratesli6
-      document.getElementById('ratesli6').innerHTML = "Please enquire"
+      document.getElementById('ratesli6').innerHTML = "Annual student showcase"
       //ratesli7
       document.getElementById('ratesli7').innerHTML = "<mark class='px-4'>Studio in Boronia, Melbourne</mark>"
       //ratesli8
       document.getElementById('ratesli8').innerHTML = "Facebook page <a target=' blank' href='https://www.facebook.com/hanfordlampiano'>here</a>"
       //ratesli9
-      document.getElementById('ratesli9').innerHTML = "<strong>Casual Piano Lessons</strong>"
+      document.getElementById('ratesli9').innerHTML = "<strong>Casual Piano Lessons ($150 / hour)</strong>"
       //ratesli10
-      document.getElementById('ratesli10').innerHTML = "$150 / hour"
+      document.getElementById('ratesli10').innerHTML = "Flexible and on-demand coaching"
+      //ratesli11
+      document.getElementById('ratesli11').innerHTML = "Piano points rewards program"
+      //ratesli12
+      document.getElementById('ratesli12').innerHTML = "Musica Viva digital concerts"
+      //ratesli13
+      document.getElementById('ratesli13').innerHTML = "Extra-curricular experiences"
     }
   }
 </script>
