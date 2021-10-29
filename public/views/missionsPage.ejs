@@ -91,7 +91,8 @@
     The Piano Wizard has put some points in your wallet.</p>
   </div>
 <% } else { %>
-  <form action="/guessBPM" method="POST" class="aboveFalling form-inline text-center mb-4 mt-4 justify-content-center">
+  <div class="d-flex justify-content-center">
+    <form action="/guessBPM" method="POST" style="background-color: rgba(0, 0, 0, 0.775);" class="aboveFalling form-inline d-inline-block text-center rounded p-4 mb-4 mt-4 justify-content-center">
     <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
     <div class="form-group ml-4">
       <input type="range" min="20" max="200" step="10" name="bpmGuess" id="bpmGuess" class="input-lg mx-sm-3" oninput="num.value = this.value">
@@ -103,6 +104,8 @@
       <button type="submit" class="btn btn-success ms-3">Guess</button>
     </div>
   </form>
+  </div>
+  
 <% } %>
 <script>
   // Guess the tempo
