@@ -458,12 +458,12 @@ hr {
     color: rgb(0, 0, 0);
     max-width: 1000px;
     margin: 0 auto;
-    background-color: rgba(144, 218, 218, 0.796);
+    background-color: rgba(255, 255, 255, 0.94);
 }
 
 .blue-box {
     margin: 0 auto;
-    background-color: rgba(144, 218, 218, 0.796);
+    background-color: rgba(208, 255, 255, 0.953);
     color: rgb(0, 0, 0);
     font-size: 1.2rem;
     padding: 4px 5px;
@@ -472,7 +472,7 @@ hr {
 #weeklySnapshot h1 {
     font-family: 'Belgrano', serif;
     font-size: 2rem;
-    color: #ff3a5e;
+    color: #000000;
     margin-bottom: 1.5rem;
     text-shadow: 1px 1px 3px rgb(0, 0, 0);
 }
