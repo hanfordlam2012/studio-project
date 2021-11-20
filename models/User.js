@@ -70,14 +70,17 @@ User.prototype.cleanUp = function() {
           exam: false,
           compete: false
         },
-        leaderboardColor: '#000000',
+        leaderboardColor: '#ffff00',
         lastSubmittedDate: new Date(),
         savedGameScore: 0,
         BPMStatus: "",
         lastBPMGuess: new Date(),
         lessonCount: 0,
         paidLessons: 0,
-        practiceConversations: []
+        practiceConversations: [],
+        grade: "",
+        lessonVideoURL: "",
+        studentBio: ""
     }
 }
 
