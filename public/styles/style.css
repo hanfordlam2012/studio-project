@@ -897,3 +897,21 @@ hr {
 .black-bg {
     background-color: black;
 }
+
+/* SCHEDULE */
+.hover-past {
+    color: rgb(130, 130, 130);
+    text-decoration: line-through;
+}
+.hover-workshop {
+    color: rgb(255, 136, 72);
+}
+.hover-general {
+    color: rgb(0, 208, 255);
+}
+.hover-concert {
+    color: rgb(96, 192, 0);
+}
+.table-valign-middle {
+    vertical-align: middle;
+}

@@ -178,6 +178,12 @@ exports.showFeedbackPage = function(req, res) {
     })
 }
 
+exports.showSchedulePage = function(req, res) {
+    res.render('schedule', {
+        fName: req.session.user.fName
+    })
+}
+
 // STUDENT NAVIGATION FUNCTIONS
 exports.showPracticePage = function(req, res) {
     getThesePropertyValuesForUser([
