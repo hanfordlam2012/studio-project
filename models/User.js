@@ -62,14 +62,7 @@ User.prototype.cleanUp = function() {
         secret: this.data.secret,
         admin: false,
         leaderboardScore: 0,
-        MissionStatuses: {
-          technical: false,
-          reading: false,
-          literacy: false,
-          perform: false,
-          exam: false,
-          compete: false
-        },
+        missionsAccomplished: [],
         leaderboardColor: '#ffff00',
         lastSubmittedDate: new Date(),
         savedGameScore: 0,
@@ -346,10 +339,10 @@ User.getStudentWeeks = async function(userId) {
     }).catch(function(err) {reject(err)})
 }
 
-User.getMissionStatuses = async (userId) => {
+User.getMissionsAccomplished = async (userId) => {
     return new Promise (async(resolve, reject) => {
         let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
-        resolve(userDoc.MissionStatuses)
+        resolve(userDoc.missionsAccomplished)
     })
 }
 

@@ -72,7 +72,7 @@
         <!-- PRACTICE HUB -->
         <!-- linebreaks are rendered in textarea placeholder -->
         <div id="practice-guide" class="aboveFalling transparentBG mt-2 mb-4 section">
-          <div class="py-4 my-4 mb-2 mx-0"><h1 id="headingText" class="px-5 display-2 recursive rainbowText text-center">PRACTICE</h1>
+          <div class="py-4 my-4 mb-2 mx-0">
             <!--DISPLAY WEEKLY COMMENTS-->
             <% latestComments.forEach((comment) => { %>
               <div id="weeklySnapshot" class="mt-0 px-5 py-4 mt-4 rounded recursive"><%- filterUserHTML(comment.comments) %></div>  
@@ -88,6 +88,52 @@
               </div>
               <% } %>
             </div>
+            <!-- keep csrf token accessible, use lowercase for dataset entries! -->
+            <span id="csrf-landmark" data-value="<%= csrfToken %>" data-username="<%= username %>" data-studentid="<%= userId %>"></span>
+            <span id="guessTheTempo"></span>
+            <!-- Guess the Tempo -->
+            <% if (BPMStatus == 'success') { %>
+              <div id="bpm-success" class="aboveFalling green-text text-center mb-4 mt-4 pt-4">
+                <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
+                <p class="black-bg d-inline-block p-3 rounded">Spot on, <%= randomBPM %>! Your sense of timing is amazing.
+                <br>The Piano Wizard has put some points in your wallet.</p>
+              </div>
+            <% } else if (BPMStatus == 'notQuite') { %>
+              <div id="bpm-almost" class="aboveFalling pink-text text-center mb-4 mt-4 pt-4">
+                <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
+                <p class="black-bg d-inline-block p-3 rounded">Not quite! The tempo is <%= randomBPM %> beats per minute.<br>
+                The Piano Wizard has put some points in your wallet.</p>
+              </div>
+            <% } else { %>
+              <div class="d-flex justify-content-center">
+                <form action="/guessBPM" method="POST" style="background-color: rgba(0, 0, 0, 0.775);" class="aboveFalling form-inline d-inline-block text-center rounded p-4 mb-4 mt-4 justify-content-center">
+                  <p class="white-text caveat" style="font-size: 2em;">Guess the Tempo</p>
+                  <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
+                <div class="form-group ml-4 mt-3">
+                  <input type="range" min="20" max="200" step="10" name="bpmGuess" id="bpmGuess" class="input-lg mx-sm-3" oninput="num.value = this.value">
+                  <output style="width:3rem;" class="mr-0 pr-0 white-text" id="num">110</output>
+                  <small id="passwordHelpInline" class="text-muted">
+                    beats per minute
+                  </small>
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button type="submit" class="btn btn-success ms-3">Guess</button>
+                </div>
+              </form>
+              </div>
+              
+            <% } %>
+            <script>
+              // Guess the tempo
+              var img = document.getElementById('blinking_image');
+
+              var interval = window.setInterval(function(){
+                if (img.style.visibility == 'hidden') {
+                  img.style.visibility = 'visible';
+                } else{
+                  img.style.visibility = 'hidden';
+                }
+              }, 30000/<%- randomBPM %>);
+            </script>
             <!--DISPLAY CONVERSATION-->
             <div id="practiceConversationContainer" class="w-100 d-flex topShadow rounded mb-5" style="z-index: -2;overflow-y: auto;height:300px;">
               <div id="practiceConversation" class="mx-auto pt-4 px-4" style="z-index: -1;">
@@ -116,7 +162,7 @@
               </form>
             <% } else { %>
               <div id="practice-success" class="recursive text-center mt-5 my-2">
-                <p class="black-bg d-inline-block px-3 p-2 rounded"><span class="green-text">Come back tomorrow for Hanford's reply!</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
+                <p class="black-bg d-inline-block p-3 rounded"><span class="green-text">Come back tomorrow for Hanford's reply!</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
               </div>
             <% } %>
           </div>

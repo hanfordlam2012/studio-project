@@ -391,43 +391,15 @@ hr {
     display: inline-block;
     position: relative;
     background-color: rgba(178, 255, 174, 0.9);
-    padding: 1.5rem;
-    min-height: 11rem;
-    min-width: 11rem;
+    padding: 1.5em;
     text-align: center;
     vertical-align: middle;
-    margin: 0.8rem 0.8rem;
+    margin: 0.8em 0.8em;
     color: rgb(17, 102, 0);
 }
 
 #missionsWrapper{
     text-align: center;
-}
-
-.missionContent {
-    margin: 0;
-    position: absolute;               /* 2 */
-    top: 50%;                         /* 3 */
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
-.missionContent h3 {
-    font-size: 1.2rem;
-}
-
-.task-div-incomplete {
-    display: inline-block;
-    position: relative;
-    background-color: rgba(255, 204, 204, 0.9);
-    padding: 1.5rem;
-    min-height: 11rem;
-    min-width: 11rem;
-    text-align: center;
-    vertical-align: middle;
-    margin: 0.8rem;
-    color: rgb(141, 0, 2);
 }
 
 .section::before {
@@ -741,7 +713,7 @@ hr {
 .marquee {
     width: 100%;
 	line-height: 50px;
-	background-color: #ffde24a4;
+	background-color: #ffde24d9;
 	color: rgb(0, 0, 0);
     font-weight: bold;
     white-space: nowrap;

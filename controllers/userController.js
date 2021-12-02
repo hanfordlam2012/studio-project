@@ -226,7 +226,7 @@ exports.showPracticePage = function(req, res) {
 }
 
 exports.showMissionsPage = function(req, res) {
-    User.getMissionStatuses(req.session.user.userId).then((missionStatuses) => {
+    User.getMissionsAccomplished(req.session.user.userId).then((missionsAccomplished) => {
         getThesePropertyValuesForUser([
             'leaderboardScore'
             ],req.session.user.userId).then((userProps) => {
@@ -246,7 +246,7 @@ exports.showMissionsPage = function(req, res) {
                             userId: req.session.user.userId,
                             parentName: req.session.user.parentName,
                             admin: req.session.user.admin,
-                            missionStatuses: missionStatuses,
+                            missionsAccomplished: missionsAccomplished,
                             points: userProps.leaderboardScore,
                             adErrors: req.flash('adErrors'),
                             randomBPM: randomBPM, // taken from admin acc

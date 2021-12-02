@@ -53,11 +53,11 @@ exports.checkBPM = async function(req, res) {
     if (adminDoc.randomBPM == req.body.bpmGuess) {
         let newScore = studentDoc.leaderboardScore + 15
         await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "success", "lastBPMGuess": todaysDate, "leaderboardScore": newScore} })
-        res.redirect('/missions')
+        res.redirect('/practice#guessTheTempo')
     } else {
         let newScore = studentDoc.leaderboardScore + getRndInt(1, 3)
         await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "notQuite", "lastBPMGuess": todaysDate, "leaderboardScore": newScore} })
-        res.redirect('/missions')
+        res.redirect('/practice#guessTheTempo')
     }
 }
 

@@ -74,348 +74,214 @@
 <!-- MINI MISSIONS -->
 <!-- keep csrf token accessible, use lowercase for dataset entries! -->
 <span id="csrf-landmark" data-value="<%= csrfToken %>" data-username="<%= username %>" data-studentid="<%= userId %>"></span>
-<div id="mini-missions" class="section aboveFalling">
-  <div class="py-4 my-4 mb-4 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">MISSIONS</h1></div>
-</div>
-<!-- Guess the Tempo -->
-<% if (BPMStatus == 'success') { %>
-  <div id="bpm-success" class="aboveFalling green-text text-center mb-4 mt-4 pt-4">
-    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
-    <p class="black-bg d-inline-block px-2">Spot on, <%= randomBPM %>! Your sense of timing is amazing.
-    <br>The Piano Wizard has put some points in your wallet.</p>
-  </div>
-<% } else if (BPMStatus == 'notQuite') { %>
-  <div id="bpm-almost" class="aboveFalling pink-text text-center mb-4 mt-4 pt-4">
-    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
-    <p class="black-bg d-inline-block px-2">Not quite! The tempo is <%= randomBPM %> beats per minute.<br>
-    The Piano Wizard has put some points in your wallet.</p>
-  </div>
-<% } else { %>
-  <div class="d-flex justify-content-center">
-    <form action="/guessBPM" method="POST" style="background-color: rgba(0, 0, 0, 0.775);" class="aboveFalling form-inline d-inline-block text-center rounded p-4 mb-4 mt-4 justify-content-center">
-    <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
-    <div class="form-group ml-4">
-      <input type="range" min="20" max="200" step="10" name="bpmGuess" id="bpmGuess" class="input-lg mx-sm-3" oninput="num.value = this.value">
-      <output style="width:3rem;" class="mr-0 pr-0 white-text" id="num">110</output>
-      <small id="passwordHelpInline" class="text-muted">
-        beats per minute
-      </small>
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <button type="submit" class="btn btn-success ms-3">Guess</button>
-    </div>
-  </form>
-  </div>
-  
-<% } %>
-<script>
-  // Guess the tempo
-  var img = document.getElementById('blinking_image');
-
-  var interval = window.setInterval(function(){
-    if (img.style.visibility == 'hidden') {
-      img.style.visibility = 'visible';
-    } else{
-      img.style.visibility = 'hidden';
-    }
-  }, 30000/<%- randomBPM %>);
-</script>
 
 <div class="mt-5 aboveFalling" id="missionsWrapper">
-<!-- Technical Skills -->
-<% if (missionStatuses.technical) { %>
+  <!--MISSIONS ACCOMPLISHED-->
+  <div class="w-100">
+    <div class="black-bg belgrano rounded d-inline-block">
+    <h3 class="p-3 orange-text" style="font-size: 2em;">👑 Missions ACCOMPLISHED 👑</h3>
+  </div>
+  </div>
+  
+  <% missionsAccomplished.forEach((mission) => { %>
   <div class="rounded task-div-complete">
-    <div class="missionContent">
-      <h3 class=""><span class="dark-orange-text">Month</span><br>Technical<br>50</h3>
-      <img src="../images/check-mark.png">
+    <div class="missionContent recursive">
+      <%- mission %>
     </div>
   </div>
-<% } else { %>
-  <div class="rounded task-div-incomplete">
-    <div class="missionContent">
-      <h3 class=""><span class="dark-orange-text">Month</span><br>Technical<br>50</h3>
-      <img src="../images/chronometer.png">
-    </div> 
-  </div>
-<% }
-if (missionStatuses.literacy) { %>
-<div class="rounded task-div-complete">
-  <div class="missionContent">
-<h3 class=""><span class="dark-orange-text">Month</span><br>Literacy<br>50</h3>
-  <img src="../images/check-mark.png">
-  </div>
-  
+  <% }) %>
 </div>
-<% } else { %> 
-<div class="rounded task-div-incomplete">
-  <div class="missionContent">
-    <h3 class=""><span class="dark-orange-text">Month</span><br>Literacy<br>50</h3>
-    <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% }
-if (missionStatuses.reading) { %>
-<div class="rounded task-div-complete">
-  <div class="missionContent">
-    <h3 class=""><span class="dark-orange-text">Month</span><br>Reading<br>50</h3>
-    <img src="../images/check-mark.png">
-  </div>
-</div> 
-<% } else { %> 
-<div class="rounded task-div-incomplete">
-  <div class="missionContent">
-    <h3 class=""><span class="dark-orange-text">Month</span><br>Reading<br>50</h3>
-    <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% }
 
-if (missionStatuses.perform) { %>
-<div class="rounded task-div-complete">
-  <div class="missionContent">
-<h3 class=""><span class="dark-orange-text">Term</span><br>Perform<br>300</h3>
-  <img src="../images/check-mark.png">
-  </div>
-  
-</div> 
-<% } else { %>  
-<div class="rounded task-div-incomplete">
-  <div class="missionContent">
-    <h3 class=""><span class="dark-orange-text">Term</span><br>Perform<br>300</h3>
-    <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% }
-if (missionStatuses.exam) { %>
-<div class="rounded task-div-complete">
-  <div class="missionContent">
-<h3 class=""><span class="dark-orange-text">Year</span><br>Exam<br>500</h3>
-  <img src="../images/check-mark.png">
-  </div>
-  
-</div> 
-<% } else { %>   
-<div class="rounded task-div-incomplete">
-  <div class="missionContent">
-    <h3 class=""><span class="dark-orange-text">Year</span><br>Exam<br>500</h3>
-    <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% }
-if (missionStatuses.compete) { %>
-  <div class="rounded task-div-complete">
-    <div class="missionContent">
-<h3 class=""><span class="dark-orange-text">Year</span><br>Compete<br>500</h3>
-    <img src="../images/check-mark.png">
-    </div>
-    
-  </div> 
-<% } else { %>   
-<div class="rounded task-div-incomplete">
-  <div class="missionContent">
-    <h3 class=""><span class="dark-orange-text">Year</span><br>Compete<br>500</h3>
-    <img src="../images/chronometer.png">
-  </div>  
-</div>
-<% } %>
 
-<!--BOUNCING ARROW-->
-<div class="aboveFalling arrowcontainer">
-  <div class="arrow-holder">
-    <div id="arrow" class="circle bounce">
-        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+  <!--BOUNCING ARROW-->
+  <div class="aboveFalling arrowcontainer">
+    <div class="arrow-holder">
+      <div id="arrow" class="circle bounce">
+          <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- INTERESTING VIDEO -->
-<div id="interestingVideoContainer" class="aboveFalling">
-  <% if(interestingVideoURL){ %>
-  <p class="blue-box text-center mb-5 rounded recursive"><%= interestingVideoPrompt %></p>
-  <div class="responsive-container">
-    <iframe loading="lazy" style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <!-- INTERESTING VIDEO -->
+  <div id="interestingVideoContainer" class="aboveFalling">
+    <% if(interestingVideoURL){ %>
+    <p class="blue-box text-center mb-0 rounded recursive"><%- interestingVideoPrompt %></p>
+    <div class="responsive-container">
+      <iframe loading="lazy" style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <% } %>
   </div>
-  <% } %>
-</div>
 
-<!--BOUNCING ARROW-->
-<div class="aboveFalling arrowcontainer">
-  <div class="arrow-holder">
-    <div id="arrow" class="circle bounce">
-        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+  <!-- READING PRACTICE -->
+  <div id="readingPracticeContainer" class="aboveFalling mt-5">
+    <% if(readingPracticePDFPath){ %>
+    <p class="blue-box text-center rounded recursive"><%- readingPracticePrompt %></p>
+    <p class="blue-box text-center rounded recursive mb-0">Here is the <a href="<%= readingPracticePDFPath %>" target="_blank">PDF</a> file.</p>
+    <iframe loading="lazy" src="<%= readingPracticePDFPath %>" width="100%" height="1000px"></iframe>
+    <% } %>
+  </div>
+
+  <!--BOUNCING ARROW-->
+  <div class="aboveFalling arrowcontainer">
+    <div class="arrow-holder">
+      <div id="arrow" class="circle bounce">
+          <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- READING PRACTICE -->
-<div id="readingPracticeContainer" class="aboveFalling">
-  <% if(readingPracticePDFPath){ %>
-  <p class="blue-box text-center rounded recursive"><%= readingPracticePrompt %></p>
-  <p class="blue-box text-center rounded recursive mb-5">Here is the <a href="<%= readingPracticePDFPath %>" target="_blank">PDF</a> file.</p>
-  <iframe loading="lazy" src="<%= readingPracticePDFPath %>" width="100%" height="1000px"></iframe>
-  <% } %>
-</div>
+  <!-- CLUMSY BIRD 
+  <div class="responsive-container-3-2">
+    <iframe loading="lazy" class="aboveFalling rounded responsive-iframe" src="..\files\ClumsyBird\index.html" frameborder="0"></iframe>
+  </div>-->
 
-<!--BOUNCING ARROW-->
-<div class="aboveFalling arrowcontainer">
-  <div class="arrow-holder">
-    <div id="arrow" class="circle bounce">
-        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+  <!--2048
+  <div style="margin: 0 auto; max-width:800px;"><iframe loading="lazy" class="aboveFalling rounded mt-5" id="game2048" src="..//files//2048//index.html" frameborder="0"></iframe></div>-->
+
+  <!--BOUNCING ARROW
+  <div class="aboveFalling arrowcontainer">
+    <div class="arrow-holder">
+      <div id="arrow" class="circle bounce">
+          <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+      </div>
+    </div>
+  </div>-->
+
+  <!--pacman
+  <div class="aboveFalling white-text text-center mt-5 mb-0 pt-4 pb-0 ps2p" style="background-color:#000; max-width: 800px; margin: 0 auto;">
+    <p class="my-3 purple-text">GLOBAL HIGHSCORES</p>
+    <p>Pac-man: <span class="orange-text"><%= pacmanHighscores[0][0]%></span> <span class="green-text"><%= pacmanHighscores[0][1]%></span><br>Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[1][0]%></span> <span class="green-text"><%= pacmanHighscores[1][1]%></span></p>
+    <p>Ms Pac-man <span class="orange-text"><%= pacmanHighscores[2][0]%></span> <span class="green-text"><%= pacmanHighscores[2][1]%></span><br>Ms Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[3][0]%></span> <span class="green-text"><%= pacmanHighscores[3][1]%></span></p>
+    <p class="mb-0 pb-0">Cookie-man <span class="orange-text"><%= pacmanHighscores[4][0]%></span> <span class="green-text"><%= pacmanHighscores[4][1]%></span><br>Cookie-man Turbo <span class="orange-text"><%= pacmanHighscores[5][0]%></span> <span class="green-text"><%= pacmanHighscores[5][1]%></span></p>
+    <iframe loading="lazy" class="mt-0 pt-0" id="gamepacman" src="..//files//pacman//index.htm" style="border: 0;display:block;"></iframe>
+  </div>-->
+
+  <!--BOUNCING ARROW
+  <div class="aboveFalling arrowcontainer">
+    <div class="arrow-holder">
+      <div id="arrow" class="circle bounce">
+          <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+      </div>
+    </div>
+  </div>-->
+
+  <!--QUAVER ATTACK
+  <iframe loading="lazy" class="aboveFalling mt-5 mx-auto" height="800" width="450" id="gamequaverattack" src="..//files//QuaverAttack//index.html" style="border: 0;display:block;"></iframe>-->
+
+  <!--BOUNCING ARROW
+  <div class="aboveFalling arrowcontainer">
+    <div class="arrow-holder">
+      <div id="arrow" class="circle bounce">
+          <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
+      </div>
+    </div>
+  </div>-->
+
+  <!-- HEXTRIS -->
+  <div style="max-width: 801px; margin:0 auto;">
+    <div class="responsive-container-1-1">
+      <iframe loading="lazy" class="aboveFalling responsive-iframe" src="https://hextris.io/"></iframe>
     </div>
   </div>
-</div>
-
-<!-- CLUMSY BIRD -->
-<div class="responsive-container-3-2">
-  <iframe loading="lazy" class="aboveFalling rounded responsive-iframe" src="..\files\ClumsyBird\index.html" frameborder="0"></iframe>
-</div>
-
-<!--2048
-<div style="margin: 0 auto; max-width:800px;"><iframe loading="lazy" class="aboveFalling rounded mt-5" id="game2048" src="..//files//2048//index.html" frameborder="0"></iframe></div>-->
-
-<!--BOUNCING ARROW
-<div class="aboveFalling arrowcontainer">
-  <div class="arrow-holder">
-    <div id="arrow" class="circle bounce">
-        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
-    </div>
-  </div>
-</div>-->
-
-<!--pacman
-<div class="aboveFalling white-text text-center mt-5 mb-0 pt-4 pb-0 ps2p" style="background-color:#000; max-width: 800px; margin: 0 auto;">
-  <p class="my-3 purple-text">GLOBAL HIGHSCORES</p>
-  <p>Pac-man: <span class="orange-text"><%= pacmanHighscores[0][0]%></span> <span class="green-text"><%= pacmanHighscores[0][1]%></span><br>Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[1][0]%></span> <span class="green-text"><%= pacmanHighscores[1][1]%></span></p>
-  <p>Ms Pac-man <span class="orange-text"><%= pacmanHighscores[2][0]%></span> <span class="green-text"><%= pacmanHighscores[2][1]%></span><br>Ms Pac-man Turbo <span class="orange-text"><%= pacmanHighscores[3][0]%></span> <span class="green-text"><%= pacmanHighscores[3][1]%></span></p>
-  <p class="mb-0 pb-0">Cookie-man <span class="orange-text"><%= pacmanHighscores[4][0]%></span> <span class="green-text"><%= pacmanHighscores[4][1]%></span><br>Cookie-man Turbo <span class="orange-text"><%= pacmanHighscores[5][0]%></span> <span class="green-text"><%= pacmanHighscores[5][1]%></span></p>
-  <iframe loading="lazy" class="mt-0 pt-0" id="gamepacman" src="..//files//pacman//index.htm" style="border: 0;display:block;"></iframe>
-</div>-->
-
-<!--BOUNCING ARROW
-<div class="aboveFalling arrowcontainer">
-  <div class="arrow-holder">
-    <div id="arrow" class="circle bounce">
-        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
-    </div>
-  </div>
-</div>-->
-
-<!--QUAVER ATTACK
-<iframe loading="lazy" class="aboveFalling mt-5 mx-auto" height="800" width="450" id="gamequaverattack" src="..//files//QuaverAttack//index.html" style="border: 0;display:block;"></iframe>-->
-
-<!--BOUNCING ARROW-->
-<div class="aboveFalling arrowcontainer">
-  <div class="arrow-holder">
-    <div id="arrow" class="circle bounce">
-        <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
-    </div>
-  </div>
-</div>
-
-<!-- HEXTRIS -->
-<div style="max-width: 801px; margin:0 auto;">
-  <div class="responsive-container-1-1">
-    <iframe loading="lazy" class="aboveFalling responsive-iframe" src="https://hextris.io/"></iframe>
-  </div>
-</div>
 
 
 
-<script>
-// ADD CSRF TOKEN TO MISSION SUBMITS
-  if (document.getElementById('missionSubmitButton')) {
-    var d1 = document.getElementById('missionSubmitButton')
-    d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="_csrf" value="<%= csrfToken %>">')
-    d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="userId" value="<%= userId %>">')
-  }
-</script>
-
-<script>
-  // DRAGGABLE WALLET
-  var dragItem = document.querySelector(".draggable");
-  var container = document.querySelector("#container");
-
-  var active = false;
-  var currentX;
-  var currentY;
-  var initialX;
-  var initialY;
-  var xOffset = 0;
-  var yOffset = 0;
-
-  container.addEventListener("touchstart", dragStart, false);
-  container.addEventListener("touchend", dragEnd, false);
-  container.addEventListener("touchmove", drag, false);
-
-  container.addEventListener("mousedown", dragStart, false);
-  container.addEventListener("mouseup", dragEnd, false);
-  container.addEventListener("mousemove", drag, false);
-
-  function dragStart(e) {
-    if (e.type === "touchstart") {
-      initialX = e.touches[0].clientX - xOffset;
-      initialY = e.touches[0].clientY - yOffset;
-    } else {
-      initialX = e.clientX - xOffset;
-      initialY = e.clientY - yOffset;
+  <script>
+  // ADD CSRF TOKEN TO MISSION SUBMITS
+    if (document.getElementById('missionSubmitButton')) {
+      var d1 = document.getElementById('missionSubmitButton')
+      d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="_csrf" value="<%= csrfToken %>">')
+      d1.insertAdjacentHTML('beforebegin', '<input type="hidden" name="userId" value="<%= userId %>">')
     }
+  </script>
 
-    if (e.target === dragItem) {
-      active = true;
-    }
-  }
+  <script>
+    // DRAGGABLE WALLET
+    var dragItem = document.querySelector(".draggable");
+    var container = document.querySelector("#container");
 
-  function dragEnd(e) {
-    initialX = currentX;
-    initialY = currentY;
+    var active = false;
+    var currentX;
+    var currentY;
+    var initialX;
+    var initialY;
+    var xOffset = 0;
+    var yOffset = 0;
 
-    active = false;
-  }
+    container.addEventListener("touchstart", dragStart, false);
+    container.addEventListener("touchend", dragEnd, false);
+    container.addEventListener("touchmove", drag, false);
 
-  function drag(e) {
-    if (active) {
-    
-      e.preventDefault();
-    
-      if (e.type === "touchmove") {
-        currentX = e.touches[0].clientX - initialX;
-        currentY = e.touches[0].clientY - initialY;
+    container.addEventListener("mousedown", dragStart, false);
+    container.addEventListener("mouseup", dragEnd, false);
+    container.addEventListener("mousemove", drag, false);
+
+    function dragStart(e) {
+      if (e.type === "touchstart") {
+        initialX = e.touches[0].clientX - xOffset;
+        initialY = e.touches[0].clientY - yOffset;
       } else {
-        currentX = e.clientX - initialX;
-        currentY = e.clientY - initialY;
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
       }
 
-      xOffset = currentX;
-      yOffset = currentY;
-
-      setTranslate(currentX, currentY, dragItem);
+      if (e.target === dragItem) {
+        active = true;
+      }
     }
-  }
 
-  function setTranslate(xPos, yPos, el) {
-    el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-  }
+    function dragEnd(e) {
+      initialX = currentX;
+      initialY = currentY;
 
-  // rainbow headings
-    window.addEventListener("load", function() {
-    let elements = document.getElementsByClassName("rainbowText");
-    for (let i = 0; i < elements.length; i++) {
-      generateRainbowText(elements[i]);
+      active = false;
     }
-  })
-  
-  function generateRainbowText(element) {
-    let text = element.innerText;
-    element.innerHTML = "";
-    for (let i = 0; i < text.length; i++) {
-      let charElem = document.createElement("span");
-      charElem.style.color = "hsl(" + (360 * i / text.length) + ",100%,50%)";
-      charElem.style.fontWeight = "bold";
-      charElem.style.textShadow = "0px 4px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), -4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 0px -4px 5px hsl(" + (360 * i / text.length) + ",80%,20%)";
-      charElem.innerHTML = text[i];
-      element.appendChild(charElem);
+
+    function drag(e) {
+      if (active) {
+      
+        e.preventDefault();
+      
+        if (e.type === "touchmove") {
+          currentX = e.touches[0].clientX - initialX;
+          currentY = e.touches[0].clientY - initialY;
+        } else {
+          currentX = e.clientX - initialX;
+          currentY = e.clientY - initialY;
+        }
+
+        xOffset = currentX;
+        yOffset = currentY;
+
+        setTranslate(currentX, currentY, dragItem);
+      }
     }
-  }
-  </script>
+
+    function setTranslate(xPos, yPos, el) {
+      el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+    }
+
+    // rainbow headings
+      window.addEventListener("load", function() {
+      let elements = document.getElementsByClassName("rainbowText");
+      for (let i = 0; i < elements.length; i++) {
+        generateRainbowText(elements[i]);
+      }
+    })
+    
+    function generateRainbowText(element) {
+      let text = element.innerText;
+      element.innerHTML = "";
+      for (let i = 0; i < text.length; i++) {
+        let charElem = document.createElement("span");
+        charElem.style.color = "hsl(" + (360 * i / text.length) + ",100%,50%)";
+        charElem.style.fontWeight = "bold";
+        charElem.style.textShadow = "0px 4px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), -4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 0px -4px 5px hsl(" + (360 * i / text.length) + ",80%,20%)";
+        charElem.innerHTML = text[i];
+        element.appendChild(charElem);
+      }
+    }
+    </script>
 </div>
     <!-- Footer -->
     <footer class="footer text-center small white-text py-3">

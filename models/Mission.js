@@ -13,12 +13,11 @@ let Mission = function(data) {
 giveEveryoneASomething = async function() {
     //let d = new Date()
     //d.setHours(d.getHours() + 11)
-    await weeksCollection.deleteMany(
-      {"": ""},
-      { $set:
+    await usersCollection.updateMany(
+      {"admin": false},
+      { $unset:
          {
-            studentBio: "",
-            lessonVideoURL: ""
+            MissionStatuses: ""
          }
       }
    )
