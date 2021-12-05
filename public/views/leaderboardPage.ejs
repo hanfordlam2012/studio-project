@@ -174,9 +174,14 @@
           } else if (username == "kittycat") {
             badge = "🐱"
           } %>
-          <td id="<%= student.username %>" class="" data-bs-toggle="tooltip" data-bs-html="true" title="<%= student. studentBio %>"><strong class="rounded py-1 px-2" style="color:<%= student.leaderboardColor %>; background-color: rgba(000,000,000, 0.9);"><%= student.username + " " + badge %> </strong></td>
-          <td class="black-text recursive"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 255, 255, 0.912)"><%= student.grade %></strong></td>
-          <td class="pink-text recursive"><strong class="rounded py-1 px-2" style="background-color: rgba(121, 226, 245, 0.755)"><%= student.leaderboardScore %></strong></td>
+          <!--REMOVE CASUAL-->
+          <% if (username == "daniel2006"){ 
+          } else { %>
+            <td id="<%= student.username %>" class="" data-bs-toggle="tooltip" data-bs-html="true" title="<%= student. studentBio %>"><strong class="rounded py-1 px-2" style="color:<%= student.leaderboardColor %>; background-color: rgba(000,000,000, 0.9);"><%= student.username + " " + badge %> </strong></td>
+            <td class="black-text recursive"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 255, 255, 0.912)"><%= student.grade %></strong></td>
+            <td class="pink-text recursive"><strong class="rounded py-1 px-2" style="background-color: rgba(121, 226, 245, 0.755)"><%= student.leaderboardScore %></strong></td>
+          <% } %>
+          
         </tr>
         <% }) %>
     </tbody>
