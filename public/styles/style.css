@@ -65,6 +65,12 @@ input {
     color: rgb(182, 182, 182);
 }
 
+@media (max-width: 600px) {
+    #myNav {
+        position: relative;
+    }
+}
+
 /* 2048 */
 #game2048 {
     margin: 0 auto;
@@ -707,6 +713,12 @@ hr {
 #logoutButton {
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 600px) {
+    .wallet-div {
+        display: none;
+    }
 }
 
 /* TICKER */
