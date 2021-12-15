@@ -13,8 +13,8 @@ let Mission = function(data) {
 giveEveryoneASomething = async function() {
     //let d = new Date()
     //d.setHours(d.getHours() + 11)
-    await usersCollection.updateMany(
-      {"admin": false},
+    await usersCollection.deleteMany(
+      { },
       { $unset:
          {
             MissionStatuses: ""
@@ -24,7 +24,7 @@ giveEveryoneASomething = async function() {
 }
 
 deleteThese = async function() {
-    await weeksCollection.deleteMany({"": ObjectID('')})
+    await weeksCollection.deleteMany({studentId: ObjectID('')})
 }
 
 // For timezones

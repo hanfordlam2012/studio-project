@@ -186,6 +186,7 @@ exports.showSchedulePage = function(req, res) {
 
 // STUDENT NAVIGATION FUNCTIONS
 exports.showPracticePage = function(req, res) {
+    
     getThesePropertyValuesForUser([
         'leaderboardScore',
         'practiceConversations',
