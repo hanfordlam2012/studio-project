@@ -1,6 +1,7 @@
 const missionsCollection = require('../db').db('studio-project').collection('missions')
 const usersCollection = require('../db').db('studio-project').collection('users')
 const weeksCollection = require('../db').db('studio-project').collection('weeks')
+const sessionsCollection = require('../db').db('studio-project').collection('sessions')
 const ObjectID = require('mongodb').ObjectID
 const Message = require('./Message')
 
@@ -24,7 +25,7 @@ giveEveryoneASomething = async function() {
 }
 
 deleteThese = async function() {
-    await weeksCollection.deleteMany({studentId: ObjectID('')})
+    await weeksCollection.deleteMany()
 }
 
 // For timezones

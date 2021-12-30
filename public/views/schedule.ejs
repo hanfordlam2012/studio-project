@@ -26,35 +26,8 @@
     </script>
   </head>
   <body class="container-fluid background-transparent">
-    <!-- NAVBAR -->
-    <nav id="myNav" class="rounded recursive row align-items-center text-center py-2 w-auto">
-      <div class="col-lg-5">
-        <a id="navIcon" class="my-2 d-block" href='/'>Hanford Lam | Piano Teacher</a>
-      </div>
-      <div class="col-lg-7">
-        <a id="practiceTab" href="/practice" class="mx-4 my-2 d-inline-block navLink">PRACTICE</a>
-        <a id="missionsTab" href="/missions" class="mx-4 my-2 d-inline-block navLink">MISSIONS</a>
-        <a id="leaderboardTab" href="/leaderboard" class="mx-4 my-2 d-inline-block navLink">LEADERBOARD</a>
-        <form id="logoutButton" class="mx-4 my-2 d-inline-block" action="/logout" method="POST">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <button type="submit" class="btn btn-sm btn-secondary">LOG OUT</button>
-        </form>        
-      </div>
-    </nav>
-      <!-- DYNAMIC NAVBAR AND TITLE -->
-      <script>
-        let currentPath = window.location.pathname
-        if (currentPath == '/practice') {
-          document.getElementById("practiceTab").classList.add("orange-text")
-          document.title = "Portal - Hanford Lam"
-        } else if (currentPath == '/missions') {
-          document.getElementById("missionsTab").classList.add("orange-text")
-          document.title = "Portal - Hanford Lam"
-        } else if (currentPath == '/leaderboard') {
-          document.getElementById("leaderboardTab").classList.add("orange-text")
-          document.title = "Portal - Hanford Lam"
-        }
-      </script>
+    
+
       <div id="container" class="container">
 
 <!-- SCHEDULE -->
@@ -100,11 +73,11 @@
     <tr class="hover-general">
       <td scope="row">Wed 13 Apr, 9am-4pm</td>
       <td>Musical Movement and the Human Body: Mini-Doctors Day</td>
-      <td>Boronia</td>
+      <td>Studio</td>
     </tr>
     <tr class="hover-workshop">
       <td scope="row">Sun 1 May, 2pm-3pm</td>
-      <td>Student Performance Workshop</td>
+      <td>Student Masterclass with Felicité Heine</td>
       <td>Studio</td>
     </tr>
     <tr class="hover-concert">
@@ -114,7 +87,7 @@
     </tr>
     <tr class="hover-workshop">
       <td scope="row">Sun 29 May, 2pm-3pm</td>
-      <td>Student Performance Workshop</td>
+      <td>Introduction to Strings with Felicité Heine</td>
       <td>Studio</td>
     </tr>
     <tr class="hover-concert">
@@ -185,72 +158,7 @@
   </tbody>
 </table>
 
-<script>
-  // DRAGGABLE WALLET
-  var dragItem = document.querySelector(".draggable");
-  var container = document.querySelector("#container");
 
-  var active = false;
-  var currentX;
-  var currentY;
-  var initialX;
-  var initialY;
-  var xOffset = 0;
-  var yOffset = 0;
-
-  container.addEventListener("touchstart", dragStart, false);
-  container.addEventListener("touchend", dragEnd, false);
-  container.addEventListener("touchmove", drag, false);
-
-  container.addEventListener("mousedown", dragStart, false);
-  container.addEventListener("mouseup", dragEnd, false);
-  container.addEventListener("mousemove", drag, false);
-
-  function dragStart(e) {
-    if (e.type === "touchstart") {
-      initialX = e.touches[0].clientX - xOffset;
-      initialY = e.touches[0].clientY - yOffset;
-    } else {
-      initialX = e.clientX - xOffset;
-      initialY = e.clientY - yOffset;
-    }
-
-    if (e.target === dragItem) {
-      active = true;
-    }
-  }
-
-  function dragEnd(e) {
-    initialX = currentX;
-    initialY = currentY;
-
-    active = false;
-  }
-
-  function drag(e) {
-    if (active) {
-    
-      e.preventDefault();
-    
-      if (e.type === "touchmove") {
-        currentX = e.touches[0].clientX - initialX;
-        currentY = e.touches[0].clientY - initialY;
-      } else {
-        currentX = e.clientX - initialX;
-        currentY = e.clientY - initialY;
-      }
-
-      xOffset = currentX;
-      yOffset = currentY;
-
-      setTranslate(currentX, currentY, dragItem);
-    }
-  }
-
-  function setTranslate(xPos, yPos, el) {
-    el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
-  }
-  </script>
 </div>
     <!-- Footer -->
     <footer class="footer text-center small white-text py-3">
