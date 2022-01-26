@@ -105,7 +105,7 @@
   <!-- INTERESTING VIDEO -->
   <div id="interestingVideoContainer" class="aboveFalling">
     <% if(interestingVideoURL){ %>
-    <p class="blue-box text-center mb-0 rounded recursive"><%- interestingVideoPrompt %></p>
+    <p class="blue-box text-center mb-0 py-4 rounded recursive"><%- interestingVideoPrompt %></p>
     <div class="responsive-container">
       <iframe loading="lazy" style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
@@ -115,20 +115,20 @@
   <!-- READING PRACTICE -->
   <div id="readingPracticeContainer" class="aboveFalling mt-5">
     <% if(readingPracticePDFPath){ %>
-    <p class="blue-box text-center rounded recursive"><%- readingPracticePrompt %></p>
-    <p class="blue-box text-center rounded recursive mb-0">Here is the <a href="<%= readingPracticePDFPath %>" target="_blank">PDF</a> file.</p>
+    <p class="blue-box text-center py-4 rounded recursive"><%- readingPracticePrompt %></p>
+    <p class="blue-box text-center pb-4 rounded recursive mb-0">Here is the <a href="<%= readingPracticePDFPath %>" target="_blank">PDF</a> file.</p>
     <iframe loading="lazy" src="<%= readingPracticePDFPath %>" width="100%" height="1000px"></iframe>
     <% } %>
   </div>
 
-  <!--BOUNCING ARROW-->
+  <!--BOUNCING ARROW
   <div class="aboveFalling arrowcontainer">
     <div class="arrow-holder">
       <div id="arrow" class="circle bounce">
           <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <!-- CLUMSY BIRD 
   <div class="responsive-container-3-2">
@@ -177,12 +177,12 @@
     </div>
   </div>-->
 
-  <!-- HEXTRIS -->
+  <!-- HEXTRIS
   <div style="max-width: 801px; margin:0 auto;">
     <div class="responsive-container-1-1">
       <iframe loading="lazy" class="aboveFalling responsive-iframe" src="https://hextris.io/"></iframe>
     </div>
-  </div>
+  </div> -->
 
 
 

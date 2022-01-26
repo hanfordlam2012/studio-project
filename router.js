@@ -22,7 +22,7 @@ router.post('/sendMelodyToHanford', messageController.sendMelodyToHanford)
 //router.get('/showcase', userController.mustBeLoggedIn, performanceController.showShowcasePage)
 //router.post('/addPerformanceComment', userController.mustBeLoggedIn, performanceController.addPerformanceComment)
 router.get('/feedback', userController.mustBeLoggedIn, userController.showFeedbackPage)
-router.get('/schedule', userController.mustBeLoggedIn, userController.showSchedulePage)
+router.get('/schedule', userController.showSchedulePage)
 router.post('/sendFeedbackToHanford', messageController.sendFeedbackToHanford)
 
 // user routes

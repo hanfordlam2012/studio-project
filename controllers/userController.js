@@ -179,9 +179,7 @@ exports.showFeedbackPage = function(req, res) {
 }
 
 exports.showSchedulePage = function(req, res) {
-    res.render('schedule', {
-        fName: req.session.user.fName
-    })
+    res.render('schedule')
 }
 
 // STUDENT NAVIGATION FUNCTIONS
