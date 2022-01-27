@@ -140,7 +140,7 @@ input {
 }
 
 .home-display {
-    background-color: rgba(255, 255, 255, 0.939);
+    background-color: rgba(255, 255, 255, 0.953);
     padding: 5px 10px;
     border-radius: 15px;
 }
@@ -436,7 +436,7 @@ hr {
     color: rgb(0, 0, 0);
     max-width: 1000px;
     margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.94);
+    background-color: rgba(255, 255, 255, 0.96);
 }
 
 .blue-box {
@@ -735,7 +735,7 @@ hr {
 .marquee div {
     display: inline-block;
     padding-left: 100%;
-    animation: marquee 25s linear infinite;
+    animation: marquee 35s linear infinite;
 }
 .marquee div span {
     padding-left: 20px
