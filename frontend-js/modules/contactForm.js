@@ -14,7 +14,7 @@ export default class ContactForm {
         this.contactMessageDiv = document.querySelector("#contactMessageDiv")
         this.contactMessageInput.previousValue = ""
         // add recaptcha token
-        this.recaptchaTokenInput = document.querySelector("#recaptchaTokenInput")
+        //this.recaptchaTokenInput = document.querySelector("#recaptchaTokenInput")
         this.events()
     }
 
@@ -47,16 +47,10 @@ export default class ContactForm {
             !this.contactEmailDiv.errors &&
             !this.contactMessageDiv.errors
             ) {
-            grecaptcha.ready(function(){
-                grecaptcha.execute('6LdmwyccAAAAAAeyi3pmB9GFe7CqpJgEuqutQqVL', {action: 'submit'}).then(function(token){
-                    document.getElementById("contactFormSubmit").innerHTML = "Sending..."
-                    document.getElementById("contactFormSubmit").disabled = true
-                    document.getElementById("recaptchaTokenInput").value = token // add token to form submit
-                    self.form.submit() // use self instead of this to refer beyond scope
-                })
-            })
-            
-        }
+                document.getElementById("contactFormSubmit").innerHTML = "Sending..."
+                document.getElementById("contactFormSubmit").disabled = true
+                self.form.submit() // use self instead of this to refer beyond scope
+            }
     }
 
     contactMessageOnlyOnSubmit() {
