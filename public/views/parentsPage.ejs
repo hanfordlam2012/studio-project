@@ -1,61 +1,45 @@
-<%- include('includes/header') %>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Bootstrap CSS and Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Handlee&family=Rye&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Hanford Lam | Piano Teacher</title>
+    <!-- CURSOR -->
+    <style>HTML,BODY{cursor: url("../../images/cursor.cur"), auto;}</style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7KLNXVSDD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S7KLNXVSDD');
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+    <div id="container" class="container">
+      <!--POPPER AND CHART JS SCRIPTS-->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!-- ERRORS -->
 <% adErrors.forEach(function(message) { %>
   <div class="alert alert-danger text-center small py-1 mt-2"><%= message %></div>
 <% }) %>
-<!--Flowers FOR Spring-->
-<div class="snowflakes" aria-hidden="true">
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🍀
-  </div>
-  <div class="snowflake">
-  🌺
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🍀
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-  <div class="snowflake">
-  🍀
-  </div>
-  <div class="snowflake">
-  🌺
-  </div>
-  <div class="snowflake">
-  🌸
-  </div>
-</div>
-
-<div class="wallet-div bellota grey-text inline draggable">
-  <strong style="color: <%= leaderboardColor %>"><%= username %></strong>'s wallet<br>
-  <span class="pink-text"><strong><%= points %></strong></span> points<br>
-  <span class="yellow-text"><%= lessonCount %></span>/<span class="orange-text"><%= paidLessons %></span> lessons<br>
-  <a href="/practice" type="button" class="my-1 btn btn-info btn-sm">Practice</a>
-  <a href="/parents" type="button" class="my-1 btn btn-warning btn-sm">Record</a><br>
-  <a href="/missions" type="button" class="my-1 btn btn-danger btn-sm">Missions</a>
-  <a href="/leaderboard" type="button" class="my-1 btn btn-success btn-sm">Prizes</a>
-  <form id="logoutButton" class="mt-1 mb-2" action="/logout" method="POST">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button type="submit" class="btn btn-secondary btn-sm">Log Out</button>
-  </form>
-</div>
     
 <!-- FULL RECORD -->
 <div id="full-record" class="section">
-  <div class="pt-4 mt-4 mb-0 mx-0"><h1 class="px-5 display-2 recursive rainbowText text-center">RECORD</h1>
-    <h2 class="grey-text text-center handlee py-0 mt-0">Are we improving?</h2></div>
+  <div class="pt-4 mt-4 mb-0 mx-0 text-center">
+    <h1 class="px-5 display-2 recursive">HISTORY: <span class="small">Our Progress</span></h1>
+    <input class="btn btn-lg btn-warning mt-3" type="button" target="_blank" onclick="window.open('<%= playlistLink %>')" value="Open Youtube Playlist" />
+  </div>
 </div>
 <div class="justify-content-center"><canvas id="pieceGraph"></canvas></div>
 
@@ -140,7 +124,7 @@ function showExtraComponentInfo() {
 </script>
 
 <div class="justify-content-center mt-2 mb-3 px-0 table-responsive">
-  <table class="justify-content-center table table-dark table-striped table-hover text-center">
+  <table class="justify-content-center table table-light table-striped table-hover text-center">
       <thead>
         <tr class="">
           <th scope="col">Date</th>
@@ -155,6 +139,7 @@ function showExtraComponentInfo() {
       </thead>
       <tbody>
         <% studentWeeks.forEach(function(studentWeek) {
+          let dateTooltip = ""
           let techAScoreTooltip = ""
           let techBScoreTooltip = ""
           let rhythmAlertColour = ""
@@ -301,27 +286,29 @@ function showExtraComponentInfo() {
           }
           %>
           <tr class="">
-            <th class="align-middle" scope="row"><%= studentWeek.createdDate.getDate() %>/<%= studentWeek.createdDate.getMonth()+1 %>/<%= studentWeek.createdDate.getFullYear() %></th>
+            <th class="align-middle" scope="row">
+                <%= studentWeek.createdDate.getDate() %>/<%= studentWeek.createdDate.getMonth()+1 %>/<%= studentWeek.createdDate.getFullYear() %>
+            </th>
             <td class="align-middle"><%= studentWeek.pieceName %></td>
             <td class="align-middle">
-                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#piece<%= studentWeek._id %>">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#piece<%= studentWeek._id %>">
                   <%= Number(studentWeek.rhythm) + Number(studentWeek.coordination) + Number(studentWeek.tone) + Number(studentWeek.dynamics) + Number(studentWeek.stylistic) %>
                 </button>
             </td>
             <td class="align-middle"><%= studentWeek.techAName %></td>
             <td class="align-middle">
-                <button type="button" class="btn btn-dark" data-toggle="tooltip" data-placement="right" data-html="true" title="<%= techAScoreTooltip %>">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true" title="<%= techAScoreTooltip %>">
                   <%= studentWeek.techAScore %>
                 </button>
             </td>
             <td class="align-middle"><%= studentWeek.techBName %></td>
             <td class="align-middle">
-                <button type="button" class="btn btn-dark" data-toggle="tooltip" data-placement="right" data-html="true" title="<%= techBScoreTooltip %>">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true" title="<%= techBScoreTooltip %>">
                   <%= studentWeek.techBScore %>
                 </button>
             </td>
             <td class="align-middle">
-              <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#comments<%= studentWeek._id %>">
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#comments<%= studentWeek._id %>">
                 Read
               </button>
             </td>
@@ -332,7 +319,7 @@ function showExtraComponentInfo() {
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Components Assessed:</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -368,7 +355,7 @@ function showExtraComponentInfo() {
                   <p><%= stylisticModalDesc %></p>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -379,7 +366,7 @@ function showExtraComponentInfo() {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Comments:</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -389,7 +376,7 @@ function showExtraComponentInfo() {
               </pre>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -534,4 +521,10 @@ function showExtraComponentInfo() {
     <button class="mx-3 btn btn-outline-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Click for printer-friendly Practice Guide</button>
   </div>
 
+  <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+  </script>
 <%- include('includes/footer') %>

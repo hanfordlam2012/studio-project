@@ -294,7 +294,8 @@ exports.showLeaderboardPage = function(req, res) {
 
 exports.showParentsPage = function(req, res) {
     getThesePropertyValuesForUser([
-        'leaderboardScore'
+        'leaderboardScore',
+        'playlistLink'
         ],req.session.user.userId).then((userProps) => {
         User.getStudentWeeks(req.session.user.userId).then(function (data) {
             let studentWeeks = data.studentWeeks
@@ -312,6 +313,7 @@ exports.showParentsPage = function(req, res) {
                 parentName: req.session.user.parentName,
                 admin: req.session.user.admin,
                 // record
+                playlistLink: userProps.playlistLink,
                 dateLabels: dateLabels,
                 rhythmArray: rhythmArray,
                 coordinationArray: coordinationArray,

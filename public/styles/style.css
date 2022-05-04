@@ -177,6 +177,16 @@ input {
 }
 
 /*IN PARENTS PAGE*/
+.tooltip > .tooltip-arrow {
+    display: none;
+}
+
+.tooltip > .tooltip-inner {
+    border: 1px solid red;
+    padding: 15px;
+    margin: 15px;
+}
+
 .modal-body pre {
     white-space: pre-wrap;
     /* Since CSS 2.1 */
