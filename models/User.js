@@ -73,7 +73,8 @@ User.prototype.cleanUp = function() {
         practiceConversations: [],
         grade: "",
         lessonVideoURL: "",
-        studentBio: ""
+        studentBio: "",
+        playlistLink: ""
     }
 }
 
