@@ -470,9 +470,13 @@ hr {
 }
 
 .topShadow {
-    box-shadow: inset 0px 25px 19px -18px #000000;
-    background-color: transparent;
+    box-shadow: 2px 2px 20px 20px rgba(0, 36, 91, 0.587);
+    background-color: #4964ffc4;
     
+}
+
+#practiceConversation > div p {
+    margin: 0;
 }
 
 /*BE ON TOP OF SNOWFLAKES*/

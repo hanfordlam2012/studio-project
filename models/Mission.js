@@ -4,6 +4,7 @@ const weeksCollection = require('../db').db('studio-project').collection('weeks'
 const sessionsCollection = require('../db').db('studio-project').collection('sessions')
 const ObjectID = require('mongodb').ObjectID
 const Message = require('./Message')
+const sanitizeHTML = require('sanitize-html')
 
 let Mission = function(data) {
     this.data = data
@@ -52,6 +53,7 @@ Mission.getPracticeStatus = function(userId) {
 Mission.replyToStudent = async function(studentId, reply) {
     let userDoc = await usersCollection.findOne({"_id": ObjectID(studentId)})
     let practiceConversation = userDoc.practiceConversations
+    sanitizeHTML(reply, {allowedTags: [], allowedAttributes: []})
     if(practiceConversation.length > 20) {
         practiceConversation.shift()
         practiceConversation.push(['Hanford', reply])

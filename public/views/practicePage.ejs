@@ -90,20 +90,20 @@
             <span id="guessTheTempo"></span>
             <!-- Guess the Tempo -->
             <% if (BPMStatus == 'success') { %>
-              <div id="bpm-success" class="aboveFalling green-text text-center mb-4 mt-4 pt-4">
+              <div id="bpm-success" class="aboveFalling green-text text-center mt-4 pt-4" style="margin-bottom: 150px;">
                 <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
                 <p class="black-bg d-inline-block p-3 rounded">Spot on, <%= randomBPM %>! Your sense of timing is amazing.
                 <br>The Piano Wizard has put some points in your wallet.</p>
               </div>
             <% } else if (BPMStatus == 'notQuite') { %>
-              <div id="bpm-almost" class="aboveFalling pink-text text-center mb-4 mt-4 pt-4">
+              <div id="bpm-almost" class="aboveFalling pink-text text-center mt-4 pt-4" style="margin-bottom: 150px;">
                 <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
                 <p class="black-bg d-inline-block p-3 rounded">Not quite! The tempo is <%= randomBPM %> beats per minute.<br>
                 The Piano Wizard has put some points in your wallet.</p>
               </div>
             <% } else { %>
               <div class="d-flex justify-content-center">
-                <form action="/guessBPM" method="POST" style="background-color: rgba(0, 0, 0, 0.775);" class="aboveFalling form-inline d-inline-block text-center rounded p-4 mb-4 mt-4 justify-content-center">
+                <form action="/guessBPM" method="POST" style="background-color: rgba(0, 0, 0, 0.775); margin-bottom: 150px;" class="aboveFalling form-inline d-inline-block text-center rounded p-4 mt-4 justify-content-center">
                   <p class="white-text caveat" style="font-size: 2em;">Guess the Tempo</p>
                   <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
                 <div class="form-group ml-4 mt-3">
@@ -132,36 +132,46 @@
               }, 30000/<%- randomBPM %>);
             </script>
             <!--DISPLAY CONVERSATION-->
-            <div id="practiceConversationContainer" class="w-100 d-flex topShadow rounded mb-5" style="z-index: -2;overflow-y: auto;height:300px;">
-              <div id="practiceConversation" class="mx-auto pt-4 px-4" style="z-index: -1;">
-                <% practiceConversation.forEach((entry) => { 
-                  if(entry[0] == 'You') { %>
-                    <p class="black-text p-2 rounded" style="background-color: rgba(255, 255, 255, 0.912)"><strong class="orange-text"><%= entry[0] %></strong> : <%= entry[1] %></p>
-                  <% } else if(entry[0] == 'Hanford') { %>
-                    <p class="black-text p-2 rounded" style="background-color: rgba(255, 255, 255, 0.912)"><strong class="purple-text"><%= entry[0] %></strong> : <%= entry[1] %></p>
-                  <% }
-                }) %>
-              </div>
-            </div>
-            <script>
-              let practiceConversationContainer = document.getElementById('practiceConversationContainer')
-              practiceConversationContainer.scrollTop = practiceConversationContainer.scrollHeight
-            </script>
-            <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS-->
-            <% if (!practiceStatus) { %>
-              <form id="PracticeConvo" class="my-2" action="/updateLastSubmittedDateAndAddPoints" method="POST">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <div class="form-group text-center" style="width:100%;margin:0 auto;">
-                  <textarea autocomplete="off" name="practiceConversation" class="form-control" style="background-color: rgba(30, 20, 51, 0.927);color:chartreuse;" 
-                  placeholder="<%= practicePrompt %>&#10; &#10;" id="practiceConversation" rows="6"></textarea>
-                  <button  type="submit" class="btn btn-info btn-lg mt-4" style="font-size: 1.2rem;">SEND</button>
+            <div class="d-flex justify-content-center">
+              <div class="d-flex flex-column">
+                <div id="practiceConversationContainer" class="d-flex topShadow rounded my-5 py-3" style="max-width:960px; z-index: 1;overflow-y: scroll;height:400px;">
+                <div id="practiceConversation" class="mx-auto px-4" style="z-index: 100;">
+                  <% practiceConversation.forEach((entry) => { 
+                    if(entry[0] == 'You') { %>
+                      <div class="black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="orange-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
+                    <% } else if(entry[0] == 'Hanford') { %>
+                      <div class="black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="purple-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
+                    <% }
+                  }) %>
+                  <div style="height:15px;"></div>
                 </div>
-              </form>
-            <% } else { %>
-              <div id="practice-success" class="recursive text-center mt-5 my-2">
-                <p class="black-bg d-inline-block p-3 rounded"><span class="green-text">Come back tomorrow for Hanford's reply!</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
               </div>
-            <% } %>
+              <script>
+                let practiceConversationContainer = document.getElementById('practiceConversationContainer')
+                practiceConversationContainer.scrollTop = practiceConversationContainer.scrollHeight
+              </script>
+              <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS-->
+              <% if (!practiceStatus) { %>
+                <form id="PracticeConvo" class="my-2" style="max-width:960px;" action="/updateLastSubmittedDateAndAddPoints" method="POST">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <div class="form-group text-center" style="width:100%;margin:0 auto;">
+                    <textarea autocomplete="off" name="practiceConversation" class="form-control" style="background-color: rgba(30, 20, 51, 0.927);color:chartreuse;" 
+                    placeholder="<%= practicePrompt %>&#10; &#10;" id="practiceConversation" rows="6"></textarea>
+                    <div class="d-grid">
+                      <button  type="submit" class="btn btn-danger btn-block mt-4" style="font-size: 1.2rem; border:3px solid white">SEND</button>
+                    </div>
+                    
+                  </div>
+                </form>
+              <% } else { %>
+                <div id="practice-success" class="recursive text-center mt-5 my-2">
+                  <p class="black-bg d-inline-block p-3 rounded"><span class="green-text">Come back tomorrow for Hanford's reply!</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
+                </div>
+              <% } %>
+              </div>
+          
+            </div>
+            
           </div>
         </div>
 
