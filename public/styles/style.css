@@ -131,7 +131,7 @@ input {
 
 /* HOME */
 #home-html {
-    background-image: url("../images/buildings.jpg");
+    background-image: url("../images/piano-bg.png");
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -166,8 +166,7 @@ input {
 #photo1, #photo2, #hanford-lam-studio-min, #youtubeShowcase {
     width: 100%;
     border-radius: 20px;
-    box-shadow: 0 0 10px #ffffff;
-    border: 1px solid black;
+    border: 2px solid white;
 }
 
 #bioRow, .featureVideoRow, #experienceRow, #pedagogyRow, #ratesRow, #mapRow {
@@ -894,6 +893,10 @@ hr {
 
 .black-bg {
     background-color: black;
+}
+
+.white-border {
+    border: 2px solid white;
 }
 
 /* SCHEDULE */
