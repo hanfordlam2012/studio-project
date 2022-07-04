@@ -907,11 +907,20 @@ hr {
 .hover-workshop {
     color: rgb(255, 136, 72);
 }
-.hover-general {
+.hover-livestream {
     color: rgb(0, 208, 255);
 }
-.hover-concert {
+.hover-excursion {
     color: rgb(96, 192, 0);
+}
+.hover-holiday {
+    color: rgb(255, 80, 191);
+}
+.hover-performance {
+    color: rgb(246, 246, 92);
+}
+.hover-extra {
+    color: rgb(135, 255, 177);
 }
 .table-valign-middle {
     vertical-align: middle;
