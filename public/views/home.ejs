@@ -2,13 +2,13 @@
 <html lang="en" id="home-html">
   <head>
     <!-- HTML Meta Tags -->
-<title>Hanford Lam | Piano Teacher</title>
+<title>Hanford Lam | Piano Studio</title>
 <meta name="description" content="Holistic interactive music education through piano learning and enrichment activities.">
 
 <!-- Facebook Meta Tags -->
 <meta property="og:url" content="https://www.hanfordlam.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hanford Lam | Piano Teacher">
+<meta property="og:title" content="Hanford Lam | Piano Studio">
 <meta property="og:description" content="Holistic interactive music education through piano learning and enrichment activities.">
 <meta property="og:image" content="https://www.hanfordlam.com/images/hanford-piano-teacher.webp">
 
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="hanfordlam.com">
 <meta property="twitter:url" content="https://www.hanfordlam.com/">
-<meta name="twitter:title" content="Hanford Lam | Piano Teacher">
+<meta name="twitter:title" content="Hanford Lam | Piano Studio">
 <meta name="twitter:description" content="Holistic interactive music education through piano learning and enrichment activities.">
 <meta name="twitter:image" content="https://www.hanfordlam.com/images/hanford-piano-teacher.webp">
 
@@ -32,7 +32,7 @@
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/style.css">
-    <title>Hanford Lam | Piano Teacher</title>
+    <title>Hanford Lam | Piano Studio</title>
     <!-- CURSOR -->
     <style>HTML,BODY{cursor: url("../../images/cursor.cur"), auto;}</style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -49,7 +49,7 @@
     <!-- NAVBAR -->
     <nav id="myNav" class="rounded recursive row align-items-center text-center w-auto py-2">
       <div class="col-lg-7">
-        <a id="navIcon" class="my-2 d-block" href='/'>Hanford Lam | Piano Teacher</a>
+        <a id="navIcon" class="my-2 d-block" href='/'>Hanford Lam | Piano Studio</a>
       </div>
       <div class="col-lg-5">
         <a id="homeTab" class="mx-4 my-2 d-inline-block navLink" href="/">HOME</a>
@@ -78,9 +78,9 @@
 <div id="biographyContainer" class="">
   
   <!--<div class="w-100 text-center"><button data-lang="en" id="languageToggleButton" onclick="languageToggle()" class="btn btn-lg btn-warning text-center mt-3">EN/<span class='zcool' style="font-size: 1.2rem;">中文</span></button>  </div>-->
-  <div class="text-center white-border rounded m-5 p-5">
-    <p class="text-muted belgrano"><span style="color:#73e9f0;">Are you</span> a parent of a <span>curious</span>, <span>active</span> child who would like piano lessons from an <span>attentive</span> and <span>patient</span> teacher?</p>
-    <p class="text-muted belgrano">If so, I think you are in the right place. If not, I wish you a great day and hope you tell someone about my studio!</p>
+  <div class="text-center white-border rounded black-bg m-5 p-5">
+    <p class="belgrano" style="color:#ff9422;">Are you a parent of a <span>curious</span>, <span>active</span> child who would like piano lessons from an <span>attentive</span> and <span>patient</span> teacher?</p>
+    <p class="belgrano" style="color:#7cfff8;">If so, you are in the right place! In any case, I wish you a great day and hope you tell someone about my studio. 😊</p>
   </div>
   <!--INTROVIDEO
   <div class="row mt-5" id="">
@@ -382,4 +382,108 @@ Hanford" rows="18"></textarea>
   }
 </script>
 
-<%- include('includes/footer') %>
+<script>
+  // DRAGGABLE WALLET
+  var dragItem = document.querySelector(".draggable");
+  var container = document.querySelector("#container");
+
+  var active = false;
+  var currentX;
+  var currentY;
+  var initialX;
+  var initialY;
+  var xOffset = 0;
+  var yOffset = 0;
+
+  container.addEventListener("touchstart", dragStart, false);
+  container.addEventListener("touchend", dragEnd, false);
+  container.addEventListener("touchmove", drag, false);
+
+  container.addEventListener("mousedown", dragStart, false);
+  container.addEventListener("mouseup", dragEnd, false);
+  container.addEventListener("mousemove", drag, false);
+
+  function dragStart(e) {
+    if (e.type === "touchstart") {
+      initialX = e.touches[0].clientX - xOffset;
+      initialY = e.touches[0].clientY - yOffset;
+    } else {
+      initialX = e.clientX - xOffset;
+      initialY = e.clientY - yOffset;
+    }
+
+    if (e.target === dragItem) {
+      active = true;
+    }
+  }
+
+  function dragEnd(e) {
+    initialX = currentX;
+    initialY = currentY;
+
+    active = false;
+  }
+
+  function drag(e) {
+    if (active) {
+    
+      e.preventDefault();
+    
+      if (e.type === "touchmove") {
+        currentX = e.touches[0].clientX - initialX;
+        currentY = e.touches[0].clientY - initialY;
+      } else {
+        currentX = e.clientX - initialX;
+        currentY = e.clientY - initialY;
+      }
+
+      xOffset = currentX;
+      yOffset = currentY;
+
+      setTranslate(currentX, currentY, dragItem);
+    }
+  }
+
+  function setTranslate(xPos, yPos, el) {
+    el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+  }
+
+  // rainbow headings
+    window.addEventListener("load", function() {
+    let elements = document.getElementsByClassName("rainbowText");
+    for (let i = 0; i < elements.length; i++) {
+      generateRainbowText(elements[i]);
+    }
+  })
+  
+  function generateRainbowText(element) {
+    let text = element.innerText;
+    element.innerHTML = "";
+    for (let i = 0; i < text.length; i++) {
+      let charElem = document.createElement("span");
+      charElem.style.color = "hsl(" + (360 * i / text.length) + ",100%,50%)";
+      charElem.style.fontWeight = "bold";
+      charElem.style.textShadow = "0px 4px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), -4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 0px -4px 5px hsl(" + (360 * i / text.length) + ",80%,20%)";
+      charElem.innerHTML = text[i];
+      element.appendChild(charElem);
+    }
+  }
+  </script>
+</div>
+    <!-- Footer -->
+    <footer class="footer text-center small black-text py-3">
+        <p class="m-0 raleway">Thanks for visiting! Copyright &copy; <script>document.write(new Date().getFullYear());</script> <a href='/' class="black-text raleway">hanfordlam.com</a>. All rights reserved. Background by Iris.</p>
+    </footer>
+  </div> <!-- close out page container div -->
+  <!-- BOOTSTRAP 5 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <!-- TOOLTIPS -->
+  <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    </script>
+    <script src="../../main-bundled.js"></script>
+  </body>
+</html>
