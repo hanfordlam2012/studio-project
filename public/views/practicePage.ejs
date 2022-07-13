@@ -135,12 +135,12 @@
             <div class="d-flex justify-content-center" style=" min-width:0;">
               <div class="d-flex flex-column" style=" min-width:0;">
                 <div id="practiceConversationContainer" class="d-flex flex-column topShadow rounded my-5 py-3" style="max-width:960px; min-width:0; z-index: 1;overflow-y: scroll;height:400px;">
-                  <div id="practiceConversation" class="mx-auto px-4" style="z-index: 100; min-width:0; ">
+                  <div id="practiceConversation" class="mx-auto px-4" style="z-index: 100; min-width:0; max-width: 100%;">
                     <% practiceConversation.forEach((entry) => { 
                       if(entry[0] == 'You') { %>
-                        <div class="black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="orange-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
+                        <div class="convo-p-wrapper black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="orange-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
                       <% } else if(entry[0] == 'Hanford') { %>
-                        <div class="black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="purple-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
+                        <div class="convo-p-wrapper black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="purple-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
                       <% }
                     }) %>
                     <div style="height:15px;"></div>
