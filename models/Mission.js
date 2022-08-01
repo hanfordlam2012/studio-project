@@ -15,11 +15,11 @@ let Mission = function(data) {
 giveEveryoneASomething = async function() {
     //let d = new Date()
     //d.setHours(d.getHours() + 11)
-    await usersCollection.deleteMany(
+    await usersCollection.updateMany(
       { },
-      { $unset:
+      { $set:
          {
-            MissionStatuses: ""
+            subscriber: false
          }
       }
    )

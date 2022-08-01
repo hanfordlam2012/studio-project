@@ -129,6 +129,11 @@ input {
     font-family: 'Recursive', sans-serif;
 }
 
+/*SHOP*/
+#shop-blurb p{
+    margin: 50px 50px 50px 50px;
+}
+
 /* HOME */
 #home-html {
     background-image: url("../images/irisbackground.webp");

@@ -50,6 +50,61 @@ exports.register = function (req, res) {
     })
 }
 
+exports.subscribe = function (req, res) {
+    let user = new User(req.body)
+    user.register().then((sessionData) => {
+        req.session.user = { 
+            fName: sessionData.fName, 
+            parentName: sessionData.parentName, 
+            admin: sessionData.admin, 
+            userId: sessionData.userId 
+        }
+        req.session.save(function () {
+            res.redirect('/reports')
+        })
+    }).catch((regErrors) => {
+        regErrors.forEach(function (error) {
+            req.flash('regErrors', error)
+        })
+        req.session.save(function () {
+            res.redirect('/reports')
+        })
+    })
+}
+
+exports.createCheckoutSession = async function (req, res) {
+    // Set your secret key. Remember to switch to your live secret key in production.
+    // See your keys here: https://dashboard.stripe.com/apikeys
+    const stripe = require('stripe')(process.env.STRIPE_KEY);
+
+    // The price ID passed from the client
+    //   const {priceId} = req.body;
+    const priceId = req.body.priceId;
+    const session = await stripe.checkout.sessions.create({
+    mode: 'subscription',
+    line_items: [
+        {
+        price: priceId,
+        // For metered billing, do not pass quantity
+        quantity: 1,
+        },
+    ],
+    // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
+    // the actual Session ID is returned in the query parameter when your customer
+    // is redirected to the success page.
+    success_url: 'https://www.hanfordlam.com/success?session_id={CHECKOUT_SESSION_ID}',
+    cancel_url: 'https://www.hanfordlam.com',
+    });
+
+    // Redirect to the URL returned on the Checkout Session.
+    // With express, you can redirect with:
+    res.redirect(303, session.url);
+}
+
+exports.webhook = function(req, res) {
+    let stripe_payload = req.json
+    console.log(stripe_payload.type)
+}
 
 // AUTHENTICATION FUNCTIONS
 exports.mustBeLoggedIn = function (req, res, next) {
@@ -88,6 +143,8 @@ exports.login = function (req, res) {
             lName: result.lName, 
             parentName: result.parentName, 
             admin: result.admin, 
+            student: result.student,
+            subscriber: result.subscriber,
             userId: result.userId, 
             secret: result.secret,
             lessonCount: result.lessonCount,
@@ -182,9 +239,17 @@ exports.showSchedulePage = function(req, res) {
     res.render('schedule')
 }
 
+exports.showShopPage = function(req, res) {
+    res.render('shop')
+}
+
+exports.showTutorialsPage = function(req, res) {
+    res.render('tutorials')
+}
+
 // STUDENT NAVIGATION FUNCTIONS
 exports.showPracticePage = function(req, res) {
-    
+
     getThesePropertyValuesForUser([
         'leaderboardScore',
         'practiceConversations',
@@ -332,9 +397,11 @@ exports.showParentsPage = function(req, res) {
 }
 
 exports.reports = function (req, res) {
-    if (req.session.user) {
+    if (req.session.user && req.session.user.student) {
         res.redirect('/practice')
-    } else {
+    } else if (req.session.user && req.session.user.subscriber) {
+        res.render('tutorials')
+    } else {    
         res.render('reports-guest', { errors: req.flash('errors'), regErrors: req.flash('regErrors') })
     }
 }

@@ -38,6 +38,33 @@ User.prototype.register = function() {
   })
 }
 
+User.prototype.subscribe = function() {
+  return new Promise(async (resolve, reject) => {
+      try {
+      // Validate user data
+      this.cleanUp()
+      await this.validate()
+      } catch(err) {
+          console.log(err)
+      }
+      // If no errors, save data to database
+      if (!this.errors.length) {
+          // hash user password
+          let salt = bcrypt.genSaltSync(10)
+          this.data.password = bcrypt.hashSync(this.data.password, salt)
+          await usersCollection.insertOne(this.data)
+          resolve({admin: this.data.admin, 
+            username: this.data.username,
+            student: this.data.student, 
+            subscriber: this.data.subscriber, 
+            userId: this.data._id, 
+            secret: this.data.secret})
+      } else {
+          reject(this.errors)
+      }
+  })
+}
+
 User.prototype.cleanUp = function() {
 
 
@@ -61,6 +88,8 @@ User.prototype.cleanUp = function() {
         password: this.data.password,
         secret: this.data.secret,
         admin: false,
+        student: false,
+        subscriber: false,
         leaderboardScore: 0,
         missionsAccomplished: [],
         leaderboardColor: '#ffff00',
@@ -130,6 +159,8 @@ User.prototype.login = function() {
                   lName: existingUser.lName, 
                   parentName: existingUser.parentName, 
                   admin: existingUser.admin, 
+                  student: existingUser.student,
+                  subscriber: existingUser.subscriber,
                   userId: existingUser._id, 
                   secret: existingUser.secret,
                   lessonCount: existingUser.lessonCount,

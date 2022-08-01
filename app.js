@@ -32,7 +32,7 @@ app.use(function(req, res, next) {
     res.locals.user = req.session.user
     // make markdown function available in ejs templates
     res.locals.filterUserHTML = function(content) {
-        return markdown(content)
+        return markdown.parse(content)
     }
     next()
 })

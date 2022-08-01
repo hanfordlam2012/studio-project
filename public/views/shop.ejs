@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" id="home-html">
+  <head>
+    <!-- HTML Meta Tags -->
+<title>Hanford Lam | Piano Studio</title>
+<meta name="description" content="Learn piano by yourself at home with online courses!">
+
+<!-- Facebook Meta Tags -->
+<meta property="og:url" content="https://www.hanfordlam.com/shop">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hanford Lam | Piano Studio">
+<meta property="og:description" content="Learn piano by yourself at home with online courses!">
+<meta property="og:image" content="https://www.hanfordlam.com/images/hanford-piano-teacher.webp">
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="hanfordlam.com">
+<meta property="twitter:url" content="https://www.hanfordlam.com/shop">
+<meta name="twitter:title" content="Hanford Lam | Piano Studio">
+<meta name="twitter:description" content="Learn piano by yourself at home with online courses!">
+<meta name="twitter:image" content="https://www.hanfordlam.com/images/hanford-piano-teacher.webp">
+
+<!-- Meta Tags Generated via https://www.opengraph.xyz -->
+      
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Handlee&family=Rye&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Hanford Lam | Piano Studio</title>
+    <!-- CURSOR -->
+    <style>HTML,BODY{cursor: url("../../images/cursor.cur"), auto;}</style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7KLNXVSDD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S7KLNXVSDD');
+    </script>
+  </head>
+  <body class="background-transparent w-100">
+    <!-- NAVBAR -->
+    <nav id="myNav" class="rounded recursive row align-items-center text-center w-auto py-2">
+      <div class="col-lg-7">
+        <a id="navIcon" class="my-2 d-block" href='/'>Hanford Lam | Piano Studio</a>
+      </div>
+      <div class="col-lg-5">
+        <a id="homeTab" class="mx-4 my-2 d-inline-block navLink" href="/">HOME</a>
+        <button class="mx-4 my-2 d-inline-block btn btn-sm btn-info" onclick="location.href='/#contact'">CONTACT</button>
+        <a id="reportsTab" class="mx-4 my-2 d-inline-block navLink" href="/reports">PORTAL</a>
+      </div>
+    </nav>
+    <div class="container-fluid background-transparent">
+
+      <!-- DYNAMIC NAVBAR AND TITLE -->
+      <script>
+        let currentPath = window.location.pathname
+        if (currentPath == '/') {
+          document.getElementById("homeTab").classList.add("orange-text")
+          document.title = "Hanford Lam"
+        } else if (currentPath == '/practice' || currentPath == '/missions' || currentPath == '/leaderboard' || currentPath == '/parents' || currentPath == '/reports') {
+          document.getElementById("reportsTab").classList.add("orange-text")
+          document.title = "Portal - Hanford Lam"
+        }
+      </script>
+    <div id="container" class="container">
+
+<!--removed recaptcha v3 23 nov 2021-->
+
+<!-- WELCOME -->
+<div id="biographyContainer" class="">
+  
+<!--PORTAL TUTORIALS-->
+
+<div class="text-center white-border rounded black-bg m-5 p-5">
+  <p class="belgrano" style="color:#ff9422;">Sometimes, parents want to help their children with AMEB piano pieces but don't know how.</p>
+  <p class="belgrano" style="color:#7cfff8;">That's OK. Learn how to support your child by subscribing to Portal Tutorials!</p>
+  <a href="#shop-blurb" class="mt-3 btn btn-large btn-warning">LEARN WITH HANFORD'S PORTAL TUTORIALS</a>
+</div>
+<div id="shop-blurb" class="text-center home-display p-5 m-5">
+  <p>The way this is set up is <i>simple</i>. Pay a <strong>monthly subscription</strong> fee to get portal access where you can stream a catalogue of parent education tutorials. Subscriptions also let you access a private Facebook group where you are empowered by a community of like-minded parents.</p>
+  
+  <p>I want to help eager <b>students and parents</b> make the most out of their piano lessons with their teachers. This means helping you do your best at home, so that your teacher can take you to the next level sooner.</p>
+
+  <p>These <b>tutorials</b> give you a strong overview of how to approach a piece in a practical way, with helpful tips about what to look out for, and are suitable for parents who want to understand more about their child’s music or children who are excited about making progress by themselves.</p>
+    
+  <p>If you are a <b>teacher</b>, please feel encouraged to subscribe and share these videos with your students, to support yourself as well as your students, with minimal extra work.</p>
+    
+  <p>Let’s work together to make quality music education accessible to everyone.</p>
+  
+      <!-- subscribtion FORM
+    <hr>
+    <form id="subscribtion-form" class="text-center justify-content-center my-5 mx-5 px-3" action="/create-checkout-session" method="POST">
+        <div id="emailDiv" class="input-group mb-3">
+          <input id="emailInput" autocomplete="off" type="email" name="email" class="text-center form-control-lg" value="" placeholder="Email address">
+        </div>
+        <div id="usernameDiv" class="input-group mb-3">
+          <input id="usernameInput" autocomplete="off" type="text" name="username" class="text-center form-control-lg" value="" placeholder="Create a username">
+        </div>
+        <div id="passwordDiv" class="input-group mb-3">
+          <input id="passwordInput" autocomplete="off" type="password" name="password" class="text-center form-control-lg" value="" placeholder="Create a password">
+        </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="priceId" value="price_1LQjHYKd8lFEm7v3Znm3CjSD" />
+    <button class="m-5 p-3 btn btn-large btn-primary" style="font-size: larger;" type="submit">Subscribe now for $15/month<br><span style="font-size: x-small;">Takes you to Stripe for secure payment</span></button>
+      </form> -->
+  
+  <div>
+      <p class="recursive mb-3">Learn the features of these pieces, how to practice, and help your child with confidence:</p>
+      <p><b>AMEB Series 18 Grade One</b><br>
+      A1: Etude by Beyer<br>
+      A2: Prelude by Concone/Hodgson (coming)<br>
+      A3: Minuet by Purcell (coming)<br>
+      A4: Summer Toccatina by Vandall (coming)<br>
+      B1: Allegro by Hassler (coming)<br>
+      B2: Minuet by Haydn (coming)<br>
+      B3: Allegretto by Nielsen (coming)<br>
+      B4: Mazurka by Szymanowska (coming)<br>
+      C1: Goblin Dance by Bullard (coming)<br>
+      C2: A Rainy Saturday by Diemer (coming)<br>
+      C3: Mozzie by Milne (coming)<br>
+      C4: Sailors' Dance by Tansman (coming)<br></p>
+  </div>
+</div>
+
+<script>
+  
+  // rainbow headings
+    window.addEventListener("load", function() {
+    let elements = document.getElementsByClassName("rainbowText");
+    for (let i = 0; i < elements.length; i++) {
+      generateRainbowText(elements[i]);
+    }
+  })
+  
+  function generateRainbowText(element) {
+    let text = element.innerText;
+    element.innerHTML = "";
+    for (let i = 0; i < text.length; i++) {
+      let charElem = document.createElement("span");
+      charElem.style.color = "hsl(" + (360 * i / text.length) + ",100%,50%)";
+      charElem.style.fontWeight = "bold";
+      charElem.style.textShadow = "0px 4px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), -4px 0px 5px hsl(" + (360 * i / text.length) + ",80%,20%), 0px -4px 5px hsl(" + (360 * i / text.length) + ",80%,20%)";
+      charElem.innerHTML = text[i];
+      element.appendChild(charElem);
+    }
+  }
+  </script>
+</div>
+    <!-- Footer -->
+    <footer class="footer text-center small black-text py-3">
+        <p class="m-0 raleway">Thanks for visiting! Copyright &copy; <script>document.write(new Date().getFullYear());</script> <a href='/' class="black-text raleway">hanfordlam.com</a>. All rights reserved. Background by Iris.</p>
+    </footer>
+  </div> <!-- close out page container div -->
+  <!-- BOOTSTRAP 5 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <!-- TOOLTIPS -->
+  <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    </script>
+    <script src="../../main-bundled.js"></script>
+  </body>
+</html>

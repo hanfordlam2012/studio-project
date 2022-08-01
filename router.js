@@ -35,6 +35,14 @@ router.post('/doesUsernameExist', userController.doesUsernameExist)
 router.post('/doesEmailExist', userController.doesEmailExist)
 router.post('/isCorrect', userController.isCorrect)
 
+// subscription routes
+router.post('/create-checkout-session', userController.createCheckoutSession)
+router.get('/shop', userController.showShopPage)
+//router.get('/success', userController.showSuccessPage)
+//router.get('/cancel', userController.showCancelPage)
+router.post("/webhook", userController.webhook)
+router.get('/tutorials', userController.mustBeLoggedIn, userController.showTutorialsPage)
+
 // student navigation
 router.get('/practice', userController.mustBeLoggedIn, userController.showPracticePage)
 router.get('/missions', userController.mustBeLoggedIn, userController.showMissionsPage)
