@@ -95,22 +95,22 @@
     
   <p>Let’s work together to make quality music education accessible to everyone.</p>
   
-      <!-- subscribtion FORM
+      <!-- subscription FORM-->
     <hr>
-    <form id="subscribtion-form" class="text-center justify-content-center my-5 mx-5 px-3" action="/create-checkout-session" method="POST">
-        <div id="emailDiv" class="input-group mb-3">
-          <input id="emailInput" autocomplete="off" type="email" name="email" class="text-center form-control-lg" value="" placeholder="Email address">
+    <form id="subscription-form" class="text-center d-flex flex-column justify-content-center my-5 mx-5 px-3" action="/create-checkout-session" method="POST">
+      <div class="d-block">
+        <div id="subscriptionUsernameInputDiv" class="input-group d-block mb-3">
+          <input id="subscriptionUsernameInput" autocomplete="off" type="text" name="username" class="text-center form-control-lg" value="" placeholder="Create a username">
         </div>
-        <div id="usernameDiv" class="input-group mb-3">
-          <input id="usernameInput" autocomplete="off" type="text" name="username" class="text-center form-control-lg" value="" placeholder="Create a username">
-        </div>
-        <div id="passwordDiv" class="input-group mb-3">
-          <input id="passwordInput" autocomplete="off" type="password" name="password" class="text-center form-control-lg" value="" placeholder="Create a password">
+        <div id="subscriptionPasswordInputDiv" class="input-group d-block mb-3">
+          <input id="subscriptionPasswordInput" autocomplete="off" type="password" name="password" class="text-center form-control-lg" value="" placeholder="Create a password">
         </div>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="hidden" name="priceId" value="price_1LQjHYKd8lFEm7v3Znm3CjSD" />
     <button class="m-5 p-3 btn btn-large btn-primary" style="font-size: larger;" type="submit">Subscribe now for $15/month<br><span style="font-size: x-small;">Takes you to Stripe for secure payment</span></button>
-      </form> -->
+      </div>
+        
+      </form> 
   
   <div>
       <p class="recursive mb-3">Learn the features of these pieces, how to practice, and help your child with confidence:</p>
@@ -126,7 +126,8 @@
       C1: Goblin Dance by Bullard (coming)<br>
       C2: A Rainy Saturday by Diemer (coming)<br>
       C3: Mozzie by Milne (coming)<br>
-      C4: Sailors' Dance by Tansman (coming)<br></p>
+      C4: Sailors' Dance by Tansman (coming)<br>
+    <strong>Request a tutorial topic!</strong></p>
   </div>
 </div>
 

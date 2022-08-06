@@ -38,8 +38,7 @@ router.post('/isCorrect', userController.isCorrect)
 // subscription routes
 router.post('/create-checkout-session', userController.createCheckoutSession)
 router.get('/shop', userController.showShopPage)
-//router.get('/success', userController.showSuccessPage)
-//router.get('/cancel', userController.showCancelPage)
+router.get('/success', userController.showSuccessPage)
 router.post("/webhook", userController.webhook)
 router.get('/tutorials', userController.mustBeLoggedIn, userController.showTutorialsPage)
 

@@ -6,6 +6,7 @@ const usersCollection = require('../db').db('studio-project').collection('users'
 const weeksCollection = require('../db').db('studio-project').collection('weeks')
 const missionsCollection = require('../db').db('studio-project').collection('missions')
 const prizesCollection = require('../db').db('studio-project').collection('prizes')
+const tutorialsCollection = require('../db').db('studio-project').collection('tutorials')
 const mainDb = require('../db').db('studio-project')
 // more convenient validation
 const validator = require("validator")
@@ -368,6 +369,14 @@ User.getStudentWeeks = async function(userId) {
         }
         let data = {studentWeeks, graphData}
         resolve(data)
+    }).catch(function(err) {reject(err)})
+}
+
+User.getTutorials = async function() {
+    return new Promise(async(resolve, reject) => {
+        // create tutorials object
+        let tutorials = await tutorialsCollection.find().sort({dateCreated: -1}).toArray()
+        resolve(tutorials)
     }).catch(function(err) {reject(err)})
 }
 

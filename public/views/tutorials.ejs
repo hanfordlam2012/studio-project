@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+     <!-- HTML Meta Tags -->
+<title>Hanford Lam | Piano Studio</title>
+<meta name="description" content="Learn piano by yourself at home with online courses!">
+
+<!-- Facebook Meta Tags -->
+<meta property="og:url" content="https://www.hanfordlam.com/shop">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hanford Lam | Piano Studio">
+<meta property="og:description" content="Learn piano by yourself at home with online courses!">
+<meta property="og:image" content="https://www.hanfordlam.com/images/hanford-piano-teacher.webp">
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="hanfordlam.com">
+<meta property="twitter:url" content="https://www.hanfordlam.com/shop">
+<meta name="twitter:title" content="Hanford Lam | Piano Studio">
+<meta name="twitter:description" content="Learn piano by yourself at home with online courses!">
+<meta name="twitter:image" content="https://www.hanfordlam.com/images/hanford-piano-teacher.webp">
+
+<!-- Meta Tags Generated via https://www.opengraph.xyz -->
+
+<!--JQUERY-->
+<script
+  src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+  crossorigin="anonymous"></script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Bootstrap CSS and Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Handlee&family=Rye&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Hanford Lam | Piano Studio</title>
+    <!-- CURSOR -->
+    <style>HTML,BODY{cursor: url("../../images/cursor.cur"), auto;}</style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7KLNXVSDD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S7KLNXVSDD');
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+    <div id="container" class="container">
+      <!--POPPER SCRIPTS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+<h1>Parent Education: Tutorial Videos</h1>
+<form id="logoutButton" class="mx-4 my-2 d-inline-block" action="/logout" method="POST">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <button type="submit" class="btn btn-sm btn-secondary">LOG OUT</button>
+</form>
+<p class="text-muted">A collection of video tutorials about the Level 1 AMEB piano syllabus.</p>
+<p class="text-muted">What pieces are you or your child learning? Let me know what you need.</p>
+<a class="btn btn-info btn my-3 d-block" href="/#contact" target="_blank" onclick="href('/parents')">Request a tutorial using contact form</a>
+
+<p class="text-muted">Looking for a particular piece? Search this page by pressing <strong>Ctrl + F</strong> to open the search box. (<strong>Cmd + F</strong> for Mac users)</p>
+<p class="text-muted">Newest tutorials are at the top.</p>
+
+<div class="justify-content-center mt-2 mb-3 px-0 table-responsive">
+  <table class="justify-content-center table table-light table-striped table-hover text-center">
+      <thead>
+        <tr class="">
+          <th scope="col">Title</th>
+          <th scope="col">Video + Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tutorials.forEach(function(tutorial) { %>
+          <tr class="">
+            <th class="align-middle" scope="row">
+                <%= tutorial.title %>
+            </th>
+            <td class="align-middle">
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#tutorialVideo<%= tutorial._id %>">
+                Open
+              </button>
+            </td>
+        </tr>
+        <!-- videoModal -->
+        <div class="modal fade" id="tutorialVideo<%= tutorial._id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><%= tutorial.title %></h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="responsive-container rounded">
+                  <iframe width="100%" height="auto" src="<%= tutorial.videoURL %>" title="<%= tutorial.title %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <%- filterUserHTML(tutorial.description) %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--DYNAMIC SCRIPT FOR HANDLING STOP VIDEO WHEN MODAL HIDES-->
+        <script>
+          $('#tutorialVideo<%= tutorial._id %>').on('hidden.bs.modal', function (e) {
+            $('#tutorialVideo<%= tutorial._id %> iframe').attr("src", $("#tutorialVideo<%= tutorial._id %> iframe").attr("src"));
+          });
+          </script>
+        <% }) %>
+      
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="text-center py-4">
+    <button class="mx-3 btn btn-outline-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Click for printer-friendly Practice Guide</button>
+  </div>
+
+  <script>
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+  </script>
+<%- include('includes/footer') %>

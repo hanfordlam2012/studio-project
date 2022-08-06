@@ -2,6 +2,7 @@ const session = require('express-session')
 const Mission = require('../models/Mission')
 const missionController = require('./missionController')
 const User = require('../models/User')
+const bcrypt = require('bcryptjs')
 
 // REGISTRATION FUNCTIONS
 exports.isCorrect = async function (req, res) {
@@ -80,6 +81,7 @@ exports.createCheckoutSession = async function (req, res) {
     // The price ID passed from the client
     //   const {priceId} = req.body;
     const priceId = req.body.priceId;
+    let salt = bcrypt.genSaltSync(10)
     const session = await stripe.checkout.sessions.create({
     mode: 'subscription',
     line_items: [
@@ -92,8 +94,12 @@ exports.createCheckoutSession = async function (req, res) {
     // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
     // the actual Session ID is returned in the query parameter when your customer
     // is redirected to the success page.
-    success_url: 'https://www.hanfordlam.com/success?session_id={CHECKOUT_SESSION_ID}',
-    cancel_url: 'https://www.hanfordlam.com',
+    success_url: 'https://www.hanfordlam.com/success',
+    cancel_url: 'https://www.hanfordlam.com/shop',
+    metadata: {
+        username: req.body.username,
+        password: bcrypt.hashSync(req.body.password, salt)
+    }
     });
 
     // Redirect to the URL returned on the Checkout Session.
@@ -102,8 +108,10 @@ exports.createCheckoutSession = async function (req, res) {
 }
 
 exports.webhook = function(req, res) {
+    // take payload and provision service
     let stripe_payload = req.json
     console.log(stripe_payload.type)
+    console.log(stripe_payload)
 }
 
 // AUTHENTICATION FUNCTIONS
@@ -176,7 +184,6 @@ exports.logout = function (req, res) {
 
 // ADMIN FUNCTIONS
 exports.getStudentData = function (req, res) {
-    console.log(req.body)
     getThesePropertyValuesForUser(['practiceConversations'], req.body.studentId).then((practiceConversations) => {
         User.getLatestComments(req.body.studentId).then((lastLessonComments) => {
             res.json(
@@ -243,8 +250,16 @@ exports.showShopPage = function(req, res) {
     res.render('shop')
 }
 
+exports.showSuccessPage = function(req, res) {
+    res.render('success')
+}
+
 exports.showTutorialsPage = function(req, res) {
-    res.render('tutorials')
+    User.getTutorials().then((tutorials) => {
+        res.render('tutorials', {
+        tutorials: tutorials
+    })
+    })
 }
 
 // STUDENT NAVIGATION FUNCTIONS

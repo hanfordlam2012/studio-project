@@ -1,26 +1,21 @@
 import axios from 'axios'
 import validator from 'validator'
 
-// UNUSED client side security
+// client side security
 export default class SubscriptionForm {
     constructor() {
         this._csrf = document.querySelector('[name="_csrf"]').value
         this.form = document.querySelector("#subscription-form")
         this.allFields = document.querySelectorAll("#subscription-form .input-group")
         this.insertValidationElements()
-        // email
-        this.emailInput = document.querySelector("#emailInput")
-        this.emailDiv = document.querySelector("#emailDiv")
-        this.emailInput.previousValue = ""
-        this.emailInput.isUnique = false
         // username
-        this.usernameInput = document.querySelector("#usernameInput")
-        this.usernameDiv = document.querySelector("#usernameDiv")
+        this.usernameInput = document.querySelector("#subscriptionUsernameInput")
+        this.usernameDiv = document.querySelector("#subscriptionUsernameInputDiv")
         this.usernameInput.previousValue = ""
         this.usernameInput.isUnique = false
         // password
-        this.passwordInput = document.querySelector("#passwordInput")
-        this.passwordDiv = document.querySelector("#passwordDiv")
+        this.passwordInput = document.querySelector("#subscriptionPasswordInput")
+        this.passwordDiv = document.querySelector("#subscriptionPasswordInputDiv")
         this.passwordInput.previousValue = ""
 
         this.events()
@@ -37,18 +32,12 @@ export default class SubscriptionForm {
        this.usernameInput.addEventListener("keyup", () => {
             this.isDifferent(this.usernameInput, this.usernameInputHandler)
         })
-        this.emailInput.addEventListener("keyup", () => {
-            this.isDifferent(this.emailInput, this.emailInputHandler)
-        })
         this.passwordInput.addEventListener("keyup", () => {
             this.isDifferent(this.passwordInput, this.passwordInputHandler)
         })
         // blur
         this.usernameInput.addEventListener("blur", () => {
             this.isDifferent(this.usernameInput, this.usernameInputHandler)
-        })
-        this.emailInput.addEventListener("blur", () => {
-            this.isDifferent(this.emailInput, this.emailInputHandler)
         })
         this.passwordInput.addEventListener("blur", () => {
             this.isDifferent(this.passwordInput, this.passwordInputHandler)
@@ -59,21 +48,16 @@ export default class SubscriptionForm {
     formSubmitHandler() {
         this.usernameInputImmediately()
         this.usernameInputAfterDelay()
-        this.emailInputAfterDelay()
         this.passwordInputImmediately()
         this.passwordInputAfterDelay()
 
         if (
             this.usernameInput.isUnique &&
             !this.usernameDiv.errors &&
-            this.emailInput.isUnique &&
-            !this.emailDiv.errors &&
             !this.passwordDiv.errors
             ) {
             console.log(this.usernameInput.isUnique)
             console.log(this.usernameDiv.errors)
-            console.log(this.emailInput.isUnique)
-            console.log(this.emailDiv.errors)
             console.log(this.passwordDiv.errors)
             this.form.submit()
         }
@@ -101,13 +85,6 @@ export default class SubscriptionForm {
         // this formula gives standard time delay after events
         clearTimeout(this.passwordInput.timer)
         this.passwordInput.timer = setTimeout(() => this.passwordInputAfterDelay(), 800)
-    }
-
-    emailInputHandler() {
-        this.emailDiv.errors = false
-        // this formula gives standard time delay after events
-        clearTimeout(this.emailInput.timer)
-        this.emailInput.timer = setTimeout(() => this.emailInputAfterDelay(), 800)
     }
 
     usernameInputImmediately() {
@@ -166,26 +143,6 @@ export default class SubscriptionForm {
     passwordInputAfterDelay() {
         if (this.passwordInput.value.length < 8) {
             this.showValidationError(this.passwordDiv, "Password must be at least 8 characters.")
-        }
-    }
-
-    emailInputAfterDelay() {
-        if (!/^\S+@\S+$/.test(this.emailInput.value)) {
-            this.showValidationError(this.emailDiv, "You must provide a valid email.")
-        }
-
-        if (!this.emailDiv.errors) {
-            axios.post('/doesEmailExist', {_csrf: this._csrf, email: this.emailInput.value}).then((response) => {
-                if (response.data) {
-                    this.emailInput.isUnique = false
-                    this.showValidationError(this.emailDiv, "This email is already taken.")
-                } else {
-                    this.emailInput.isUnique = true
-                    this.hideValidationError(this.emailDiv)
-                }
-            }).catch(() => {
-                console.log("Please try again later.")
-            })
         }
     }
 

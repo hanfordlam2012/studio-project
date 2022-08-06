@@ -19,7 +19,6 @@ export default class CreateWeek {
 
   getStudentData(studentId) {
     axios.post('/getStudentData', {_csrf: this._csrf, studentId: studentId}).then((response) => {
-      console.log(response.data)
       this.conversationDiv.innerHTML = ""
       this.lastLessonDiv.innerText = ""
 

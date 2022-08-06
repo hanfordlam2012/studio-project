@@ -718,6 +718,12 @@ hr {
     color:rgba(255, 141, 165, 0.9);
 }
 
+/* SUBSCRIPTION FORM */
+#subscription-form > div > input, input:focus {
+    background-color: rgb(190, 255, 180);
+    color:#002837;
+}
+
 /* WALLET */
 .wallet-div {
     text-align: center;

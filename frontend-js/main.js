@@ -7,7 +7,7 @@ if (document.querySelector("#registration-form")) {
     new RegistrationForm()
 }
 
-if (document.querySelector("#subscriber-form")) {
+if (document.querySelector("#subscription-form")) {
     new SubscriptionForm()
 }
 
