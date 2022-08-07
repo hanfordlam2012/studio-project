@@ -128,11 +128,14 @@ exports.webhook = function(req, res) {
     // Handle the event
     switch (event.type) {
         case 'checkout.session.completed':
+            console.log(event.data.object)
         let customerID = event.data.object.customer
         let username = event.data.object.metadata.username
         let password = event.data.object.metadata.password
         createSubscriber(customerID, username, password)
+        break;
       case 'customer.subscription.deleted':
+        console.log(event.data.object)
         customerID = event.data.object.customer
         deleteSubscriber(customerID)
         break;
