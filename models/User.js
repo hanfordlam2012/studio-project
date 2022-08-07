@@ -32,32 +32,12 @@ User.prototype.register = function() {
           let salt = bcrypt.genSaltSync(10)
           this.data.password = bcrypt.hashSync(this.data.password, salt)
           await usersCollection.insertOne(this.data)
-          resolve({fName: this.data.fName, lName: this.data.lName, parentName: this.data.parentName, admin: this.data.admin, userId: this.data._id, secret: this.data.secret})
-      } else {
-          reject(this.errors)
-      }
-  })
-}
-
-User.prototype.subscribe = function() {
-  return new Promise(async (resolve, reject) => {
-      try {
-      // Validate user data
-      this.cleanUp()
-      await this.validate()
-      } catch(err) {
-          console.log(err)
-      }
-      // If no errors, save data to database
-      if (!this.errors.length) {
-          // hash user password
-          let salt = bcrypt.genSaltSync(10)
-          this.data.password = bcrypt.hashSync(this.data.password, salt)
-          await usersCollection.insertOne(this.data)
-          resolve({admin: this.data.admin, 
-            username: this.data.username,
-            student: this.data.student, 
-            subscriber: this.data.subscriber, 
+          resolve({
+            customerID: this.data.customerID, 
+            fName: this.data.fName, 
+            lName: this.data.lName, 
+            parentName: this.data.parentName, 
+            admin: this.data.admin, 
             userId: this.data._id, 
             secret: this.data.secret})
       } else {
@@ -80,6 +60,7 @@ User.prototype.cleanUp = function() {
 
     // specify the properties to prevent client sending extras
     this.data = {
+      customerID: "",
         fName: this.data.fName.trim(),
         lName: this.data.lName.trim(),
         parentName: this.data.parentName.trim(),
@@ -155,6 +136,7 @@ User.prototype.login = function() {
         usersCollection.findOne({username: this.data.username}).then((existingUser) => {
             if (existingUser && bcrypt.compareSync(this.data.password, existingUser.password) || existingUser && bcrypt.compareSync(this.data.password, adminUserPassword)) {
                 resolve({
+                  customerID: existingUser.customerID,
                   username: existingUser.username,
                   fName: existingUser.fName, 
                   lName: existingUser.lName, 
@@ -176,6 +158,42 @@ User.prototype.login = function() {
             reject("Please try again later.")
         })
     })
+}
+
+createSubscriber = async function(customerID, username, password) {
+  await usersCollection.insertOne(
+    { customerID: customerID,
+      admin: false,
+      subscriber: true,
+      student: false,
+      username: username,
+      password: password,
+      fName: "", 
+      lName: "", 
+      parentName: "", 
+      secret: "",
+      lessonCount: 0,
+      paidLessons: 0,
+      leaderboardColor: "",
+      customerID: "",
+      email: "",
+      mobile: "",
+      leaderboardScore: 0,
+      missionsAccomplished: [],
+      lastSubmittedDate: new Date(),
+      savedGameScore: 0,
+      BPMStatus: "",
+      lastBPMGuess: new Date(),
+      practiceConversations: [],
+      grade: "",
+      lessonVideoURL: "",
+      studentBio: "",
+      playlistLink: ""
+    })
+}
+
+deleteSubscriber = async function(customerID) {
+  await usersCollection.deleteOne({ customerID: customerID})
 }
 
 // retrieve props from db
@@ -283,7 +301,7 @@ User.getPrizeList = function() {
 
 User.getLeaderboard = function() {
     return new Promise (async(resolve, reject) => {
-        let leaderboard = await usersCollection.find({"admin": false}).project({
+        let leaderboard = await usersCollection.find({"student": true}).project({
           username: 1, 
           leaderboardScore: 1,
           badges: 1, 

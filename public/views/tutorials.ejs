@@ -61,10 +61,14 @@
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <button type="submit" class="btn btn-sm btn-secondary">LOG OUT</button>
 </form>
-<p class="text-muted">A collection of video tutorials about the Level 1 AMEB piano syllabus.</p>
+<p class="text-muted">A collection of video tutorials about the AMEB piano syllabus.</p>
 <p class="text-muted">What pieces are you or your child learning? Let me know what you need.</p>
-<a class="btn btn-info btn my-3 d-block" href="/#contact" target="_blank" onclick="href('/parents')">Request a tutorial using contact form</a>
-
+<a class="btn btn-info my-3 d-block" href="/#contact" target="_blank">Request a tutorial topic</a>
+<form class="d-block" method="POST" action="/create-portal-session">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <input type="hidden" name="customerID" value="<%= customerID %>">
+  <button class="text-center btn btn-info my-3 d-block" type="submit">Manage billing details</button>
+</form>
 <p class="text-muted">Looking for a particular piece? Search this page by pressing <strong>Ctrl + F</strong> to open the search box. (<strong>Cmd + F</strong> for Mac users)</p>
 <p class="text-muted">Newest tutorials are at the top.</p>
 

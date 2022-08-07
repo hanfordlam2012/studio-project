@@ -15,10 +15,10 @@ router.get('/', function(req, res) {
 
 // general teaching tools
 router.get('/blackboard', function(req, res) {res.render('blackboard')})
-router.get('/quiz', function(req, res) {res.render('quiz')})
-router.post('/sendQuizToHanford', messageController.sendQuizToHanford)
-router.get('/melody', function(req, res) {res.render('melody')})
-router.post('/sendMelodyToHanford', messageController.sendMelodyToHanford)
+//router.get('/quiz', function(req, res) {res.render('quiz')})
+//router.post('/sendQuizToHanford', messageController.sendQuizToHanford)
+//router.get('/melody', function(req, res) {res.render('melody')})
+//router.post('/sendMelodyToHanford', messageController.sendMelodyToHanford)
 //router.get('/showcase', userController.mustBeLoggedIn, performanceController.showShowcasePage)
 //router.post('/addPerformanceComment', userController.mustBeLoggedIn, performanceController.addPerformanceComment)
 router.get('/feedback', userController.mustBeLoggedIn, userController.showFeedbackPage)
@@ -37,9 +37,10 @@ router.post('/isCorrect', userController.isCorrect)
 
 // subscription routes
 router.post('/create-checkout-session', userController.createCheckoutSession)
+router.post('/create-portal-session', userController.createPortalSession)
 router.get('/shop', userController.showShopPage)
 router.get('/success', userController.showSuccessPage)
-router.post("/webhook", userController.webhook)
+router.post("/webhook", express.raw({type: 'application/json'}), userController.webhook)
 router.get('/tutorials', userController.mustBeLoggedIn, userController.showTutorialsPage)
 
 // student navigation
@@ -50,7 +51,7 @@ router.get('/parents', userController.mustBeLoggedIn, userController.showParents
 
 // game routes
 //router.post('/saveScore', userController.mustBeLoggedIn, missionController.compareScoreAndSave) FOR LEGATO SMOOTH
-router.post('/sendPacmanHighScores', missionController.updatePacmanHighscores)
+//router.post('/sendPacmanHighScores', missionController.updatePacmanHighscores)
 
 // practice routes
 router.post('/updateLastSubmittedDateAndAddPoints', userController.mustBeLoggedIn, missionController.updateLastSubmittedDateAndAddPoints)

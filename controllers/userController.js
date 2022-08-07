@@ -3,6 +3,9 @@ const Mission = require('../models/Mission')
 const missionController = require('./missionController')
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
+// Set your secret key. Remember to switch to your live secret key in production.
+// See your keys here: https://dashboard.stripe.com/apikeys
+const stripe = require('stripe')(process.env.STRIPE_LIVE_API_KEY);
 
 // REGISTRATION FUNCTIONS
 exports.isCorrect = async function (req, res) {
@@ -51,32 +54,7 @@ exports.register = function (req, res) {
     })
 }
 
-exports.subscribe = function (req, res) {
-    let user = new User(req.body)
-    user.register().then((sessionData) => {
-        req.session.user = { 
-            fName: sessionData.fName, 
-            parentName: sessionData.parentName, 
-            admin: sessionData.admin, 
-            userId: sessionData.userId 
-        }
-        req.session.save(function () {
-            res.redirect('/reports')
-        })
-    }).catch((regErrors) => {
-        regErrors.forEach(function (error) {
-            req.flash('regErrors', error)
-        })
-        req.session.save(function () {
-            res.redirect('/reports')
-        })
-    })
-}
-
 exports.createCheckoutSession = async function (req, res) {
-    // Set your secret key. Remember to switch to your live secret key in production.
-    // See your keys here: https://dashboard.stripe.com/apikeys
-    const stripe = require('stripe')(process.env.STRIPE_KEY);
 
     // The price ID passed from the client
     //   const {priceId} = req.body;
@@ -102,16 +80,67 @@ exports.createCheckoutSession = async function (req, res) {
     }
     });
 
-    // Redirect to the URL returned on the Checkout Session.
+    // Redirect to the URL returned on the Checkout Sessioan.
     // With express, you can redirect with:
     res.redirect(303, session.url);
 }
 
+exports.createPortalSession = async function (req, res) {
+    const customer_ID = req.body.customerID;
+  
+    // This is the url to which the customer will be redirected when they are done
+    // managing their billing with the portal.
+    const returnUrl = "https://www.hanfordlam.com/reports";
+  
+    const portalSession = await stripe.billingPortal.sessions.create({
+      customer: customer_ID,
+      return_url: returnUrl,
+    });
+  
+    res.redirect(303, portalSession.url);
+  };
+
 exports.webhook = function(req, res) {
-    // take payload and provision service
-    let stripe_payload = req.json
-    console.log(stripe_payload.type)
-    console.log(stripe_payload)
+
+    let event = req.body;
+    // Replace this endpoint secret with your endpoint's unique secret
+    // If you are testing with the CLI, find the secret by running 'stripe listen'
+    // If you are using an endpoint defined with the API or dashboard, look in your webhook settings
+    // at https://dashboard.stripe.com/webhooks
+    const endpointSecret = process.env.STRIPE_SIGN_SECRET;
+    // Only verify the event if you have an endpoint secret defined.
+    // Otherwise use the basic event deserialized with JSON.parse
+    if (endpointSecret) {
+      // Get the signature sent by Stripe
+      const signature = req.headers['stripe-signature'];
+      try {
+        event = stripe.webhooks.constructEvent(
+          req.body,
+          signature,
+          endpointSecret
+        );
+      } catch (err) {
+        console.log(`⚠️  Webhook signature verification failed.`, err.message);
+        return res.sendStatus(400);
+      }
+    }
+    // Handle the event
+    switch (event.type) {
+        case 'checkout.session.completed':
+        let customerID = event.data.object.customer
+        let username = event.data.object.metadata.username
+        let password = event.data.object.metadata.password
+        User.createSubscriber(customerID, username, password)
+      case 'customer.subscription.deleted':
+        customerID = event.data.object.customer
+        User.deleteSubscriber(customerID)
+        break;
+      default:
+        // Unexpected event type
+        console.log(`Unhandled event type ${event.type}.`);
+    }
+    // Return a 200 response to acknowledge receipt of the event
+    res.send();
 }
 
 // AUTHENTICATION FUNCTIONS
@@ -146,6 +175,7 @@ exports.login = function (req, res) {
         // session property added by express-session in app.js
         // session package recognises changes to session object and auto updates database
         req.session.user = { 
+            customerID: result.customerID,
             username: result.username,
             fName: result.fName, 
             lName: result.lName, 
@@ -257,7 +287,8 @@ exports.showSuccessPage = function(req, res) {
 exports.showTutorialsPage = function(req, res) {
     User.getTutorials().then((tutorials) => {
         res.render('tutorials', {
-        tutorials: tutorials
+            customerID: req.session.user.customerID,
+            tutorials: tutorials
     })
     })
 }
@@ -415,7 +446,7 @@ exports.reports = function (req, res) {
     if (req.session.user && req.session.user.student) {
         res.redirect('/practice')
     } else if (req.session.user && req.session.user.subscriber) {
-        res.render('tutorials')
+        res.redirect('/tutorials')
     } else {    
         res.render('reports-guest', { errors: req.flash('errors'), regErrors: req.flash('regErrors') })
     }

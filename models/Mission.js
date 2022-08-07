@@ -19,7 +19,7 @@ giveEveryoneASomething = async function() {
       { },
       { $set:
          {
-            subscriber: false
+            customerID: ""
          }
       }
    )
