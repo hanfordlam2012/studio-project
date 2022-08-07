@@ -101,13 +101,13 @@ exports.createPortalSession = async function (req, res) {
   };
 
 exports.webhook = function(req, res) {
-
+    console.log("stripe webhook req received")
     let event = req.body;
     // Replace this endpoint secret with your endpoint's unique secret
     // If you are testing with the CLI, find the secret by running 'stripe listen'
     // If you are using an endpoint defined with the API or dashboard, look in your webhook settings
     // at https://dashboard.stripe.com/webhooks
-    const endpointSecret = process.env.STRIPE_SIGN_SECRET;
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
     // Only verify the event if you have an endpoint secret defined.
     // Otherwise use the basic event deserialized with JSON.parse
     if (endpointSecret) {
@@ -119,6 +119,7 @@ exports.webhook = function(req, res) {
           signature,
           endpointSecret
         );
+        console.log("signature verified!")
       } catch (err) {
         console.log(`⚠️  Webhook signature verification failed.`, err.message);
         return res.sendStatus(400);
@@ -130,10 +131,10 @@ exports.webhook = function(req, res) {
         let customerID = event.data.object.customer
         let username = event.data.object.metadata.username
         let password = event.data.object.metadata.password
-        User.createSubscriber(customerID, username, password)
+        createSubscriber(customerID, username, password)
       case 'customer.subscription.deleted':
         customerID = event.data.object.customer
-        User.deleteSubscriber(customerID)
+        deleteSubscriber(customerID)
         break;
       default:
         // Unexpected event type

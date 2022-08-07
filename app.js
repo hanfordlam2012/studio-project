@@ -1,5 +1,7 @@
-// enable new features for our express application
+//for webhook
+const userController = require('./controllers/userController')
 
+// enable new features for our express application
 const express = require('express');
 // lets browser keep cookies
 const session = require('express-session')
@@ -40,6 +42,9 @@ app.use(function(req, res, next) {
 // router is middleware
 const router = require('./router')
 
+//before csrf protection on routes
+app.post('/webhook', express.raw({type: 'application/json'}), userController.webhook)
+
 // user inputs accessible from req.body object
 app.use(express.urlencoded({extended: false}))
 // our app now accepts JSON
@@ -51,6 +56,9 @@ app.use(express.static('public'));
 app.set('views', 'public/views');
 // set view engine
 app.set('view engine', 'ejs');
+
+
+
 
 app.use(csrf())
 

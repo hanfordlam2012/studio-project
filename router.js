@@ -40,8 +40,8 @@ router.post('/create-checkout-session', userController.createCheckoutSession)
 router.post('/create-portal-session', userController.createPortalSession)
 router.get('/shop', userController.showShopPage)
 router.get('/success', userController.showSuccessPage)
-router.post("/webhook", express.raw({type: 'application/json'}), userController.webhook)
 router.get('/tutorials', userController.mustBeLoggedIn, userController.showTutorialsPage)
+
 
 // student navigation
 router.get('/practice', userController.mustBeLoggedIn, userController.showPracticePage)
