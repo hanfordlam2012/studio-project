@@ -23,7 +23,7 @@ exports.sendEmail = async function(req, res) {
 
 exports.sendQuizToHanford = function(req, res) {
     Message.sendQuizToHanford(req.body).then((response) => {
-        res.send("Thank you very much! Your responses have been sent to Hanford. You can close this page now!")
+        res.send("Thank you very much for sending your responses to Hanford.<br>The next task is to begin your Term 4 Project: MUSIC STYLES POWERPOINT.<br>Please go to OneNote and follow the instructions there.<br>Have a great day!")
     }).catch((err) => {
         res.send(err)
     })

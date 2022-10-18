@@ -24,7 +24,7 @@
 
 <p class="text-center grey-text my-5">Timestamp links provided for your convenience. There are 10 questions to answer - do your best!<br>If you need help, raise your hand and Mr. Hanford or Ms. Lam will come and assist.</p>
 
-<form style="line-height: 2.5;" class="text-center mb-5" action="/sendQuizToHanford" method="POST">
+<form style="line-height: 2.5;" class="text-center mb-5" action="/sendQuizToHanford" method="POST" id="quizform">
   <div class="quizQuestionContainer"><p class="white-text my-5"><span style="font-size: 2.5rem;"><span class="green-text">Question 1: </span>(<a href="javascript:void(0);" onclick="setCurrentTime(0)">0:00</a>)</span><br>The piece begins with violas doing low trills that change in volume.<br>What kind of feeling does this give you? <input style="line-height: 1;" class="mx-1" type="text" name="q1" required></input></p>
   <img src="../images/scoresby/q1.png" height="" width="100%100%" alt="Image of score" class="mb-5"></div>
 
@@ -90,6 +90,22 @@
     var object = [ 0, 20, 27, 34, 42, 59, 65, 72, 81, 210 ];
     player.seekTo(object[slideNum]);
   }
+
+  // prevent multisubmits
+  try {
+            (function() {
+              let frm = document.getElementById("quizform")
+              var allowSubmit = true;
+              frm.onsubmit = function () {
+                if (allowSubmit)
+                    allowSubmit = false;
+                else 
+                    return false;
+              }
+            })();
+          } catch(err) {
+            console.log(err);
+          }
   </script>
 
 </div><!-- close out MAIN div -->
