@@ -91,21 +91,7 @@
     player.seekTo(object[slideNum]);
   }
 
-  // prevent multisubmits
-  try {
-            (function() {
-              let frm = document.getElementById("quizform")
-              var allowSubmit = true;
-              frm.onsubmit = function () {
-                if (allowSubmit)
-                    allowSubmit = false;
-                else 
-                    return false;
-              }
-            })();
-          } catch(err) {
-            console.log(err);
-          }
+
   </script>
 
 </div><!-- close out MAIN div -->
