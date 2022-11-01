@@ -37,7 +37,7 @@
       <div class="col-lg-7">
         <a id="practiceTab" href="/practice" class="mx-4 my-2 d-inline-block navLink">PRACTICE</a>
         <a id="missionsTab" href="/missions" class="mx-4 my-2 d-inline-block navLink">MISSIONS</a>
-        <a id="leaderboardTab" href="/leaderboard" class="mx-4 my-2 d-inline-block navLink">LEADERBOARD</a>
+        <a id="leaderboardTab" href="/leaderboard" class="mx-4 my-2 d-inline-block navLink">POINTS</a>
         <form id="logoutButton" class="mx-4 my-2 d-inline-block" action="/logout" method="POST">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit" class="btn btn-sm btn-secondary">LOG OUT</button>
@@ -105,7 +105,7 @@
     </div>
   </div>
 
-  <!-- INTERESTING VIDEO -->
+  <!-- INTERESTING VIDEO 
   <div id="interestingVideoContainer" class="aboveFalling">
     <% if(interestingVideoURL){ %>
     <p class="blue-box text-center mb-0 py-4 rounded recursive"><%- interestingVideoPrompt %></p>
@@ -113,16 +113,92 @@
       <iframe loading="lazy" style="z-index: 99999;" class="mb-5" width="100%" height="500px" src="<%= interestingVideoURL %>" title="Hanford's Video Pick" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <% } %>
-  </div>
+  </div>-->
 
-  <!-- READING PRACTICE -->
+    <!-- LITERACY -->
+    <div class="aboveFalling p-5 m-5 blue-box rounded">
+      <div class="m-5">
+        <p class="recursive"><strong>November REPORTING Mission:</strong><br>1. Choose a piece of music you are currently learning.<br>2. Write a report containing information about the piece title, composer, and characteristics of the music.<br>3. Submit your report to the Conversation Box.</p>
+      </div>
+    </div>
+
+        <!-- READING -->
+        <div class="aboveFalling blue-box p-5 m-5 rounded">
+          <div class="m-5">
+          <p class="recursive"><strong>November NEW MUSIC Mission:</strong><br>1. Choose a piece of music from Hanford's bookshelf.<br>2. Take it home and work on it.<br>3. In the next lesson, show Hanford how much of it you were able to learn by yourself.</p>
+        </div>
+        </div>
+
+            <!--DISPLAY CONVERSATION-->
+            <div class="d-flex justify-content-center" style=" min-width:0;">
+              <div class="d-flex flex-column" style=" min-width:0;">
+                <div id="practiceConversationContainer" class="d-flex flex-column topShadow rounded my-5 py-3" style="max-width:960px; min-width:0; z-index: 1;overflow-y: scroll;height:400px;">
+                  <div id="practiceConversation" class="mx-auto px-4" style="z-index: 100; min-width:0; max-width: 100%;">
+                    <% practiceConversation.forEach((entry) => { 
+                      if(entry[0] == 'You') { %>
+                        <div class="convo-p-wrapper black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="orange-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
+                      <% } else if(entry[0] == 'Hanford') { %>
+                        <div class="convo-p-wrapper black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="purple-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
+                      <% }
+                    }) %>
+                    <div style="height:15px;"></div>
+                  </div>
+                    <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS-->
+                    <% if (!practiceStatus) { %>
+                      <form id="PracticeConvo" class="m-4" style="max-width:960px;" action="/updateLastSubmittedDateAndAddPoints" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <div class="form-group text-center" style="width:100%;margin:0 auto;">
+                          <textarea autocomplete="off" name="practiceConversation" class="form-control" style="background-color: rgba(30, 20, 51, 0.927);color:chartreuse;" 
+                          placeholder="<%= practicePrompt %>&#10; &#10;" id="practiceConversation" rows="6"></textarea>
+                          <div class="d-grid">
+                            <button  type="submit" class="btn btn-danger btn-block mt-4" style="font-size: 1.2rem; border:3px solid white">SEND</button>
+                          </div>
+                          
+                        </div>
+                      </form>
+                    <% } else { %>
+                      <div id="practice-success" class="recursive text-center mt-5 my-2">
+                        <p class="black-bg d-inline-block p-3 rounded"><span class="green-text">Come back tomorrow for Hanford's reply!</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
+                      </div>
+                    <% } %>
+              
+                </div>
+
+
+              
+              <script>
+                let practiceConversationContainer = document.getElementById('practiceConversationContainer')
+                practiceConversationContainer.scrollTop = practiceConversationContainer.scrollHeight
+
+                // prevent multisubmits
+          try {
+            (function() {
+              let frm = document.getElementById("PracticeConvo")
+              var allowSubmit = true;
+              frm.onsubmit = function () {
+                if (allowSubmit)
+                    allowSubmit = false;
+                else 
+                    return false;
+              }
+            })();
+          } catch(err) {
+            console.log(err);
+          }
+              </script>
+              
+              </div>
+          
+            </div>
+
+  <!-- READING PRACTICE 
   <div id="readingPracticeContainer" class="aboveFalling mt-5">
     <% if(readingPracticePDFPath){ %>
     <p class="blue-box text-center py-4 rounded recursive"><%- readingPracticePrompt %></p>
     <p class="blue-box text-center pb-4 rounded recursive mb-0">Here is the <a href="<%= readingPracticePDFPath %>" target="_blank">PDF</a> file.</p>
     <iframe loading="lazy" src="<%= readingPracticePDFPath %>" width="100%" height="1000px"></iframe>
     <% } %>
-  </div>
+  </div>-->
 
   <!--BOUNCING ARROW
   <div class="aboveFalling arrowcontainer">

@@ -342,7 +342,8 @@ exports.showPracticePage = function(req, res) {
 exports.showMissionsPage = function(req, res) {
     User.getMissionsAccomplished(req.session.user.userId).then((missionsAccomplished) => {
         getThesePropertyValuesForUser([
-            'leaderboardScore'
+            'leaderboardScore',
+            'practiceConversations'
             ],req.session.user.userId).then((userProps) => {
                 getFromAdmin([
                 'pacmanHighscores',
@@ -350,10 +351,12 @@ exports.showMissionsPage = function(req, res) {
                 'interestingVideoPrompt', 
                 'readingPracticePDFPath', 
                 'readingPracticePrompt',
+                'practicePrompt'
                 ]).then((adminProps) => {
                     missionController.getRandomBPM().then((randomBPM) => {
                     // function not yet written, need to return object with props BPMStatus, points
                     missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
+                        Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
                         res.render('missionsPage', {
                             username: req.session.user.username,
                             fName: req.session.user.fName,
@@ -372,7 +375,11 @@ exports.showMissionsPage = function(req, res) {
                             readingPracticePDFPath: adminProps.readingPracticePDFPath,
                             readingPracticePrompt: adminProps.readingPracticePrompt,
                             interestingVideoURL: adminProps.interestingVideoURL,
-                            interestingVideoPrompt: adminProps.interestingVideoPrompt
+                            interestingVideoPrompt: adminProps.interestingVideoPrompt,
+                            practiceConversation: userProps.practiceConversations,
+                            practicePrompt: adminProps.practicePrompt,
+                            practiceStatus: practiceStatus // true if already practised
+                        })
                         })
                     })
                 })
@@ -385,26 +392,36 @@ exports.showLeaderboardPage = function(req, res) {
     User.getPrizeList().then((prizeList) => {
       User.getLeaderboard().then((leaderboardObject) => {
         getThesePropertyValuesForUser([
-            'leaderboardScore'
+            'leaderboardScore',
+            'practiceConversations'
             ],req.session.user.userId).then((userProps) => {
-            res.render('leaderboardPage', {
-            username: req.session.user.username,
-            fName: req.session.user.fName,
-            userId: req.session.user.userId,
-            parentName: req.session.user.parentName,
-            admin: req.session.user.admin,
-            leaderboard: leaderboardObject.leaderboard,
-            adErrors: req.flash('adErrors'),
-            prizeList: prizeList,
-            lessonCount: req.session.user.lessonCount,
-            paidLessons: req.session.user.paidLessons,
-            leaderboardColor: req.session.user.leaderboardColor,
-            points: userProps.leaderboardScore
-            })
-          })
+                getFromAdmin([
+                    'practicePrompt'
+                    ]).then((adminProps) => {
+                        Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
+                        res.render('leaderboardPage', {
+                            username: req.session.user.username,
+                            fName: req.session.user.fName,
+                            userId: req.session.user.userId,
+                            parentName: req.session.user.parentName,
+                            admin: req.session.user.admin,
+                            leaderboard: leaderboardObject.leaderboard,
+                            adErrors: req.flash('adErrors'),
+                            prizeList: prizeList,
+                            lessonCount: req.session.user.lessonCount,
+                            paidLessons: req.session.user.paidLessons,
+                            leaderboardColor: req.session.user.leaderboardColor,
+                            points: userProps.leaderboardScore,
+                            practiceConversation: userProps.practiceConversations,
+                            practicePrompt: adminProps.practicePrompt,
+                            practiceStatus: practiceStatus, // true if already practised
+                        })
+                    })
+                    })
         
-        })  
-    })
+                })  
+            })
+        })
 }
 
 exports.showParentsPage = function(req, res) {

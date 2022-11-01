@@ -34,7 +34,7 @@
       <div class="col-lg-7">
         <a id="practiceTab" href="/practice" class="mx-4 my-2 d-inline-block navLink">PRACTICE</a>
         <a id="missionsTab" href="/missions" class="mx-4 my-2 d-inline-block navLink">MISSIONS</a>
-        <a id="leaderboardTab" href="/leaderboard" class="mx-4 my-2 d-inline-block navLink">LEADERBOARD</a>
+        <a id="leaderboardTab" href="/leaderboard" class="mx-4 my-2 d-inline-block navLink">POINTS</a>
         <form id="logoutButton" class="mx-4 my-2 d-inline-block" action="/logout" method="POST">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit" class="btn btn-sm btn-secondary">LOG OUT</button>
@@ -80,48 +80,6 @@
 		<span>Ask questions using the Conversation Box 🤔</span>
 		<span>Want to leave your fellow pianists a message here?</span>
 	</div>
-</div>
-
-<div class="table-responsive">
-  <table class="my-0 py-0 table text-center table-hover table-light aboveFalling">
-    <thead>
-      <tr class="">
-        <th class="black-text" scope="col">PRIZE</th>
-        <th class="black-text" scope="col">PRICE</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% prizeList.forEach((prize) => { %>
-        <tr>
-          <td><span style="color:<%= prize.color %>"><%= prize.title %></span><span class="mx-2"></span><small class="orange-text ml-2"> <%= prize.desc %></small></td>
-          <td class="pink-text recursive"><%= prize.price %></td>
-        </tr>
-        <% }) %>
-    </tbody>
-  </table>
-</div>
-
-<!-- WAYS TO EARN -->
-<div class="table-responsive my-0 py-0">
-  <table class="my-0 table text-center table-hover table-dark aboveFalling">
-    <thead>
-      <tr class="">
-        <th class="white-text" scope="col">Ways to earn piano points</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr><td><span class="blue-text">Guess the Tempo</span><span class="mx-2 orange-text">awards 1 to 15 points</span></td></tr>  
-        <tr><td><span class="blue-text">Log your practice using the Conversation Box</span><span class="mx-2 orange-text">awards 5 to 10 points</span></td></tr>
-        <tr><td><span class="blue-text">Teach Hanford a cool new thing</span><span class="mx-2 orange-text">awards 20 points</span></td></tr>
-        <tr><td><span class="blue-text">Solve a Turing Tumble puzzle</span><span class="mx-2 orange-text">awards 20 points</span></td></tr>
-        <tr><td><span class="blue-text">Contribute ideas for the next holiday program</span><span class="mx-2 orange-text">awards 20 points</span></td></tr>
-        <tr><td><span class="blue-text">Complete a Literacy mission</span><span class="mx-2 orange-text">awards 50 points</span></td></tr>
-        <tr><td><span class="blue-text">Complete a Reading mission</span><span class="mx-2 orange-text">awards 50 points</span></td></tr>
-        <tr><td><span class="blue-text">Pass an AMEB exam</span><span class="mx-2 orange-text">awards 500 points</span></td></tr>
-        <tr><td><span class="blue-text">Perform for an event</span><span class="mx-2 orange-text">awards 500 points</span></td></tr>
-        
-    </tbody>
-  </table>
 </div>
 
 <div id="leaderboard-table" class="table-responsive my-0 py-0">
@@ -190,6 +148,113 @@
     </tbody>
   </table>
 </div>
+
+
+<div class="table-responsive">
+  <table class="my-5 py-0 table text-center table-hover table-light aboveFalling">
+    <thead>
+      <tr class="">
+        <th class="black-text" scope="col">REWARDS</th>
+        <th class="black-text" scope="col">COST</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% prizeList.forEach((prize) => { %>
+        <tr>
+          <td><span style="color:<%= prize.color %>"><%= prize.title %></span><span class="mx-2"></span><small class="orange-text ml-2"> <%= prize.desc %></small></td>
+          <td class="pink-text recursive"><%= prize.price %></td>
+        </tr>
+        <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<!-- WAYS TO EARN -->
+<div class="table-responsive mb-5 py-0">
+  <table class="my-0 table text-center table-hover table-dark aboveFalling">
+    <thead>
+      <tr class="">
+        <th class="white-text" scope="col">WAYS TO COLLECT POINTS</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr><td><span class="blue-text">Guess the Tempo</span><span class="mx-2 orange-text">awards 1 to 15 points</span></td></tr>  
+        <tr><td><span class="blue-text">Log your practice using the Conversation Box</span><span class="mx-2 orange-text">awards 5 to 10 points</span></td></tr>
+        <tr><td><span class="blue-text">Complete a Monthly Mission</span><span class="mx-2 orange-text">awards 100 points</span></td></tr>
+        <tr><td><span class="blue-text">Attend all Theory Club Sessions</span><span class="mx-2 orange-text">awards 150 points</span></td></tr>
+        <tr><td><span class="blue-text">Attend all Performance Workshops</span><span class="mx-2 orange-text">awards 150 points</span></td></tr>
+        <tr><td><span class="blue-text">Pass an AMEB exam</span><span class="mx-2 orange-text">awards 200 points</span></td></tr>
+        <tr><td><span class="blue-text">Perform for an event</span><span class="mx-2 orange-text">awards 300 points</span></td></tr>
+        
+    </tbody>
+  </table>
+</div>
+
+            <!--DISPLAY CONVERSATION-->
+            <div class="d-flex justify-content-center" style=" min-width:0;">
+              <div class="d-flex flex-column" style=" min-width:0;">
+                <div id="practiceConversationContainer" class="d-flex flex-column topShadow rounded my-5 py-3" style="max-width:960px; min-width:0; z-index: 1;overflow-y: scroll;height:400px;">
+                  <div id="practiceConversation" class="mx-auto px-4" style="z-index: 100; min-width:0; max-width: 100%;">
+                    <% practiceConversation.forEach((entry) => { 
+                      if(entry[0] == 'You') { %>
+                        <div class="convo-p-wrapper black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="orange-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
+                      <% } else if(entry[0] == 'Hanford') { %>
+                        <div class="convo-p-wrapper black-text px-3 py-2 my-3 rounded" style="background-color: rgba(255, 255, 255, 0.97)"><strong class="purple-text"><%= entry[0] %></strong> <%- filterUserHTML(entry[1]) %></div>
+                      <% }
+                    }) %>
+                    <div style="height:15px;"></div>
+                  </div>
+                    <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS-->
+                    <% if (!practiceStatus) { %>
+                      <form id="PracticeConvo" class="m-4" style="max-width:960px;" action="/updateLastSubmittedDateAndAddPoints" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <div class="form-group text-center" style="width:100%;margin:0 auto;">
+                          <textarea autocomplete="off" name="practiceConversation" class="form-control" style="background-color: rgba(30, 20, 51, 0.927);color:chartreuse;" 
+                          placeholder="<%= practicePrompt %>&#10; &#10;" id="practiceConversation" rows="6"></textarea>
+                          <div class="d-grid">
+                            <button  type="submit" class="btn btn-danger btn-block mt-4" style="font-size: 1.2rem; border:3px solid white">SEND</button>
+                          </div>
+                          
+                        </div>
+                      </form>
+                    <% } else { %>
+                      <div id="practice-success" class="recursive text-center mt-5 my-2">
+                        <p class="black-bg d-inline-block p-3 rounded"><span class="green-text">Come back tomorrow for Hanford's reply!</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
+                      </div>
+                    <% } %>
+              
+                </div>
+
+
+              
+              <script>
+                let practiceConversationContainer = document.getElementById('practiceConversationContainer')
+                practiceConversationContainer.scrollTop = practiceConversationContainer.scrollHeight
+
+                // prevent multisubmits
+          try {
+            (function() {
+              let frm = document.getElementById("PracticeConvo")
+              var allowSubmit = true;
+              frm.onsubmit = function () {
+                if (allowSubmit)
+                    allowSubmit = false;
+                else 
+                    return false;
+              }
+            })();
+          } catch(err) {
+            console.log(err);
+          }
+              </script>
+              
+              </div>
+          
+            </div>
+
+
+            
+
 <script>
   // DRAGGABLE WALLET
   var dragItem = document.querySelector(".draggable");

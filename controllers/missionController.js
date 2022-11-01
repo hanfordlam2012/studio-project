@@ -78,7 +78,7 @@ exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
     let randomInt = getRndInt(5, 10)
     await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
     await Mission.updatePracticeConversationAndEmailHanford(req.body, req.session.user.userId, req.session.user.username)
-    res.redirect('/practice#practiceConversation')
+    res.redirect('/leaderboard#practiceConversation')
 }
 
 function getRndInt(min, max) {
