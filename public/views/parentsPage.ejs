@@ -37,7 +37,7 @@
 <!-- FULL RECORD -->
 <div id="full-record" class="section">
   <div class="pt-4 mt-4 mb-0 mx-0 text-center">
-    <h1 class="px-5 display-2 recursive">HISTORY: <span class="small">Our Progress</span></h1>
+    <h1 class="px-5 display-2 recursive">HISTORY: <span class="small">Tracking Progress</span></h1>
     <input class="btn btn-lg btn-warning mt-3" type="button" target="_blank" onclick="window.open('<%= playlistLink %>')" value="Open Youtube Playlist" />
   </div>
 </div>
@@ -50,31 +50,31 @@ let stackedBar = new Chart(ctx, {
   type: 'bar',
   data: {
     datasets: [{
-        label: 'Rhythm and Pulse',
+        label: 'Pulse and Rhythm',
         data: [<%- rhythmArray %>],
         backgroundColor: 'rgba(255, 99, 132, 0.6)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
     }, {
-        label: 'Coordination and Pitch',
+        label: 'Pitch',
         data: [<%- coordinationArray %>],
         backgroundColor: 'rgba(54, 162, 235, 0.6)',
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
     }, {
-        label: 'Tone and Articulation',
+        label: 'Articulation',
         data: [<%- toneArray %>],
         backgroundColor: 'rgba(255, 206, 86, 0.6)',
         borderColor: 'rgba(255, 206, 86, 1)',
         borderWidth: 1,
     }, {
-        label: 'Dynamics and Balance',
+        label: 'Dynamics',
         data: [<%- dynamicsArray %>],
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
     }, {
-        label: 'Stylistic Awareness',
+        label: 'Coordination',
         data: [<%- stylisticArray %>],
         backgroundColor: 'rgba(153, 102, 255, 0.6)',
         borderColor: 'rgba(153, 102, 255, 1)',
@@ -130,11 +130,11 @@ function showExtraComponentInfo() {
           <th scope="col">Date</th>
           <th scope="col">Piece</th>
           <th scope="col">Score</th>
-          <th scope="col">Task A</th>
+          <th scope="col">Task</th>
           <th scope="col">Score</th>
-          <th scope="col">Task B</th>
+          <th scope="col">Task</th>
           <th scope="col">Score</th>
-          <th scope="col">Comments</th>
+          <th scope="col">Feedback</th>
         </tr>
       </thead>
       <tbody>
@@ -158,130 +158,130 @@ function showExtraComponentInfo() {
           let stylisticModalTitle = ""
           let stylisticModalDesc = ""
           if (studentWeek.techAScore == 1 || studentWeek.techAScore == 1.5) {
-            techAScoreTooltip = "<b>Hibernating Bear</b><br>Uneven and rough coordination, inconsistent articulation and dynamics, and generally inaccurate pitch, at a slow tempo."
+            techAScoreTooltip = "I am struggling."
           } else if (studentWeek.techAScore == 2 || studentWeek.techAScore == 2.5) {
-            techAScoreTooltip = "<b>Wobbly Jellyfish</b><br>Some unevenness and compromised coordination, inconsistent articulation and dynamics, and somewhat inaccurate pitch, at a reasonable tempo."
+            techAScoreTooltip = "I am getting better."
           } else if (studentWeek.techAScore == 3 || studentWeek.techAScore == 3.5) {
-            techAScoreTooltip = "<b>Comfortable Koala</b><br>Even and mostly coordinated, appropriate articulation and dynamics, and mostly accurate pitch, at a reasonable tempo."
+            techAScoreTooltip = "I am comfortable."
           } else if (studentWeek.techAScore == 4 || studentWeek.techAScore == 4.5) {
-            techAScoreTooltip = "<b>Accomplished Octopus</b><br>Very even and well-coordinated, appropriate articulation and dynamics, and mostly accurate pitch, at a reasonable tempo."
+            techAScoreTooltip = "I am enjoying myself."
           } else {
-            techAScoreTooltip = "<b>Acrobatic Eagle</b><br>Exceptional evenness and coordination, precise articulation and dynamics, and highly accurate pitch, at a fast tempo."
+            techAScoreTooltip = "I am ready to perform."
           }
           if (studentWeek.techBScore == 1 || studentWeek.techBScore == 1.5) {
-            techBScoreTooltip = "<b>Hibernating Bear</b><br>Uneven and rough coordination, inconsistent articulation and dynamics, and generally inaccurate pitch, at a slow tempo."
+            techBScoreTooltip = "I am struggling."
           } else if (studentWeek.techBScore == 2 || studentWeek.techBScore == 2.5) {
-            techBScoreTooltip = "<b>Wobbly Jellyfish</b><br>Some unevenness and compromised coordination, inconsistent articulation and dynamics, and somewhat inaccurate pitch, at a reasonable tempo."
+            techBScoreTooltip = "I am getting better."
           } else if (studentWeek.techBScore == 3 || studentWeek.techBScore == 3.5) {
-            techBScoreTooltip = "<b>Comfortable Koala</b><br>Even and mostly coordinated, appropriate articulation and dynamics, and mostly accurate pitch, at a reasonable tempo."
+            techBScoreTooltip = "I am comfortable."
           } else if (studentWeek.techBScore == 4 || studentWeek.techBScore == 4.5) {
-            techBScoreTooltip = "<b>Accomplished Octopus</b><br>Very even and well-coordinated, appropriate articulation and dynamics, and mostly accurate pitch, at a reasonable tempo."
+            techBScoreTooltip = "I am enjoying myself."
           } else {
-            techBScoreTooltip = "<b>Acrobatic Eagle</b><br>Exceptional evenness and coordination, precise articulation and dynamics, and highly accurate pitch, at a fast tempo."
+            techBScoreTooltip = "I am ready to perform."
           }
           if (studentWeek.rhythm == 1 || studentWeek.rhythm == 1.5) {
             rhythmModalTitle = "Hibernating Bear"
-            rhythmModalDesc = "Sporadic pulse and loose rhythmic subdivisions."
+            rhythmModalDesc = "I need to learn the feeling of the pulse and rhythms."
             rhythmAlertColour = "bear"
           } else if (studentWeek.rhythm == 2 || studentWeek.rhythm == 2.5) {
             rhythmModalTitle = "Wobbly Jellyfish"
-            rhythmModalDesc = "Fluctuating pulse with rhythm subdivisions generally lacking precision."
+            rhythmModalDesc = "I can play sections with a steady pulse and correct rhythms."
             rhythmAlertColour = "jellyfish"
           } else if (studentWeek.rhythm == 3 || studentWeek.rhythm == 3.5) {
             rhythmModalTitle = "Comfortable Koala"
-            rhythmModalDesc = "Quite steady pulse with mostly even rhythmic subdivision."
+            rhythmModalDesc = "I can play with a steady pulse and correct rhythms most of the time."
             rhythmAlertColour = "koala"
           } else if (studentWeek.rhythm == 4 || studentWeek.rhythm == 4.5) {
             rhythmModalTitle = "Accomplished Octopus"
-            rhythmModalDesc = "Steady pulse with mostly even and precise rhythmic subdivision."
+            rhythmModalDesc = "I can consistently play with a steady pulse and correct rhythms."
             rhythmAlertColour = "octopus"
           } else {
             rhythmModalTitle = "Acrobatic Eagle"
-            rhythmModalDesc = "Very steady pulse with even and precise rhythmic subdivisions throughout."
+            rhythmModalDesc = "I can consistently play with a nuanced pulse and correct rhythms."
             rhythmAlertColour = "eagle"
           }
           if (studentWeek.coordination == 1 || studentWeek.coordination == 1.5) {
             coordinationModalTitle = "Hibernating Bear"
-            coordinationModalDesc = "Highly tense coordination with rough unisons, generally compromised independent rhythms, and generally inaccurate pitch."
+            coordinationModalDesc = "I need help to find the correct notes."
             coordinationAlertColour = "bear"
           } else if (studentWeek.coordination == 2 || studentWeek.coordination == 2.5) {
             coordinationModalTitle = "Wobbly Jellyfish"
-            coordinationModalDesc = "Tense coordination with some rough unisons, somewhat compromised independent rhythms, and somewhat inaccurate pitch."
+            coordinationModalDesc = "I can play sections with the correct notes most of the time."
             coordinationAlertColour = "jellyfish"
           } else if (studentWeek.coordination == 3 || studentWeek.coordination == 3.5) {
             coordinationModalTitle = "Comfortable Koala"
-            coordinationModalDesc = "Coordination with some tension, approximate unisons, mostly independent rhythms, and mostly accurate pitch."
+            coordinationModalDesc = "I can play with the correct notes most of the time."
             coordinationAlertColour = "koala"
           } else if (studentWeek.coordination == 4 || studentWeek.coordination == 4.5) {
             coordinationModalTitle = "Accomplished Octopus"
-            coordinationModalDesc = "Precise coordination with exact unisons, mostly independent rhythms, and mostly accurate pitch."
+            coordinationModalDesc = "I can play with the correct notes."
             coordinationAlertColour = "octopus"
           } else {
             coordinationModalTitle = "Acrobatic Eagle"
-            coordinationModalDesc = "Relaxed and precise coordination with exact unisons, independent rhythms, and highly accurate pitch."
+            coordinationModalDesc = "I can consistently play with the correct notes."
             coordinationAlertColour = "eagle"
           }
           if (studentWeek.tone == 1 || studentWeek.tone == 1.5) {
             toneModalTitle = "Hibernating Bear"
-            toneModalDesc = "General inaccuracy with generally harsh tone."
+            toneModalDesc = "I need to learn the meanings of the marked articulation."
             toneAlertColour = "bear"
           } else if (studentWeek.tone == 2 || studentWeek.tone == 2.5) {
             toneModalTitle = "Wobbly Jellyfish"
-            toneModalDesc = "Mostly accurate with little use of fingers, wrist, and arm in tone production."
+            toneModalDesc = "I can play sections with the correct articulation."
             toneAlertColour = "jellyfish"
           } else if (studentWeek.tone == 3 || studentWeek.tone == 3.5) {
             toneModalTitle = "Comfortable Koala"
-            toneModalDesc = "Mostly accurate with some use of fingers, wrist, and arm in tone production."
+            toneModalDesc = "I can play with the correct articulation most of the time."
             toneAlertColour = "koala"
           } else if (studentWeek.tone == 4 || studentWeek.tone == 4.5) {
             toneModalTitle = "Accomplished Octopus"
-            toneModalDesc = "Accurate with appropriate use of fingers, wrist, and arm, producing a warm tone."
+            toneModalDesc = "I can consistently play with the correct articulation."
             toneAlertColour = "octopus"
           } else {
             toneModalTitle = "Acrobatic Eagle"
-            toneModalDesc = "Very accurate with appropriate use of fingers, wrist, and arm, producing a warm tone."
+            toneModalDesc = "I can consistently play with nuanced articulation."
             toneAlertColour = "eagle"
           }
           if (studentWeek.dynamics == 1 || studentWeek.dynamics == 1.5) {
             dynamicsModalTitle = "Hibernating Bear"
-            dynamicsModalDesc = "Dynamics not observed with a lack of balance in the parts."
+            dynamicsModalDesc = "I need to learn the meanings of the marked dynamics."
             dynamicsAlertColour = "bear"
           } else if (studentWeek.dynamics == 2 || studentWeek.dynamics == 2.5) {
             dynamicsModalTitle = "Wobbly Jellyfish"
-            dynamicsModalDesc = "Dynamics executed imprecisely with little balance in the parts."
+            dynamicsModalDesc = "I can play sections with the correct dynamics."
             dynamicsAlertColour = "jellyfish"
           } else if (studentWeek.dynamics == 3 || studentWeek.dynamics == 3.5) {
             dynamicsModalTitle = "Comfortable Koala"
-            dynamicsModalDesc = "Most dynamics executed well with some balance in the parts."
+            dynamicsModalDesc = "I can play with the correct dynamics most of the time."
             dynamicsAlertColour = "koala"
           } else if (studentWeek.dynamics == 4 || studentWeek.dynamics == 4.5) {
             dynamicsModalTitle = "Accomplished Octopus"
-            dynamicsModalDesc = "Most dynamics executed precisely with most parts well balanced."
+            dynamicsModalDesc = " I can consistently play with the correct dynamics."
             dynamicsAlertColour = "octopus"
           } else {
             dynamicsModalTitle = "Acrobatic Eagle"
-            dynamicsModalDesc = "All dynamics executed precisely with all parts very well balanced."
+            dynamicsModalDesc = "I can consistently play with nuanced dynamics."
             dynamicsAlertColour = "eagle"
           }
           if (studentWeek.stylistic == 1 || studentWeek.stylistic == 1.5) {
             stylisticModalTitle = "Hibernating Bear"
-            stylisticModalDesc = "Musical style not conveyed."
+            stylisticModalDesc = "I need to learn the technical gestures."
             stylisticAlertColour = "bear"
           } else if (studentWeek.stylistic == 2 || studentWeek.stylistic == 2.5) {
             stylisticModalTitle = "Wobbly Jellyfish"
-            stylisticModalDesc = "Sense of musical style somewhat present with important details needing attention."
+            stylisticModalDesc = "I can play sections with the correct technical gestures."
             stylisticAlertColour = "jellyfish"
           } else if (studentWeek.stylistic == 3 || studentWeek.stylistic == 3.5) {
             stylisticModalTitle = "Comfortable Koala"
-            stylisticModalDesc = "General sense of musical style conveyed with minor details needing attention."
+            stylisticModalDesc = "I can play with the correct technical gestures most of the time."
             stylisticAlertColour = "koala"
           } else if (studentWeek.stylistic == 4 || studentWeek.stylistic == 4.5) {
             stylisticModalTitle = "Accomplished Octopus"
-            stylisticModalDesc = "General sense of musical style well conveyed with confidence."
+            stylisticModalDesc = "I can consistently play with the correct technical gestures."
             stylisticAlertColour = "octopus"
           } else {
             stylisticModalTitle = "Acrobatic Eagle"
-            stylisticModalDesc = "Convincing musical style very well conveyed with confidence and nuance."
+            stylisticModalDesc = "I can consistently play with nuanced technical gestures."
             stylisticAlertColour = "eagle"
           }
           %>
@@ -318,39 +318,39 @@ function showExtraComponentInfo() {
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Components Assessed:</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Elements Assessed:</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                  <h5 class="text-center">Rhythm and Pulse</h5>
+                  <h5 class="text-center">Pulse and Rhythm</h5>
                   <div class="alert <%= rhythmAlertColour %> text-center" role="alert">
-                      <%= rhythmModalTitle %>: <%= studentWeek.rhythm %> / 5
+                      <%= studentWeek.rhythm %> / 5
                   </div>
                   <p><%= rhythmModalDesc %></p>
                   <hr>
-                  <h5 class="text-center">Coordination and Pitch</h5>
+                  <h5 class="text-center">Pitch</h5>
                   <div class="alert <%= coordinationAlertColour %> text-center" role="alert">
-                    <%= coordinationModalTitle %>: <%= studentWeek.coordination %> / 5
+                    <%= studentWeek.coordination %> / 5
                   </div>
                   <p><%= coordinationModalDesc %></p>
                   <hr>
-                  <h5 class="text-center">Tone and Articulation</h5>
+                  <h5 class="text-center">Articulation</h5>
                   <div class="alert <%= toneAlertColour %> text-center" role="alert">
-                    <%= toneModalTitle %>: <%= studentWeek.tone %> / 5
+                    <%= studentWeek.tone %> / 5
                   </div>
                   <p><%= toneModalDesc %></p>
                   <hr>
-                  <h5 class="text-center">Dynamics and Balance</h5>
+                  <h5 class="text-center">Dynamics</h5>
                   <div class="alert <%= dynamicsAlertColour %> text-center" role="alert">
-                    <%= dynamicsModalTitle %>: <%= studentWeek.dynamics %> / 5
+                    <%= studentWeek.dynamics %> / 5
                   </div>
                   <p><%= dynamicsModalDesc %></p>
                   <hr>
-                  <h5 class="text-center">Stylistic Awareness</h5>
+                  <h5 class="text-center">Coordination</h5>
                   <div class="alert <%= stylisticAlertColour %> text-center" role="alert">
-                    <%= stylisticModalTitle %>: <%= studentWeek.stylistic %> / 5
+                    <%= studentWeek.stylistic %> / 5
                   </div>
                   <p><%= stylisticModalDesc %></p>
               </div>
@@ -365,7 +365,7 @@ function showExtraComponentInfo() {
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Comments:</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Feedback:</h5>
               <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -387,136 +387,139 @@ function showExtraComponentInfo() {
     </table>
   </div>
   
-  <!-- RUBRIC 
+  <!-- RUBRIC -->
   <div id="rubric-grid" class="px-0 mt-0 rubric-grid">
     <div class="row m-0 text-center row-border">
       <div class="col-sm rhythm">
         <b>Pulse and Rhythm</b>
       </div>
       <div class="col-sm coordination">
-        <b>Pitch and Coordination</b>
+        <b>Pitch</b>
       </div>
       <div class="col-sm tone">
-        <b>Articulation and Tone</b>
+        <b>Articulation</b>
       </div>
       <div class="col-sm dynamics">
-        <b>Dynamics and Balance</b>
+        <b>Dynamics</b>
       </div>
       <div class="col-sm stylistic">
-        <b>Musical Style</b>
+        <b>Coordination</b>
       </div>
     </div>
     <div class="row text-center m-0 eagle row-border">
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/eagle.ico" alt="">
-        <p>Well controlled pulse with accurate rhythmic subdivisions.</p>
+        <p>I can consistently play with a nuanced pulse and correct rhythms.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/eagle.ico" alt="">
-        <p>Accurate pitch with relaxed coordination. Same as below.</p>
+        <p>I can consistently play with the correct notes.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/eagle.ico" alt="">
-        <p>Accurate and considered articulation with interesting tone.</p>
+        <p>I can consistently play with nuanced articulation.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/eagle.ico" alt="">
-        <p>Precise dynamics with suitable balance.</p>
+        <p>I can consistently play with nuanced dynamics.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/eagle.ico" alt="">
-        <p>Convincing musical style very well conveyed with confidence and nuance.</p>
+        <p>I can consistently play with nuanced technical gestures.</p>
       </div>
     </div>
     <div class="row m-0 text-center octopus row-border">
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/octopus.ico" alt="">
-        <p>Steady pulse with accurate rhythmic subdivision.</p>
+        <p>I can consistently play with a steady pulse and correct rhythms.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/octopus.ico" alt="">
-        <p>Accurate pitch with relaxed coordination.</p>
+        <p>I can play with the correct notes.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/octopus.ico" alt="">
-        <p>Accurate articulation with suitable tone.</p>
+        <p>I can consistently play with the correct articulation.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/octopus.ico" alt="">
-        <p>Precise dynamics with suitable balance.</p>
+        <p> I can consistently play with the correct dynamics.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/octopus.ico" alt="">
-        <p>Sense of musical style well conveyed with confidence.</p>
+        <p>I can consistently play with the correct technical gestures.</p>
       </div>
     </div>
     <div class="row m-0 text-center koala row-border">
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/koala.ico" alt="">
-        <p>Steady pulse with mostly accurate rhythmic subdivision.</p>
+        <p>I can play with a steady pulse and correct rhythms most of the time.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/koala.ico" alt="">
-        <p>Accurate pitch with some tension in coordination.</p>
+        <p>I can play with the correct notes most of the time.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/koala.ico" alt="">
-        <p>Accurate articulation with suitable tone.</p>
+        <p>I can play with the correct articulation most of the time.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/koala.ico" alt="">
-        <p>Precise dynamics with suitable balance.</p>
+        <p>I can play with the correct dynamics most of the time.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/koala.ico" alt="">
-        <p>General sense of musical style conveyed with minor details needing attention.</p>
+        <p>I can play with the correct technical gestures most of the time.</p>
       </div>
     </div>
     <div class="row m-0 text-center jellyfish row-border">
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/jellyfish.ico" alt="">
-        <p>Fluctuating pulse with some accurate rhythmic subdivisions.</p>
+        <p>I can play sections with a steady pulse and correct rhythms.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/jellyfish.ico" alt="">
-        <p>Mostly accurate pitch with tense coordination.</p>
+        <p>I can play sections with the correct notes most of the time.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/jellyfish.ico" alt="">
-        <p>Mostly accurate articulation with acceptable tone.</p>
+        <p>I can play sections with the correct articulation.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/jellyfish.ico" alt="">
-        <p>Mostly precise dynamics with acceptable balance.</p>
+        <p>I can play sections with the correct dynamics.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/jellyfish.ico" alt="">
-        <p>Sense of musical style somewhat present with important details needing attention.</p>
+        <p>I can play sections with the correct technical gestures.</p>
       </div>
     </div>
     <div class="row m-0 text-center bear row-border">
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/bear.ico" alt="">
-        <p>Sporadic pulse with inaccurate rhythmic subdivisions.</p>
+        <p>I need to learn the feeling of the pulse and rhythms.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/bear.ico" alt="">
-        <p>Inaccurate pitch.</p>
+        <p>I need help to find the correct notes.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/bear.ico" alt="">
-        <p>Inaccurate articulation with unsuitable tone.</p>
+        <p>I need to learn the meanings of the marked articulation.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/bear.ico" alt="">
-        <p>Inaccurate dynamics with unsuitable balance.</p>
+        <p>I need to learn the meanings of the marked dynamics.</p>
       </div>
       <div class="col-sm">
         <img class="mb-2 rubric-icon" src="../images/bear.ico" alt="">
-        <p>Musical style not conveyed.</p>
+        <p>I need to learn the technical gestures.</p>
       </div>
     </div>
-  </div>-->
+  </div>
+
+
+
   <div class="text-center py-4">
     <button class="mx-3 btn btn-outline-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Click for printer-friendly Practice Guide</button>
   </div>
