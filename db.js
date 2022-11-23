@@ -7,9 +7,9 @@ client.connect(err => {
   module.exports = client;
   const app = require('./app');
   // dynamic port selection
-  // const server = app.listen(0, () => {
-  //  console.log('Studio app listening at http://localhost:', server.address().port);
-//});
+  const server = app.listen(0, () => {
+  console.log('Studio app listening at http://localhost:', server.address().port);
+  });
 // old code does not allow dynamic port
-app.listen(process.env.PORT || 3000)
+//app.listen(process.env.PORT || 3000)
 });
