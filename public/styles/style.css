@@ -1,7 +1,7 @@
 html,
 body,
 .container-fluid {
-    background-color: #1c1c1c;
+    background-color: #888888;
     min-height: 98vh;
     width:100%;
     display: flex;
@@ -69,7 +69,10 @@ input {
     #myNav {
         position: relative;
     }
+
+    
 }
+
 
 /* 2048 */
 #game2048 {
@@ -136,7 +139,8 @@ input {
 
 /* HOME */
 #home-html {
-    background-image: url("../images/irisbackground.webp");
+    background-image: url("../images/professional-teaching-studio.webp");
+    background-blend-mode: multiply;
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -156,7 +160,7 @@ input {
 
 #biographyContainer p, #ratesRow li {
     line-height: 1.8;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: center;
 }
 
@@ -908,7 +912,7 @@ hr {
 }
 
 .black-bg {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.867);
 }
 
 .white-border {
