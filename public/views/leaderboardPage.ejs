@@ -73,12 +73,11 @@
 <!-- TICKER -->
 <div class="marquee recursive aboveFalling mt-5">
 	<div>
-		<span>Do things and collect points!</span>
-		<span>Work hard, learn lots, have fun.</span>
-		<span>Big things grow from small things...</span>
-		<span>You can do it!</span>
-		<span>Ask questions using the Conversation Box 🤔</span>
-		<span>Want to leave your fellow pianists a message here?</span>
+		<span>Work hard, learn lots, enjoy the process.</span>
+		<span>To do big things, start small.</span>
+		<span>You can do it if you try again!</span>
+		<span>The piano keys are black and white but they sound like a million colours in your mind.</span>
+		<span>Life is like a piano. What you get out of it depends on how you play it.</span>
 	</div>
 </div>
 
@@ -86,7 +85,7 @@
   <table class="my-0 table text-center table-hover aboveFalling" style="border-collapse: separate;border-spacing: 0;">
     <thead>
       <tr class="">
-        <th class="white-text" scope="col"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 77, 77, 0.912)">STUDENT</strong></th>
+        <th class="white-text" scope="col"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 77, 77, 0.912)">PIANIST</strong></th>
         <th class="white-text" scope="col"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 77, 77, 0.912)">PIANO GRADE</strong></th>
         <th class="white-text" scope="col"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 77, 77, 0.912)">POINTS</strong></th>
       </tr>
@@ -154,22 +153,22 @@
   <table class="my-5 py-0 table text-center table-hover table-light aboveFalling">
     <thead>
       <tr class="">
-        <th class="black-text" scope="col">REWARDS</th>
-        <th class="black-text" scope="col">PRICE</th>
+        <th class="black-text" scope="col">ITEM</th>
+        <th class="black-text" scope="col">POINTS</th>
       </tr>
     </thead>
     <tbody>
       <% prizeList.forEach((prize) => { %>
         <tr>
           <td><span style="color:<%= prize.color %>"><%= prize.title %></span><span class="mx-2"></span><small class="orange-text ml-2"> <%= prize.desc %></small></td>
-          <td class="pink-text recursive"><%= prize.price %></td>
+          <td class="black-text recursive"><%= prize.price %></td>
         </tr>
         <% }) %>
     </tbody>
   </table>
 </div>
 
-<!-- WAYS TO EARN -->
+<!-- WAYS TO EARN
 <div class="table-responsive mb-5 py-0">
   <table class="my-0 table text-center table-hover table-dark aboveFalling">
     <thead>
@@ -178,8 +177,6 @@
       </tr>
     </thead>
     <tbody>
-        <tr><td><span class="blue-text">Guess the Tempo</span><span class="mx-2 orange-text">awards 1 to 15 points</span></td></tr>  
-        <tr><td><span class="blue-text">Use the Conversation Box</span><span class="mx-2 orange-text">awards 5 to 10 points</span></td></tr>
         <tr><td><span class="blue-text">Complete a Mission</span><span class="mx-2 orange-text">awards 100 points</span></td></tr>
         <tr><td><span class="blue-text">Throw the beanbag into the eye socket</span><span class="mx-2 orange-text">awards 150 points</span></td></tr>
         <tr><td><span class="blue-text">Defeat Hanford in an arm wrestle</span><span class="mx-2 orange-text">awards 250 points</span></td></tr>
@@ -188,7 +185,7 @@
         <tr><td><span class="blue-text">Complete a theory book</span><span class="mx-2 orange-text">awards 500 points</span></td></tr>
     </tbody>
   </table>
-</div>
+</div> -->
 
             <!--DISPLAY CONVERSATION-->
             <div class="d-flex justify-content-center" style=" min-width:0;">
