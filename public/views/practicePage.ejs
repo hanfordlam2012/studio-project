@@ -95,14 +95,14 @@
             <% if (BPMStatus == 'success') { %>
               <div id="bpm-success" class="aboveFalling green-text text-center mt-4 pt-4" style="margin-bottom: 150px;">
                 <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
-                <p class="black-bg d-inline-block p-3 rounded">Spot on, <%= randomBPM %>! Your sense of timing is amazing.
-                <br>The Piano Wizard has put some points in your wallet.</p>
+                <p class="black-bg d-inline-block p-3 rounded">Correct, <%= randomBPM %>! Your sense of tempo is great.
+                <br>The Piano Wizard has put 3 points in your wallet.</p>
               </div>
             <% } else if (BPMStatus == 'notQuite') { %>
               <div id="bpm-almost" class="aboveFalling pink-text text-center mt-4 pt-4" style="margin-bottom: 150px;">
                 <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' class="mb-4 d-block mx-auto"/>
-                <p class="black-bg d-inline-block p-3 rounded">Not quite! The tempo is <%= randomBPM %> beats per minute.<br>
-                The Piano Wizard has put some points in your wallet.</p>
+                <p class="black-bg d-inline-block p-3 rounded">Try again tomorrow! The tempo is <%= randomBPM %> beats per minute.<br>
+                The Piano Wizard has put 3 points in your wallet.</p>
               </div>
             <% } else { %>
               <div class="d-flex justify-content-center">
@@ -163,7 +163,7 @@
                       </form>
                     <% } else { %>
                       <div id="practice-success" class="recursive text-center mt-5 my-2">
-                        <p class="black-bg d-inline-block p-3 rounded"><span class="green-text">Hanford will reply soon! Ask Mum or Dad if you need to send another message.</span><br><span class="orange-text">Some points have been added to your wallet.</span></p>
+                        <p class="black-bg d-inline-block p-3 rounded"><span class="green-text">Hanford will reply soon! Ask Mum or Dad if you need to send another message.</span><br><span class="orange-text">3 points have been added to your wallet.</span></p>
                       </div>
                     <% } %>
               

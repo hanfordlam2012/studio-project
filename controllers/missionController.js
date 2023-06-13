@@ -51,11 +51,11 @@ exports.checkBPM = async function(req, res) {
 
     // compare Hanford's ...
     if (adminDoc.randomBPM == req.body.bpmGuess) {
-        let newScore = studentDoc.leaderboardScore + 15
+        let newScore = studentDoc.leaderboardScore + 3
         await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "success", "lastBPMGuess": todaysDate, "leaderboardScore": newScore} })
         res.redirect('/practice#guessTheTempo')
     } else {
-        let newScore = studentDoc.leaderboardScore + getRndInt(1, 3)
+        let newScore = studentDoc.leaderboardScore + 3
         await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "notQuite", "lastBPMGuess": todaysDate, "leaderboardScore": newScore} })
         res.redirect('/practice#guessTheTempo')
     }
@@ -75,12 +75,13 @@ exports.compareScoreAndSave = async function(req, res) {
 
 // PRACTICE CONVERSATION
 exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
-    let randomInt = getRndInt(5, 10)
+    let randomInt = 3
     await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
     await Mission.updatePracticeConversationAndEmailHanford(req.body, req.session.user.userId, req.session.user.username)
     res.redirect('/leaderboard#practiceConversation')
 }
 
+//Unused, for generating random points between max and min
 function getRndInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
