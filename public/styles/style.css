@@ -930,6 +930,9 @@ hr {
 .hover-livestream {
     color: rgb(0, 208, 255);
 }
+.hover-livestream1 {
+    color: rgb(171, 240, 255);
+}
 
 .hover-excursion {
     color: rgb(96, 192, 0);
@@ -942,6 +945,9 @@ hr {
 }
 .hover-extra {
     color: rgb(135, 255, 177);
+}
+.hover-extra1 {
+    color: rgb(95, 207, 134);
 }
 .table-valign-middle {
     vertical-align: middle;
