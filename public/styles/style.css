@@ -51,8 +51,7 @@ input {
 }
 
 #myNav {
-    position: -webkit-sticky; /* Safari */
-    position: sticky;
+    position: static;
     top: 0;
     font-size: 1.3rem;
     background-color: rgba(18, 46, 68, 0.713);
@@ -887,7 +886,7 @@ hr {
 }
 
 #leaderboard-table {
-    background-color: rgba(201, 201, 201, 0.666);
+    background-color: rgba(255, 255, 255, 0.885);
 }
 
 /* SHOWCASE PAGE */

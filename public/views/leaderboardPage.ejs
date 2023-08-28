@@ -74,7 +74,8 @@
 <div class="marquee recursive aboveFalling mt-5">
 	<div>
 		<span>Work hard, learn lots, enjoy the process.</span>
-		<span>To do big things, start small.</span>
+		<span>Hanford is here to help; just ask.</span>
+		<span>From little things, big things grow.</span>
 		<span>You can do it if you try again!</span>
 		<span>The piano keys are black and white but they sound like a million colours in your mind.</span>
 		<span>Life is like a piano. What you get out of it depends on how you play it.</span>
@@ -86,7 +87,7 @@
     <thead>
       <tr class="">
         <th class="white-text" scope="col"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 77, 77, 0.912)">PIANIST</strong></th>
-        <th class="white-text" scope="col"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 77, 77, 0.912)">PIANO GRADE</strong></th>
+        <!--<th class="white-text" scope="col"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 77, 77, 0.912)">PIANO GRADE</strong></th>-->
         <th class="white-text" scope="col"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 77, 77, 0.912)">POINTS</strong></th>
       </tr>
     </thead>
@@ -138,8 +139,8 @@
           <% if (username == ""){ 
           } else { %>
             <td id="<%= student.username %>" class="" data-bs-toggle="tooltip" data-bs-html="true" title="<%= student. studentBio %>"><strong class="rounded py-1 px-2" style="color:<%= student.leaderboardColor %>;background-color: rgba(000,000,000, 0.9);"><%= student.username + " " + badge %></strong></td>
-            <td class="black-text recursive"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 255, 255, 0.912)"><%= student.grade %></strong></td>
-            <td class="pink-text recursive"><strong class="rounded py-1 px-2" style="background-color: rgba(121, 226, 245, 0.755)"><%= student.leaderboardScore %></strong></td>
+            <!--<td class="black-text recursive"><strong class="rounded py-1 px-2" style="background-color: rgba(255, 255, 255, 0.912)"><%= student.grade %></strong></td>-->
+            <td class="pink-text recursive"><strong class="rounded py-1 px-2" style="background-color: rgba(121, 226, 245, 0.755); border: 1px solid #e8226a;"><%= student.leaderboardScore %></strong></td>
           <% } %>
           
         </tr>
