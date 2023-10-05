@@ -488,7 +488,17 @@ hr {
 }
 
 #practiceConversation > div p {
-    margin: 0 auto;
+    margin: 15px auto;
+}
+
+#practiceConversation > div hr {
+    background-color: black;
+    border: none;
+}
+
+#practiceConversation > div h1, #practiceConversation > div h2, #practiceConversation > div h3 {
+    color: rgb(194, 53, 53);
+    font-size: 1.5rem;
 }
 
 /*BE ON TOP OF SNOWFLAKES*/
