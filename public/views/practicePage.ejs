@@ -84,7 +84,7 @@
             <div id="recordedLesson" class="aboveFalling mb-5 rounded">
               <% if(recordedLessonURL){ %>
               <div class="responsive-container">
-                <iframe loading="lazy" style="z-index: 99999;" class="" width="100%" height="500px" src="https://www.youtube.com/embed/<%= recordedLessonURL %>" title="Latest lesson recording" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe style="z-index: 99999;" class="" width="100%" height="500px" src="https://www.youtube.com/embed/<%= recordedLessonURL %>" title="Latest lesson recording" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
               <% } %>
             </div>
@@ -123,16 +123,16 @@
               
             <% } %>
             <script>
-              // Guess the tempo
+             // Guess the tempo
               var img = document.getElementById('blinking_image');
 
               var interval = window.setInterval(function(){
                 if (img.style.visibility == 'hidden') {
-                  img.style.visibility = 'visible';
+                 img.style.visibility = 'visible';
                 } else{
                   img.style.visibility = 'hidden';
                 }
-              }, 30000/<%- randomBPM %>);
+             }, 30000/<%- randomBPM %>);
             </script>
             <!--DISPLAY CONVERSATION-->
             <div class="d-flex justify-content-center" style=" min-width:0;">
