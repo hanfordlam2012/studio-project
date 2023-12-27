@@ -1,4 +1,56 @@
-<%- include('includes/header') %>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Bootstrap CSS and Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Handlee&family=Rye&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Hanford Lam | Piano Studio</title>
+    <!-- CURSOR -->
+    <style>HTML,BODY{cursor: url("../../images/cursor.cur"), auto;}</style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7KLNXVSDD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-S7KLNXVSDD');
+    </script>
+  </head>
+  <body style="background-color: black;">
+    <!-- NAVBAR -->
+    <nav id="myNav" class="rounded recursive row align-items-center text-center py-2  w-100">
+      <div class="col-lg-7">
+        <a id="navIcon" class="my-2 d-block" href='/'>Hanford Lam | Piano Studio</a>
+      </div>
+      <div class="col-lg-5">
+        <a id="homeTab" class="mx-4 my-2 d-inline-block navLink" href="/">HOME</a>
+        <button class="mx-4 my-2 d-inline-block btn btn-sm btn-info" onclick="location.href='/#ratesRow'">CONTACT</button>
+        <a id="reportsTab" class="mx-4 my-2 d-inline-block navLink" href="/reports">PORTAL</a>
+      </div>
+    </nav>
+    <div class="container-fluid" style="background-color: black;">
+
+      <!-- DYNAMIC NAVBAR AND TITLE -->
+      <script>
+        let currentPath = window.location.pathname
+        if (currentPath == '/') {
+          document.getElementById("homeTab").classList.add("orange-text")
+          document.title = "Hanford Lam"
+        } else if (currentPath == '/practice' || currentPath == '/missions' || currentPath == '/leaderboard' || currentPath == '/parents' || currentPath == '/reports') {
+          document.getElementById("reportsTab").classList.add("orange-text")
+          document.title = "Portal - Hanford Lam"
+        }
+      </script>
+    <div id="container" class="container">
+
+
 <form class="mt-3 mb-5" action="/logout" method="POST">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <button type="submit" class="btn btn-secondary btn-lg btn-block">Log Out</button>
@@ -41,96 +93,96 @@
         <b>Dynamics</b>
       </div>
       <div class="col-sm stylistic">
-        <b>Coordination</b>
+        <b>Body Feeling</b>
       </div>
     </div>
     <div class="row text-center m-0 eagle row-border">
-      <div class="col-sm iconContainer eagle">
-        <input required autocomplete="off" type="radio" name="rhythm" value="5" id="rhythmEagle"><label for="rhythmEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br>I can play all sections with nuanced pulse and rhythms... but will I?<br><strong>**exam standard**</strong></label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="rhythm" value="5" id="rhythmEagle"><label for="rhythmEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br><span class="interactiveText">Expert</span><br>I played with stylistically nuanced pulse and rhythms.</label>
       </div>
-      <div class="col-sm iconContainer eagle">
-        <input required autocomplete="off" type="radio" name="coordination" value="5" id="coordinationEagle"><label for="coordinationEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br>I can play all notes correctly... but will I?<br><strong>**exam standard**</strong></label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="coordination" value="5" id="coordinationEagle"><label for="coordinationEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br><span class="interactiveText">Expert</span><br>I played all the notes correctly.</label>
       </div>
-      <div class="col-sm iconContainer eagle">
-        <input required autocomplete="off" type="radio" name="tone" value="5" id="toneEagle"><label for="toneEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br>I can play all marked articulation with nuance... but will I?<br><strong>**exam standard**</strong></label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="tone" value="5" id="toneEagle"><label for="toneEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br><span class="interactiveText">Expert</span><br>I played the marked articulation with stylistic nuance.</label>
       </div>
-      <div class="col-sm iconContainer eagle">
-        <input required autocomplete="off" type="radio" name="dynamics" value="5" id="dynamicsEagle"><label for="dynamicsEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br>I can play all marked dynamics with nuance... but will I?<br><strong>**exam standard**</strong></label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="dynamics" value="5" id="dynamicsEagle"><label for="dynamicsEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br><span class="interactiveText">Expert</span><br>I played the marked dynamics with stylistic nuance.</label>
       </div>
-      <div class="col-sm iconContainer eagle">
-        <input required autocomplete="off" type="radio" name="stylistic" value="5" id="stylisticEagle"><label for="stylisticEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br>I can play all sections fluidly and easily... but will I?<br><strong>**exam standard**</strong></label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="stylistic" value="5" id="stylisticEagle"><label for="stylisticEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br><span class="interactiveText">Expert</span><br>It felt easy, natural, and enjoyable.</label>
       </div>
     </div>
     
     <div class="row m-0 text-center octopus row-border">
-      <div class="col-sm iconContainer octopus">
-        <input required autocomplete="off" type="radio" name="rhythm" value="4" id="rhythmOctopus"><label for="rhythmOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br>I can play all sections with the correct pulse and rhythms... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="rhythm" value="4" id="rhythmOctopus"><label for="rhythmOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br><span class="interactiveText">Proficient</span><br>I played with very clear pulse and rhythms.</label>
       </div>
-      <div class="col-sm iconContainer octopus">
-        <input required autocomplete="off" type="radio" name="coordination" value="4" id="coordinationOctopus"><label for="coordinationOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br>I can play most of the notes correctly... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="coordination" value="4" id="coordinationOctopus"><label for="coordinationOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br><span class="interactiveText">Proficient</span><br>I played almost all the notes correctly.</label>
       </div>
-      <div class="col-sm iconContainer octopus">
-        <input required autocomplete="off" type="radio" name="tone" value="4" id="toneOctopus"><label for="toneOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br>I can play all marked articulation correctly... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="tone" value="4" id="toneOctopus"><label for="toneOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br><span class="interactiveText">Proficient</span><br>I played the marked articulation correctly.</label>
       </div>
-      <div class="col-sm iconContainer octopus">
-        <input required autocomplete="off" type="radio" name="dynamics" value="4" id="dynamicsOctopus"><label for="dynamicsOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br>I can play all  marked dynamics correctly... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="dynamics" value="4" id="dynamicsOctopus"><label for="dynamicsOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br><span class="interactiveText">Proficient</span><br>I played the marked dynamics correctly.</label>
       </div>
-      <div class="col-sm iconContainer octopus">
-        <input required autocomplete="off" type="radio" name="stylistic" value="4" id="stylisticOctopus"><label for="stylisticOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br>I can play most sections fluidly and easily... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="stylistic" value="4" id="stylisticOctopus"><label for="stylisticOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br><span class="interactiveText">Proficient</span><br>It felt easy and natural.</label>
       </div>
     </div>
    
     <div class="row m-0 text-center koala row-border">
-      <div class="col-sm iconContainer koala">
-        <input required autocomplete="off" type="radio" name="rhythm" value="3" id="rhythmKoala"><label for="rhythmKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br>I can play most sections with the correct pulse and rhythms... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="rhythm" value="3" id="rhythmKoala"><label for="rhythmKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br><span class="interactiveText">Competent</span><br>I played with somewhat clear pulse and rhythms.</label>
       </div>
-      <div class="col-sm iconContainer koala">
-        <input required autocomplete="off" type="radio" name="coordination" value="3" id="coordinationKoala"><label for="coordinationKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br>I can play about half of the notes correctly... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="coordination" value="3" id="coordinationKoala"><label for="coordinationKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br><span class="interactiveText">Competent</span><br>I played most of the notes correctly.</label>
       </div>
-      <div class="col-sm iconContainer koala">
-        <input required autocomplete="off" type="radio" name="tone" value="3" id="toneKoala"><label for="toneKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br>I can play most marked articulation correctly... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="tone" value="3" id="toneKoala"><label for="toneKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br><span class="interactiveText">Competent</span><br>I played most of the marked articulation correctly.</label>
       </div>
-      <div class="col-sm iconContainer koala">
-        <input required autocomplete="off" type="radio" name="dynamics" value="3" id="dynamicsKoala"><label for="dynamicsKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br>I can play most marked dynamics correctly... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="dynamics" value="3" id="dynamicsKoala"><label for="dynamicsKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br><span class="interactiveText">Competent</span><br>I played most of the marked dynamics correctly.</label>
       </div>
-      <div class="col-sm iconContainer koala">
-        <input required autocomplete="off" type="radio" name="stylistic" value="3" id="stylisticKoala"><label for="stylisticKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br>I can play about half of the sections fluidly and easily... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="stylistic" value="3" id="stylisticKoala"><label for="stylisticKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br><span class="interactiveText">Competent</span><br>It felt a little awkward.</label>
       </div>
     </div>
    
     <div class="row m-0 text-center jellyfish row-border">
-      <div class="col-sm iconContainer jellyfish">
-        <input required autocomplete="off" type="radio" name="rhythm" value="2" id="rhythmJellyfish"><label for="rhythmJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br>I can play some sections with the correct pulse and rhythms... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="rhythm" value="2" id="rhythmJellyfish"><label for="rhythmJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br><span class="interactiveText">Advanced Novice</span><br>I played with vague pulse and rhythms.</label>
       </div>
-      <div class="col-sm iconContainer jellyfish">
-        <input required autocomplete="off" type="radio" name="coordination" value="2" id="coordinationJellyfish"><label for="coordinationJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br>I can play some notes correctly... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="coordination" value="2" id="coordinationJellyfish"><label for="coordinationJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br><span class="interactiveText">Advanced Novice</span><br>I played about half of the notes correctly.</label>
       </div>
-      <div class="col-sm iconContainer jellyfish">
-        <input required autocomplete="off" type="radio" name="tone" value="2" id="toneJellyfish"><label for="toneJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br>I can play some marked articulation correctly... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="tone" value="2" id="toneJellyfish"><label for="toneJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br><span class="interactiveText">Advanced Novice</span><br>I played some of the marked articulation correctly.</label>
       </div>
-      <div class="col-sm iconContainer jellyfish">
-        <input required autocomplete="off" type="radio" name="dynamics" value="2" id="dynamicsJellyfish"><label for="dynamicsJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br>I can play some marked dynamics correctly... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="dynamics" value="2" id="dynamicsJellyfish"><label for="dynamicsJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br><span class="interactiveText">Advanced Novice</span><br>I played some of the marked dynamics correctly.</label>
       </div>
-      <div class="col-sm iconContainer jellyfish">
-        <input required autocomplete="off" type="radio" name="stylistic" value="2" id="stylisticJellyfish"><label for="stylisticJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br>I can play some sections fluidly and easily... but will I?</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="stylistic" value="2" id="stylisticJellyfish"><label for="stylisticJellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br><span class="interactiveText">Advanced Novice</span><br>It felt awkward.</label>
       </div>
     </div>
   
     <div class="row m-0 text-center bear row-border">
       <div class="col-sm iconContainer bear">
-        <input required autocomplete="off" type="radio" name="rhythm" value="1" id="rhythmBear"><label for="rhythmBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br>I need an explanation of the pulse and rhythms.</label>
+        <input required autocomplete="off" type="radio" name="rhythm" value="1" id="rhythmBear"><label for="rhythmBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br><span class="interactiveText">Novice</span><br>I did not play with any predictable pulse nor correct rhythms.</label>
       </div>
       <div class="col-sm iconContainer bear">
-        <input required autocomplete="off" type="radio" name="coordination" value="1" id="coordinationBear"><label for="coordinationBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br>I need an explanation of how to find the correct notes.</label>
+        <input required autocomplete="off" type="radio" name="coordination" value="1" id="coordinationBear"><label for="coordinationBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br><span class="interactiveText">Novice</span><br>I did not play any of the notes correctly.</label>
       </div>
       <div class="col-sm iconContainer bear">
-        <input required autocomplete="off" type="radio" name="tone" value="1" id="toneBear"><label for="toneBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br>I need an explanation of the marked articulation.</label>
+        <input required autocomplete="off" type="radio" name="tone" value="1" id="toneBear"><label for="toneBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br><span class="interactiveText">Novice</span><br>I did not play any of the marked articulation correctly.</label>
       </div>
       <div class="col-sm iconContainer bear">
-        <input required autocomplete="off" type="radio" name="dynamics" value="1" id="dynamicsBear"><label for="dynamicsBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br>I need an explanation of the marked dynamics.</label>
+        <input required autocomplete="off" type="radio" name="dynamics" value="1" id="dynamicsBear"><label for="dynamicsBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br><span class="interactiveText">Novice</span><br>I did not play any of the marked dynamics correctly.</label>
       </div>
       <div class="col-sm iconContainer bear">
-        <input required autocomplete="off" type="radio" name="stylistic" value="1" id="stylisticBear"><label for="stylisticBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br>I need an explanation of the proper body movements.</label>
+        <input required autocomplete="off" type="radio" name="stylistic" value="1" id="stylisticBear"><label for="stylisticBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br><span class="interactiveText">Novice</span><br>It felt very awkward.</label>
       </div>
     </div>
   </div>
@@ -146,19 +198,19 @@
   <div class="rubric-grid">
     <div class="row row-border m-0 text-center">
       <div class="col-sm iconContainer bear">
-        <input required autocomplete="off" type="radio" name="techAScore" value="1" id="techABear"><label for="techABear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br>Just started</label>
+        <input required autocomplete="off" type="radio" name="techAScore" value="1" id="techABear"><label for="techABear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br>Novice</label>
       </div>
-      <div class="col-sm iconContainer jellyfish">
-        <input required autocomplete="off" type="radio" name="techAScore" value="2" id="techAjellyfish"><label for="techAjellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br>Getting better</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techAScore" value="2" id="techAjellyfish"><label for="techAjellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br>Advanced Novice</label>
       </div>
-      <div class="col-sm iconContainer koala">
-        <input required autocomplete="off" type="radio" name="techAScore" value="3" id="techAKoala"><label for="techAKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br>Getting comfortable</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techAScore" value="3" id="techAKoala"><label for="techAKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br>Competent</label>
       </div>
-      <div class="col-sm iconContainer octopus">
-        <input required autocomplete="off" type="radio" name="techAScore" value="4" id="techAOctopus"><label for="techAOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br>Becoming great</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techAScore" value="4" id="techAOctopus"><label for="techAOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br>Proficient</label>
       </div>
-      <div class="col-sm iconContainer eagle">
-        <input required autocomplete="off" type="radio" name="techAScore" value="5" id="techAEagle"><label for="techAEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br>Excellence</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techAScore" value="5" id="techAEagle"><label for="techAEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br>Expert</label>
       </div>
     </div>
   </div>
@@ -174,25 +226,25 @@
   <div class="rubric-grid">
     <div class="row row-border m-0 text-center">
       <div class="col-sm iconContainer bear">
-        <input required autocomplete="off" type="radio" name="techBScore" value="1" id="techBBear"><label for="techBBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br>Just started</label>
+        <input required autocomplete="off" type="radio" name="techBScore" value="1" id="techBBear"><label for="techBBear"><img class="interactiveIcon" src="../images/bear.ico" alt=""><br>Novice</label>
       </div>
-      <div class="col-sm iconContainer jellyfish">
-        <input required autocomplete="off" type="radio" name="techBScore" value="2" id="techBjellyfish"><label for="techBjellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br>Getting better</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techBScore" value="2" id="techBjellyfish"><label for="techBjellyfish"><img class="interactiveIcon" src="../images/jellyfish.ico" alt=""><br>Advanced Novice</label>
       </div>
-      <div class="col-sm iconContainer koala">
-        <input required autocomplete="off" type="radio" name="techBScore" value="3" id="techBKoala"><label for="techBKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br>Getting comfortable</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techBScore" value="3" id="techBKoala"><label for="techBKoala"><img class="interactiveIcon" src="../images/koala.ico" alt=""><br>Competent</label>
       </div>
-      <div class="col-sm iconContainer octopus">
-        <input required autocomplete="off" type="radio" name="techBScore" value="4" id="techBOctopus"><label for="techBOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br>Becoming great</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techBScore" value="4" id="techBOctopus"><label for="techBOctopus"><img class="interactiveIcon" src="../images/octopus.ico" alt=""><br>Proficient</label>
       </div>
-      <div class="col-sm iconContainer eagle">
-        <input required autocomplete="off" type="radio" name="techBScore" value="5" id="techBEagle"><label for="techBEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br>Excellence</label>
+      <div class="col-sm iconContainer bear">
+        <input required autocomplete="off" type="radio" name="techBScore" value="5" id="techBEagle"><label for="techBEagle"><img class="interactiveIcon" src="../images/eagle.ico" alt=""><br>Expert</label>
       </div>
     </div>
   </div>
   <hr>
   <!-- General Comments -->
-  <h2 class="text-center display-4 mb-4">Lesson Notes</h2>
+  <h2 class="text-center display-4 mb-4">Lesson Feedback</h2>
   <div class="form-group">
     <textarea required autocomplete="off" name="comments" class="form-control" id="comments" rows="20"></textarea>
   </div>
@@ -204,7 +256,7 @@
   <button class="btn my-4 btn-success btn-block" type="submit">Create Week</button>
 </form>
 
-<div class="black-text mb-3" id="lastLessonDiv"></div>
+<div class="orange-text mb-3" id="lastLessonDiv"></div>
 <div class="white-text" id="conversationDiv"></div>
 
 

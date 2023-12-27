@@ -340,7 +340,9 @@ exports.showPracticePage = function(req, res) {
 }
 
 exports.showMissionsPage = function(req, res) {
+  
     User.getMissionsAccomplished(req.session.user.userId).then((missionsAccomplished) => {
+        User.getRepertoirePolished(req.session.user.userId).then((repertoirePolished) => {
         getThesePropertyValuesForUser([
             'leaderboardScore',
             'practiceConversations'
@@ -364,6 +366,7 @@ exports.showMissionsPage = function(req, res) {
                             parentName: req.session.user.parentName,
                             admin: req.session.user.admin,
                             missionsAccomplished: missionsAccomplished,
+                            repertoirePolished: repertoirePolished,
                             points: userProps.leaderboardScore,
                             adErrors: req.flash('adErrors'),
                             randomBPM: randomBPM, // taken from admin acc
@@ -386,7 +389,7 @@ exports.showMissionsPage = function(req, res) {
             })
         })
     })
-}
+})}
 
 exports.showLeaderboardPage = function(req, res) {
     User.getPrizeList().then((prizeList) => {

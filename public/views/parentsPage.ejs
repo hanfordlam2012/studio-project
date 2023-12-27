@@ -74,7 +74,7 @@ let stackedBar = new Chart(ctx, {
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
     }, {
-        label: 'Coordination',
+        label: 'Body Feeling',
         data: [<%- stylisticArray %>],
         backgroundColor: 'rgba(153, 102, 255, 0.6)',
         borderColor: 'rgba(153, 102, 255, 1)',
@@ -158,130 +158,130 @@ function showExtraComponentInfo() {
           let stylisticModalTitle = ""
           let stylisticModalDesc = ""
           if (studentWeek.techAScore == 1 || studentWeek.techAScore == 1.5) {
-            techAScoreTooltip = "Just started"
+            techAScoreTooltip = "Novice"
           } else if (studentWeek.techAScore == 2 || studentWeek.techAScore == 2.5) {
-            techAScoreTooltip = "Getting better"
+            techAScoreTooltip = "Advanced Novice"
           } else if (studentWeek.techAScore == 3 || studentWeek.techAScore == 3.5) {
-            techAScoreTooltip = "Getting comfortable"
+            techAScoreTooltip = "Competent"
           } else if (studentWeek.techAScore == 4 || studentWeek.techAScore == 4.5) {
-            techAScoreTooltip = "Becoming great"
+            techAScoreTooltip = "Proficient"
           } else {
-            techAScoreTooltip = "Excellence"
+            techAScoreTooltip = "Expert"
           }
           if (studentWeek.techBScore == 1 || studentWeek.techBScore == 1.5) {
-            techBScoreTooltip = "Just started"
+            techBScoreTooltip = "Novice"
           } else if (studentWeek.techBScore == 2 || studentWeek.techBScore == 2.5) {
-            techBScoreTooltip = "Getting better"
+            techBScoreTooltip = "Advanced Novice"
           } else if (studentWeek.techBScore == 3 || studentWeek.techBScore == 3.5) {
-            techBScoreTooltip = "Getting comfortable"
+            techBScoreTooltip = "Competent"
           } else if (studentWeek.techBScore == 4 || studentWeek.techBScore == 4.5) {
-            techBScoreTooltip = "Becoming great"
+            techBScoreTooltip = "Proficient"
           } else {
-            techBScoreTooltip = "Excellence"
+            techBScoreTooltip = "Expert"
           }
           if (studentWeek.rhythm == 1 || studentWeek.rhythm == 1.5) {
-            rhythmModalTitle = "Hibernating Bear"
-            rhythmModalDesc = "I need an explanation of the pulse and rhythms."
+            rhythmModalTitle = "Novice"
+            rhythmModalDesc = "I did not play with any predictable pulse nor correct rhythms."
             rhythmAlertColour = "bear"
           } else if (studentWeek.rhythm == 2 || studentWeek.rhythm == 2.5) {
-            rhythmModalTitle = "Wobbly Jellyfish"
-            rhythmModalDesc = "I can play some sections with the correct pulse and rhythms... but will I?"
+            rhythmModalTitle = "Advanced Novice"
+            rhythmModalDesc = "I played with vague pulse and rhythms."
             rhythmAlertColour = "jellyfish"
           } else if (studentWeek.rhythm == 3 || studentWeek.rhythm == 3.5) {
-            rhythmModalTitle = "Comfortable Koala"
-            rhythmModalDesc = "I can play most sections with the correct pulse and rhythms... but will I?"
+            rhythmModalTitle = "Competent"
+            rhythmModalDesc = "I played with somewhat clear pulse and rhythms."
             rhythmAlertColour = "koala"
           } else if (studentWeek.rhythm == 4 || studentWeek.rhythm == 4.5) {
-            rhythmModalTitle = "Accomplished Octopus"
-            rhythmModalDesc = "I can play all sections with the correct pulse and rhythms... but will I?"
+            rhythmModalTitle = "Proficient"
+            rhythmModalDesc = "I played with very clear pulse and rhythms."
             rhythmAlertColour = "octopus"
           } else {
-            rhythmModalTitle = "Acrobatic Eagle"
-            rhythmModalDesc = "I can play all sections with nuanced pulse and rhythms... but will I?"
+            rhythmModalTitle = "Expert"
+            rhythmModalDesc = "I played with stylistically nuanced pulse and rhythms."
             rhythmAlertColour = "eagle"
           }
           if (studentWeek.coordination == 1 || studentWeek.coordination == 1.5) {
-            coordinationModalTitle = "Hibernating Bear"
-            coordinationModalDesc = "I need an explanation of how to find the correct notes."
+            coordinationModalTitle = "Novice"
+            coordinationModalDesc = "I did not play any of the notes correctly."
             coordinationAlertColour = "bear"
           } else if (studentWeek.coordination == 2 || studentWeek.coordination == 2.5) {
-            coordinationModalTitle = "Wobbly Jellyfish"
-            coordinationModalDesc = "I can play some notes correctly... but will I?"
+            coordinationModalTitle = "Advanced Novice"
+            coordinationModalDesc = "I played about half of the notes correctly."
             coordinationAlertColour = "jellyfish"
           } else if (studentWeek.coordination == 3 || studentWeek.coordination == 3.5) {
-            coordinationModalTitle = "Comfortable Koala"
-            coordinationModalDesc = "I can play about half of the notes correctly... but will I?"
+            coordinationModalTitle = "Competent"
+            coordinationModalDesc = "I played most of the notes correctly."
             coordinationAlertColour = "koala"
           } else if (studentWeek.coordination == 4 || studentWeek.coordination == 4.5) {
-            coordinationModalTitle = "Accomplished Octopus"
-            coordinationModalDesc = "I can play most of the notes correctly... but will I?"
+            coordinationModalTitle = "Proficient"
+            coordinationModalDesc = "I played almost all the notes correctly."
             coordinationAlertColour = "octopus"
           } else {
-            coordinationModalTitle = "Acrobatic Eagle"
-            coordinationModalDesc = "I can play all the notes correctly... but will I?"
+            coordinationModalTitle = "Expert"
+            coordinationModalDesc = "I played all the notes correctly."
             coordinationAlertColour = "eagle"
           }
           if (studentWeek.tone == 1 || studentWeek.tone == 1.5) {
-            toneModalTitle = "Hibernating Bear"
-            toneModalDesc = "I need an explanation of the marked articulation."
+            toneModalTitle = "Novice"
+            toneModalDesc = "I did not play any of the marked articulation correctly."
             toneAlertColour = "bear"
           } else if (studentWeek.tone == 2 || studentWeek.tone == 2.5) {
-            toneModalTitle = "Wobbly Jellyfish"
-            toneModalDesc = "I can play some marked articulation correctly... but will I?"
+            toneModalTitle = "Advanced Novice"
+            toneModalDesc = "I played some of the marked articulation correctly."
             toneAlertColour = "jellyfish"
           } else if (studentWeek.tone == 3 || studentWeek.tone == 3.5) {
-            toneModalTitle = "Comfortable Koala"
-            toneModalDesc = "I can play most marked articulation correctly... but will I?"
+            toneModalTitle = "Competent"
+            toneModalDesc = "I played most of the marked articulation correctly."
             toneAlertColour = "koala"
           } else if (studentWeek.tone == 4 || studentWeek.tone == 4.5) {
-            toneModalTitle = "Accomplished Octopus"
-            toneModalDesc = "I can play all marked articulation correctly... but will I?"
+            toneModalTitle = "Proficient"
+            toneModalDesc = "I played the marked articulation correctly."
             toneAlertColour = "octopus"
           } else {
-            toneModalTitle = "Acrobatic Eagle"
-            toneModalDesc = "I can play all marked articulation with nuance... but will I?"
+            toneModalTitle = "Expert"
+            toneModalDesc = "I played the marked articulation with stylistic nuance."
             toneAlertColour = "eagle"
           }
           if (studentWeek.dynamics == 1 || studentWeek.dynamics == 1.5) {
-            dynamicsModalTitle = "Hibernating Bear"
-            dynamicsModalDesc = "I need an explanation of the marked dynamics."
+            dynamicsModalTitle = "Novice"
+            dynamicsModalDesc = "I did not play any of the marked dynamics correctly."
             dynamicsAlertColour = "bear"
           } else if (studentWeek.dynamics == 2 || studentWeek.dynamics == 2.5) {
-            dynamicsModalTitle = "Wobbly Jellyfish"
-            dynamicsModalDesc = "I can play some marked dynamics correctly... but will I?"
+            dynamicsModalTitle = "Advanced Novice"
+            dynamicsModalDesc = "I played some of the marked dynamics correctly."
             dynamicsAlertColour = "jellyfish"
           } else if (studentWeek.dynamics == 3 || studentWeek.dynamics == 3.5) {
-            dynamicsModalTitle = "Comfortable Koala"
-            dynamicsModalDesc = "I can play most marked dynamics correctly... but will I?"
+            dynamicsModalTitle = "Competent"
+            dynamicsModalDesc = "I played most of the marked dynamics correctly."
             dynamicsAlertColour = "koala"
           } else if (studentWeek.dynamics == 4 || studentWeek.dynamics == 4.5) {
-            dynamicsModalTitle = "Accomplished Octopus"
-            dynamicsModalDesc = " I can play all marked dynamics correctly... but will I?"
+            dynamicsModalTitle = "Proficient"
+            dynamicsModalDesc = " I played the marked dynamics correctly."
             dynamicsAlertColour = "octopus"
           } else {
-            dynamicsModalTitle = "Acrobatic Eagle"
-            dynamicsModalDesc = "I can play all marked dynamics with nuance... but will I?"
+            dynamicsModalTitle = "Expert"
+            dynamicsModalDesc = "I played the marked dynamics with stylistic nuance."
             dynamicsAlertColour = "eagle"
           }
           if (studentWeek.stylistic == 1 || studentWeek.stylistic == 1.5) {
-            stylisticModalTitle = "Hibernating Bear"
-            stylisticModalDesc = "I need an explanation of the proper body movements."
+            stylisticModalTitle = "Novice"
+            stylisticModalDesc = "It felt very awkward."
             stylisticAlertColour = "bear"
           } else if (studentWeek.stylistic == 2 || studentWeek.stylistic == 2.5) {
-            stylisticModalTitle = "Wobbly Jellyfish"
-            stylisticModalDesc = "I can play some sections fluidly and easily... but will I?"
+            stylisticModalTitle = "Advanced Novice"
+            stylisticModalDesc = "It felt awkward."
             stylisticAlertColour = "jellyfish"
           } else if (studentWeek.stylistic == 3 || studentWeek.stylistic == 3.5) {
-            stylisticModalTitle = "Comfortable Koala"
-            stylisticModalDesc = "I can play about half of the sections fluidly and easily... but will I?"
+            stylisticModalTitle = "Competent"
+            stylisticModalDesc = "It felt a little awkward."
             stylisticAlertColour = "koala"
           } else if (studentWeek.stylistic == 4 || studentWeek.stylistic == 4.5) {
-            stylisticModalTitle = "Accomplished Octopus"
-            stylisticModalDesc = "I can play most sections fluidly and easily... but will I?"
+            stylisticModalTitle = "Proficient"
+            stylisticModalDesc = "It felt easy and natural."
             stylisticAlertColour = "octopus"
           } else {
-            stylisticModalTitle = "Acrobatic Eagle"
-            stylisticModalDesc = "I can play all sections fluidly and easily... but will I?"
+            stylisticModalTitle = "Expert"
+            stylisticModalDesc = "It felt easy, natural, and enjoyable."
             stylisticAlertColour = "eagle"
           }
           %>
@@ -348,7 +348,7 @@ function showExtraComponentInfo() {
                   </div>
                   <p><%= dynamicsModalDesc %></p>
                   <hr>
-                  <h5 class="text-center">Coordination</h5>
+                  <h5 class="text-center">Body Feeling</h5>
                   <div class="alert <%= stylisticAlertColour %> text-center" role="alert">
                     <%= studentWeek.stylistic %> / 5
                   </div>
@@ -521,7 +521,7 @@ function showExtraComponentInfo() {
 
 
   <div class="text-center py-4">
-    <button class="mx-3 btn btn-outline-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Click for printer-friendly Practice Guide</button>
+    <button class="mx-3 btn btn-outline-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Click for printer-friendly Practice Rubric</button>
   </div>
 
   <script>

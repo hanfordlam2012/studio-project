@@ -74,6 +74,7 @@ User.prototype.cleanUp = function() {
         subscriber: false,
         leaderboardScore: 0,
         missionsAccomplished: [],
+        repertoirePolished: [],
         leaderboardColor: '#ffff00',
         lastSubmittedDate: new Date(),
         savedGameScore: 0,
@@ -180,6 +181,7 @@ createSubscriber = async function(customerID, username, password) {
       mobile: "",
       leaderboardScore: 0,
       missionsAccomplished: [],
+      repertoirePolished: [],
       lastSubmittedDate: new Date(),
       savedGameScore: 0,
       BPMStatus: "",
@@ -403,6 +405,13 @@ User.getMissionsAccomplished = async (userId) => {
         let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
         resolve(userDoc.missionsAccomplished)
     })
+}
+
+User.getRepertoirePolished = async (userId) => {
+  return new Promise (async(resolve, reject) => {
+      let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+      resolve(userDoc.repertoirePolished)
+  })
 }
 
 User.getMissionCode = async function() {

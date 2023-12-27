@@ -139,7 +139,7 @@ input {
 /* HOME */
 #home-html {
     background-image: url("../images/professional-teaching-studio.webp");
-    background-blend-mode: multiply;
+    background-blend-mode: none;
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -212,7 +212,7 @@ input {
 }
 
 .row-border {
-    border: 1px solid white;
+    border: 1px solid rgb(105, 105, 105);
 }
 
 .col-sm {
@@ -334,37 +334,37 @@ input {
 }
 
 .eagleSelected {
-    background-color: #a1f179;
+    background-color: #aaff7f;
 }
 
 .octopusSelected {
-    background-color: #79baf7;
+    background-color: #6cd5ff;
 }
 
 .koalaSelected {
-    background-color: #f0a579;
+    background-color: #ffc06e;
 }
 
 .jellyfishSelected {
-    background-color: #f1d580;
+    background-color: #ffdc73;
 }
 
 .bearSelected {
-    background-color: #969696;
+    background-color: #b1b1b1;
 }
 
 
 /* ASSESSMENT GRID */
 
 .rubric-grid {
-    background-color: rgb(226, 226, 226);
-    border: 1px solid white;
+    background-color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
     padding: 0;
     margin: 0;
 }
 
 .rubric-grid div div {
-    border: 1px solid white;
+    border: 1px solid rgb(0, 0, 0);
 }
 
 .iconContainer {
@@ -375,8 +375,14 @@ input {
 }
 
 .interactiveIcon {
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.interactiveText {
+    font-size: 0.8rem;
+    font-weight: 100;
+    color:rgb(156, 156, 156);
 }
 
 .rubric-grid input[type="radio"] {
@@ -387,12 +393,25 @@ input {
 
 .rubric-grid input[type="radio"] + label img {
     cursor: pointer;
-    transition: width 0.2s, height 0.2s;
+    transition: width 0.5s, height 0.5s;
 }
 
 .rubric-grid input[type="radio"]:checked + label img {
-    width: 5rem;
-    height: 5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+}  
+
+/* for text */
+.rubric-grid input[type="radio"] + label .interactiveText {
+    cursor: pointer;
+    transition-property: color font-size font-weight;
+    transition-duration: 0.5s;
+}
+
+.rubric-grid input[type="radio"]:checked + label .interactiveText {
+    color:rgb(0, 0, 0);
+    font-size: 1rem;
+    font-family: recursive;
 }  
 
 hr {

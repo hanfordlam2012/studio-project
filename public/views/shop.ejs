@@ -78,56 +78,55 @@
 <div id="biographyContainer" class="">
   
 <!--PORTAL TUTORIALS-->
-
-<div class="text-center white-border rounded black-bg m-5 p-5">
-  <p class="belgrano" style="color:#ff9422;">Are you a parent with a child learning to play the piano?</p>
-  <p class="belgrano" style="color:#7cfff8;">Do you want to improve your own music skills?</p>
-  <a href="#shop-blurb" class="mt-3 btn btn-large btn-warning">LEARN WITH PARENTS' EDUCATION</a>
-</div>
 <div id="shop-blurb" class="text-center home-display p-5 m-5">
-  <h1>Annual Parents' Education Subscription</h1>
-  <ul>
-    <li>Unlock a clearer understanding of music</li>
-    <li>Learn how to help your child more easily</li>
-    <li>Weekly interactive training via online group call with Hanford</li>
-    <li></li>
-    <li></li>
-  </ul>
-  <p>The way this is set up is <i>simple</i>. Pay a <strong>monthly subscription</strong> fee to get portal access where you can find a catalogue of parent education tutorials. Subscriptions also let you access a private Facebook group where you are empowered by a community of like-minded parents.</p>
+  <h1 class="black-text mb-5">Unlock Piano Playing Success with Hanford's Rubric and Guide</h1>
+  <h2 class="orange-text">For Teachers, Parents, and Students</h2>
+  <p>Welcome to a tool that transforms piano performance. This Rubric and Guide is designed to empower teachers, engage parents, and inspire students. Elevate the learning experience with a powerful resource that brings clarity, consistency, and success to every piece in your piano repertoire.</p>
   
-  <p>I want to help eager <b>students and parents</b> make the most out of their piano lessons with their teachers. This means helping you do your best at home, so that your teacher can take you to the next level sooner.</p>
+  <h2 style="color:blue">Why Choose Hanford's Rubric and Guide?</h2>
+<p><strong>Enhance Teaching Effectiveness:</strong> <br>This five-element rubric provides teachers with a clear framework for assessment, making it easier to evaluate and guide student progress.</p>
 
-  <p>These <b>tutorials</b> give you a strong overview of how to approach a piece in a practical way, with helpful tips about what to look out for, and are suitable for parents who want to understand more about their child’s music or children who are excited about making progress by themselves.</p>
-    
-  <p>If you are a <b>teacher</b>, please feel encouraged to subscribe and share these videos with your students, to support yourself as well as your students, with minimal extra work.</p>
-    
-  <p>Let’s work together to make quality music education accessible to everyone.</p>
-  
+<p><strong>Foster Parental Involvement:</strong> <br>Keep parents informed about musical expectations and how they can support their child's learning journey. Strengthen the student-teacher-parent connection with this user-friendly guide.</p>
+
+<p><strong>Empower Students: </strong><br>Equip students with the tools they need to excel. The guide not only explains the rubric but also offers valuable tips and strategies for playing-improvement.</p>
+
+<p><strong>Save Time and Effort: </strong><br>Say goodbye to tedious document creation. This ready-to-use PDF rubric and usage guide saves piano educators valuable time, allowing them to focus on what matters most &#8211; teaching.</p>
+
+<h2 class="orange-text">What You'll Get:</h2>
+<p><strong>Thoughtfully Crafted Rubric: </strong><br>Simple and clear rubric covering five important playing criteria.</p>
+
+<p><strong>Comprehensive Usage Guide: </strong><br>A step-by-step guide for teachers, parents, and students on how to effectively use and benefit from the rubric.</p>
+
+<h2 style="color:blue">Pricing:</h2>
+<p><strong>One-time payment of $25 AUD</strong> for PDF download of Rubric and Guide</p>
+
+<h2 class="orange-text">Testimonials:</h2>
+<p>"The rubric and guide has been a game-changer in my practice. Clear expectations and valuable insights for both me and my students."
+<i>— Mrs. Johnson, piano teacher</i></p>
+<p>"I can now help my child at home with more confidence because of the explanations, tips, and strategies in the guide. My son is able to measure his own progress which motivates him to practice!"
+  <i>— Mr. Zhong, parent</i></p>
+
+<h1 class="mb-5">Unlock Success Today!</h1>
+<p><strong>Empower your teaching, support parent partnerships, and supercharge students to reach new performance heights.</strong></p>
+<p><strong>Invest in your knowledge and practice with Hanford's Rubric and Guide.</strong></p>
+
       <!-- subscription FORM-->
-    <hr>
-    <form id="subscription-form" class="text-center d-flex flex-column justify-content-center my-5 mx-5 px-3" action="/create-checkout-session" method="POST">
-      <div class="d-block">
-        <div id="subscriptionUsernameInputDiv" class="input-group d-block mb-3">
-          <input id="subscriptionUsernameInput" autocomplete="off" type="text" name="username" class="text-center form-control-lg" value="" placeholder="Create a username">
+      <form id="subscription-form" class="text-center d-flex flex-column justify-content-center my-5 mx-5 px-3" action="/create-checkout-session" method="POST">
+        <div class="d-block">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="priceId" value="price_1LQjHjKd8lFEm7v382HscQ7D" />
+      <button class="m-5 p-3 btn btn-large btn-danger" style="font-size: larger;" type="submit">Buy the Rubric and Guide<br><span style="font-size: x-small;">Takes you to Stripe for secure payment</span></button>
         </div>
-        <div id="subscriptionPasswordInputDiv" class="input-group d-block mb-3">
-          <input id="subscriptionPasswordInput" autocomplete="off" type="password" name="password" class="text-center form-control-lg" value="" placeholder="Create a password">
-        </div>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <input type="hidden" name="priceId" value="price_1LQjHjKd8lFEm7v382HscQ7D" />
-    <button class="m-5 p-3 btn btn-large btn-primary" style="font-size: larger;" type="submit">Subscribe now for $20/month<br><span style="font-size: x-small;">Takes you to Stripe for secure payment</span></button>
-      </div>
-        
-      </form> 
+          
+        </form> 
+
+Have questions? Send a message <a target="_blank" href="https://www.hanfordlam.com/#contact">here</a>.
   
-  <div>
-      <p class="recursive mb-3">Learn the features of these pieces, how to practice, and help your child with confidence:</p>
-      <p><b>AMEB Series 18 Grade One</b><br>
-      A1: Etude by Beyer</p>
-      <p><b>AMEB Series 18 Grade Two</b><br>
-      A2: Through the steppes by Bortkiewicz (coming)</p>
-    <p><strong>Request a tutorial topic!</strong></p>
-  </div>
+
+  
+
+  
+  
 </div>
 
 <script>
@@ -155,8 +154,8 @@
   </script>
 </div>
     <!-- Footer -->
-    <footer class="footer text-center small black-text py-3">
-        <p class="m-0 raleway">Thanks for visiting! Copyright &copy; <script>document.write(new Date().getFullYear());</script> <a href='/' class="black-text raleway">hanfordlam.com</a>. All rights reserved. Background by Iris.</p>
+    <footer class="footer text-center small white-text py-3">
+        <p class="m-0 raleway">Thanks for visiting! Copyright &copy; <script>document.write(new Date().getFullYear());</script> <a href='/' class="white-text raleway">hanfordlam.com</a>. All rights reserved.</p>
     </footer>
   </div> <!-- close out page container div -->
   <!-- BOOTSTRAP 5 -->

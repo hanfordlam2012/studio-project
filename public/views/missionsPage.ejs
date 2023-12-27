@@ -79,10 +79,27 @@
 <span id="csrf-landmark" data-value="<%= csrfToken %>" data-username="<%= username %>" data-studentid="<%= userId %>"></span>
 
 <div class="mt-5 aboveFalling" id="missionsWrapper">
+
+
+  <!--REPERTOIRE POLISHED-->
+  <div class="w-100">
+    <div class="black-bg belgrano rounded d-inline-block">
+    <h3 class="p-3 blue-text" style="font-size: 2em;">🎹 Repertoire POLISHED <span style="font-size: xx-small;">since 2024</span> 🎹 </h3>
+  </div>
+  </div>
+  
+  <% repertoirePolished.forEach((rep) => { %>
+    <div class="rounded shake-little task-div-complete">
+      <div class="missionContent recursive">
+        <%- rep %>
+      </div>
+    </div>
+  <% }) %>
+  <div style="height:30px"></div>
   <!--MISSIONS ACCOMPLISHED-->
   <div class="w-100">
     <div class="black-bg belgrano rounded d-inline-block">
-    <h3 class="p-3 orange-text" style="font-size: 2em;">👑 Missions ACCOMPLISHED 👑</h3>
+    <h3 class="p-3 orange-text" style="font-size: 2em;">👑 Missions ACCOMPLISHED <span style="font-size: xx-small;">since 2022</span> 👑</h3>
   </div>
   </div>
   
@@ -93,6 +110,8 @@
       </div>
     </div>
   <% }) %>
+</div>
+
 </div>
 
 
@@ -117,15 +136,26 @@
 
     <!-- LITERACY -->
     <div class="aboveFalling p-3 m-3 blue-box rounded">
-        <p class="recursive text-center mb-0"><strong>SIGHT READING Mission:</strong><br>1. Give your best attempt at a sight reading exercise one grade level above your current.</p>
+        <p class="recursive text-center mb-0"><strong>Mission: Major Scales</strong><br>Perform 12 major scales from memory.</p>
     </div>
+
+    <!-- LITERACY -->
+    <div class="aboveFalling p-3 m-3 blue-box rounded">
+      <p class="recursive text-center mb-0"><strong>Mission: Note Memory</strong><br>Challenge and win at a game of Note Memory against Hanford.</p>
+  </div>
 
         <!-- READING -->
         <div class="aboveFalling blue-box p-3 m-3 rounded">
-          <p class="recursive text-center mb-0"><strong>TETRACHORD Mission:</strong><br>1. Ask to Hanford to show you how to build major scales with tetrachords.<br>2. Build some yourself.</p>
+          <p class="recursive text-center mb-0"><strong>Mission: Excursion Report</strong><br>Write a report after an excursion to share on the noticeboard.</p>
         </div>
 
-            <!--DISPLAY CONVERSATION-->
+
+   <!-- READING -->
+   <div class="aboveFalling blue-box p-3 m-3 rounded">
+    <p class="recursive text-center mb-0"><strong>Mission: Compose or Improvise</strong><br>Create some new music based on something you are currently learning. Hanford can help guide your creativity.</p>
+  </div>      
+
+<!--DISPLAY CONVERSATION-->
             <div class="d-flex justify-content-center" style=" min-width:0;">
               <div class="d-flex flex-column" style=" min-width:0;">
                 <div id="practiceConversationContainer" class="d-flex flex-column topShadow rounded my-5 py-3" style="max-width:960px; min-width:0; z-index: 1;overflow-y: scroll;height:400px;">
