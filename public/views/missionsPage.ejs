@@ -36,7 +36,7 @@
       </div>
       <div class="col-lg-7">
         <a id="practiceTab" href="/practice" class="mx-4 my-2 d-inline-block navLink">PRACTICE</a>
-        <a id="missionsTab" href="/missions" class="mx-4 my-2 d-inline-block navLink">MISSIONS</a>
+        <a id="missionsTab" href="/missions" class="mx-4 my-2 d-inline-block navLink">FEATS</a>
         <a id="leaderboardTab" href="/leaderboard" class="mx-4 my-2 d-inline-block navLink">POINTS</a>
         <form id="logoutButton" class="mx-4 my-2 d-inline-block" action="/logout" method="POST">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -84,7 +84,7 @@
   <!--REPERTOIRE POLISHED-->
   <div class="w-100">
     <div class="black-bg belgrano rounded d-inline-block">
-    <h3 class="p-3 blue-text" style="font-size: 2em;">🎹 Repertoire POLISHED <span style="font-size: xx-small;">since 2024</span> 🎹 </h3>
+    <h3 class="p-3 blue-text" style="font-size: 2em;">🎹 Polished Repertoire <span style="font-size: xx-small;">since 2024</span> 🎹 </h3>
   </div>
   </div>
   
@@ -99,7 +99,7 @@
   <!--MISSIONS ACCOMPLISHED-->
   <div class="w-100">
     <div class="black-bg belgrano rounded d-inline-block">
-    <h3 class="p-3 orange-text" style="font-size: 2em;">👑 Missions ACCOMPLISHED <span style="font-size: xx-small;">since 2022</span> 👑</h3>
+    <h3 class="p-3 orange-text" style="font-size: 2em;">👑 Performances and Exams <span style="font-size: xx-small;">since 2022</span> 👑</h3>
   </div>
   </div>
   
@@ -115,14 +115,14 @@
 </div>
 
 
-  <!--BOUNCING ARROW-->
+  <!--BOUNCING ARROW
   <div class="aboveFalling arrowcontainer">
     <div class="arrow-holder">
       <div id="arrow" class="circle bounce">
           <i class="fas fa-angle-double-down fa-4x drop-arrow"></i>
       </div>
     </div>
-  </div>
+  </div>-->
 
   <!-- INTERESTING VIDEO 
   <div id="interestingVideoContainer" class="aboveFalling">
@@ -134,28 +134,28 @@
     <% } %>
   </div>-->
 
-    <!-- LITERACY -->
+    <!-- LITERACY 
     <div class="aboveFalling p-3 m-3 blue-box rounded">
-        <p class="recursive text-center mb-0"><strong>Mission: Major Scales</strong><br>Perform 12 major scales from memory.</p>
-    </div>
+        <p class="recursive text-center mb-0"><strong>Mission: Technical Work</strong><br>Perform your graded technical exercises from memory.</p>
+    </div>-->
 
-    <!-- LITERACY -->
+    <!-- LITERACY 
     <div class="aboveFalling p-3 m-3 blue-box rounded">
       <p class="recursive text-center mb-0"><strong>Mission: Note Memory</strong><br>Challenge and win at a game of Note Memory against Hanford.</p>
-  </div>
+  </div>-->
 
-        <!-- READING -->
+        <!-- READING 
         <div class="aboveFalling blue-box p-3 m-3 rounded">
-          <p class="recursive text-center mb-0"><strong>Mission: Excursion Report</strong><br>Write a report after an excursion to share on the noticeboard.</p>
-        </div>
+          <p class="recursive text-center mb-0"><strong>Mission: Concert Review</strong><br>Write and share a review of a digital or live concert that you attended.</p>
+        </div>-->
 
 
-   <!-- READING -->
+   <!-- READING 
    <div class="aboveFalling blue-box p-3 m-3 rounded">
-    <p class="recursive text-center mb-0"><strong>Mission: Compose or Improvise</strong><br>Create some new music based on something you are currently learning. Hanford can help guide your creativity.</p>
-  </div>      
+    <p class="recursive text-center mb-0"><strong>Mission: Compose</strong><br>Create and share a piece of original music. Hanford can help guide your creativity and teach you how to use computer software.</p>
+  </div>      -->
 
-<!--DISPLAY CONVERSATION-->
+<!--DISPLAY CONVERSATION
             <div class="d-flex justify-content-center" style=" min-width:0;">
               <div class="d-flex flex-column" style=" min-width:0;">
                 <div id="practiceConversationContainer" class="d-flex flex-column topShadow rounded my-5 py-3" style="max-width:960px; min-width:0; z-index: 1;overflow-y: scroll;height:400px;">
@@ -168,8 +168,8 @@
                       <% }
                     }) %>
                     <div style="height:15px;"></div>
-                  </div>
-                    <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS-->
+                  </div>-->
+                    <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS
                     <% if (!practiceStatus) { %>
                       <form id="PracticeConvo" class="m-4" style="max-width:960px;" action="/updateLastSubmittedDateAndAddPoints" method="POST">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -188,7 +188,7 @@
                       </div>
                     <% } %>
               
-                </div>
+                </div>-->
 
 
               

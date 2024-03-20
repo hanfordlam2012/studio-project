@@ -33,7 +33,7 @@
       </div>
       <div class="col-lg-7">
         <a id="practiceTab" href="/practice" class="mx-4 my-2 d-inline-block navLink">PRACTICE</a>
-        <a id="missionsTab" href="/missions" class="mx-4 my-2 d-inline-block navLink">MISSIONS</a>
+        <a id="missionsTab" href="/missions" class="mx-4 my-2 d-inline-block navLink">FEATS</a>
         <a id="leaderboardTab" href="/leaderboard" class="mx-4 my-2 d-inline-block navLink">POINTS</a>
         <form id="logoutButton" class="mx-4 my-2 d-inline-block" action="/logout" method="POST">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -116,7 +116,7 @@
             badge = "🦢"
           } else if (username == "kathy") {
             badge = "🦃"
-          } else if (username == "daniel2006") {
+          } else if (username == "michelle") {
             badge = "🦔"
           } else if (username == "iris") {
             badge = "🐇"
@@ -154,7 +154,7 @@
   <table class="my-5 py-0 table text-center table-hover table-light aboveFalling">
     <thead>
       <tr class="">
-        <th class="black-text" scope="col">ITEM</th>
+        <th class="black-text" scope="col">ITEMS</th>
         <th class="black-text" scope="col">POINTS</th>
       </tr>
     </thead>
@@ -188,7 +188,7 @@
   </table>
 </div> -->
 
-            <!--DISPLAY CONVERSATION-->
+            <!--DISPLAY CONVERSATION
             <div class="d-flex justify-content-center" style=" min-width:0;">
               <div class="d-flex flex-column" style=" min-width:0;">
                 <div id="practiceConversationContainer" class="d-flex flex-column topShadow rounded my-5 py-3" style="max-width:960px; min-width:0; z-index: 1;overflow-y: scroll;height:400px;">
@@ -201,8 +201,8 @@
                       <% }
                     }) %>
                     <div style="height:15px;"></div>
-                  </div>
-                    <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS-->
+                  </div>-->
+                    <!--DISPLAY REPLY BOX IF NO PRACTICE STATUS
                     <% if (!practiceStatus) { %>
                       <form id="PracticeConvo" class="m-4" style="max-width:960px;" action="/updateLastSubmittedDateAndAddPoints" method="POST">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -221,7 +221,7 @@
                       </div>
                     <% } %>
               
-                </div>
+                </div>-->
 
 
               
