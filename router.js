@@ -15,13 +15,13 @@ router.get('/', function(req, res) {
 
 // general teaching tools
 router.get('/blackboard', function(req, res) {res.render('blackboard')})
-router.get('/quiz', function(req, res) {res.render('quiz')})
+//router.get('/quiz', function(req, res) {res.render('quiz')})
 router.post('/sendQuizToHanford', messageController.sendQuizToHanford)
 //router.get('/melody', function(req, res) {res.render('melody')})
 //router.post('/sendMelodyToHanford', messageController.sendMelodyToHanford)
 //router.get('/showcase', userController.mustBeLoggedIn, performanceController.showShowcasePage)
 //router.post('/addPerformanceComment', userController.mustBeLoggedIn, performanceController.addPerformanceComment)
-router.get('/feedback', userController.mustBeLoggedIn, userController.showFeedbackPage)
+//router.get('/feedback', userController.mustBeLoggedIn, userController.showFeedbackPage)
 //router.get('/schedule', userController.showSchedulePage)
 router.post('/sendFeedbackToHanford', messageController.sendFeedbackToHanford)
 
