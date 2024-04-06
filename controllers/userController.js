@@ -283,6 +283,9 @@ exports.showSchedulePage = function(req, res) {
 exports.showShopPage = function(req, res) {
     res.render('shop')
 }
+exports.showDaytimePage = function(req, res) {
+    res.render('daytime')
+}
 
 exports.showSuccessPage = function(req, res) {
     res.render('success')
