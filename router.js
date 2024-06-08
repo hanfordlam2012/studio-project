@@ -38,7 +38,7 @@ router.post('/isCorrect', userController.isCorrect)
 // subscription routes
 router.post('/create-checkout-session', userController.createCheckoutSession)
 router.post('/create-portal-session', userController.createPortalSession)
-router.get('/theory', userController.showShopPage)
+//router.get('/theory', userController.showShopPage)
 router.get('/daytime', userController.showHolisticPage)
 router.get('/holistic', userController.showHolisticPage)
 router.get('/success', userController.showSuccessPage)
