@@ -44,3 +44,17 @@ exports.sendMelodyToHanford = function(req, res) {
         res.send(err)
     })
 }
+
+exports.sendCheckedSnapshot = async function(req, res) {
+    Message.sendCheckedSnapshot(req).then((response) => {
+        req.flash("status", response)
+        req.session.save(function() {
+            res.redirect('/practice')
+        })
+    }).catch((err) => {
+        req.flash("status", err)
+        req.session.save(function() {
+            res.redirect('/practice')
+        })
+    })
+}

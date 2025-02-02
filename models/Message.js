@@ -198,4 +198,39 @@ Message.sendMelodyToHanford = function(data) {
     })
 }
 
+Message.sendCheckedSnapshot = function(req) {
+    return new Promise(async(resolve, reject) => {
+        try {
+            // stringify because req.body is a null object
+            let checkedList = JSON.stringify(req.body)
+            let student = req.session.user.fName
+            let output = `
+            UPDATE: ${checkedList}
+            `
+            // create reusable transporter object using the default SMTP transport
+            let transporter = nodemailer.createTransport({
+                host: "sg1-ts3.a2hosting.com",
+                port: 465,
+                secure: true, // true for 465, false for other ports
+                auth: {
+                user: process.env.A2EMAIL,
+                pass: process.env.A2EMAILPASSWORD,
+                },
+            });
+
+            // send mail with defined transport object
+            await transporter.sendMail({
+                from: process.env.A2EMAIL, // sender address
+                to: process.env.EMAIL, // list of receivers
+                subject: `Checklist update from ${student}`, // Subject line
+                html: output, // html body
+            });
+            resolve("success")
+        } catch (e) {
+            console.log(e)
+            reject("fail")
+        }
+    })
+}
+
 module.exports = Message

@@ -250,10 +250,15 @@
   </div>
   <hr>
 
+  <!--points add-->
+  <label for="pointsAdd" class="white-text">Add Points:</label>
+<input type="number" id="pointsAdd" name="pointsAdd" required><br>
+
+
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
   <!-- Submit Button-->
-  <button class="btn my-4 btn-success btn-block" type="submit">Create Week</button>
+  <button class="btn btn-lg my-4 btn-success btn-block" type="submit">Do we need to add any points? Create Week.</button>
 </form>
 
 <div class="orange-text mb-3" id="lastLessonDiv"></div>

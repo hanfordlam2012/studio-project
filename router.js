@@ -58,6 +58,7 @@ router.get('/parents', userController.mustBeLoggedIn, userController.showParents
 // practice routes
 router.post('/updateLastSubmittedDateAndAddPoints', userController.mustBeLoggedIn, missionController.updateLastSubmittedDateAndAddPoints)
 router.post('/guessBPM', userController.mustBeLoggedIn, missionController.checkBPM)
+router.post('/sendCheckedSnapshot', userController.mustBeLoggedIn, messageController.sendCheckedSnapshot)
 
 // admin routes
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)
@@ -67,6 +68,9 @@ router.post('/choose-week', userController.mustBeLoggedIn, userController.mustBe
 router.post('/edit-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.editWeek)
 router.post('/getStudentData', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.getStudentData)
 router.post('/replyToStudent', userController.mustBeLoggedIn, userController.mustBeAdmin, missionController.replyToStudent)
+
+// STORY
+
 
 // sitemap
 router.get('/sitemap.xml', function(req, res) {

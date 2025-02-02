@@ -325,6 +325,7 @@ exports.showPracticePage = function(req, res) {
                                 BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
                                 latestComments: latestComments,
                                 adErrors: req.flash('adErrors'),
+                                status: req.flash('status'),
                                 practiceStatus: practiceStatus, // true if already practised
                                 points: userProps.leaderboardScore,
                                 lessonCount: req.session.user.lessonCount,

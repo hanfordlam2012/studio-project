@@ -70,15 +70,53 @@
         <!-- linebreaks are rendered in textarea placeholder -->
         <div id="practice-guide" class="aboveFalling transparentBG mt-2 mb-4 section">
           <div class="py-4 my-4 mb-2 mx-0">
+
             <!--DISPLAY WEEKLY COMMENTS-->
             <% latestComments.forEach((comment) => { %>
-              <div id="weeklySnapshot" class="mt-0 px-5 py-4 mt-4 rounded recursive"><%- filterUserHTML(comment.comments) %></div>  
-              <div id="print-button" class="text-center mt-3 pt-3 pb-2">
-                <button class="mx-3 my-5 btn btn-secondary btn-sm" href="#" onclick="printDiv('weeklySnapshot')">Print notes</button>
-              </div>
-              <div class="text-center mb-4 pb-4">
-                <button class="mx-3 btn btn-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Click for printer-friendly Practice Guide</button>
-              </div>
+              <form action="/sendCheckedSnapshot" method="POST" id="sendCheckedSnapshot">
+                <div id="weeklySnapshot" class="mt-0 mb-5 px-5 py-5 rounded recursive">
+                  
+                  <!--DISPLAY FEEDBACK AFTER SENDING CHECKED LIST-->
+                  <% if (status == 'fail') { %>
+                    <div id="contacterror" class="alert alert-danger text-center small mt-1 py-2">Sorry, your checked list couldn't be sent... that's OK. How about asking mum or dad to send me a picture on Whatsapp?</div>
+                  <% } else if (status == 'success') { %>
+                    <div id="contactsuccess" class="alert alert-success text-center small mt-1 py-2">Got it. Thanks for the update!</div>
+                  <% } %>
+
+                  <%- filterUserHTML(comment.comments) %>
+
+                  <div class="text-center mt-5">
+                    <p class="mt-5 small" style="color: blueviolet;max-width: 50%; margin-left: auto; margin-right: auto;">☝ <i>Check off each numbered item by clicking it, then let Hanford know what you worked on today! 👇</i></p>
+                  </div>
+
+                  <!--SEND CHECKED-->
+                  <div id="sendChecked" class="text-center my-1">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="mx-3 my-3 btn btn-success btn-lg">Alert Hanford of today's checked list</button>
+                  </div>
+                  <!--PRINT COMMENTS-->
+                  <div id="print-button" class="text-center my-1">
+                    <button class="mx-3 my-3 btn btn-secondary btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print this week's comments</button>
+                  </div>
+                  <!--PRACTICE GUIDE-->
+                  <div class="text-center my-1">
+                    <button class="mx-3 my-3 btn btn-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Open Practice Guide</button>
+                  </div>
+                </div> 
+              </form> 
+                <!--use js add checkboxes to each list element, css to apply strikethrough, on Button press - send checked list to server to email Hanford-->
+                <script>
+                  let practiceList = document.getElementById("weeklySnapshot");
+                  let practiceItems = practiceList.getElementsByTagName('li')
+                  
+                  // add checkboxes to each list item
+                  for (let i = 0; i < practiceItems.length; i++) {
+                    console.log()
+                    practiceItems[i].innerHTML = "<span><input type='checkbox' name='" + practiceItems[i].parentElement.previousSibling.previousSibling.innerText + "' value='" + practiceItems[i].innerText + "' id='"  + practiceItems[i].innerText + "'><label for='" + practiceItems[i].innerText + "'>" + practiceItems[i].innerText + "</label></span>"
+                  }
+
+                </script>
+                
             <% }) %>
             <!--RECORDED LESSON-->
             <div id="recordedLesson" class="aboveFalling mb-5 rounded">
@@ -106,7 +144,7 @@
               </div>
             <% } else { %>
               <div class="d-flex justify-content-center">
-                <form action="/guessBPM" method="POST" style="background-color: rgba(0, 0, 0, 0.775); margin-bottom: 150px;" class="aboveFalling form-inline d-inline-block text-center rounded p-4 mt-4 justify-content-center">
+                <form action="/guessBPM" method="POST" style="background-color: rgba(0, 0, 0, 0.775); margin-bottom: 150px;" class="aboveFalling form-inline d-inline-block text-center rounded p-4 mt-5 pt-5 justify-content-center">
                   <p class="white-text caveat" style="font-size: 2em;">Guess the Tempo</p>
                   <img src='../images/metronome-colour.png' alt='blinking!' id='blinking_image' />
                 <div class="form-group ml-4 mt-3">
@@ -156,7 +194,7 @@
                           <textarea autocomplete="off" name="practiceConversation" class="form-control" style="background-color: rgba(30, 20, 51, 0.927);color:chartreuse;" 
                           placeholder="<%= practicePrompt %>&#10; &#10;" id="practiceConversation" rows="6"></textarea>
                           <div class="d-grid">
-                            <button  type="submit" class="btn btn-danger btn-block mt-4" style="font-size: 1.2rem; border:3px solid white">SEND</button>
+                            <button  type="submit" class="btn btn-success btn-block mt-4" style="font-size: 1.2rem; border:3px solid white">Send my message to Hanford</button>
                           </div>
                           
                         </div>
@@ -184,6 +222,7 @@
         </div>
 
         <script>
+
           // PRINT FEATURE PLAIN TEXT
           function printDiv(elementId) {
             var prtContent = document.getElementById(elementId);
@@ -194,10 +233,26 @@
             WinPrint.print();
           }
 
-          // prevent multisubmits
+          // prevent CONVO multisubmits
           try {
             (function() {
               let frm = document.getElementById("PracticeConvo")
+              var allowSubmit = true;
+              frm.onsubmit = function () {
+                if (allowSubmit)
+                    allowSubmit = false;
+                else 
+                    return false;
+              }
+            })();
+          } catch(err) {
+            console.log(err);
+          }
+
+          // prevent CHECKLIST multisubmits
+          try {
+            (function() {
+              let frm = document.getElementById("sendCheckedSnapshot")
               var allowSubmit = true;
               frm.onsubmit = function () {
                 if (allowSubmit)

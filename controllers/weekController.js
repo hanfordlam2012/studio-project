@@ -9,11 +9,14 @@ exports.createWeek = function(req, res) {
 		// find and update student
 		let studentDoc = await usersCollection.findOne({"_id": ObjectID(req.body.studentId)})
 		let currentLessonCount = studentDoc.lessonCount
+		let currentLeaderboardScore = studentDoc.leaderboardScore
+		
 		await usersCollection.updateOne(
       { _id: ObjectID(req.body.studentId)},
       { $set:
          {
-            lessonCount:  currentLessonCount + 1
+            lessonCount:  currentLessonCount + 1,
+						leaderboardScore: Number(currentLeaderboardScore) + Number(req.body.pointsAdd)
          }
       })
 		req.flash('success', msg)

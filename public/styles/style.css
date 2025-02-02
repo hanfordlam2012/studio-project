@@ -480,6 +480,22 @@ hr {
     background-color: rgba(255, 255, 255, 0.96);
 }
 
+#weeklySnapshot input[type="checkbox"] {
+    appearance: none;
+}
+
+#weeklySnapshot input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+  }
+
+#weeklySnapshot span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+  
+
 .blue-box {
     margin: 0 auto;
     background-color: rgba(208, 255, 255, 0.953);
