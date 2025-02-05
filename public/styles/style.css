@@ -72,7 +72,6 @@ input {
     
 }
 
-
 /* 2048 */
 #game2048 {
     margin: 0 auto;
@@ -487,6 +486,8 @@ hr {
 #weeklySnapshot input[type="checkbox"]:checked + label {
     text-decoration: line-through;
   }
+
+
 
 #weeklySnapshot span {
     display: inline-block;

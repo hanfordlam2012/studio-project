@@ -46,6 +46,7 @@ exports.sendMelodyToHanford = function(req, res) {
 }
 
 exports.sendCheckedSnapshot = async function(req, res) {
+    console.log(req.body)
     Message.sendCheckedSnapshot(req).then((response) => {
         req.flash("status", response)
         req.session.save(function() {

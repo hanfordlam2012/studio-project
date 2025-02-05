@@ -73,8 +73,9 @@
 
             <!--DISPLAY WEEKLY COMMENTS-->
             <% latestComments.forEach((comment) => { %>
-              <form action="/sendCheckedSnapshot" method="POST" id="sendCheckedSnapshot">
-                <div id="weeklySnapshot" class="mt-0 mb-5 px-5 py-5 rounded recursive">
+              <div id="weeklySnapshot" class="mt-0 mb-5 px-5 py-5 rounded recursive">
+                <form action="/sendCheckedSnapshot" method="POST" id="sendCheckedSnapshot">
+                
                   
                   <!--DISPLAY FEEDBACK AFTER SENDING CHECKED LIST-->
                   <% if (status == 'fail') { %>
@@ -82,10 +83,12 @@
                   <% } else if (status == 'success') { %>
                     <div id="contactsuccess" class="alert alert-success text-center small mt-1 py-2">Got it. Thanks for the update!</div>
                   <% } %>
+                  <div id="printable-area">
+                    <%- filterUserHTML(comment.comments) %>
+                  </div>
+                  
 
-                  <%- filterUserHTML(comment.comments) %>
-
-                  <div class="text-center mt-5">
+                  <div id="send-checked-prompt" class="text-center mt-5">
                     <p class="mt-5 small" style="color: blueviolet;max-width: 50%; margin-left: auto; margin-right: auto;">☝ <i>Check off each numbered item by clicking it, then let Hanford know what you worked on today! 👇</i></p>
                   </div>
 
@@ -94,16 +97,17 @@
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button type="submit" class="mx-3 my-3 btn btn-success btn-lg">Alert Hanford of today's checked list</button>
                   </div>
+                </form>
                   <!--PRINT COMMENTS-->
                   <div id="print-button" class="text-center my-1">
-                    <button class="mx-3 my-3 btn btn-secondary btn-lg" href="#" onclick="printDiv('weeklySnapshot')">Print this week's comments</button>
+                    <button class="mx-3 my-3 btn btn-secondary btn-lg" href="#" onclick="printDiv('printable-area')">Print this week's comments</button>
                   </div>
                   <!--PRACTICE GUIDE-->
-                  <div class="text-center my-1">
+                  <div id="practice-guide-button" class="text-center my-1">
                     <button class="mx-3 my-3 btn btn-warning btn-lg" onclick="window.open('../files/practice-guide.pdf')">Open Practice Guide</button>
                   </div>
-                </div> 
-              </form> 
+          </div> 
+               
                 <!--use js add checkboxes to each list element, css to apply strikethrough, on Button press - send checked list to server to email Hanford-->
                 <script>
                   let practiceList = document.getElementById("weeklySnapshot");
@@ -226,8 +230,10 @@
           // PRINT FEATURE PLAIN TEXT
           function printDiv(elementId) {
             var prtContent = document.getElementById(elementId);
+            prtContent.querySelectorAll('input[type="checkbox"]').forEach(el => el.remove())
+            
             var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.write('<span style="font-size:200%">' + prtContent.innerHTML + '</span>');
             WinPrint.document.close();
             WinPrint.focus();
             WinPrint.print();
