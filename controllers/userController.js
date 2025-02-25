@@ -291,6 +291,10 @@ exports.showSuccessPage = function(req, res) {
     res.render('success')
 }
 
+exports.showPromoPage = function(req, res) {
+    res.render('promo')
+}
+
 exports.showTutorialsPage = function(req, res) {
     User.getTutorials().then((tutorials) => {
         res.render('tutorials', {

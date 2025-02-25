@@ -13,6 +13,7 @@ router.get('/', function(req, res) {
     res.render('home', {status: req.flash('status')})
 })
 
+
 // general teaching tools
 router.get('/blackboard', function(req, res) {res.render('blackboard')})
 //router.get('/quiz', function(req, res) {res.render('quiz')})
@@ -42,6 +43,7 @@ router.post('/create-portal-session', userController.createPortalSession)
 router.get('/daytime', userController.showHolisticPage)
 router.get('/holistic', userController.showHolisticPage)
 router.get('/success', userController.showSuccessPage)
+router.get('/promo', userController.showPromoPage)
 router.get('/tutorials', userController.mustBeLoggedIn, userController.showTutorialsPage)
 
 
