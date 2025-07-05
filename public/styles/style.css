@@ -163,7 +163,6 @@ input {
 }
 
 .bioTitle {
-    border-bottom: solid 2px rgb(55, 55, 55);
     display: table;
     margin-top: 30px;
     margin: auto;
