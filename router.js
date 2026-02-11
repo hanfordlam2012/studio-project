@@ -45,6 +45,7 @@ router.get('/holistic', userController.showHolisticPage)
 router.get('/success', userController.showSuccessPage)
 router.get('/promo', userController.showPromoPage)
 router.get('/tutorials', userController.mustBeLoggedIn, userController.showTutorialsPage)
+router.get('/schedule', userController.showSchedulePage)
 
 
 // student navigation
