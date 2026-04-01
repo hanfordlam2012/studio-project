@@ -72,21 +72,47 @@ input {
     
 }
 
-/* 2048 */
-#game2048 {
-    margin: 0 auto;
-    height: 980px;
-    width: 100%;
-}
-
-/* pacman */
-#gamepacman {
-    margin: 0 auto;
-    height: 600px;
-    width: 100%;
-}
-
 /* FONTS */
+
+@font-face {
+  font-family: 'Gagalin';
+  src: url('../styles/fonts/Gagalin-Regular.otf') format('woff2'),
+     url('../styles/fonts/Gagalin-Regular.otf') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hangyaboly';
+  src:url('../styles/fonts/Hangyaboly.ttf') format('woff2'),
+     url('../styles/fonts/Hangyaboly.ttf') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Garamond';
+  src: url('../styles/fonts/EBGaramond-VariableFont_wght.ttf') format('woff2'),
+  url('../styles/fonts/EBGaramond-VariableFont_wght.ttf') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.hangyaboly {
+    font-family: 'Hangyaboly'
+}
+
+.gagalin {
+    font-family: 'Gagalin';
+}
+
+.garamond {
+    font-family: 'Garamond';
+}
+
 .allison {
     font-family: 'Allison', cursive;
 }
@@ -125,9 +151,18 @@ input {
 }
 
 .recursive,
-.alert,
-.btn {
+.alert {
     font-family: 'Recursive', sans-serif;
+}
+
+#contactFormSubmit {
+    font-family: 'Gagalin';
+    font-size: 3rem;
+}
+
+#contactMessageInput, #contactEmailText, #contactEmailInput {
+    font-family: 'Garamond';
+    font-size: 1.5rem;
 }
 
 /*SHOP*/
@@ -147,7 +182,19 @@ input {
 }
 
 .home-display {
-    background-color: rgba(255, 255, 255, 0.953);
+    background-color: rgba(255, 255, 255, 0.944);
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.home-display-orange {
+    background-color: rgba(255, 173, 73, 0.784);
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.home-display-green {
+    background-color: rgba(223, 255, 169, 0.989);
     padding: 5px 10px;
     border-radius: 15px;
 }
@@ -238,11 +285,11 @@ input {
 }
 
 .green-text {
-    color: #8cff2f;
+    color: #178f25;
 }
 
 .dark-green-text {
-    color: #64ac29;
+    color: #59b88e;
 }
 
 .red-text {
@@ -764,7 +811,7 @@ hr {
 }
 
 #loginForm ::placeholder {
-    color:rgba(255, 141, 165, 0.9);
+    color:rgba(30, 255, 0, 0.9);
 }
 
 /* SUBSCRIPTION FORM */
