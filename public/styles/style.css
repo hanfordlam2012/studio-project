@@ -157,12 +157,12 @@ input {
 
 #contactFormSubmit {
     font-family: 'Gagalin';
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 #contactMessageInput, #contactEmailText, #contactEmailInput {
-    font-family: 'Garamond';
-    font-size: 1.5rem;
+    font-family: 'Poppins';
+    font-size: 1.3rem;
 }
 
 /*SHOP*/
@@ -301,7 +301,7 @@ input {
 }
 
 .purple-text {
-    color: #9c5eff;
+    color: #472282;
 }
 
 .orange-text {
