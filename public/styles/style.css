@@ -58,6 +58,8 @@ input {
     box-shadow: 0px 0px 5px rgb(0, 0, 0);
     z-index: 300;
     width: 100%;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 #navIcon, .navLink {
@@ -779,6 +781,59 @@ hr {
     overflow-x: hidden;
 }
 
+.portal-login-wrap {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 760px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.portal-quote-card {
+    background: rgba(255, 248, 220, 0.96);
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38);
+    color: #000000;
+    display: inline-block;
+    margin: 0 auto 18px;
+    max-width: 680px;
+    padding: 24px 30px;
+    position: relative;
+}
+
+.portal-quote-card::before {
+    background: #122e44;
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+    color: #ffde24;
+    content: "♪";
+    font-family: 'Recursive', sans-serif;
+    font-size: 1.1rem;
+    height: 34px;
+    left: 22px;
+    line-height: 30px;
+    position: absolute;
+    top: -17px;
+    width: 34px;
+}
+
+.portal-quote-card blockquote {
+    color: #122e44;
+    font-family: 'Handlee', cursive;
+    font-size: clamp(1.75rem, 4vw, 2.6rem);
+    font-weight: bold;
+    line-height: 1.18;
+    margin: 0 0 12px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.portal-quote-card figcaption {
+    color: #dc6a00;
+    font-family: 'Recursive', sans-serif;
+    font-weight: bold;
+}
+
 #pikachuMusic {
     width: 15rem;
 }
@@ -1043,4 +1098,657 @@ hr {
 }
 .table-valign-middle {
     vertical-align: middle;
+}
+
+/* POLISHED HOME REFRESH */
+.home-page {
+    max-width: 1180px;
+}
+
+.home-section {
+    margin: 92px auto;
+}
+
+.hero-section {
+    margin-top: 74px;
+}
+
+.home-display {
+    border-radius: 8px;
+}
+
+.hero-copy,
+.music-value-panel,
+.problem-panel,
+.approach-panel,
+.menu-panel,
+.outcomes-panel,
+.about-panel {
+    border: 2px solid rgba(255, 255, 255, 0.92);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+}
+
+.hero-copy {
+    padding: 34px;
+    position: relative;
+}
+
+.hero-copy::before {
+    background: #ffde24;
+    border: 2px solid #000000;
+    border-radius: 999px;
+    content: "";
+    height: 18px;
+    position: absolute;
+    right: 22px;
+    top: 20px;
+    width: 18px;
+}
+
+.section-kicker {
+    color: #6e2ab5;
+    font-family: 'Recursive', sans-serif;
+    font-size: 0.86rem;
+    font-weight: bold;
+    letter-spacing: 0;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.hero-title {
+    color: #dc6a00;
+    font-size: clamp(2.4rem, 5vw, 4.6rem);
+    line-height: 0.98;
+    margin-bottom: 18px;
+}
+
+.hero-lede,
+.section-copy,
+.music-value-intro {
+    font-size: 1.14rem;
+    line-height: 1.75;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 26px 0 18px;
+}
+
+.home-cta {
+    border-radius: 8px;
+    display: inline-flex;
+    font-family: 'Recursive', sans-serif;
+    font-weight: bold;
+    justify-content: center;
+    min-width: 150px;
+    padding: 11px 18px;
+    text-decoration: none;
+}
+
+.home-cta-primary {
+    background: #122e44;
+    border: 2px solid #122e44;
+    color: #ffffff;
+}
+
+.home-cta-secondary {
+    background: #fff8dc;
+    border: 2px solid #dc6a00;
+    color: #122e44;
+}
+
+.home-cta:hover,
+.home-cta:focus {
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.home-cta-secondary:hover,
+.home-cta-secondary:focus {
+    background: #dc6a00;
+}
+
+.afterglow-cta {
+    background: #122e44;
+    border: 2px solid #122e44;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.hero-proof,
+.hero-caption {
+    color: #122e44;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.hero-caption {
+    background: #fff8dc;
+    border: 2px solid #122e44;
+    border-radius: 8px;
+    margin: 12px 8px 0;
+    padding: 8px 10px;
+    text-align: center;
+}
+
+.home-video-frame,
+.image-frame {
+    border-radius: 8px;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.32);
+}
+
+.image-frame {
+    background: #122e44;
+    border: 2px solid #ffffff;
+    overflow: hidden;
+}
+
+.image-frame img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+.music-cabinet-row {
+    margin-top: 42px;
+}
+
+.music-value-panel {
+    background: rgba(255, 255, 255, 0.96);
+    padding: 30px;
+}
+
+.music-resource-grid {
+    align-items: stretch;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 26px auto 0;
+    max-width: 1040px;
+}
+
+.music-resource-card,
+.wiki-music-widget {
+    border-radius: 8px;
+    min-height: 280px;
+    padding: 22px;
+}
+
+.music-resource-card {
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    text-decoration: none;
+    transition: transform 160ms ease, filter 160ms ease;
+}
+
+.music-resource-card:hover,
+.music-resource-card:focus {
+    color: #ffffff;
+    filter: saturate(1.12);
+    transform: translateY(-3px) rotate(-0.4deg);
+}
+
+.resource-train {
+    background: #122e44;
+}
+
+.resource-read {
+    background: #6e2ab5;
+}
+
+.music-resource-label,
+.wiki-music-widget__eyebrow {
+    background: #ffde24;
+    border: 2px solid #000000;
+    border-radius: 999px;
+    color: #000000;
+    display: inline-block;
+    font-family: 'Recursive', sans-serif;
+    font-size: 0.86rem;
+    font-weight: bold;
+    padding: 4px 10px;
+    width: fit-content;
+}
+
+.resource-mark {
+    align-items: center;
+    background: #122e44;
+    border-radius: 999px;
+    color: #ffffff;
+    display: inline-flex;
+    font-size: 0.72rem;
+    height: 25px;
+    justify-content: center;
+    line-height: 1;
+    margin-right: 6px;
+    min-width: 25px;
+    padding: 0 6px;
+    vertical-align: middle;
+}
+
+.music-resource-title {
+    color: #ffffff;
+    font-family: 'Gagalin';
+    font-size: 1.8rem;
+    line-height: 1.08;
+}
+
+.music-resource-copy {
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+.music-resource-credit {
+    color: #9aff47;
+    font-family: 'Recursive', sans-serif;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+.wiki-music-widget {
+    background: #fff8dc;
+    border: 2px solid #dc6a00;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.wiki-music-widget__header {
+    align-items: flex-start;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.wiki-music-widget__button {
+    background: #59b88e;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    color: #000000;
+    font-family: 'Recursive', sans-serif;
+    font-weight: bold;
+    padding: 8px 12px;
+    white-space: nowrap;
+}
+
+.wiki-music-widget__button:hover,
+.wiki-music-widget__button:focus {
+    background: #9aff47;
+}
+
+.wiki-music-widget__subtitle {
+    color: #6e2ab5;
+    font-family: 'Recursive', sans-serif;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.wiki-music-widget__title {
+    color: #122e44;
+    font-family: 'Gagalin';
+    font-size: 1.8rem;
+    line-height: 1.12;
+    margin-bottom: 12px;
+}
+
+.wiki-music-widget__extract {
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.55;
+}
+
+.wiki-music-widget__link {
+    color: #dc6a00;
+    font-family: 'Recursive', sans-serif;
+    font-weight: bold;
+    margin-top: auto;
+    text-decoration: none;
+}
+
+.wiki-music-widget__link:hover,
+.wiki-music-widget__link:focus {
+    color: #178f25;
+    text-decoration: underline;
+}
+
+.problem-panel,
+.approach-panel,
+.menu-panel,
+.outcomes-panel,
+.about-panel {
+    padding: 30px;
+}
+
+.problem-panel {
+    background: rgba(255, 248, 220, 0.96);
+}
+
+.approach-panel {
+    background: rgba(255, 255, 255, 0.96);
+}
+
+.menu-panel {
+    background: rgba(223, 255, 169, 0.96);
+}
+
+.outcomes-panel {
+    background: rgba(255, 255, 255, 0.96);
+}
+
+.about-panel {
+    background: rgba(255, 248, 220, 0.96);
+}
+
+.signal-list {
+    display: grid;
+    gap: 10px;
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
+}
+
+.signal-list li,
+.menu-list li {
+    background: rgba(18, 46, 68, 0.08);
+    border: 2px solid rgba(18, 46, 68, 0.18);
+    border-radius: 8px;
+    color: #000000;
+    font-family: 'Recursive', sans-serif;
+    font-weight: bold;
+    padding: 10px 12px;
+}
+
+.problem-list li {
+    border-color: rgba(250, 0, 0, 0.28);
+}
+
+.outcome-list li {
+    border-color: rgba(23, 143, 37, 0.3);
+}
+
+.approach-steps {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 24px 0;
+}
+
+.approach-steps span {
+    background: #122e44;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 12px;
+}
+
+.section-note {
+    color: #dc6a00;
+    font-size: 1.25rem;
+    line-height: 1.45;
+    margin: 18px 0 0;
+}
+
+.soundcloud-strip {
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.menu-list {
+    display: grid;
+    gap: 10px;
+    margin: 24px 0;
+}
+
+.resource-link {
+    color: #6e2ab5;
+    display: inline-block;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.resource-link:hover,
+.resource-link:focus,
+.connect-line a:hover,
+.connect-line a:focus {
+    color: #dc6a00;
+    text-decoration: underline;
+}
+
+.connect-line {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-top: 18px;
+}
+
+.contact-heading {
+    margin-bottom: 30px;
+}
+
+.contact-section {
+    margin-top: 30px;
+}
+
+.testimonial-section {
+    margin-top: 40px;
+}
+
+.testimonial-panel {
+    background: rgba(255, 255, 255, 0.96);
+    border: 2px solid rgba(255, 255, 255, 0.92);
+    border-radius: 8px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+    padding: 28px;
+}
+
+.testimonial-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.testimonial-card {
+    background: #fff8dc;
+    border: 2px solid #dc6a00;
+    border-radius: 8px;
+    margin: 0;
+    min-height: 190px;
+    padding: 24px;
+    position: relative;
+}
+
+.testimonial-card::before {
+    background: #ffde24;
+    border: 2px solid #000000;
+    border-radius: 999px;
+    content: "Q";
+    font-family: 'Recursive', sans-serif;
+    font-size: 0.78rem;
+    font-weight: bold;
+    height: 28px;
+    left: 18px;
+    line-height: 24px;
+    position: absolute;
+    text-align: center;
+    top: -14px;
+    width: 28px;
+}
+
+.testimonial-card-quirk {
+    background: #122e44;
+    border-color: #ffffff;
+}
+
+.testimonial-card blockquote {
+    color: #122e44;
+    font-family: 'Hangyaboly';
+    font-size: 1.9rem;
+    line-height: 1.2;
+    margin: 10px 0 18px;
+}
+
+.testimonial-card-quirk blockquote {
+    color: #ffffff;
+}
+
+.testimonial-card figcaption {
+    color: #6e2ab5;
+    font-family: 'Recursive', sans-serif;
+    font-weight: bold;
+}
+
+.testimonial-card-quirk figcaption {
+    color: #9aff47;
+}
+
+.contact-panel {
+    border: 2px solid rgba(255, 255, 255, 0.92);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+    margin: 0 auto;
+    max-width: 920px;
+    padding: 28px;
+}
+
+.contact-panel form {
+    margin-bottom: 0;
+}
+
+.contact-panel .form-control,
+.contact-panel .input-group-text {
+    border: 2px solid #122e44;
+}
+
+.contact-panel .form-control {
+    background-color: #fff8dc;
+}
+
+.contact-panel textarea.form-control {
+    min-height: 190px;
+}
+
+.contact-panel #contactFormSubmit {
+    background: #122e44;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    color: #ffffff;
+    transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.contact-panel #contactFormSubmit:hover,
+.contact-panel #contactFormSubmit:focus {
+    background: #178f25;
+    transform: translateY(-2px);
+}
+
+.qualification-list {
+    background: #122e44;
+    border-radius: 8px;
+    color: #ffffff;
+    line-height: 1.6;
+    margin: 20px auto;
+    max-width: 760px;
+    padding: 14px;
+    overflow-wrap: anywhere;
+}
+
+.about-experience-line {
+    white-space: normal;
+}
+
+.about-layout {
+    align-items: center;
+    display: grid;
+    gap: 28px;
+    grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.about-copy {
+    text-align: center;
+}
+
+.about-portrait-frame {
+    background: #122e44;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.24);
+    overflow: hidden;
+    transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+.about-portrait-frame:hover,
+.about-portrait-frame:focus-within {
+    box-shadow: 0 22px 42px rgba(0, 0, 0, 0.34);
+    transform: translateY(-3px) rotate(-0.35deg);
+}
+
+.about-portrait-frame img {
+    display: block;
+    height: 100%;
+    max-height: 360px;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .home-section {
+        margin: 64px auto;
+    }
+
+    .hero-video-column {
+        margin-bottom: 24px;
+    }
+
+    .music-resource-grid,
+    .approach-steps,
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .music-resource-card,
+    .wiki-music-widget {
+        min-height: auto;
+    }
+
+    .about-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-copy,
+    .music-value-panel,
+    .problem-panel,
+    .approach-panel,
+    .menu-panel,
+    .outcomes-panel,
+    .about-panel {
+        padding: 20px 14px;
+    }
+
+    .hero-actions {
+        display: grid;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .section-copy,
+    .hero-lede,
+    .music-value-intro {
+        font-size: 1rem;
+    }
 }
