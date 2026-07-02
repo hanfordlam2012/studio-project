@@ -302,25 +302,161 @@ Help your child feel capable, focused, and confident in their learning!" rows="5
           if (!widget) return;
 
           const items = [
-            "Circle of fifths",
-            "Equal temperament",
-            "Musique concrete",
-            "Prepared piano",
-            "Dies irae",
+            "Aeolian harp",
+            "Alphorn",
+            "Appalachian dulcimer",
+            "Arpeggione",
+            "Baryton",
+            "Bazantar",
+            "Celesta",
+            "Cristal Baschet",
+            "Crwth",
+            "Didgeridoo",
+            "Erhu",
+            "Glass harmonica",
+            "Hardanger fiddle",
             "Hurdy-gurdy",
-            "Ostinato",
-            "Raga",
-            "Clave (rhythm)",
-            "Blue note",
+            "Hydraulophone",
+            "Jew's harp",
+            "Kora (instrument)",
+            "Mbira",
+            "Musical saw",
+            "Nyckelharpa",
+            "Ocarina",
+            "Ondes Martenot",
+            "Otamatone",
+            "Pyrophone",
+            "Rackett",
+            "Serpent (instrument)",
+            "Singing bowl",
+            "Stylophone",
+            "Theremin",
+            "Toy piano",
+            "Trautonium",
+            "Waterphone",
+            "Zither",
+            "Prepared piano",
+            "Player piano",
+            "Tape loop",
             "Mellotron",
-            "Counterpoint"
+            "Optigan",
+            "Orchestrion",
+            "Telharmonium",
+            "Clavichord",
+            "Virginal",
+            "Theorbo",
+            "Contrabassoon",
+            "Subcontrabass flute",
+            "Piccolo trumpet",
+            "Harmonic series (music)",
+            "Wolf interval",
+            "Comma (music)",
+            "Just intonation",
+            "Microtonal music",
+            "Scordatura",
+            "Col legno",
+            "Sul ponticello",
+            "Bowed piano",
+            "Inside piano",
+            "Extended technique",
+            "Overtone singing",
+            "Yodeling",
+            "Throat singing",
+            "Beatboxing",
+            "Hocket",
+            "Isorhythm",
+            "Phasing (music)",
+            "Euclidean rhythm",
+            "Hemiola",
+            "Polyrhythm",
+            "Clave (rhythm)",
+            "Shepard tone",
+            "Tritone",
+            "Blue note",
+            "Ostinato",
+            "Ground bass",
+            "Passacaglia",
+            "Chaconne",
+            "Soggetto cavato",
+            "BACH motif",
+            "Musical cryptogram",
+            "Klangfarbenmelodie",
+            "Augenmusik",
+            "Tintinnabuli",
+            "Micropolyphony",
+            "Musique concrete",
+            "Tape music",
+            "Acousmatic music",
+            "Aleatoric music",
+            "Graphic notation",
+            "Shape note",
+            "Solresol",
+            "Guidonian hand",
+            "Dies irae",
+            "L'homme arme",
+            "Nonsense song",
+            "Sea shanty",
+            "Murder ballad",
+            "Black MIDI",
+            "The Well-Tuned Piano",
+            "As Slow as Possible",
+            "I Am Sitting in a Room",
+            "Poeme symphonique",
+            "The Unanswered Question",
+            "Conlon Nancarrow",
+            "Harry Partch",
+            "Moondog",
+            "Raymond Scott",
+            "Delia Derbyshire",
+            "Wendy Carlos",
+            "Meredith Monk",
+            "Florence Foster Jenkins",
+            "Outsider music",
+            "Sound sculpture"
           ];
           const titleEl = widget.querySelector("[data-wiki-title]");
           const extractEl = widget.querySelector("[data-wiki-extract]");
           const linkEl = widget.querySelector("[data-wiki-link]");
           const button = widget.querySelector("[data-wiki-next]");
           const storageKey = "hanfordMusicRabbitHole";
-          let currentIndex = Math.floor(Math.random() * items.length);
+          const recentKey = "hanfordMusicRabbitHoleRecent";
+          const recentLimit = 16;
+          let currentIndex = pickRandomIndex();
+
+          function readRecent() {
+            try {
+              const saved = JSON.parse(localStorage.getItem(recentKey));
+              return Array.isArray(saved) ? saved : [];
+            } catch (error) {
+              return [];
+            }
+          }
+
+          function saveRecent(title) {
+            try {
+              const recent = readRecent().filter(function (item) {
+                return item !== title;
+              });
+              recent.unshift(title);
+              localStorage.setItem(recentKey, JSON.stringify(recent.slice(0, recentLimit)));
+            } catch (error) {
+            }
+          }
+
+          function pickRandomIndex() {
+            const recent = readRecent();
+            const available = items
+              .map(function (title, index) {
+                return { title: title, index: index };
+              })
+              .filter(function (item) {
+                return recent.indexOf(item.title) === -1;
+              });
+            const pool = available.length ? available : items.map(function (title, index) {
+              return { title: title, index: index };
+            });
+            return pool[Math.floor(Math.random() * pool.length)].index;
+          }
 
           function wikiUrl(title) {
             return "https://en.wikipedia.org/wiki/" + encodeURIComponent(title.replace(/ /g, "_"));
@@ -388,18 +524,21 @@ Help your child feel capable, focused, and confident in their learning!" rows="5
                 };
                 showItem(item);
                 saveItem(item);
+                saveRecent(title);
               })
-              .catch(showFallback);
+              .catch(function () {
+                if (!restoreItem()) {
+                  showFallback();
+                }
+              });
           }
 
           button.addEventListener("click", function () {
-            currentIndex = (currentIndex + 1 + Math.floor(Math.random() * (items.length - 1))) % items.length;
+            currentIndex = pickRandomIndex();
             loadItem();
           });
 
-          if (!restoreItem()) {
-            loadItem();
-          }
+          loadItem();
         }());
       </script>
 
