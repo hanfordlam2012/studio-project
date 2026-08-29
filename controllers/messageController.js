@@ -7,16 +7,15 @@ exports.sendEmail = async function(req, res) {
     // axios to verify grecaptcha
     // send a POST request
     // chain next actions via Promise
-    console.log(req.body)
     Message.sendEmail(req.body).then((response) => {
         req.flash("status", response)
         req.session.save(function() {
-            res.redirect('/#ratesRow')
+            res.redirect('/#contactForm')
         })
     }).catch((err) => {
         req.flash("status", err)
         req.session.save(function() {
-            res.redirect('/#ratesRow')
+            res.redirect('/#contactForm')
         })
     })
 }
@@ -46,14 +45,17 @@ exports.sendMelodyToHanford = function(req, res) {
 }
 
 exports.sendCheckedSnapshot = async function(req, res) {
-    console.log(req.body)
+    if (!req.body.checkedItems || ![].concat(req.body.checkedItems).filter(Boolean).length) {
+        req.flash("checklistStatus", "empty")
+        return req.session.save(function() { res.redirect('/practice') })
+    }
     Message.sendCheckedSnapshot(req).then((response) => {
-        req.flash("status", response)
+        req.flash("checklistStatus", response)
         req.session.save(function() {
             res.redirect('/practice')
         })
     }).catch((err) => {
-        req.flash("status", err)
+        req.flash("checklistStatus", err)
         req.session.save(function() {
             res.redirect('/practice')
         })

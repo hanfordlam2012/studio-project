@@ -36,9 +36,6 @@ router.post('/doesUsernameExist', userController.doesUsernameExist)
 router.post('/doesEmailExist', userController.doesEmailExist)
 router.post('/isCorrect', userController.isCorrect)
 
-// subscription routes
-router.post('/create-checkout-session', userController.createCheckoutSession)
-router.post('/create-portal-session', userController.createPortalSession)
 //router.get('/theory', userController.showShopPage)
 router.get('/daytime', userController.showHolisticPage)
 router.get('/holistic', userController.showHolisticPage)
@@ -53,6 +50,7 @@ router.get('/practice', userController.mustBeLoggedIn, userController.showPracti
 router.get('/missions', userController.mustBeLoggedIn, userController.showMissionsPage)
 router.get('/leaderboard', userController.mustBeLoggedIn, userController.showLeaderboardPage)
 router.get('/parents', userController.mustBeLoggedIn, userController.showParentsPage)
+router.get('/parents/print/:weekId', userController.mustBeLoggedIn, userController.showPrintableLesson)
 
 // game routes
 //router.post('/saveScore', userController.mustBeLoggedIn, missionController.compareScoreAndSave) FOR LEGATO SMOOTH
@@ -64,11 +62,19 @@ router.post('/guessBPM', userController.mustBeLoggedIn, missionController.checkB
 router.post('/sendCheckedSnapshot', userController.mustBeLoggedIn, messageController.sendCheckedSnapshot)
 
 // admin routes
+router.get('/admin', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewAdminPage)
+router.get('/admin/student-view', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewAdminStudent)
+router.post('/admin/student-field', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.updateAdminStudentField)
+router.post('/admin/student-create', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.createAdminStudent)
+router.post('/admin/student-password', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.updateAdminStudentPassword)
+router.post('/admin/prize', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.saveAdminPrize)
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)
 router.post('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, weekController.createWeek)
 router.get('/choose-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewChooseWeekPage)
 router.post('/choose-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewEditWeekPage)
+router.post('/getStudentWeekArchive', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.getStudentWeekArchive)
 router.post('/edit-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.editWeek)
+router.post('/week-email-resend', userController.mustBeLoggedIn, userController.mustBeAdmin, weekController.resendWeekEmail)
 router.post('/getStudentData', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.getStudentData)
 router.post('/replyToStudent', userController.mustBeLoggedIn, userController.mustBeAdmin, missionController.replyToStudent)
 

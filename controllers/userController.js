@@ -1,11 +1,7 @@
-const session = require('express-session')
 const Mission = require('../models/Mission')
 const missionController = require('./missionController')
 const User = require('../models/User')
-const bcrypt = require('bcryptjs')
-// Set your secret key. Remember to switch to your live secret key in production.
-// See your keys here: https://dashboard.stripe.com/apikeys
-const stripe = require('stripe')(process.env.STRIPE_LIVE_API_KEY);
+const {renderSafeMarkdown} = require('../lib/safeContent')
 
 // REGISTRATION FUNCTIONS
 exports.isCorrect = async function (req, res) {
@@ -54,99 +50,6 @@ exports.register = function (req, res) {
     })
 }
 
-exports.createCheckoutSession = async function (req, res) {
-
-    // The price ID passed from the client
-    //   const {priceId} = req.body;
-    const priceId = req.body.priceId;
-    let salt = bcrypt.genSaltSync(10)
-    const session = await stripe.checkout.sessions.create({
-    mode: 'subscription',
-    line_items: [
-        {
-        price: priceId,
-        // For metered billing, do not pass quantity
-        quantity: 1,
-        },
-    ],
-    // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
-    // the actual Session ID is returned in the query parameter when your customer
-    // is redirected to the success page.
-    success_url: 'https://www.hanfordlam.com/success',
-    cancel_url: 'https://www.hanfordlam.com/shop',
-    metadata: {
-        username: req.body.username,
-        password: bcrypt.hashSync(req.body.password, salt)
-    }
-    });
-
-    // Redirect to the URL returned on the Checkout Sessioan.
-    // With express, you can redirect with:
-    res.redirect(303, session.url);
-}
-
-exports.createPortalSession = async function (req, res) {
-    const customer_ID = req.body.customerID;
-  
-    // This is the url to which the customer will be redirected when they are done
-    // managing their billing with the portal.
-    const returnUrl = "https://www.hanfordlam.com/reports";
-  
-    const portalSession = await stripe.billingPortal.sessions.create({
-      customer: customer_ID,
-      return_url: returnUrl,
-    });
-  
-    res.redirect(303, portalSession.url);
-  };
-
-exports.webhook = function(req, res) {
-    console.log("stripe webhook req received")
-    let event = req.body;
-    // Replace this endpoint secret with your endpoint's unique secret
-    // If you are testing with the CLI, find the secret by running 'stripe listen'
-    // If you are using an endpoint defined with the API or dashboard, look in your webhook settings
-    // at https://dashboard.stripe.com/webhooks
-    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-    // Only verify the event if you have an endpoint secret defined.
-    // Otherwise use the basic event deserialized with JSON.parse
-    if (endpointSecret) {
-      // Get the signature sent by Stripe
-      const signature = req.headers['stripe-signature'];
-      try {
-        event = stripe.webhooks.constructEvent(
-          req.body,
-          signature,
-          endpointSecret
-        );
-        console.log("signature verified!")
-      } catch (err) {
-        console.log(`⚠️  Webhook signature verification failed.`, err.message);
-        return res.sendStatus(400);
-      }
-    }
-    // Handle the event
-    switch (event.type) {
-        case 'checkout.session.completed':
-            console.log(event.data.object)
-        let customerID = event.data.object.customer
-        let username = event.data.object.metadata.username
-        let password = event.data.object.metadata.password
-        createSubscriber(customerID, username, password)
-        break;
-      case 'customer.subscription.deleted':
-        console.log(event.data.object)
-        customerID = event.data.object.customer
-        deleteSubscriber(customerID)
-        break;
-      default:
-        // Unexpected event type
-        console.log(`Unhandled event type ${event.type}.`);
-    }
-    // Return a 200 response to acknowledge receipt of the event
-    res.send();
-}
-
 // AUTHENTICATION FUNCTIONS
 exports.mustBeLoggedIn = function (req, res, next) {
     if (req.session.user) {
@@ -179,14 +82,12 @@ exports.login = function (req, res) {
         // session property added by express-session in app.js
         // session package recognises changes to session object and auto updates database
         req.session.user = { 
-            customerID: result.customerID,
             username: result.username,
             fName: result.fName, 
             lName: result.lName, 
             parentName: result.parentName, 
             admin: result.admin, 
             student: result.student,
-            subscriber: result.subscriber,
             userId: result.userId, 
             secret: result.secret,
             lessonCount: result.lessonCount,
@@ -196,7 +97,7 @@ exports.login = function (req, res) {
         // so we can manually save to ensure callback function is run after
         req.session.save(function () {
             if (req.session.user.admin == true) {
-                res.redirect('/create-week')
+                res.redirect('/admin')
             } else {
                 res.redirect('/reports')
             }
@@ -217,24 +118,111 @@ exports.logout = function (req, res) {
 }
 
 // ADMIN FUNCTIONS
+exports.viewAdminPage = async function(req, res) {
+    try {
+        const dashboard = await User.getAdminDashboard(req.session.user.secret, req.session.user.userId)
+        res.render('adminDashboard', {
+            students: dashboard.students,
+            prizes: dashboard.prizes,
+            adErrors: req.flash('adErrors'),
+            adminSuccess: req.flash('adminSuccess')
+        })
+    } catch (error) {
+        req.flash('adErrors', 'The Studio Desk could not be loaded.')
+        req.session.save(() => res.redirect('/practice'))
+    }
+}
+
+exports.updateAdminStudentField = async function(req, res) {
+    try {
+        const value = await User.updateAdminStudentField(req.session.user.secret, req.body.studentId, req.body.field, req.body.value)
+        res.json({ok: true, value: value})
+    } catch (error) {
+        res.status(400).json({ok: false, error: error.message || 'That change could not be saved.'})
+    }
+}
+
+exports.createAdminStudent = async function(req, res) {
+    try {
+        req.flash('adminSuccess', await User.createAdminStudent(req.session.user.secret, req.body))
+    } catch (error) {
+        req.flash('adErrors', error.message || 'The student could not be added.')
+    }
+    req.session.save(() => res.redirect('/admin#studentList'))
+}
+
+exports.updateAdminStudentPassword = async function(req, res) {
+    try {
+        req.flash('adminSuccess', await User.updateAdminStudentPassword(req.session.user.secret, req.body.studentId, req.body.password, req.body.passwordConfirm))
+    } catch (error) {
+        req.flash('adErrors', error.message || 'The password could not be updated.')
+    }
+    req.session.save(() => res.redirect('/admin#studentList'))
+}
+
+exports.viewAdminStudent = async function(req, res) {
+    try {
+        const view = await User.getAdminStudentView(req.session.user.secret, req.query.studentId)
+        res.render('adminStudentView', {
+            student: view.student,
+            students: view.students,
+            studentIndex: view.index,
+            weeks: view.weeks,
+            adErrors: req.flash('adErrors')
+        })
+    } catch (error) {
+        req.flash('adErrors', error.message || 'That student view could not be opened.')
+        req.session.save(() => res.redirect('/admin#studentList'))
+    }
+}
+
+exports.saveAdminPrize = async function(req, res) {
+    try {
+        req.flash('adminSuccess', await User.saveAdminPrize(req.body))
+    } catch (error) {
+        req.flash('adErrors', error.message || 'The reward could not be saved.')
+    }
+    req.session.save(() => res.redirect('/admin#rewards'))
+}
+
 exports.getStudentData = function (req, res) {
-    getThesePropertyValuesForUser(['practiceConversations'], req.body.studentId).then((practiceConversations) => {
+    const studentId = req.body.studentId
+    if (!studentId || !studentId.match(/^[a-f\d]{24}$/i)) return res.status(400).json({error: 'That student could not be found.'})
+    const users = require('../db').db('studio-project').collection('users')
+    users.findOne({_id: new (require('mongodb').ObjectId)(studentId), secret: req.session.user.secret, student: true}, {projection: {_id: 1}}).then((ownedStudent) => {
+    if (!ownedStudent) return res.status(404).json({error: 'That student could not be found.'})
+    getThesePropertyValuesForUser(['practiceConversations'], studentId).then((practiceConversations) => {
         User.getLatestComments(req.body.studentId).then((lastLessonComments) => {
+            const student = req.body.studentId && req.body.studentId.match(/^[a-f\d]{24}$/i)
+                ? require('../db').db('studio-project').collection('users').findOne(
+                    {_id: new (require('mongodb').ObjectId)(studentId), secret: req.session.user.secret, student: true},
+                    {projection: {fName: 1, lName: 1, parentName: 1, email: 1, lessonCount: 1}}
+                )
+                : Promise.resolve(null)
+            student.then((studentContact) => {
+            const latestComments = lastLessonComments[0] && lastLessonComments[0].comments
+            const lastLessonHTML = latestComments ? renderSafeMarkdown(latestComments) : ''
             res.json(
                 {
                     practiceConversations: practiceConversations,
-                    lastLessonComments: lastLessonComments
+                    lastLessonComments: lastLessonComments,
+                    lastLessonHTML: lastLessonHTML,
+                    student: studentContact
                 }
             )
+            })
         })
-    })    
+    })
+    })
 }
 
 exports.viewCreateWeekPage = function (req, res) {
     User.getStudentList(req.session.user.secret, req.session.user.userId).then(function (studentList) {
-        res.render('create-week', { 
+        res.render('createWeekV2', {
             studentList: studentList, 
-            success: req.flash('success') 
+            success: req.flash('success'),
+            warnings: req.flash('warning'),
+            errors: req.flash('createError')
         })
     }).catch(function () {
         res.send("Student list didn't build sucessfully.")
@@ -242,7 +230,23 @@ exports.viewCreateWeekPage = function (req, res) {
 }
 
 exports.viewChooseWeekPage = function (req, res) {
-    res.render('choose-week', { msg: false })
+    User.getStudentList(req.session.user.secret, req.session.user.userId).then(function(studentList) {
+        res.render('pathArchive', {
+            studentList: studentList,
+            success: req.flash('success'),
+            errors: req.flash('editError')
+        })
+    }).catch(function() {
+        res.send("Student list didn't build successfully.")
+    })
+}
+
+exports.getStudentWeekArchive = function(req, res) {
+    User.getStudentWeekArchive(req.session.user.secret, req.body.studentId).then(function(weeks) {
+        res.json({weeks: weeks})
+    }).catch(function() {
+        res.status(500).json({weeks: [], error: 'The archive could not be loaded.'})
+    })
 }
 
 exports.viewEditWeekPage = function (req, res) {
@@ -265,8 +269,15 @@ exports.viewEditWeekPage = function (req, res) {
 }
 
 exports.editWeek = function (req, res) {
-    User.findWeekAndUpdate(req.body).then(function (result) {
-        res.render('choose-week', { msg: result })
+    User.findWeekAndUpdate(req.session.user.secret, req.body).then(async function (result) {
+        if (result.publishedNow) {
+            await require('../db').db('studio-project').collection('users').updateOne({_id: result.studentId}, {$inc: {lessonCount: 1, leaderboardScore: result.pointsAdd}})
+        }
+        req.flash('success', result.message)
+        req.session.save(function() { res.redirect('/choose-week') })
+    }).catch(function(error) {
+        req.flash('editError', error)
+        req.session.save(function() { res.redirect('/choose-week') })
     })
 }
 
@@ -298,7 +309,6 @@ exports.showPromoPage = function(req, res) {
 exports.showTutorialsPage = function(req, res) {
     User.getTutorials().then((tutorials) => {
         res.render('tutorials', {
-            customerID: req.session.user.customerID,
             tutorials: tutorials
     })
     })
@@ -318,18 +328,20 @@ exports.showPracticePage = function(req, res) {
             User.getLatestComments(req.session.user.userId).then(function (latestComments) {
                 Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
                     missionController.getRandomBPM().then((randomBPM) => {
-                        missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
-                            res.render('practicePage', {
+                        missionController.getBPMFeedback(req.session.user.userId).then((BPMFeedback) => {
+                            res.render('practicePageV2', {
                                 username: req.session.user.username,
                                 fName: req.session.user.fName,
                                 userId: req.session.user.userId,
                                 parentName: req.session.user.parentName,
                                 admin: req.session.user.admin,
                                 randomBPM: randomBPM, // taken from admin acc + other operations performed, don't modify!
-                                BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
+                                BPMStatus: BPMFeedback.status, // 'success' 'notQuite' 'open'
+                                BPMGuess: BPMFeedback.guess,
                                 latestComments: latestComments,
                                 adErrors: req.flash('adErrors'),
                                 status: req.flash('status'),
+                                checklistStatus: req.flash('checklistStatus'),
                                 practiceStatus: practiceStatus, // true if already practised
                                 points: userProps.leaderboardScore,
                                 lessonCount: req.session.user.lessonCount,
@@ -367,7 +379,7 @@ exports.showMissionsPage = function(req, res) {
                     // function not yet written, need to return object with props BPMStatus, points
                     missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
                         Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
-                        res.render('missionsPage', {
+                        res.render('missionsPageV2', {
                             username: req.session.user.username,
                             fName: req.session.user.fName,
                             userId: req.session.user.userId,
@@ -410,7 +422,7 @@ exports.showLeaderboardPage = function(req, res) {
                     'practicePrompt'
                     ]).then((adminProps) => {
                         Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
-                        res.render('leaderboardPage', {
+                        res.render('leaderboardPageV2', {
                             username: req.session.user.username,
                             fName: req.session.user.fName,
                             userId: req.session.user.userId,
@@ -448,7 +460,7 @@ exports.showParentsPage = function(req, res) {
             let toneArray = data.graphData.componentsArray.toneArray
             let dynamicsArray = data.graphData.componentsArray.dynamicsArray
             let stylisticArray = data.graphData.componentsArray.stylisticArray
-            res.render('parentsPage', {
+            res.render('lessonHistoryV2', {
                 // general
                 username: req.session.user.username,
                 fName: req.session.user.fName,
@@ -463,7 +475,7 @@ exports.showParentsPage = function(req, res) {
                 toneArray: toneArray,
                 dynamicsArray: dynamicsArray,
                 stylisticArray: stylisticArray,
-                studentWeeks: studentWeeks,
+                studentWeeks: studentWeeks.slice().reverse(),
                 adErrors: req.flash('adErrors'),
                 lessonCount: req.session.user.lessonCount,
                 paidLessons: req.session.user.paidLessons,
@@ -477,9 +489,17 @@ exports.showParentsPage = function(req, res) {
 exports.reports = function (req, res) {
     if (req.session.user && req.session.user.student) {
         res.redirect('/practice')
-    } else if (req.session.user && req.session.user.subscriber) {
-        res.redirect('/tutorials')
     } else {    
         res.render('reports-guest', { errors: req.flash('errors'), regErrors: req.flash('regErrors') })
+    }
+}
+
+exports.showPrintableLesson = async function(req, res) {
+    try {
+        const week = await User.getPrintableStudentWeek(req.session.user.userId, req.params.weekId)
+        if (!week) return res.status(404).render('404')
+        res.render('printLesson', {week: week, studentName: req.session.user.fName || req.session.user.username})
+    } catch (error) {
+        res.status(404).render('404')
     }
 }

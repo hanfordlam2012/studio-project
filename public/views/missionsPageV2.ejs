@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" id="missions-html">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width">
+  <meta name="theme-color" content="#122e44"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Music Studio"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Recursive&family=Belgrano&family=Bellota&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css">
+  <title>Trophy Cabinet | Learning Park Portal</title>
+  <style>HTML,BODY{cursor:url("../../images/cursor.cur"),auto;}</style>
+</head>
+<body class="portal-body portal-body-cabinet">
+  <%- include('includes/portalHeader', {activePortalTab: 'missions'}) %>
+  <main class="portal-main">
+    <% adErrors.forEach(function(message) { %><div class="alert alert-danger text-center"><%= message %></div><% }) %>
+    <%- include('includes/portalStatus') %>
+    <section class="portal-intro">
+      <p class="portal-eyebrow">Trophy Cabinet</p>
+      <h1>The work that became yours</h1>
+      <p>Finished pieces, performances and milestones live here as evidence of attention accumulated over time.</p>
+    </section>
+    <div class="portal-achievement-grid">
+      <section class="portal-achievement-section">
+        <div class="portal-section-heading">
+          <div><p class="portal-eyebrow">Repertoire</p><h2>Polished Pieces</h2></div>
+          <span class="portal-count"><%= repertoirePolished.length %></span>
+        </div>
+        <div class="portal-achievement-list">
+          <% repertoirePolished.forEach((rep,index) => { %>
+            <article class="portal-achievement"><span><%= String(index + 1).padStart(2, '0') %></span><div><%- rep %></div></article>
+          <% }) %>
+          <% if (!repertoirePolished.length) { %><div class="portal-empty-state"><span>The first polished piece will appear here.</span></div><% } %>
+        </div>
+      </section>
+      <section class="portal-achievement-section">
+        <div class="portal-section-heading">
+          <div><p class="portal-eyebrow">Public moments</p><h2>Performances and Exams</h2></div>
+          <span class="portal-count"><%= missionsAccomplished.length %></span>
+        </div>
+        <div class="portal-achievement-list">
+          <% missionsAccomplished.forEach((mission,index) => { %>
+            <article class="portal-achievement is-performance"><span><%= String(index + 1).padStart(2, '0') %></span><div><%- mission %></div></article>
+          <% }) %>
+          <% if (!missionsAccomplished.length) { %><div class="portal-empty-state"><span>Future performances and exams will gather here.</span></div><% } %>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="portal-footer">Learning Park Portal · <a href="/">Return to hanfordlam.com</a></footer>
+  <script src="/pwa.js" defer></script>
+</body>
+</html>

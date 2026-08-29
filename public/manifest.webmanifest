@@ -1,0 +1,30 @@
+{
+  "id": "/practice",
+  "name": "Hanford Lam Music Learning Studio",
+  "short_name": "Music Studio",
+  "description": "Lesson paths, musical discoveries, achievements and progress from Hanford Lam's Music Learning Studio.",
+  "start_url": "/practice?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#d8e8dc",
+  "theme_color": "#122e44",
+  "icons": [
+    {
+      "src": "/images/music-studio-app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {"name": "Today's Path", "short_name": "Today's Path", "url": "/practice"},
+    {"name": "Trophy Cabinet", "short_name": "Trophies", "url": "/missions"},
+    {"name": "Lesson History", "short_name": "History", "url": "/parents"}
+  ]
+}

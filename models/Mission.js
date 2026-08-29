@@ -2,9 +2,9 @@ const missionsCollection = require('../db').db('studio-project').collection('mis
 const usersCollection = require('../db').db('studio-project').collection('users')
 const weeksCollection = require('../db').db('studio-project').collection('weeks')
 const sessionsCollection = require('../db').db('studio-project').collection('sessions')
-const ObjectID = require('mongodb').ObjectID
+const ObjectId = require('mongodb').ObjectId
 const Message = require('./Message')
-const sanitizeHTML = require('sanitize-html')
+const sanitizeHTML = require('../lib/safeContent').plainText
 
 let Mission = function(data) {
     this.data = data
@@ -37,54 +37,53 @@ Date.prototype.addHours = function(h) {
 
 Mission.getPracticeStatus = function(userId) {
     return new Promise(async(resolve, reject) => {
-        let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+        let userDoc = await usersCollection.findOne({"_id": new ObjectId(userId)})
         let lastSubmittedDate = userDoc.lastSubmittedDate
-        let todaysDate = new Date()
-        // set time-zone
-        todaysDate.addHours(3)
-        if (lastSubmittedDate.getDate() == todaysDate.getDate()) {
-            resolve(true)
-        } else {
-            resolve(false)
-        }
+        if (!(lastSubmittedDate instanceof Date)) return resolve(false)
+        let sydneyDate = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'Australia/Sydney',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        })
+        resolve(sydneyDate.format(lastSubmittedDate) === sydneyDate.format(new Date()))
     })
 }
 
 Mission.replyToStudent = async function(studentId, reply) {
-    let userDoc = await usersCollection.findOne({"_id": ObjectID(studentId)})
+    let userDoc = await usersCollection.findOne({"_id": new ObjectId(studentId)})
     let practiceConversation = userDoc.practiceConversations
-    sanitizeHTML(reply, {allowedTags: [], allowedAttributes: []})
+    reply = sanitizeHTML(reply, {allowedTags: [], allowedAttributes: []})
     if(practiceConversation.length > 20) {
         practiceConversation.shift()
         practiceConversation.push(['Hanford', reply])
     } else {
         practiceConversation.push(['Hanford', reply])
     }
-    await usersCollection.updateOne({"_id": ObjectID(studentId)}, { $set: {"practiceConversations": practiceConversation} })
+    await usersCollection.updateOne({"_id": new ObjectId(studentId)}, { $set: {"practiceConversations": practiceConversation} })
 }
 
 Mission.updatePracticeConversationAndEmailHanford = async function(data, userId, username) {
     //used plural to distinguish from existing practiceConversation, smooth implementation from current
-    let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+    let userDoc = await usersCollection.findOne({"_id": new ObjectId(userId)})
     let practiceConversation = userDoc.practiceConversations
+    data.practiceConversation = sanitizeHTML(data.practiceConversation, {allowedTags: [], allowedAttributes: []})
     if(practiceConversation.length > 20) {
         practiceConversation.shift()
         practiceConversation.push(['You', data.practiceConversation])
     } else {
         practiceConversation.push(['You', data.practiceConversation])
     }
-    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"practiceConversations": practiceConversation} })
+    await usersCollection.updateOne({"_id": new ObjectId(userId)}, { $set: {"practiceConversations": practiceConversation} })
     Message.sendEmail({message:JSON.stringify(data), email:username})
 }
 
 Mission.updateLastSubmittedDateAndAddPoints = async function(points, userId) {
-    let userDoc = await usersCollection.findOne({"_id": ObjectID(userId)})
+    let userDoc = await usersCollection.findOne({"_id": new ObjectId(userId)})
     let leaderboardScore = userDoc.leaderboardScore
     let practicePoints = parseInt(points, 10)
     let todaysDate = new Date()
-    // set time-zone
-    todaysDate.addHours(3)
-    await usersCollection.updateOne({"_id": ObjectID(userId)}, { $set: {"lastSubmittedDate": todaysDate, "leaderboardScore": leaderboardScore + practicePoints} })
+    await usersCollection.updateOne({"_id": new ObjectId(userId)}, { $set: {"lastSubmittedDate": todaysDate, "leaderboardScore": leaderboardScore + practicePoints} })
 }
     
 

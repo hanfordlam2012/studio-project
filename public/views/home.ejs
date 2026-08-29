@@ -18,21 +18,26 @@
       gtag('config', 'G-128KK82LWF');
     </script>
 
-    <title>Hanford Lam | Music Learning Studio</title>
-    <meta name="description" content="Music educator, pianist, learning guide, and creator of unusual educational resources.">
+    <title>Hanford Lam | The Learning Park</title>
+    <meta name="description" content="Public workshops, musical experiments, performances, and freely shared learning objects by pianist and teacher Hanford Lam.">
     <meta property="og:url" content="https://www.hanfordlam.com/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Hanford Lam | Music Learning Studio">
-    <meta property="og:description" content="Music educator, pianist, learning guide, and creator of unusual educational resources.">
+    <meta property="og:title" content="Hanford Lam | The Learning Park">
+    <meta property="og:description" content="Enter with something tangled. Leave with greater clarity, something useful, and a path towards the next attraction.">
     <meta property="og:image" content="https://www.hanfordlam.com/images/hanford-piano-teacher.webp">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="hanfordlam.com">
     <meta property="twitter:url" content="https://www.hanfordlam.com/">
-    <meta name="twitter:title" content="Hanford Lam | Music Learning Studio">
-    <meta name="twitter:description" content="Music educator, pianist, learning guide, and creator of unusual educational resources.">
+    <meta name="twitter:title" content="Hanford Lam | The Learning Park">
+    <meta name="twitter:description" content="Public workshops, musical experiments, performances, and freely shared learning objects.">
     <meta name="twitter:image" content="https://www.hanfordlam.com/images/hanford-piano-teacher.webp">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
+    <meta name="theme-color" content="#122e44">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Music Studio">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/favicon.png">
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&family=Handlee&family=Rye&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
@@ -47,7 +52,7 @@
 
     <nav id="myNav" class="rounded recursive row align-items-center text-center w-auto py-2">
       <div class="col-lg-7 g-0">
-        <a id="navIcon" class="my-2 d-block" href="/">Hanford Lam | Music Learning Studio</a>
+        <a id="navIcon" class="my-2 d-block" href="/">Hanford Lam | The Learning Park</a>
       </div>
       <div class="col-lg-5">
         <a id="homeTab" class="mx-4 my-2 d-inline-block navLink" href="/">HOME</a>
@@ -60,7 +65,7 @@
         let currentPath = window.location.pathname;
         if (currentPath == '/') {
           document.getElementById("homeTab").classList.add("orange-text");
-          document.title = "Hanford Lam";
+          document.title = "Hanford Lam | The Learning Park";
         } else if (currentPath == '/practice' || currentPath == '/missions' || currentPath == '/leaderboard' || currentPath == '/parents' || currentPath == '/reports') {
           document.getElementById("reportsTab").classList.add("orange-text");
           document.title = "Portal - Hanford Lam";
@@ -72,29 +77,55 @@
           <div class="col-xl-6 hero-video-column">
             <div class="performance-card">
               <div class="performance-card__header">
-                <p class="performance-card__kicker">Featured performance</p>
+                <p class="performance-card__kicker">Sound at the gate</p>
                 <h2>Hyde Sonata, First Movement</h2>
-                <p>Performed by Hanford Lam, recorded in the studio.</p>
+                <p>Before choosing an attraction, you are welcome to listen.</p>
               </div>
             <div class="responsive-container white-border home-video-frame">
               <iframe loading="lazy" width="100%" height="auto" src="https://www.youtube.com/embed/zhUdsJw0IBo" title="Hyde Sonata, First Movement - Hanford Lam" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
               <div class="performance-card__footer">
-                <p class="hero-caption recursive">A little proof-of-music before the page starts asking anything of you.</p>
+                <p class="hero-caption recursive">A performance offered as evidence that this park is built from actual music.</p>
                 <a class="watch-youtube-link" href="https://youtu.be/zhUdsJw0IBo" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
               </div>
             </div>
           </div>
           <div class="col-xl-6">
             <div class="home-display hero-copy">
-              <p class="section-kicker">Music, learning, embodiment, meaning</p>
-              <h1 class="hero-title gagalin">A Strange Little Studio for Becoming More Musical</h1>
-              <p class="hero-lede Poppins black-text">Performances, free resources, piano feedback, and one-on-one guidance for students who want music and learning to feel clearer, deeper, and more alive.</p>
+              <p class="section-kicker">Public workshops · musical experiments · freely shared objects</p>
+              <h1 class="hero-title gagalin">Enter The Learning Park</h1>
+              <p class="hero-lede Poppins black-text">A changing programme of public gatherings about music, practice, pattern, movement, creativity, and the strange business of learning.</p>
+              <p class="hero-park-promise recursive">Arrive with something tangled. Leave with greater clarity, something useful in your hands, and a path towards the next attraction.</p>
               <div class="hero-actions">
-                <a class="home-cta home-cta-primary" href="#freeResources">Start with free resources</a>
-                <a class="home-cta home-cta-secondary" href="#studioDoorways">Work with me</a>
+                <a class="home-cta home-cta-primary" href="#openingAttraction">Explore the opening attraction</a>
+                <a class="home-cta home-cta-secondary" href="#freeResources">Take something home</a>
               </div>
-              <p class="hero-proof recursive">13+ years experience | Qualified teacher | Melbourne-based</p>
+              <p class="hero-proof recursive">Public workshops · Melbourne · Curiosity welcome</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="row home-section opening-attraction-section" id="openingAttraction">
+          <div class="col-xl-11 mx-auto">
+            <div class="opening-attraction-panel">
+              <div class="opening-attraction-copy">
+                <p class="section-kicker opening-attraction-kicker">Opening attraction</p>
+                <h2 class="opening-attraction-title gagalin">The Practice Foundry</h2>
+                <p class="opening-attraction-question hangyaboly">Why can practising harder sometimes leave us more stuck?</p>
+                <p class="section-copy Poppins">A 75-minute public workshop for musicians, students, teachers, parents, returning pianists, and curious learners.</p>
+                <p class="section-copy Poppins">Bring one practice frustration. Together, we will examine how intention, listening, movement, repetition, and reflection can become disconnected, then experiment with ways of joining the chain again.</p>
+                <p class="opening-attraction-note recursive">No advanced musical knowledge is required.</p>
+                <div class="opening-attraction-actions">
+                  <a class="home-cta attraction-cta" href="#contactForm">Join the first invitation list</a>
+                  <span class="opening-attraction-status recursive">Pilot gathering · Melbourne · Date to be announced</span>
+                </div>
+              </div>
+              <ol class="attraction-route" aria-label="The Practice Foundry workshop journey">
+                <li><span>01</span><strong>The Knot</strong><small>Name what keeps catching.</small></li>
+                <li><span>02</span><strong>The Broken Chain</strong><small>See where practice disconnects.</small></li>
+                <li><span>03</span><strong>The Workshop Floor</strong><small>Test ideas through sound and movement.</small></li>
+                <li><span>04</span><strong>The Afterglow</strong><small>Leave with a clearer next experiment.</small></li>
+              </ol>
             </div>
           </div>
         </section>
@@ -102,8 +133,9 @@
         <section class="row home-section music-cabinet-row" id="musicValueRow">
           <div class="col-xl-11 mx-auto">
             <div class="home-display music-value-panel text-center">
-              <h2 class="bioTitle gagalin dark-green-text">Practice and Explore</h2>
-              <p class="music-value-intro Poppins black-text">Three useful musical doors before you keep reading: train, sight-read, or wander.</p>
+              <p class="section-kicker">Wayside attractions</p>
+              <h2 class="bioTitle gagalin dark-green-text">Train, Sight-Read, or Wander</h2>
+              <p class="music-value-intro Poppins black-text">Three useful musical detours you can enter immediately.</p>
               <div class="music-resource-grid">
                 <a class="music-resource-card resource-train" href="https://musetrainer.github.io/library/" target="_blank" rel="noopener noreferrer">
                   <span class="music-resource-label"><span class="resource-mark">T</span> Train</span>
@@ -136,9 +168,9 @@
           <div class="col-xl-11 mx-auto">
             <div class="home-display free-resource-panel">
               <div class="free-resource-heading text-center">
-                <p class="section-kicker">Free educational material</p>
-                <h2 class="bioTitle gagalin dark-orange-text">Take Something Useful With You</h2>
-                <p class="section-copy Poppins black-text">A small shelf of free PDFs for curious musicians, thoughtful learners, and anyone who wants a little nourishment before deciding what comes next.</p>
+                <p class="section-kicker">Freely shared learning material</p>
+                <h2 class="bioTitle gagalin dark-orange-text">Take-Home Objects</h2>
+                <p class="section-copy Poppins black-text">Every visit should place something useful in your hands. This shelf contains maps, stories, diagrams, frameworks, and provocations for curious musicians and thoughtful learners.</p>
               </div>
               <div class="free-resource-grid">
                 <article class="free-resource-card">
@@ -214,7 +246,52 @@
                   </div>
                 </article>
               </div>
-              <p class="free-resource-footer hangyaboly">These are free to use, share, revisit, and grow with.</p>
+              <p class="free-resource-footer hangyaboly">Open them, download them, share them, and return whenever another path becomes interesting.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="row home-section keystone-feature-section align-items-center" id="keystoneTexts">
+          <div class="col-xl-10 mx-auto">
+            <div class="keystone-feature">
+              <div class="keystone-feature-visual">
+                <img src="../images/2026textpage1.jpg" alt="Keystone Texts 2026 cover">
+                <span class="keystone-price recursive">Hardcopy · $150 AUD</span>
+              </div>
+              <div class="keystone-feature-copy">
+                <p class="section-kicker">A text to keep returning to</p>
+                <h2 class="bioTitle gagalin dark-orange-text">Keystone Texts 2026</h2>
+                <p class="keystone-positioning hangyaboly">The kind of ideas I could explore with a student in a focused one-hour session — distilled into a text you can return to again and again.</p>
+                <p class="section-copy Poppins black-text">The complete PDF remains free. For readers who want the ideas as a physical object, the hardcopy edition is $150 AUD.</p>
+                <div class="keystone-actions">
+                  <a class="home-cta keystone-free-cta" href="../files/Keystone Texts 2026.pdf" target="_blank" rel="noopener noreferrer">Read the free PDF</a>
+                  <a class="home-cta keystone-hardcopy-cta" href="https://hanfordlampiano.myshopify.com/" target="_blank" rel="noopener noreferrer">Explore the hardcopy · $150 AUD</a>
+                </div>
+              </div>
+            </div>
+            <div class="keystone-pages">
+              <div class="keystone-pages-heading">
+                <p class="section-kicker">A glimpse inside</p>
+                <p class="Poppins">Four pages from the journey: orientation, embodiment, experiment, and return.</p>
+              </div>
+              <div class="keystone-page-grid">
+                <a href="../files/Keystone Texts 2026.pdf#page=4" target="_blank" rel="noopener noreferrer">
+                  <img src="../images/keystone-page-04.png" alt="Keystone Texts chapter map: Feel, Describe, Understand, Grow">
+                  <span class="recursive">The four-part map</span>
+                </a>
+                <a href="../files/Keystone Texts 2026.pdf#page=14" target="_blank" rel="noopener noreferrer">
+                  <img src="../images/keystone-page-14.png" alt="Keystone Texts anatomy page with a skeleton illustration">
+                  <span class="recursive">Anatomy from the inside</span>
+                </a>
+                <a href="../files/Keystone Texts 2026.pdf#page=37" target="_blank" rel="noopener noreferrer">
+                  <img src="../images/keystone-page-37.png" alt="Keystone Texts piano experiment about mass and momentum">
+                  <span class="recursive">A threshold experiment</span>
+                </a>
+                <a href="../files/Keystone Texts 2026.pdf#page=53" target="_blank" rel="noopener noreferrer">
+                  <img src="../images/keystone-page-53.png" alt="Keystone Texts page titled The Long View: A Hero's Spiral">
+                  <span class="recursive">The long view</span>
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -224,9 +301,9 @@
             <a class="fiverr-promo-card" href="http://www.fiverr.com/s/KeNGDl8" target="_blank" rel="noopener noreferrer">
               <img src="https://img.youtube.com/vi/0XGq0tPbSkI/hqdefault.jpg" alt="Fiverr piano performance feedback video thumbnail">
               <span class="fiverr-promo-copy">
-                <span class="free-resource-type">Paid performance feedback</span>
-                <strong>Need a second opinion on your piano playing?</strong>
-                <span>Send me a recording and I will give structured feedback on what is working, what to explore next, and how to return to the instrument with clearer priorities.</span>
+                <span class="free-resource-type">Private Listening Room · Paid online service</span>
+                <strong>Need another pair of ears?</strong>
+                <span>Send me a recording of your piano performance and receive structured written feedback on what is already working, what deserves attention, and what you might explore when you return to the instrument.</span>
               </span>
             </a>
           </div>
@@ -236,13 +313,9 @@
           <div class="col-lg-7 mx-auto">
             <div class="home-display problem-panel">
               <h2 id="pedagogyh1" class="bioTitle gagalin dark-green-text">THE QUIET KNOT</h2>
-              <p id="pedagogyp" class="section-copy Poppins black-text">Many students do not struggle because they lack ability. They struggle because learning can become too rushed, abstract, or disconnected from the body.</p>
-              <ul class="signal-list problem-list">
-                <li>Low confidence</li>
-                <li>Frustration or avoidance</li>
-                <li>Reliance on memorisation instead of understanding</li>
-              </ul>
-              <p class="section-note hangyaboly">With the right guidance, this can change.</p>
+              <p id="pedagogyp" class="section-copy Poppins black-text">The park begins where certainty runs out.</p>
+              <p class="section-copy Poppins black-text">Confusion is not evidence that someone lacks ability. It often appears when ideas have become rushed, abstract, physically disconnected, or difficult to name.</p>
+              <p class="section-note hangyaboly">Each gathering chooses one knot. We approach it from several directions and loosen enough of it for movement to become possible again.</p>
             </div>
             <iframe loading="lazy" class="soundcloud-strip" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/330611534&color=%23ff5500&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>
           </div>
@@ -251,14 +324,15 @@
         <section class="row home-section approach-section align-items-center">
           <div class="col-xl-8">
             <div class="home-display approach-panel text-center">
-              <h2 class="bioTitle gagalin dark-orange-text">THE METHOD</h2>
-              <p class="section-copy Poppins black-text">I work with sound, movement, metaphor, structure, and careful explanation so students can build real understanding instead of merely surviving the next task.</p>
-              <div class="approach-steps recursive">
-                <span>Listen closely</span>
-                <span>Untangle gently</span>
-                <span>Make it playable</span>
+              <h2 class="bioTitle gagalin dark-orange-text">HOW AN ATTRACTION UNFOLDS</h2>
+              <p class="section-copy Poppins black-text">An idea becomes memorable when we can encounter it, test it, and carry something away from it.</p>
+              <div class="approach-steps approach-steps-four recursive">
+                <span>Arrive with a question</span>
+                <span>Encounter an idea</span>
+                <span>Test it through experience</span>
+                <span>Leave with a next path</span>
               </div>
-              <p class="section-note hangyaboly">This is not just instruction. It is learning with an aftertaste.</p>
+              <p class="section-note hangyaboly">You will not leave knowing everything. You should leave wanting to continue.</p>
             </div>
           </div>
           <div class="col-xl-4">
@@ -268,23 +342,78 @@
           </div>
         </section>
 
-        <section class="row home-section menu-section align-items-center" id="studioDoorways">
-          <div class="col-xl-6">
-            <div class="image-frame">
-              <img src="../images/studentAndTeacher.jpg" alt="student and teacher">
-            </div>
+        <section class="home-section park-map-section" id="parkMap">
+          <div class="park-map-heading text-center">
+            <p class="section-kicker">Park map</p>
+            <h2 class="bioTitle gagalin dark-green-text">Choose a Question, Not a Level</h2>
+            <p class="section-copy Poppins black-text">The attractions are connected, but there is no prescribed route. Begin wherever your curiosity catches.</p>
           </div>
-          <div class="col-xl-6">
-            <div class="home-display menu-panel text-center">
-              <h2 class="bioTitle gagalin dark-green-text">Choose a Doorway</h2>
-              <ul class="menu-list list-unstyled">
-                <li><a href="#contactForm">Piano, musicianship, and theory</a></li>
-                <li><a href="#contactForm">Creative learning support</a></li>
-                <li><a href="#contactForm">Mathematics and academic confidence</a></li>
-                <li><a href="#freeResources">Free music resources</a></li>
-                <li><a href="#performanceFeedback">Piano performance feedback</a></li>
-              </ul>
-              <p class="section-note hangyaboly">You can come for lessons, resources, performance, or another pair of ears on a recording that needs thoughtful attention.</p>
+          <div class="attraction-grid">
+            <a class="attraction-card attraction-card-open" href="#openingAttraction">
+              <span class="attraction-card-visual attraction-card-visual-practice">
+                <img loading="lazy" src="../images/piano-background.jpg" alt="An antique piano illuminated beside an open window">
+                <span class="attraction-card-number recursive">01</span>
+              </span>
+              <span class="attraction-card-copy">
+                <span class="attraction-card-status recursive">Opening attraction</span>
+                <strong>The Practice Foundry</strong>
+                <span>Why does practice break down, and how can we rebuild it?</span>
+              </span>
+            </a>
+            <a class="attraction-card" href="#contactForm">
+              <span class="attraction-card-visual attraction-card-visual-listening">
+                <img loading="lazy" src="../images/moon.jpg" alt="A luminous moon rising through bright clouds">
+                <span class="attraction-card-number recursive">02</span>
+              </span>
+              <span class="attraction-card-copy">
+                <span class="attraction-card-status recursive">In development</span>
+                <strong>The Listening Observatory</strong>
+                <span>How can we hear what notation cannot entirely say?</span>
+              </span>
+            </a>
+            <a class="attraction-card" href="#contactForm">
+              <span class="attraction-card-visual attraction-card-visual-theory">
+                <img loading="lazy" src="../images/road.jpeg" alt="A hand-painted road converging between colourful houses">
+                <span class="attraction-card-number recursive">03</span>
+              </span>
+              <span class="attraction-card-copy">
+                <span class="attraction-card-status recursive">In development</span>
+                <strong>The Theory Thoroughfare</strong>
+                <span>How can scattered musical facts become a navigable structure?</span>
+              </span>
+            </a>
+            <a class="attraction-card attraction-card-pattern" href="#contactForm">
+              <span class="attraction-card-visual attraction-card-visual-pattern">
+                <img loading="lazy" src="../images/scene1.jpg" alt="A bright geometric river winding through a green landscape">
+                <span class="attraction-card-number recursive">04</span>
+              </span>
+              <span class="attraction-card-copy">
+                <span class="attraction-card-status recursive">Exploring collaborators</span>
+                <strong>The Pattern Gardens</strong>
+                <span>Where do mathematics, music, symmetry, transformation, and perception meet?</span>
+              </span>
+            </a>
+            <a class="attraction-card" href="#contactForm">
+              <span class="attraction-card-visual attraction-card-visual-maestro">
+                <img loading="lazy" src="../images/whispersOfTheMaestro.jpg" alt="Whispers of the Maestro illustrated cover artwork">
+                <span class="attraction-card-number recursive">05</span>
+              </span>
+              <span class="attraction-card-copy">
+                <span class="attraction-card-status recursive">Future attraction</span>
+                <strong>Whispers of the Maestro</strong>
+                <span>Which inherited artistic ideas still illuminate musical life?</span>
+              </span>
+            </a>
+            <div class="attraction-card attraction-card-stone">
+              <span class="attraction-card-visual attraction-card-visual-stone">
+                <img loading="lazy" src="../images/volcano.jpg" alt="A volcanic stone landscape at sunrise">
+                <span class="attraction-card-number recursive">∞</span>
+              </span>
+              <span class="attraction-card-copy">
+                <span class="attraction-card-status recursive">Central attraction under construction</span>
+                <strong>True the Stone</strong>
+                <span>A developing work about resistance, transformation, truth, and the creative act.</span>
+              </span>
             </div>
           </div>
         </section>
@@ -293,19 +422,20 @@
           <div class="col-xl-8">
             <div class="home-display outcomes-panel text-center">
               <h2 class="bioTitle gagalin dark-orange-text">Afterglow</h2>
-              <p class="section-copy Poppins black-text">Over time, people who spend time in this little learning cabinet often develop:</p>
+              <p class="section-copy Poppins black-text">When you leave, one confusion should feel less immovable. You may carry away:</p>
               <ul class="signal-list outcome-list">
-                <li>Greater confidence and motivation</li>
-                <li>Clearer understanding of concepts</li>
-                <li>Improved focus and discipline</li>
-                <li>The ability to approach new challenges independently</li>
+                <li>A practical experiment</li>
+                <li>A new way of listening</li>
+                <li>A useful object</li>
+                <li>Better words for the question</li>
               </ul>
-              <a class="home-cta afterglow-cta" href="#contactForm">Open a conversation</a>
+              <p class="section-note hangyaboly">Most importantly, another path should now be visible.</p>
+              <a class="home-cta afterglow-cta" href="#contactForm">Join the next gathering</a>
             </div>
           </div>
           <div class="col-xl-4">
-            <div class="responsive-container white-border home-video-frame">
-              <iframe loading="lazy" width="100%" height="auto" src="https://www.youtube.com/embed/EFbHEmuZFjM" title="Poulenc - Toccata (Hanford in 2012)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="image-frame afterglow-image">
+              <img src="../images/studentAndTeacher.jpg" alt="Hanford teaching a student at the piano">
             </div>
           </div>
         </section>
@@ -313,7 +443,7 @@
         <section class="row home-section testimonial-section">
           <div class="col-xl-10 mx-auto">
             <div class="testimonial-panel">
-              <p class="section-kicker">Small reports from the field</p>
+              <p class="section-kicker">Reports from previous visitors</p>
               <div class="testimonial-grid">
                 <figure class="testimonial-card">
                   <blockquote>"you helped me understand what music really means"</blockquote>
@@ -329,12 +459,13 @@
         </section>
 
         <section id="contact" class="home-section contact-heading text-center">
-          <div class="p-5 d-inline-block rounded mx-auto display-2 gagalin rainbowText white-border black-bg">Let's Begin</div>
+          <div class="contact-sign p-5 d-inline-block rounded mx-auto display-2 gagalin rainbowText white-border black-bg">Join a Gathering</div>
         </section>
 
         <section id="ratesRow" class="row pt-0 home-section contact-section">
           <div id="contactForm" class="home-display contact-panel my-auto px-auto">
-            <p class="section-kicker text-center">Send a small flare</p>
+            <p class="section-kicker text-center">The first invitation list is forming</p>
+            <p class="contact-intro Poppins text-center">Tell me which attraction interests you, what currently feels tangled, and whether you would like to attend, collaborate on, or host a public workshop.</p>
             <% if (status == 'fail') { %>
               <div id="contacterror" class="alert alert-danger text-center small mt-1 py-2">Sorry, your message couldn't be sent... try my Facebook Page or email hanfordlam2012 [at] hotmail [dot] com instead!</div>
             <% } else if (status == 'success') { %>
@@ -343,16 +474,14 @@
             <form id="contact-form" class="my-4 px-3" action="/sendEmail" method="POST">
               <div id="contactEmailDiv" class="input-group mb-3">
                 <div id="contactEmailPrepend" class="input-group-prepend">
-                  <span id="contactEmailText" class="input-group-text">Your email address:</span>
+                  <label for="contactEmailInput" id="contactEmailText" class="input-group-text">Your email address:</label>
                 </div>
                 <input id="contactEmailInput" autocomplete="off" type="email" name="email" class="form-control" value="" placeholder=" example@hotmail.com">
               </div>
               <div id="contactMessageDiv" class="form-group">
-                <textarea id="contactMessageInput" autocomplete="off" name="message" class="form-control" value="" placeholder="1. Say hello - lessons, resources, performance, or piano feedback
-2. Tell me what feels tangled
-3. We choose a good first doorway
-To keep the work thoughtful, availability is limited.
-Music and learning can feel clearer, stranger, and more alive." rows="5"></textarea>
+                <textarea id="contactMessageInput" aria-label="Your message" autocomplete="off" name="message" class="form-control" value="" placeholder="1. Which attraction caught your curiosity?
+2. What currently feels tangled?
+3. Would you like to attend, collaborate on, or host a gathering?" rows="5"></textarea>
               </div>
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <input type="hidden" name="recaptchaTokenInput" id="recaptchaTokenInput" value="">
@@ -360,7 +489,7 @@ Music and learning can feel clearer, stranger, and more alive." rows="5"></texta
                 <button type="submit" id="contactFormSubmit" value="submit" class="white-border btn btn-success mt-3">Send this message</button>
               </div>
             </form>
-            <p class="connect-line contact-connect-line hangyaboly">Connect on <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/hanfordlampiano">Facebook</a> or see <a target="_blank" rel="noopener noreferrer" href="https://goo.gl/maps/yz5JEic7aKGkwJ3v8">where</a> the studio is.</p>
+            <p class="connect-line contact-connect-line hangyaboly">Connect on <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/hanfordlampiano">Facebook</a> or see <a target="_blank" rel="noopener noreferrer" href="https://goo.gl/maps/yz5JEic7aKGkwJ3v8">where</a> the park begins in Melbourne.</p>
           </div>
         </section>
 
@@ -373,10 +502,10 @@ Music and learning can feel clearer, stranger, and more alive." rows="5"></texta
                 </div>
                 <div class="about-copy">
                   <p class="section-kicker">About Hanford</p>
-                  <h2 class="bioTitle hangyaboly black-text">The teacher behind the cabinet</h2>
-                  <p class="section-copy hangyaboly black-text about-experience-line">With over 13 years of teaching experience, I bring a depth of knowledge across both music and academic learning.</p>
+                  <h2 class="bioTitle hangyaboly black-text">The curator behind the park</h2>
+                  <p class="section-copy hangyaboly black-text about-experience-line">I am a pianist and qualified teacher working across performance, movement, musical understanding, pattern, and imaginative learning.</p>
                   <p class="qualification-list recursive black-text">LMusA (Piano) | Bachelor of Music (Honours) | Master of Teaching (Music)</p>
-                  <p class="section-copy hangyaboly black-text">I have worked with a wide range of students and understand how to adapt teaching to suit different personalities, needs, and goals.</p>
+                  <p class="section-copy hangyaboly black-text">After more than 13 years of teaching, I remain fascinated by the moment when confusion changes shape and a learner can move again. The Learning Park is a home for that moment: public, exploratory, practical, and just strange enough to remain memorable.</p>
                 </div>
               </div>
             </div>
@@ -664,5 +793,6 @@ Music and learning can feel clearer, stranger, and more alive." rows="5"></texta
       });
     </script>
     <script src="../../main-bundled.js"></script>
+    <script src="/pwa.js" defer></script>
   </body>
 </html>

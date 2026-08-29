@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" id="leaderboard-html">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width">
+  <meta name="theme-color" content="#122e44"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Music Studio"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Recursive&family=Belgrano&family=Bellota&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css">
+  <title>Progress Map | Learning Park Portal</title>
+  <style>HTML,BODY{cursor:url("../../images/cursor.cur"),auto;}</style>
+</head>
+<body class="portal-body portal-body-progress">
+  <%- include('includes/portalHeader', {activePortalTab: 'progress'}) %>
+  <main class="portal-main">
+    <% adErrors.forEach(function(message) { %><div class="alert alert-danger text-center"><%= message %></div><% }) %>
+    <%- include('includes/portalStatus') %>
+    <section class="portal-intro">
+      <p class="portal-eyebrow">Progress Map</p>
+      <h1>Your trail, not your verdict</h1>
+      <p>Points record participation and persistence. They are one small signal of work, never a measure of musical worth.</p>
+    </section>
+    <div class="portal-progress-layout">
+      <section class="portal-personal-progress">
+        <p class="portal-eyebrow">Personal progress</p>
+        <strong class="portal-points-total"><%= points %></strong>
+        <span>points gathered</span>
+        <p>Spend them on something that supports the next stage of your learning.</p>
+        <a class="portal-button portal-button-primary" href="/parents">Open my lesson history</a>
+      </section>
+      <section class="portal-prize-section">
+        <div class="portal-section-heading"><div><p class="portal-eyebrow">Your points, your choice</p><h2>Choose a Reward</h2></div></div>
+        <div class="portal-prize-list">
+          <% prizeList.forEach((prize) => { %>
+            <article><div><strong style="color:<%= prize.color %>"><%= prize.title %></strong><span><%= prize.desc %></span></div><b><%= prize.price %></b></article>
+          <% }) %>
+        </div>
+      </section>
+    </div>
+    <details class="portal-standings">
+      <summary>Open studio standings</summary>
+      <div class="portal-standings-intro">
+        <strong>Look outward without losing your own path.</strong>
+        <p>The names below are studio usernames. Notice the field, then return your attention to your own next piece of work.</p>
+      </div>
+      <div class="portal-standings-list">
+        <% leaderboard.forEach((student,index) => { %>
+          <% if (student.username) { %>
+            <div class="<%= student.username === username ? 'is-current-student' : '' %>">
+              <span><%= index + 1 %></span><strong><%= student.username %></strong><b><%= student.leaderboardScore %></b>
+            </div>
+          <% } %>
+        <% }) %>
+      </div>
+    </details>
+  </main>
+  <footer class="portal-footer">Learning Park Portal · <a href="/">Return to hanfordlam.com</a></footer>
+  <script src="/pwa.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<header class="portal-header recursive">
+  <a class="portal-brand" href="/practice">
+    <span class="portal-brand-kicker">Hanford Lam</span>
+    <strong>The Learning Park Portal</strong>
+  </a>
+  <nav class="portal-nav" aria-label="Student portal" data-portal-navigation>
+    <a href="/practice" class="portal-nav-link <%= activePortalTab === 'practice' ? 'is-active' : '' %>" <%= activePortalTab === 'practice' ? 'aria-current="page"' : '' %>>Today's Path</a>
+    <a href="/missions" class="portal-nav-link <%= activePortalTab === 'missions' ? 'is-active' : '' %>" <%= activePortalTab === 'missions' ? 'aria-current="page"' : '' %>>Trophy Cabinet</a>
+    <a href="/leaderboard" class="portal-nav-link <%= activePortalTab === 'progress' ? 'is-active' : '' %>" <%= activePortalTab === 'progress' ? 'aria-current="page"' : '' %>>Progress Map</a>
+    <a href="/parents" class="portal-nav-link <%= activePortalTab === 'history' ? 'is-active' : '' %>" <%= activePortalTab === 'history' ? 'aria-current="page"' : '' %>>Lesson History</a>
+  </nav>
+  <form class="portal-logout" action="/logout" method="POST">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit">Log out</button>
+  </form>
+</header>
+<script>
+  document.querySelectorAll('[data-portal-navigation] a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (link.href !== window.location.href) document.body.classList.add('portal-is-leaving');
+    });
+  });
+</script>

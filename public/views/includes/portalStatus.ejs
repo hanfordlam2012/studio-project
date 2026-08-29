@@ -1,0 +1,17 @@
+<section class="portal-status recursive <%= typeof activePortalTab !== 'undefined' && activePortalTab === 'history' ? 'is-history' : '' %>" aria-label="Your current portal status">
+  <div class="portal-status-welcome">
+    <span>Welcome back</span>
+    <strong class="portal-status-name"><%= fName || username %></strong>
+  </div>
+  <div class="portal-status-item">
+    <span>Your points</span>
+    <strong><%= points %></strong>
+  </div>
+  <div class="portal-status-item">
+    <span>Lessons used</span>
+    <strong><%= lessonCount %> of <%= paidLessons %></strong>
+  </div>
+  <% if (typeof activePortalTab === 'undefined' || activePortalTab !== 'history') { %>
+    <a class="portal-status-history" href="/parents">View lesson history</a>
+  <% } %>
+</section>

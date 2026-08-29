@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width">
+  <meta name="theme-color" content="#122e44"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Music Studio"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Recursive&family=Belgrano&family=Bellota&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css">
+  <title>Lesson History | Learning Park Portal</title>
+  <style>HTML,BODY{cursor:url("../../images/cursor.cur"),auto;}</style>
+</head>
+<body class="portal-body portal-body-history">
+  <%- include('includes/portalHeader', {activePortalTab: 'history'}) %>
+  <main class="portal-main">
+    <% adErrors.forEach(function(message){ %><div class="alert alert-danger text-center"><%= message %></div><% }) %>
+    <%- include('includes/portalStatus', {activePortalTab: 'history'}) %>
+    <section class="portal-intro"><p class="portal-eyebrow">Lesson History</p><h1>The path behind you</h1><p>Revisit earlier notes, notice recurring questions, and see how one musical problem gradually changed shape.</p></section>
+    <% const years=[...new Set(studentWeeks.map(function(week){return week.createdDate instanceof Date ? week.createdDate.getFullYear() : new Date(week.createdDate).getFullYear()}))].filter(Boolean); %>
+    <section class="history-summary" aria-label="History summary"><div><span>Paths recorded</span><strong><%= studentWeeks.length %></strong></div><div><span>Latest project</span><strong><% if(studentWeeks.length){ const latestPieces=Array.isArray(studentWeeks[0].pieces)?studentWeeks[0].pieces:[]; %><%= studentWeeks[0].pieceName %><%= latestPieces.length>1 ? ' + '+(latestPieces.length-1)+' more' : '' %><% } else { %>Waiting<% } %></strong></div><div><span>Years gathered</span><strong><%= years.length || 0 %></strong></div></section>
+    <section class="history-tools" aria-label="Filter lesson history"><label for="historySearch">Search notes<input id="historySearch" type="search" placeholder="Piece, focus, task or quiet knot"></label><label for="historyYear">Year<select id="historyYear"><option value="">All years</option><% years.forEach(function(year){ %><option value="<%= year %>"><%= year %></option><% }) %></select></label></section>
+    <section class="history-list" id="historyList">
+      <% studentWeeks.forEach(function(week,index){ const created=week.createdDate instanceof Date ? week.createdDate : new Date(week.createdDate); const structured=(Array.isArray(week.pieces)&&week.pieces.length)||(Array.isArray(week.practiceTasks)&&week.practiceTasks.length); const pieceNames=Array.isArray(week.pieces)?week.pieces.map(function(piece){return piece.pieceName}).filter(Boolean):[]; const searchable=[pieceNames.join(' '),week.pieceName,week.lessonFocus,week.quietKnot,week.generalNote,week.comments].join(' ').toLowerCase(); %>
+        <details class="history-entry" data-history-entry data-year="<%= created.getFullYear() %>" data-search="<%= searchable %>" <%= index===0?'open':'' %>>
+          <summary><span class="history-date"><%= created.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) %></span><span class="history-piece"><strong><%= week.pieceName || 'Untitled path' %><%= pieceNames.length>1 ? ' + '+(pieceNames.length-1)+' more' : '' %></strong><span><%= week.lessonFocus || 'Lesson notes' %></span></span><span class="history-kind <%= structured?'':'is-legacy' %>"><%= structured?'Path':'Legacy' %></span></summary>
+          <div class="history-detail"><div class="history-notes"><%- filterUserHTML(week.comments || 'No notes were recorded for this lesson.') %></div><aside class="history-evidence"><a class="history-print" href="/parents/print/<%= week._id %>" target="_blank" rel="noopener">Open printable notes</a><div><p class="portal-eyebrow">Development snapshot</p><div class="history-ratings"><% [['rhythm','Pulse'],['coordination','Pitch'],['tone','Articulation'],['dynamics','Dynamics'],['stylistic','Body feeling']].forEach(function(item){ %><div class="history-rating"><span><%= item[1] %></span><strong><%= week[item[0]] || '—' %> / 5</strong></div><% }) %></div></div><% if(week.techAName||week.techBName){ %><div class="history-tech"><p class="portal-eyebrow">Technical work</p><% if(week.techAName){ %><strong><%= week.techAName %></strong><span><%= week.techAScore || 'Not scored' %> / 5</span><% } %><% if(week.techBName){ %><strong><%= week.techBName %></strong><span><%= week.techBScore || 'Not scored' %> / 5</span><% } %></div><% } %></aside></div>
+        </details>
+      <% }) %>
+      <% if(!studentWeeks.length){ %><div class="history-empty">Lesson paths will gather here after the first one is published.</div><% } %>
+    </section>
+    <div class="history-empty" id="historyNoResults" hidden>No lesson paths match those filters.</div>
+  </main>
+  <footer class="portal-footer">Learning Park Portal · <a href="/">Return to hanfordlam.com</a></footer>
+  <script>
+    (function(){var search=document.getElementById('historySearch'),year=document.getElementById('historyYear'),entries=[].slice.call(document.querySelectorAll('[data-history-entry]')),empty=document.getElementById('historyNoResults');function filter(){var query=search.value.trim().toLowerCase(),chosen=year.value,visible=0;entries.forEach(function(entry){var show=(!query||entry.dataset.search.indexOf(query)>-1)&&(!chosen||entry.dataset.year===chosen);entry.hidden=!show;if(show)visible++});empty.hidden=visible!==0}search.addEventListener('input',filter);year.addEventListener('change',filter)}());
+  </script>
+  <script src="/pwa.js" defer></script>
+</body></html>

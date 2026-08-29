@@ -1,7 +1,7 @@
 const Mission = require('../models/Mission')
 const usersCollection = require('../db').db('studio-project').collection('users')
 const session = require('express-session')
-const ObjectID = require('mongodb').ObjectID
+const ObjectId = require('mongodb').ObjectId
 
 // For timezones
 Date.prototype.addHours = function(h) {
@@ -29,7 +29,7 @@ exports.getRandomBPM = async function() {
 
 exports.getBPMStatus = async function(userId) {
     // find student's document
-    let userDoc = await usersCollection.findOne({"_id": ObjectID(userId) })
+    let userDoc = await usersCollection.findOne({"_id": new ObjectId(userId) })
     let todaysDate = new Date()
     todaysDate.addHours(3)
 
@@ -45,31 +45,43 @@ exports.getBPMStatus = async function(userId) {
 exports.checkBPM = async function(req, res) {
     // find Hanford's, student's documents
     let adminDoc = await usersCollection.findOne({"admin": true})
-    let studentDoc = await usersCollection.findOne({"_id": ObjectID(req.session.user.userId) })
+    let studentDoc = await usersCollection.findOne({"_id": new ObjectId(req.session.user.userId) })
     let todaysDate = new Date()
     todaysDate.addHours(3)
 
+    const bpmGuess = Number(req.body.bpmGuess)
+    if (!Number.isInteger(bpmGuess) || bpmGuess < 20 || bpmGuess > 200 || bpmGuess % 10 !== 0) return res.redirect('/practice')
+
     // compare Hanford's ...
-    if (adminDoc.randomBPM == req.body.bpmGuess) {
+    if (adminDoc.randomBPM == bpmGuess) {
         let newScore = studentDoc.leaderboardScore + 3
-        await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "success", "lastBPMGuess": todaysDate, "leaderboardScore": newScore} })
-        res.redirect('/practice#guessTheTempo')
+        await usersCollection.updateOne({"_id": new ObjectId(req.session.user.userId)}, { $set: {"BPMStatus": "success", "lastBPMGuess": todaysDate, "lastBPMGuessValue": bpmGuess, "leaderboardScore": newScore} })
+        res.redirect('/practice?pulse=answered')
     } else {
-        let newScore = studentDoc.leaderboardScore + 3
-        await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"BPMStatus": "notQuite", "lastBPMGuess": todaysDate, "leaderboardScore": newScore} })
-        res.redirect('/practice#guessTheTempo')
+        await usersCollection.updateOne({"_id": new ObjectId(req.session.user.userId)}, { $set: {"BPMStatus": "notQuite", "lastBPMGuess": todaysDate, "lastBPMGuessValue": bpmGuess} })
+        res.redirect('/practice?pulse=answered')
     }
+}
+
+exports.getBPMFeedback = async function(userId) {
+    const userDoc = await usersCollection.findOne({_id: new ObjectId(userId)})
+    if (!userDoc || !(userDoc.lastBPMGuess instanceof Date)) return {status: 'open', guess: null}
+    const sydneyDay = date => new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Australia/Sydney', year: 'numeric', month: '2-digit', day: '2-digit'
+    }).format(date)
+    if (sydneyDay(userDoc.lastBPMGuess) !== sydneyDay(new Date())) return {status: 'open', guess: null}
+    return {status: userDoc.BPMStatus || 'open', guess: Number(userDoc.lastBPMGuessValue) || null}
 }
 
 // LEGATO SMOOTH
 exports.compareScoreAndSave = async function(req, res) {
-    let userDoc = await usersCollection.findOne({"_id": ObjectID(req.session.user.userId)})
+    let userDoc = await usersCollection.findOne({"_id": new ObjectId(req.session.user.userId)})
     let currentGameScore = parseInt(req.body.score, 10)
     if (userDoc.savedGameScore >= currentGameScore) {
         return
     } else {
         let scoreDifference = currentGameScore - userDoc.savedGameScore
-        await usersCollection.updateOne({"_id": ObjectID(req.session.user.userId)}, { $set: {"leaderboardScore": userDoc.leaderboardScore + scoreDifference, "savedGameScore": currentGameScore} })
+        await usersCollection.updateOne({"_id": new ObjectId(req.session.user.userId)}, { $set: {"leaderboardScore": userDoc.leaderboardScore + scoreDifference, "savedGameScore": currentGameScore} })
     }
 }
 
@@ -78,7 +90,10 @@ exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
     let randomInt = 3
     await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
     await Mission.updatePracticeConversationAndEmailHanford(req.body, req.session.user.userId, req.session.user.username)
-    res.redirect('/leaderboard#practiceConversation')
+    req.flash('status', 'success')
+    req.session.save(function() {
+        res.redirect('/practice?correspondence=posted')
+    })
 }
 
 //Unused, for generating random points between max and min

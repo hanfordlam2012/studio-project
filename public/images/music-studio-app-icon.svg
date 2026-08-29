@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Music Learning Studio piano keys</title>
+  <rect width="512" height="512" rx="96" fill="#122e44"/>
+  <g transform="translate(76 92)">
+    <rect width="78" height="328" rx="12" fill="#f4f7f5"/>
+    <rect x="94" width="78" height="328" rx="12" fill="#f4f7f5"/>
+    <rect x="188" width="78" height="328" rx="12" fill="#f4f7f5"/>
+    <rect x="282" width="78" height="328" rx="12" fill="#f4f7f5"/>
+    <rect x="54" width="54" height="214" rx="10" fill="#26343b"/>
+    <rect x="148" width="54" height="214" rx="10" fill="#26343b"/>
+    <rect x="242" width="54" height="214" rx="10" fill="#26343b"/>
+  </g>
+</svg>

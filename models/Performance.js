@@ -1,5 +1,5 @@
 const performancesCollection = require('../db').db('studio-project').collection('performances')
-const ObjectID = require('mongodb').ObjectID
+const ObjectId = require('mongodb').ObjectId
 
 let Performance = function() {
   this.errors = []
@@ -14,11 +14,11 @@ Performance.getPerformances = function() {
 
 Performance.addPerformanceComment = function(performanceId, studentName, comment) {
   return new Promise(async(resolve, reject) => {
-    let performance = await performancesCollection.findOne({"_id": ObjectID(performanceId)})
+    let performance = await performancesCollection.findOne({"_id": new ObjectId(performanceId)})
     let newComment = []
     newComment.push(studentName, comment)
     performance.comments.push(newComment)
-    await performancesCollection.updateOne({"_id": ObjectID(performanceId)}, { $set: {"comments": performance.comments} })
+    await performancesCollection.updateOne({"_id": new ObjectId(performanceId)}, { $set: {"comments": performance.comments} })
     resolve()
   })
 }
