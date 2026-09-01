@@ -64,6 +64,9 @@ input {
 
 /* LEARNING PARK PORTAL V2 */
 .portal-body{background:#d8e8dc url("../images/piano-background.jpg") center/cover fixed;color:#122e44;font-family:'Poppins',sans-serif;margin:0;min-height:100vh}
+.portal-body-cabinet{background-image:url("../images/stage.jpg")}
+.portal-body-progress{background-image:url("../images/moon.jpg")}
+.portal-body-history{background-image:url("../images/road.jpeg")}
 .portal-body::before{background:rgba(216,232,220,.8);content:"";inset:0;pointer-events:none;position:fixed;z-index:0}
 .portal-header,.portal-main,.portal-footer{position:relative;z-index:1}
 .portal-header{align-items:center;background:#122e44;border-bottom:4px solid #ffde24;display:grid;gap:22px;grid-template-columns:minmax(210px,.8fr) minmax(0,1.5fr) auto;padding:15px clamp(18px,4vw,58px)}
@@ -100,7 +103,7 @@ input {
 .tempo-beat{animation:portalBeat var(--beat-duration) ease-out infinite;background:#9aff47;border-radius:50%;bottom:21px;height:16px;left:calc(50% - 8px);position:absolute;width:16px}
 @keyframes portalPendulum{0%,100%{transform:rotate(-34deg)}50%{transform:rotate(34deg)}}@keyframes portalBeat{0%{box-shadow:0 0 0 0 rgba(154,255,71,.85);transform:scale(1)}100%{box-shadow:0 0 0 28px rgba(154,255,71,0);transform:scale(.8)}}
 .tempo-form label,.portal-reflection-form label{display:block;font-family:'Recursive',sans-serif;font-size:.8rem;font-weight:bold;margin-bottom:8px}.tempo-control{align-items:center;display:grid;gap:7px;grid-template-columns:minmax(0,1fr) auto auto;margin-bottom:18px}.tempo-control output{color:#6e2ab5;font-size:1.1rem;font-weight:bold}
-.tempo-result{background:#fff8dc;border-left:5px solid #dc6a00;display:grid;gap:16px;margin-top:18px;padding:18px}.tempo-result-success{border-color:#178f25}.tempo-result-copy>strong{display:block;font-size:1.2rem}.tempo-comparison{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid #d8cfa8;background:#fff}.tempo-comparison div{padding:11px}.tempo-comparison div+div{border-left:1px solid #d8cfa8}.tempo-comparison span,.tempo-comparison strong{display:block}.tempo-comparison span{color:#63747a;font-size:.7rem;font-weight:bold;text-transform:uppercase}.tempo-comparison strong{color:#15364c;margin-top:3px}.tempo-feedback-stage{height:105px;margin:0}.portal-guide-tool{background:#fff8dc}@media(max-width:480px){.tempo-comparison{grid-template-columns:1fr}.tempo-comparison div+div{border-left:0;border-top:1px solid #d8cfa8}}
+.tempo-result{background:#fff8dc;border-left:5px solid #dc6a00;display:grid;gap:16px;margin-top:18px;padding:18px}.tempo-result-success{border-color:#178f25}.tempo-result-copy>strong{display:block;font-size:1.2rem}.tempo-comparison{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid #d8cfa8;background:#fff}.tempo-comparison div{padding:11px}.tempo-comparison div+div{border-left:1px solid #d8cfa8}.tempo-comparison span,.tempo-comparison strong{display:block}.tempo-comparison span{color:#63747a;font-size:.7rem;font-weight:bold;text-transform:uppercase}.tempo-comparison strong{color:#15364c;margin-top:3px}.tempo-feedback-stage{height:138px;margin:0}.portal-guide-tool{background:#fff8dc}@media(max-width:480px){.tempo-comparison{grid-template-columns:1fr}.tempo-comparison div+div{border-left:0;border-top:1px solid #d8cfa8}}
 .portal-conversation,.portal-legacy-recording,.portal-standings{margin-top:18px}.portal-message-list{background:#eef3f5;border:1px solid #ccd8de;border-radius:6px;display:grid;gap:10px;max-height:390px;overflow-y:auto;padding:14px}
 .portal-message{background:#fff;border-left:4px solid #dc6a00;border-radius:4px;max-width:82%;padding:12px 14px}.portal-message.is-hanford{border-color:#6e2ab5}.portal-message.is-student{justify-self:end}.portal-message strong{color:#6e2ab5;display:block;font-family:'Recursive',sans-serif;font-size:.72rem;margin-bottom:4px}.portal-message.is-student strong{color:#dc6a00}.portal-message p:last-child{margin-bottom:0}
 .portal-reflection-form{display:grid;margin-top:18px}.portal-reflection-form textarea{background:#fff8dc;border:2px solid #122e44;border-radius:6px;color:#122e44;line-height:1.6;margin-bottom:12px;padding:13px;resize:vertical}
@@ -525,13 +528,12 @@ hr {
     border-top: 1px solid white;
 }
 
-/* MISSIONS PAGE */
-#missions-html {
-    background-image: url("../images/sunset-bird.jpeg");
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
+/* Portal artwork belongs to .portal-body. Keep the root neutral so an old
+   watercolor is never painted underneath while the current image loads. */
+#missions-html,
+#practice-html,
+#leaderboard-html {
+    background: #d8e8dc;
     overflow-x: hidden;
 }
 
@@ -560,14 +562,6 @@ hr {
 }
 
 /*PRACTICE PAGE*/
-#practice-html {
-    background-image: url("../images/hamsters.jpeg");
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    overflow-x: scroll;
-}
 
 #PracticeConvo ::placeholder {
     color:rgb(139, 230, 255);
@@ -840,6 +834,16 @@ hr {
     overflow-x: hidden;
 }
 
+#reports-guest-html body,
+#reports-guest-html input,
+#reports-guest-html button {
+    font-family: 'DM Sans', sans-serif;
+}
+
+#reports-guest-html #navIcon {
+    font-family: 'Rye', serif;
+}
+
 .portal-login-wrap {
     margin-left: auto;
     margin-right: auto;
@@ -879,17 +883,17 @@ hr {
 
 .portal-quote-card blockquote {
     color: #122e44;
-    font-family: 'Handlee', cursive;
-    font-size: clamp(1.75rem, 4vw, 2.6rem);
-    font-weight: bold;
-    line-height: 1.18;
+    font-family: 'Rye', serif;
+    font-size: clamp(1.45rem, 3.5vw, 2.25rem);
+    font-weight: normal;
+    line-height: 1.35;
     margin: 0 0 12px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .portal-quote-card figcaption {
     color: #dc6a00;
-    font-family: 'Recursive', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-weight: bold;
 }
 
@@ -1077,14 +1081,6 @@ hr {
 }
 
 /* LEADERBOARD PAGE */
-#leaderboard-html {
-    background-image: url("../images/road.jpeg");
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    overflow-x: hidden;
-}
 
 #leaderboard-table {
     background-color: rgba(255, 255, 255, 0.885);

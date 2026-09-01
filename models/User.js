@@ -291,6 +291,34 @@ User.getOneWeek = function(week_id) {
   })
 }
 
+User.getPortalStudentSnapshot = function(userId) {
+  return usersCollection.findOne({_id: new ObjectId(userId)}, {projection: {
+    leaderboardScore: 1,
+    practiceConversations: 1,
+    lessonVideoURL: 1,
+    missionsAccomplished: 1,
+    repertoirePolished: 1,
+    playlistLink: 1,
+    lastSubmittedDate: 1,
+    lastBPMGuess: 1,
+    lastBPMGuessValue: 1,
+    BPMStatus: 1
+  }})
+}
+
+User.getPortalAdminSnapshot = function() {
+  return usersCollection.findOne({admin: true}, {projection: {
+    practicePrompt: 1,
+    pacmanHighscores: 1,
+    interestingVideoURL: 1,
+    interestingVideoPrompt: 1,
+    readingPracticePDFPath: 1,
+    readingPracticePrompt: 1,
+    randomBPM: 1,
+    lastBPMUpdate: 1
+  }})
+}
+
 function normaliseRecipientEmails(value) {
   const emails = String(value || '').split(';').map(email => email.trim().toLowerCase()).filter(Boolean)
   if (!emails.length) return ''
@@ -358,7 +386,8 @@ User.getAdminStudentView = async function(secret, studentId) {
     paidLessons: 1,
     leaderboardScore: 1,
     missionsAccomplished: 1,
-    repertoirePolished: 1
+    repertoirePolished: 1,
+    practiceConversations: 1
   }).sort({fName: 1, lName: 1}).toArray()
   const index = students.findIndex(student => String(student._id) === studentId)
   if (index < 0) throw new Error('That student is not attached to this studio account.')

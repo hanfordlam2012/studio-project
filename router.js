@@ -10,13 +10,11 @@ const performanceController = require('./controllers/performanceController')
 
 // run this function for that route
 router.get('/', function(req, res) {
-    res.render('home', {status: req.flash('status')})
+    res.render('homeBrief', {status: req.flash('status')})
 })
 
 
-// general teaching tools
-router.get('/blackboard', function(req, res) {res.render('blackboard')})
-//router.get('/quiz', function(req, res) {res.render('quiz')})
+// Retired teaching pages are intentionally no longer public routes.
 router.post('/sendQuizToHanford', messageController.sendQuizToHanford)
 //router.get('/melody', function(req, res) {res.render('melody')})
 //router.post('/sendMelodyToHanford', messageController.sendMelodyToHanford)
@@ -35,15 +33,6 @@ router.post('/sendEmail', messageController.sendEmail)
 router.post('/doesUsernameExist', userController.doesUsernameExist)
 router.post('/doesEmailExist', userController.doesEmailExist)
 router.post('/isCorrect', userController.isCorrect)
-
-//router.get('/theory', userController.showShopPage)
-router.get('/daytime', userController.showHolisticPage)
-router.get('/holistic', userController.showHolisticPage)
-router.get('/success', userController.showSuccessPage)
-router.get('/promo', userController.showPromoPage)
-router.get('/tutorials', userController.mustBeLoggedIn, userController.showTutorialsPage)
-router.get('/schedule', userController.showSchedulePage)
-
 
 // student navigation
 router.get('/practice', userController.mustBeLoggedIn, userController.showPracticePage)

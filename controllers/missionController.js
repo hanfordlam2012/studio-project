@@ -10,9 +10,9 @@ Date.prototype.addHours = function(h) {
 }
 
 // BPM GUESS GAME
-exports.getRandomBPM = async function() {
+exports.getRandomBPM = async function(adminSnapshot) {
     // find Hanford's document
-    let userDoc = await usersCollection.findOne({"admin": true})
+    let userDoc = adminSnapshot || await usersCollection.findOne({"admin": true})
     let todaysDate = new Date()
     todaysDate.addHours(3)
 
@@ -102,8 +102,15 @@ function getRndInt(min, max) {
 }
 
 exports.replyToStudent = async function(req, res) {
-    await Mission.replyToStudent(req.body.studentId, req.body.reply)
-    res.redirect('/create-week')
+    try {
+        await Mission.replyToStudent(req.body.studentId, req.body.reply, req.session.user.secret)
+        req.flash('adminSuccess', 'Reply added to practice correspondence.')
+    } catch (error) {
+        req.flash('adErrors', error.message || 'The reply could not be added.')
+    }
+    req.session.save(function() {
+        res.redirect('/admin/student-view?studentId=' + encodeURIComponent(req.body.studentId || '') + '#correspondence')
+    })
 }
 
 // PACMAN HIGHSCORES

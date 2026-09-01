@@ -50,17 +50,21 @@ Mission.getPracticeStatus = function(userId) {
     })
 }
 
-Mission.replyToStudent = async function(studentId, reply) {
-    let userDoc = await usersCollection.findOne({"_id": new ObjectId(studentId)})
-    let practiceConversation = userDoc.practiceConversations
+Mission.replyToStudent = async function(studentId, reply, secret) {
+    if (typeof studentId !== 'string' || !studentId.match(/^[a-f\d]{24}$/i)) throw new Error('That student could not be found.')
+    let userDoc = await usersCollection.findOne({"_id": new ObjectId(studentId), secret: secret, student: true})
+    if (!userDoc) throw new Error('That student is not attached to this studio account.')
+    let practiceConversation = Array.isArray(userDoc.practiceConversations) ? userDoc.practiceConversations : []
     reply = sanitizeHTML(reply, {allowedTags: [], allowedAttributes: []})
+    if (!reply.trim()) throw new Error('Write a reply before sending.')
+    if (reply.length > 1200) throw new Error('Keep the reply under 1,200 characters.')
     if(practiceConversation.length > 20) {
         practiceConversation.shift()
         practiceConversation.push(['Hanford', reply])
     } else {
         practiceConversation.push(['Hanford', reply])
     }
-    await usersCollection.updateOne({"_id": new ObjectId(studentId)}, { $set: {"practiceConversations": practiceConversation} })
+    await usersCollection.updateOne({"_id": new ObjectId(studentId), secret: secret, student: true}, { $set: {"practiceConversations": practiceConversation} })
 }
 
 Mission.updatePracticeConversationAndEmailHanford = async function(data, userId, username) {

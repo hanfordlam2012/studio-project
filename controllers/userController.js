@@ -168,7 +168,8 @@ exports.viewAdminStudent = async function(req, res) {
             students: view.students,
             studentIndex: view.index,
             weeks: view.weeks,
-            adErrors: req.flash('adErrors')
+            adErrors: req.flash('adErrors'),
+            adminSuccess: req.flash('adminSuccess')
         })
     } catch (error) {
         req.flash('adErrors', error.message || 'That student view could not be opened.')
@@ -315,144 +316,76 @@ exports.showTutorialsPage = function(req, res) {
 }
 
 // STUDENT NAVIGATION FUNCTIONS
-exports.showPracticePage = function(req, res) {
+const sydneyDay = date => new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Australia/Sydney', year: 'numeric', month: '2-digit', day: '2-digit'
+}).format(date)
 
-    getThesePropertyValuesForUser([
-        'leaderboardScore',
-        'practiceConversations',
-        'lessonVideoURL'
-        ],req.session.user.userId).then((userProps) => {
-        getFromAdmin([
-        'practicePrompt'
-        ]).then((adminProps) => {
-            User.getLatestComments(req.session.user.userId).then(function (latestComments) {
-                Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
-                    missionController.getRandomBPM().then((randomBPM) => {
-                        missionController.getBPMFeedback(req.session.user.userId).then((BPMFeedback) => {
-                            res.render('practicePageV2', {
-                                username: req.session.user.username,
-                                fName: req.session.user.fName,
-                                userId: req.session.user.userId,
-                                parentName: req.session.user.parentName,
-                                admin: req.session.user.admin,
-                                randomBPM: randomBPM, // taken from admin acc + other operations performed, don't modify!
-                                BPMStatus: BPMFeedback.status, // 'success' 'notQuite' 'open'
-                                BPMGuess: BPMFeedback.guess,
-                                latestComments: latestComments,
-                                adErrors: req.flash('adErrors'),
-                                status: req.flash('status'),
-                                checklistStatus: req.flash('checklistStatus'),
-                                practiceStatus: practiceStatus, // true if already practised
-                                points: userProps.leaderboardScore,
-                                lessonCount: req.session.user.lessonCount,
-                                paidLessons: req.session.user.paidLessons,
-                                leaderboardColor: req.session.user.leaderboardColor,
-                                practiceConversation: userProps.practiceConversations,
-                                practicePrompt: adminProps.practicePrompt,
-                                recordedLessonURL: userProps.lessonVideoURL
-                            })
-                        })
-                    })
-                })
-            })
-        })
+const practiceSubmittedToday = user => user && user.lastSubmittedDate instanceof Date && sydneyDay(user.lastSubmittedDate) === sydneyDay(new Date())
+
+const bpmFeedbackFrom = user => {
+    if (!user || !(user.lastBPMGuess instanceof Date) || sydneyDay(user.lastBPMGuess) !== sydneyDay(new Date())) return {status: 'open', guess: null}
+    return {status: user.BPMStatus || 'open', guess: Number(user.lastBPMGuessValue) || null}
+}
+
+exports.showPracticePage = async function(req, res) {
+    const [userProps, adminProps, latestComments] = await Promise.all([
+        User.getPortalStudentSnapshot(req.session.user.userId),
+        User.getPortalAdminSnapshot(),
+        User.getLatestComments(req.session.user.userId)
+    ])
+    const randomBPM = await missionController.getRandomBPM(adminProps)
+    const BPMFeedback = bpmFeedbackFrom(userProps)
+    res.render('practicePageV2', {
+        username: req.session.user.username, fName: req.session.user.fName, userId: req.session.user.userId,
+        parentName: req.session.user.parentName, admin: req.session.user.admin, randomBPM: randomBPM,
+        BPMStatus: BPMFeedback.status, BPMGuess: BPMFeedback.guess, latestComments: latestComments,
+        adErrors: req.flash('adErrors'), status: req.flash('status'), checklistStatus: req.flash('checklistStatus'),
+        practiceStatus: practiceSubmittedToday(userProps), points: userProps.leaderboardScore,
+        lessonCount: req.session.user.lessonCount, paidLessons: req.session.user.paidLessons,
+        leaderboardColor: req.session.user.leaderboardColor, practiceConversation: userProps.practiceConversations || [],
+        practicePrompt: adminProps.practicePrompt, recordedLessonURL: userProps.lessonVideoURL
     })
 }
 
-exports.showMissionsPage = function(req, res) {
-  
-    User.getMissionsAccomplished(req.session.user.userId).then((missionsAccomplished) => {
-        User.getRepertoirePolished(req.session.user.userId).then((repertoirePolished) => {
-        getThesePropertyValuesForUser([
-            'leaderboardScore',
-            'practiceConversations'
-            ],req.session.user.userId).then((userProps) => {
-                getFromAdmin([
-                'pacmanHighscores',
-                'interestingVideoURL', 
-                'interestingVideoPrompt', 
-                'readingPracticePDFPath', 
-                'readingPracticePrompt',
-                'practicePrompt'
-                ]).then((adminProps) => {
-                    missionController.getRandomBPM().then((randomBPM) => {
-                    // function not yet written, need to return object with props BPMStatus, points
-                    missionController.getBPMStatus(req.session.user.userId).then((BPMStatus) => {
-                        Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
-                        res.render('missionsPageV2', {
-                            username: req.session.user.username,
-                            fName: req.session.user.fName,
-                            userId: req.session.user.userId,
-                            parentName: req.session.user.parentName,
-                            admin: req.session.user.admin,
-                            missionsAccomplished: missionsAccomplished,
-                            repertoirePolished: repertoirePolished,
-                            points: userProps.leaderboardScore,
-                            adErrors: req.flash('adErrors'),
-                            randomBPM: randomBPM, // taken from admin acc
-                            BPMStatus: BPMStatus, // 'success' 'notQuite' 'open'
-                            lessonCount: req.session.user.lessonCount,
-                            paidLessons: req.session.user.paidLessons,
-                            leaderboardColor: req.session.user.leaderboardColor,
-                            pacmanHighscores: adminProps.pacmanHighscores,
-                            readingPracticePDFPath: adminProps.readingPracticePDFPath,
-                            readingPracticePrompt: adminProps.readingPracticePrompt,
-                            interestingVideoURL: adminProps.interestingVideoURL,
-                            interestingVideoPrompt: adminProps.interestingVideoPrompt,
-                            practiceConversation: userProps.practiceConversations,
-                            practicePrompt: adminProps.practicePrompt,
-                            practiceStatus: practiceStatus // true if already practised
-                        })
-                        })
-                    })
-                })
-            })
-        })
+exports.showMissionsPage = async function(req, res) {
+    const [userProps, adminProps] = await Promise.all([
+        User.getPortalStudentSnapshot(req.session.user.userId),
+        User.getPortalAdminSnapshot()
+    ])
+    const randomBPM = await missionController.getRandomBPM(adminProps)
+    res.render('missionsPageV2', {
+        username: req.session.user.username, fName: req.session.user.fName, userId: req.session.user.userId,
+        parentName: req.session.user.parentName, admin: req.session.user.admin,
+        missionsAccomplished: userProps.missionsAccomplished || [], repertoirePolished: userProps.repertoirePolished || [],
+        points: userProps.leaderboardScore, adErrors: req.flash('adErrors'), randomBPM: randomBPM,
+        BPMStatus: bpmFeedbackFrom(userProps).status, lessonCount: req.session.user.lessonCount,
+        paidLessons: req.session.user.paidLessons, leaderboardColor: req.session.user.leaderboardColor,
+        pacmanHighscores: adminProps.pacmanHighscores, readingPracticePDFPath: adminProps.readingPracticePDFPath,
+        readingPracticePrompt: adminProps.readingPracticePrompt, interestingVideoURL: adminProps.interestingVideoURL,
+        interestingVideoPrompt: adminProps.interestingVideoPrompt, practiceConversation: userProps.practiceConversations || [],
+        practicePrompt: adminProps.practicePrompt, practiceStatus: practiceSubmittedToday(userProps)
     })
-})}
-
-exports.showLeaderboardPage = function(req, res) {
-    User.getPrizeList().then((prizeList) => {
-      User.getLeaderboard().then((leaderboardObject) => {
-        getThesePropertyValuesForUser([
-            'leaderboardScore',
-            'practiceConversations'
-            ],req.session.user.userId).then((userProps) => {
-                getFromAdmin([
-                    'practicePrompt'
-                    ]).then((adminProps) => {
-                        Mission.getPracticeStatus(req.session.user.userId).then((practiceStatus) => {
-                        res.render('leaderboardPageV2', {
-                            username: req.session.user.username,
-                            fName: req.session.user.fName,
-                            userId: req.session.user.userId,
-                            parentName: req.session.user.parentName,
-                            admin: req.session.user.admin,
-                            leaderboard: leaderboardObject.leaderboard,
-                            adErrors: req.flash('adErrors'),
-                            prizeList: prizeList,
-                            lessonCount: req.session.user.lessonCount,
-                            paidLessons: req.session.user.paidLessons,
-                            leaderboardColor: req.session.user.leaderboardColor,
-                            points: userProps.leaderboardScore,
-                            practiceConversation: userProps.practiceConversations,
-                            practicePrompt: adminProps.practicePrompt,
-                            practiceStatus: practiceStatus, // true if already practised
-                        })
-                    })
-                    })
-        
-                })  
-            })
-        })
 }
 
-exports.showParentsPage = function(req, res) {
-    getThesePropertyValuesForUser([
-        'leaderboardScore',
-        'playlistLink'
-        ],req.session.user.userId).then((userProps) => {
-        User.getStudentWeeks(req.session.user.userId).then(function (data) {
+exports.showLeaderboardPage = async function(req, res) {
+    const [prizeList, leaderboardObject, userProps, adminProps] = await Promise.all([
+        User.getPrizeList(), User.getLeaderboard(), User.getPortalStudentSnapshot(req.session.user.userId), User.getPortalAdminSnapshot()
+    ])
+    res.render('leaderboardPageV2', {
+        username: req.session.user.username, fName: req.session.user.fName, userId: req.session.user.userId,
+        parentName: req.session.user.parentName, admin: req.session.user.admin, leaderboard: leaderboardObject.leaderboard,
+        adErrors: req.flash('adErrors'), prizeList: prizeList, lessonCount: req.session.user.lessonCount,
+        paidLessons: req.session.user.paidLessons, leaderboardColor: req.session.user.leaderboardColor,
+        points: userProps.leaderboardScore, practiceConversation: userProps.practiceConversations || [],
+        practicePrompt: adminProps.practicePrompt, practiceStatus: practiceSubmittedToday(userProps)
+    })
+}
+
+exports.showParentsPage = async function(req, res) {
+    const [userProps, data] = await Promise.all([
+        User.getPortalStudentSnapshot(req.session.user.userId),
+        User.getStudentWeeks(req.session.user.userId)
+    ])
             let studentWeeks = data.studentWeeks
             let dateLabels = data.graphData.dateLabels
             let rhythmArray = data.graphData.componentsArray.rhythmArray
@@ -482,8 +415,6 @@ exports.showParentsPage = function(req, res) {
                 leaderboardColor: req.session.user.leaderboardColor,
                 points: userProps.leaderboardScore
             })
-        })
-    })
 }
 
 exports.reports = function (req, res) {

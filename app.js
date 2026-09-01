@@ -18,6 +18,20 @@ if (isProduction) app.set('trust proxy', 1)
 app.disable('x-powered-by')
 app.use(helmet({contentSecurityPolicy: false}))
 
+// Static requests do not need a database-backed session. Serving them first
+// avoids a MongoDB round trip for every image, font, stylesheet, and script.
+app.use(express.static('public', {
+    etag: true,
+    maxAge: '1d',
+    setHeaders: function(res, filePath) {
+        if (/service-worker\.js$|manifest\.webmanifest$|offline\.html$/.test(filePath)) {
+            res.setHeader('Cache-Control', 'no-cache')
+        } else if (/\.(?:avif|gif|ico|jpe?g|png|svg|webp|woff2?|ttf)$/i.test(filePath)) {
+            res.setHeader('Cache-Control', 'public, max-age=604800')
+        }
+    }
+}))
+
 let sessionOptions = session({
     secret: process.env.SECRET,
     // override default local storage behaviour
@@ -54,8 +68,6 @@ const messageLimiter = rateLimit({windowMs: 60 * 60 * 1000, max: 20})
 app.use(['/login', '/register', '/doesUsernameExist', '/doesEmailExist'], accountLimiter)
 app.use(['/sendEmail', '/sendFeedbackToHanford', '/sendQuizToHanford'], messageLimiter)
 
-// serve static files
-app.use(express.static('public'));
 // set path to views
 app.set('views', 'public/views');
 // set view engine
@@ -76,6 +88,10 @@ app.use(function(req, res, next) {
 
 // tells express to use router for every request to root
 app.use('/', router)
+
+app.use(function(req, res) {
+    res.status(404).render('404')
+})
 
 app.use(function(err, req, res, next) {
     if (err) {
