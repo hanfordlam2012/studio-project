@@ -1,5 +1,5 @@
-const CACHE_NAME = 'music-studio-shell-v7';
-const SHELL = ['/offline.html', '/styles/style.css?v=4', '/styles/home-brief.css?v=3', '/favicon.png', '/images/music-studio-app-icon.svg'];
+const CACHE_NAME = 'music-studio-shell-v8';
+const SHELL = ['/offline.html', '/styles/style.css?v=4', '/styles/home-brief.css?v=4', '/favicon.png', '/images/music-studio-app-icon.svg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(SHELL)));
