@@ -39,7 +39,7 @@ Message.sendLessonPathToParent = async function(data) {
         <h2 style="font-size:22px">${escapeEmailHTML(piece.pieceName)}</h2>
         ${piece.lessonFocus ? `<p><strong>Focus:</strong> ${escapeEmailHTML(piece.lessonFocus)}</p>` : ''}
         ${taskItems ? `<h3 style="font-size:17px">Practice path</h3><ol>${taskItems}</ol>` : ''}
-        ${piece.quietKnot ? `<p><strong>The quiet knot:</strong> ${escapeEmailHTML(piece.quietKnot)}</p>` : ''}
+        ${piece.quietKnot ? `<p><strong>What I noticed:</strong> ${escapeEmailHTML(piece.quietKnot)}</p>` : ''}
       </section>`
     }).join('')
     const output = `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#17242b;max-width:640px">

@@ -18,6 +18,10 @@
     }).format(parsed)
   }
   const rating = (name, label, value) => `<label>${label}<select name="${name}" required>${[1, 2, 3, 4, 5].map(number => `<option value="${number}" ${String(value) === String(number) ? 'selected' : ''}>${number} · ${['Beginning', 'Emerging', 'Developing', 'Secure', 'Expressive'][number - 1]}</option>`).join('')}</select></label>`
+  const growField = field => {
+    field.style.height = 'auto'
+    field.style.height = `${Math.max(field.scrollHeight, 84)}px`
+  }
 
   function piecesFor(week) {
     if (Array.isArray(week.pieces) && week.pieces.length) return week.pieces
@@ -28,12 +32,12 @@
   }
 
   function taskMarkup(task = {}, index = 0) {
-    return `<div class="task"><div class="task-head"><span>TASK ${index + 1}</span><button type="button" class="remove-task">Remove</button></div><input class="wide" data-key="task" placeholder="What to do" value="${esc(task.task)}"><input data-key="start" placeholder="Where to begin" value="${esc(task.start)}"><input data-key="why" placeholder="Why it matters" value="${esc(task.why)}"><input class="wide" data-key="success" placeholder="Success cue" value="${esc(task.success)}"></div>`
+    return `<div class="task"><div class="task-head"><span>TASK ${index + 1}</span><button type="button" class="remove-task">Remove</button></div><textarea class="wide" data-key="task" placeholder="What to do">${esc(task.task)}</textarea><textarea data-key="start" placeholder="Where to begin">${esc(task.start)}</textarea><textarea data-key="why" placeholder="Why it matters">${esc(task.why)}</textarea><textarea class="wide" data-key="success" placeholder="Success cue">${esc(task.success)}</textarea></div>`
   }
 
   function pieceMarkup(piece = {}, index = 0) {
     const tasks = Array.isArray(piece.practiceTasks) && piece.practiceTasks.length ? piece.practiceTasks : [{}]
-    return `<section class="piece-editor"><div class="piece-editor-head"><strong>Piece ${index + 1}</strong><div><button type="button" class="move-piece-up">Move up</button><button type="button" class="move-piece-down">Move down</button><button type="button" class="remove-piece">Remove piece</button></div></div><div class="two"><div class="field"><label>Piece or project</label><input data-piece-key="pieceName" value="${esc(piece.pieceName)}" required></div><div class="field"><label>Lesson focus</label><input data-piece-key="lessonFocus" value="${esc(piece.lessonFocus)}"></div></div><div class="field"><label>Practice path</label><div class="tasks">${tasks.map(taskMarkup).join('')}</div><button type="button" class="add-task">+ Add task</button></div><div class="field"><label>The quiet knot</label><textarea data-piece-key="quietKnot" rows="3">${esc(piece.quietKnot)}</textarea></div></section>`
+    return `<section class="piece-editor"><div class="piece-editor-head"><strong>Piece ${index + 1}</strong><div><button type="button" class="move-piece-up">Move up</button><button type="button" class="move-piece-down">Move down</button><button type="button" class="remove-piece">Remove piece</button></div></div><div class="two"><div class="field"><label>Piece or project</label><input data-piece-key="pieceName" value="${esc(piece.pieceName)}" required></div><div class="field"><label>Lesson focus</label><textarea data-piece-key="lessonFocus">${esc(piece.lessonFocus)}</textarea></div></div><div class="field"><label>Practice path</label><div class="tasks">${tasks.map(taskMarkup).join('')}</div><button type="button" class="add-task">+ Add task</button></div><div class="field"><label>What I noticed</label><textarea data-piece-key="quietKnot" rows="3" placeholder="A difficulty, discovery, or piece of progress evident in this week's playing.">${esc(piece.quietKnot)}</textarea></div></section>`
   }
 
   function card(week) {
@@ -69,7 +73,7 @@
         lines.push('## Practice Path')
         piece.practiceTasks.forEach((task, index) => lines.push(`${index + 1}. **${task.task}**${task.start ? `\n\n   **Begin at:** ${task.start}` : ''}${task.why ? `\n\n   **Why:** ${task.why}` : ''}${task.success ? `\n\n   **Success cue:** ${task.success}` : ''}`))
       }
-      if (piece.quietKnot) lines.push(`## The Quiet Knot\n> ${piece.quietKnot}`)
+      if (piece.quietKnot) lines.push(`## What I Noticed\n> ${piece.quietKnot}`)
     })
     if (generalNote) lines.push(`## Lesson-wide Note\n${generalNote}`)
     return lines.join('\n\n')
@@ -100,7 +104,7 @@
     form.quietKnot.value = first.quietKnot
     form.practiceTasks.value = JSON.stringify(first.practiceTasks)
     form.comments.value = notesFor(pieces, form.generalNote.value.trim())
-    form.querySelector('.preview-content').innerHTML = pieces.map(piece => `<section class="preview-piece"><h3>${esc(piece.pieceName || 'Untitled piece')}</h3>${piece.lessonFocus ? `<p>${esc(piece.lessonFocus)}</p>` : ''}<ol>${piece.practiceTasks.length ? piece.practiceTasks.map(task => `<li><strong>${esc(task.task)}</strong>${task.success ? ` · ${esc(task.success)}` : ''}</li>`).join('') : '<li>No tasks recorded.</li>'}</ol>${piece.quietKnot ? `<p class="preview-knot">The quiet knot: ${esc(piece.quietKnot)}</p>` : ''}</section>`).join('') + (form.generalNote.value.trim() ? `<p class="preview-general">Lesson-wide note: ${esc(form.generalNote.value.trim())}</p>` : '')
+    form.querySelector('.preview-content').innerHTML = pieces.map(piece => `<section class="preview-piece"><h3>${esc(piece.pieceName || 'Untitled piece')}</h3>${piece.lessonFocus ? `<p>${esc(piece.lessonFocus)}</p>` : ''}<ol>${piece.practiceTasks.length ? piece.practiceTasks.map(task => `<li><strong>${esc(task.task)}</strong>${task.success ? ` · ${esc(task.success)}` : ''}</li>`).join('') : '<li>No tasks recorded.</li>'}</ol>${piece.quietKnot ? `<p class="preview-knot">What I noticed: ${esc(piece.quietKnot)}</p>` : ''}</section>`).join('') + (form.generalNote.value.trim() ? `<p class="preview-general">Lesson-wide note: ${esc(form.generalNote.value.trim())}</p>` : '')
     renumber(form)
   }
 
@@ -109,9 +113,15 @@
     cardElement.querySelector('.path-summary').addEventListener('click', () => {
       const open = cardElement.classList.toggle('open')
       cardElement.querySelector('.path-summary').setAttribute('aria-expanded', open)
-      if (open) refresh(cardElement)
+      if (open) {
+        refresh(cardElement)
+        form.querySelectorAll('textarea').forEach(growField)
+      }
     })
-    form.addEventListener('input', () => refresh(cardElement))
+    form.addEventListener('input', event => {
+      if (event.target.matches('textarea')) growField(event.target)
+      refresh(cardElement)
+    })
     form.addEventListener('click', event => {
       const piece = event.target.closest('.piece-editor')
       if (event.target.matches('.add-task')) {

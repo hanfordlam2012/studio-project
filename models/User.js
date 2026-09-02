@@ -471,7 +471,6 @@ User.getStudentWeekArchive = async function(secret, studentId) {
   if (!student) return []
   return weeksCollection.find({studentId: new ObjectId(studentId)})
     .sort({createdDate: -1})
-    .limit(100)
     .project({adminId: 0})
     .toArray()
 }
@@ -545,7 +544,7 @@ User.findWeekAndUpdate = function(secret, editData) {
 User.getStudentWeeks = async function(userId) {
     return new Promise(async(resolve, reject) => {
         // create studentWeeks object
-        let studentWeeks = await weeksCollection.find({"studentId": new ObjectId(userId), status: {$ne: 'draft'}}).sort({createdDate: -1}).limit(36).toArray()
+        let studentWeeks = await weeksCollection.find({"studentId": new ObjectId(userId), status: {$ne: 'draft'}}).sort({createdDate: -1}).toArray()
         studentWeeks.reverse() // Array method reverses in place
         // create graphData object
         let dateLabels = []

@@ -21,4 +21,11 @@ assert(lesson.includes('<blockquote>'))
 assert.strictEqual(plainText('Keep <b>steady</b>\0'), 'Keep steady')
 assert.strictEqual(plainText('> Listen inwardly'), '> Listen inwardly')
 
+const specialCharacters = renderSafeMarkdown('Hanford&amp;#39;s idea: Debussy&#8217;s r\u00eave \u2014 pi\u00f9 \u266f')
+assert(specialCharacters.includes("Hanford&#039;s idea: Debussy\u2019s r\u00eave \u2014 pi\u00f9 \u266f"))
+
+const encodedMarkup = renderSafeMarkdown('&lt;script&gt;alert(1)&lt;/script&gt;')
+assert(!encodedMarkup.includes('<script>'))
+assert(encodedMarkup.includes('&lt;script&gt;'))
+
 console.log('safeContent tests passed')
