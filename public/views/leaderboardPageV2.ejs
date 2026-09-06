@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Recursive&family=Belgrano&family=Bellota&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/style.css?v=4">
+  <link rel="stylesheet" href="/styles/style.css?v=23">
   <title>Progress Map | Learning Park Portal</title>
   <style>HTML,BODY{cursor:url("../../images/cursor.cur"),auto;}</style>
 </head>
@@ -15,6 +15,7 @@
   <%- include('includes/portalHeader', {activePortalTab: 'progress'}) %>
   <main class="portal-main">
     <% adErrors.forEach(function(message) { %><div class="alert alert-danger text-center"><%= message %></div><% }) %>
+    <% rewardStatus.forEach(function(message) { %><div class="alert alert-success text-center"><%= message %></div><% }) %>
     <%- include('includes/portalStatus') %>
     <section class="portal-intro">
       <p class="portal-eyebrow">Progress Map</p>
@@ -29,12 +30,15 @@
         <p>Spend them on something that supports the next stage of your learning.</p>
         <a class="portal-button portal-button-primary" href="/parents">Open my lesson history</a>
       </section>
-      <section class="portal-prize-section">
+      <section class="portal-prize-section" id="rewards">
         <div class="portal-section-heading"><div><p class="portal-eyebrow">Your points, your choice</p><h2>Choose a Reward</h2></div></div>
         <div class="portal-prize-list">
-          <% prizeList.forEach((prize) => { %>
-            <article><div><strong style="color:<%= prize.color %>"><%= prize.title %></strong><span><%= prize.desc %></span></div><b><%= prize.price %></b></article>
+          <% let quaverPlaced = false; const sortedPrizes = prizeList.slice().sort((a,b) => Number(b.price) - Number(a.price)); %>
+          <% sortedPrizes.forEach((prize) => { %>
+            <% if(!quaverPlaced && Number(prize.price) < 100){ quaverPlaced = true; %><article class="quaver-points-option"><div><strong>Quaver Attack bounty</strong><span><%= quaverCompletedAt ? 'Bounty claimed; the arcade doors remain open.' : 'Reach the final wave, pocket its secret code and claim the one-time bounty.' %></span></div><b><%= quaverCompletedAt ? 'Done' : '+100' %></b><a href="/missions#quaver-attack"><%= quaverCompletedAt ? 'Replay' : 'Open mission' %></a></article><% } %>
+            <article><div><strong style="color:<%= prize.color %>"><%= prize.title %></strong><span><%= prize.desc %></span></div><b><%= Number(prize.price)>0?'+':'' %><%= prize.price %></b><% if(Number(prize.price)<0){ const rewardCost=Math.abs(Number(prize.price)); %><form action="/rewards/request" method="POST"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="prizeId" value="<%= prize._id %>"><button class="portal-button" type="submit" <%= Number(points)<rewardCost?'disabled':'' %>><%= Number(points)<rewardCost?'Keep gathering':'Request reward' %></button></form><% } %></article>
           <% }) %>
+          <% if(!quaverPlaced){ %><article class="quaver-points-option"><div><strong>Quaver Attack bounty</strong><span><%= quaverCompletedAt ? 'Bounty claimed; the arcade doors remain open.' : 'Reach the final wave, pocket its secret code and claim the one-time bounty.' %></span></div><b><%= quaverCompletedAt ? 'Done' : '+100' %></b><a href="/missions#quaver-attack"><%= quaverCompletedAt ? 'Replay' : 'Open mission' %></a></article><% } %>
         </div>
       </section>
     </div>

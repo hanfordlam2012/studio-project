@@ -8,16 +8,30 @@
     <a href="/missions" class="portal-nav-link <%= activePortalTab === 'missions' ? 'is-active' : '' %>" <%= activePortalTab === 'missions' ? 'aria-current="page"' : '' %>>Trophy Cabinet</a>
     <a href="/leaderboard" class="portal-nav-link <%= activePortalTab === 'progress' ? 'is-active' : '' %>" <%= activePortalTab === 'progress' ? 'aria-current="page"' : '' %>>Progress Map</a>
     <a href="/parents" class="portal-nav-link <%= activePortalTab === 'history' ? 'is-active' : '' %>" <%= activePortalTab === 'history' ? 'aria-current="page"' : '' %>>Lesson History</a>
+    <a href="/studio-posts" class="portal-nav-link <%= activePortalTab === 'studio-posts' ? 'is-active' : '' %>" <%= activePortalTab === 'studio-posts' ? 'aria-current="page"' : '' %>>Studio Posts</a>
   </nav>
   <form class="portal-logout" action="/logout" method="POST">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
     <button type="submit">Log out</button>
   </form>
+  <a class="studio-post-alert" href="/studio-posts"><span>New</span> Visit Studio Posts</a>
 </header>
+<dialog class="studio-post-dialog" id="studioPostDialog">
+  <form class="studio-post-form" action="/studio-post" method="POST">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div class="studio-post-heading"><div><small>PRIVATE STUDIO POST DRAFT</small><h2>Something worth sharing?</h2></div><button type="button" aria-label="Close Studio Post" data-studio-post-close onclick="var d=document.getElementById('studioPostDialog');if(typeof d.close==='function'){d.close()}else{d.removeAttribute('open');d.classList.remove('is-open')}">&times;</button></div>
+    <p>Send a draft to Hanford for review. It stays private inside the studio portal.</p>
+    <label>Kind of post<select name="kind"><option value="reflection">Musical reflection</option><option value="progress">Work in progress</option><option value="discovery">Musical discovery</option><option value="concert">Concert review</option></select></label>
+    <label>Your post<textarea name="message" rows="5" maxlength="1200" required placeholder="What did you notice, make or discover?"></textarea></label>
+    <label>Optional video or music link<input name="link" type="url" maxlength="500" placeholder="https://..."></label>
+    <button class="portal-button portal-button-primary" type="submit">Send private draft</button>
+  </form>
+</dialog>
 <script>
   document.querySelectorAll('[data-portal-navigation] a').forEach(function(link) {
     link.addEventListener('click', function() {
       if (link.href !== window.location.href) document.body.classList.add('portal-is-leaving');
     });
   });
+  (function(){var dialog=document.querySelector('#studioPostDialog');function openDialog(){if(typeof dialog.showModal==='function')dialog.showModal();else{dialog.setAttribute('open','');dialog.classList.add('is-open')}}function closeDialog(){if(typeof dialog.close==='function')dialog.close();else{dialog.removeAttribute('open');dialog.classList.remove('is-open')}}document.querySelectorAll('[data-studio-post-open]').forEach(function(button){button.addEventListener('click',openDialog)});dialog.querySelector('[data-studio-post-close]').addEventListener('click',closeDialog);dialog.addEventListener('click',function(event){if(event.target===dialog)closeDialog()})}());
 </script>

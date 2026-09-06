@@ -7,7 +7,15 @@ const weeksCollection = require('../db').db('studio-project').collection('weeks'
 const missionsCollection = require('../db').db('studio-project').collection('missions')
 const prizesCollection = require('../db').db('studio-project').collection('prizes')
 const tutorialsCollection = require('../db').db('studio-project').collection('tutorials')
+const pathTemplatesCollection = require('../db').db('studio-project').collection('pathTemplates')
+const studioPostsCollection = require('../db').db('studio-project').collection('studioPosts')
+const studioPointDonationsCollection = require('../db').db('studio-project').collection('studioPointDonations')
+const rewardRequestsCollection = require('../db').db('studio-project').collection('rewardRequests')
 const mainDb = require('../db').db('studio-project')
+rewardRequestsCollection.createIndex(
+  {studentId: 1, prizeId: 1, status: 1},
+  {unique: true, partialFilterExpression: {status: 'pending'}, name: 'one_pending_reward_per_student'}
+).catch(error => console.error('Reward request index could not be prepared:', error.message))
 // more convenient validation
 const validator = require("validator")
 const sanitizeHTML = require('../lib/safeContent').plainText
@@ -204,7 +212,8 @@ User.getStudentList = async function(secret, userId) {
           lName: 1,
           parentName: 1,
           email: 1,
-          lessonCount: 1
+          lessonCount: 1,
+          leaderboardScore: 1
         }).toArray()
         studentList = studentList.filter(student => student.fName != "superuser")
         resolve(studentList)
@@ -279,7 +288,7 @@ User.getLeaderboard = function() {
 
 User.getLatestComments = function(userId) {
   return new Promise (async(resolve, reject) => {
-    let latestComments = await weeksCollection.find({studentId: new ObjectId(userId), status: {$ne: 'draft'}}).sort({createdDate: -1}).limit(1).project({comments: 1}).toArray() //removed "studentId" quotations
+    let latestComments = await weeksCollection.find({studentId: new ObjectId(userId), status: 'published'}).sort({createdDate: -1}).limit(1).project({comments: 1, attachments: 1, pieces: 1, practiceTasks: 1, pieceName: 1, lessonFocus: 1, quietKnot: 1, practiceResponse: 1}).toArray() //removed "studentId" quotations
     resolve(latestComments)
   })
 }
@@ -302,7 +311,8 @@ User.getPortalStudentSnapshot = function(userId) {
     lastSubmittedDate: 1,
     lastBPMGuess: 1,
     lastBPMGuessValue: 1,
-    BPMStatus: 1
+    BPMStatus: 1,
+    missionProgress: 1
   }})
 }
 
@@ -334,7 +344,7 @@ User.saveAdminPrize = async function(data) {
   const color = /^#[0-9a-f]{6}$/i.test(String(data.color || '')) ? String(data.color) : '#087f76'
   if (!title || title.length > 80) throw new Error('Reward titles must contain 1 to 80 characters.')
   if (desc.length > 180) throw new Error('Reward descriptions cannot exceed 180 characters.')
-  if (!Number.isInteger(price) || price < 1 || price > 999999) throw new Error('Reward cost must be between 1 and 999,999 points.')
+  if (!Number.isInteger(price) || price === 0 || price < -999999 || price > 999999) throw new Error('Point value must be between -999,999 and 999,999, excluding zero.')
   const prize = {title: title, desc: desc, price: price, color: color}
   if (!data.prizeId) {
     await prizesCollection.insertOne(prize)
@@ -345,6 +355,61 @@ User.saveAdminPrize = async function(data) {
   const matched = typeof result.matchedCount == 'number' ? result.matchedCount : result.result && result.result.n
   if (!matched) throw new Error('That reward could not be found.')
   return 'Reward updated.'
+}
+
+User.requestReward = async function(userId, prizeId) {
+  if (!ObjectId.isValid(userId) || !ObjectId.isValid(prizeId)) throw new Error('That reward could not be requested.')
+  const [student, prize] = await Promise.all([
+    usersCollection.findOne({_id: new ObjectId(userId), student: true}, {projection: {secret: 1, leaderboardScore: 1}}),
+    prizesCollection.findOne({_id: new ObjectId(prizeId)})
+  ])
+  if (!student || !prize) throw new Error('That reward is no longer available.')
+  const listedValue = Number(prize.price)
+  if (!Number.isInteger(listedValue) || listedValue >= 0) throw new Error('That catalogue item earns points and is not redeemable.')
+  const cost = Math.abs(listedValue)
+  if (Number(student.leaderboardScore || 0) < cost) throw new Error(`You need ${cost - Number(student.leaderboardScore || 0)} more points for that reward.`)
+  const existing = await rewardRequestsCollection.findOne({studentId: student._id, prizeId: prize._id, status: 'pending'})
+  if (existing) return 'That reward is already waiting for Hanford to review.'
+  try {
+    await rewardRequestsCollection.insertOne({
+      studentId: student._id,
+      prizeId: prize._id,
+      secret: student.secret,
+      title: String(prize.title || 'Reward').slice(0, 80),
+      cost: cost,
+      status: 'pending',
+      createdAt: new Date()
+    })
+  } catch (error) {
+    if (error && error.code === 11000) return 'That reward is already waiting for Hanford to review.'
+    throw error
+  }
+  return 'Your reward request is waiting for Hanford to review.'
+}
+
+User.resolveRewardRequest = async function(secret, requestId, decision) {
+  if (!ObjectId.isValid(requestId) || !['approve', 'decline'].includes(decision)) throw new Error('That reward request could not be changed.')
+  const request = await rewardRequestsCollection.findOne({_id: new ObjectId(requestId), secret: secret, status: 'pending'})
+  if (!request) throw new Error('That reward request has already been handled.')
+  if (decision === 'decline') {
+    const declined = await rewardRequestsCollection.updateOne({_id: request._id, status: 'pending'}, {$set: {status: 'declined', resolvedAt: new Date()}})
+    if (!declined.modifiedCount) throw new Error('That reward request has already been handled.')
+    return `Declined ${request.title}.`
+  }
+  const claimed = await rewardRequestsCollection.updateOne({_id: request._id, status: 'pending'}, {$set: {status: 'processing'}})
+  if (!claimed.modifiedCount) throw new Error('That reward request has already been handled.')
+  const student = await usersCollection.findOneAndUpdate(
+    {_id: request.studentId, secret: secret, student: true, leaderboardScore: {$gte: request.cost}},
+    {$inc: {leaderboardScore: -request.cost}},
+    {returnDocument: 'after', projection: {leaderboardScore: 1}}
+  )
+  const updatedStudent = student && (student.value || student)
+  if (!updatedStudent || typeof updatedStudent.leaderboardScore !== 'number') {
+    await rewardRequestsCollection.updateOne({_id: request._id, status: 'processing'}, {$set: {status: 'pending'}})
+    throw new Error('The student no longer has enough points for this reward.')
+  }
+  await rewardRequestsCollection.updateOne({_id: request._id, status: 'processing'}, {$set: {status: 'approved', resolvedAt: new Date(), balanceAfter: updatedStudent.leaderboardScore}})
+  return `Approved ${request.title}; ${request.cost} points were deducted.`
 }
 
 User.getAdminDashboard = async function(secret, userId) {
@@ -360,11 +425,13 @@ User.getAdminDashboard = async function(secret, userId) {
     username: 1,
     lessonCount: 1,
     paidLessons: 1,
-    leaderboardScore: 1
+    leaderboardScore: 1,
+    missionsAccomplished: 1,
+    repertoirePolished: 1
   }).sort({fName: 1, lName: 1}).toArray()
   const studentIds = students.map(student => student._id)
   const pathCounts = studentIds.length ? await weeksCollection.aggregate([
-    {$match: {studentId: {$in: studentIds}, status: {$ne: 'draft'}}},
+    {$match: {studentId: {$in: studentIds}, status: 'published'}},
     {$group: {_id: '$studentId', count: {$sum: 1}, latest: {$max: '$createdDate'}}}
   ]).toArray() : []
   const countsByStudent = new Map(pathCounts.map(item => [String(item._id), item]))
@@ -373,7 +440,305 @@ User.getAdminDashboard = async function(secret, userId) {
     student.pathCount = paths ? paths.count : 0
     student.latestPathDate = paths ? paths.latest : null
   })
-  return {students: students, prizes: await User.getPrizeList()}
+  const inboxWeeks = studentIds.length ? await weeksCollection.find({
+    studentId: {$in: studentIds},
+    'practiceResponse.updatedAt': {$exists: true},
+    'practiceResponse.reviewedAt': {$exists: false}
+  }).project({studentId: 1, pieceName: 1, pieces: 1, lessonFocus: 1, practiceResponse: 1}).sort({'practiceResponse.updatedAt': -1}).limit(16).toArray() : []
+  const studentNames = new Map(students.map(student => [String(student._id), `${student.fName} ${student.lName}`.trim()]))
+  const inbox = inboxWeeks.map(week => ({
+    weekId: week._id,
+    studentId: week.studentId,
+    studentName: studentNames.get(String(week.studentId)) || 'Student',
+    pieceName: week.pieceName || (week.pieces && week.pieces[0] && week.pieces[0].pieceName) || 'Lesson path',
+    lessonFocus: week.lessonFocus || (week.pieces && week.pieces[0] && week.pieces[0].lessonFocus) || '',
+    response: week.practiceResponse
+  }))
+  const recentResponses = studentIds.length ? await weeksCollection.find({
+    studentId: {$in: studentIds},
+    'practiceResponse.updatedAt': {$exists: true}
+  }).project({studentId: 1, practiceResponse: 1}).sort({'practiceResponse.updatedAt': -1}).limit(300).toArray() : []
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+  const currentResponses = recentResponses.filter(week => new Date(week.practiceResponse.updatedAt) >= thirtyDaysAgo)
+  const studentsWithRecentUpdates = new Set(currentResponses.map(week => String(week.studentId)))
+  const breakdown = function(valueForWeek) {
+    const totals = new Map()
+    currentResponses.forEach(week => {
+      const count = valueForWeek(week)
+      if (count) totals.set(String(week.studentId), (totals.get(String(week.studentId)) || 0) + count)
+    })
+    return [...totals.entries()].map(([studentId, count]) => ({name: studentNames.get(studentId) || 'Student', count: count})).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+  }
+  const insights = {
+    updates: currentResponses.length,
+    helpRequests: currentResponses.reduce((sum, week) => sum + (week.practiceResponse.items || []).filter(item => item.status === 'help').length, 0),
+    secureTasks: currentResponses.reduce((sum, week) => sum + (week.practiceResponse.items || []).filter(item => item.status === 'secure').length, 0),
+    questions: currentResponses.filter(week => String(week.practiceResponse.question || '').trim()).length,
+    quietStudents: students.filter(student => !studentsWithRecentUpdates.has(String(student._id))).length,
+    details: {
+      updates: breakdown(() => 1),
+      helpRequests: breakdown(week => (week.practiceResponse.items || []).filter(item => item.status === 'help').length),
+      secureTasks: breakdown(week => (week.practiceResponse.items || []).filter(item => item.status === 'secure').length),
+      questions: breakdown(week => String(week.practiceResponse.question || '').trim() ? 1 : 0),
+      quietStudents: students.filter(student => !studentsWithRecentUpdates.has(String(student._id))).map(student => ({name: `${student.fName} ${student.lName}`.trim(), count: ''}))
+    }
+  }
+  const reviewed = recentResponses.filter(week => week.practiceResponse.reviewedAt).slice(0, 50).map(week => ({
+    weekId: week._id,
+    studentId: week.studentId,
+    studentName: studentNames.get(String(week.studentId)) || 'Student',
+    response: week.practiceResponse
+  }))
+  const studioPosts = studentIds.length ? await studioPostsCollection.find({studentId: {$in: studentIds}, status: 'pending'}).sort({createdAt: -1}).limit(30).toArray() : []
+  studioPosts.forEach(post => { post.studentName = studentNames.get(String(post.studentId)) || 'Student' })
+  const rewardRequests = studentIds.length ? await rewardRequestsCollection.find({studentId: {$in: studentIds}, secret: secret, status: 'pending'}).sort({createdAt: 1}).limit(50).toArray() : []
+  rewardRequests.forEach(request => {
+    request.studentName = studentNames.get(String(request.studentId)) || 'Student'
+    const student = students.find(item => String(item._id) === String(request.studentId))
+    request.currentPoints = student ? Number(student.leaderboardScore || 0) : 0
+  })
+  return {students: students, prizes: await User.getPrizeList(), inbox: inbox, insights: insights, reviewed: reviewed, studioPosts: studioPosts, rewardRequests: rewardRequests}
+}
+
+User.updateAdminStudentTrophies = async function(secret, studentId, data) {
+  if (!String(studentId || '').match(/^[a-f\d]{24}$/i)) throw new Error('That student could not be found.')
+  const cleanList = value => String(value || '').split(/\r?\n/).map(item => sanitizeHTML(item).trim()).filter(Boolean).slice(0, 60).map(item => item.slice(0, 180))
+  const result = await usersCollection.updateOne({_id: new ObjectId(studentId), secret: secret, student: true}, {$set: {
+    repertoirePolished: cleanList(data.repertoirePolished),
+    missionsAccomplished: cleanList(data.missionsAccomplished)
+  }})
+  const matched = typeof result.matchedCount === 'number' ? result.matchedCount : result.result && result.result.n
+  if (!matched) throw new Error('That student could not be found.')
+  return 'The trophy cabinet was updated.'
+}
+
+User.submitStudioPost = async function(userId, data) {
+  if (!String(userId || '').match(/^[a-f\d]{24}$/i)) throw new Error('Your account could not be found.')
+  const student = await usersCollection.findOne({_id: new ObjectId(userId), student: true}, {projection: {secret: 1}})
+  if (!student) throw new Error('Your account could not be found.')
+  const kinds = {reflection: 'Musical reflection', progress: 'Work in progress', discovery: 'Musical discovery', concert: 'Concert review'}
+  const kind = kinds[data.kind] ? data.kind : 'reflection'
+  const message = sanitizeHTML(String(data.message || '')).trim().slice(0, 1200)
+  const link = String(data.link || '').trim().slice(0, 500)
+  if (!message) throw new Error('Add a short note for your Studio Post.')
+  if (link && (!validator.isURL(link, {protocols: ['http', 'https'], require_protocol: true}) || !/^https?:\/\//i.test(link))) throw new Error('Use a complete http or https link.')
+  await studioPostsCollection.insertOne({studentId: student._id, secret: student.secret, kind: kind, label: kinds[kind], message: message, link: link, status: 'pending', createdAt: new Date()})
+  return 'Your private Studio Post draft is waiting for Hanford to review.'
+}
+
+User.getPublishedStudioPosts = async function(secret, viewerId) {
+  if (!ObjectId.isValid(viewerId)) throw new Error('Your account could not be found.')
+  const viewerObjectId = new ObjectId(viewerId)
+  const [posts, viewer] = await Promise.all([
+    studioPostsCollection.find({secret: secret, status: 'published'}).sort({publishedAt: -1, createdAt: -1}).limit(40).toArray(),
+    usersCollection.findOne({_id: viewerObjectId, secret: secret, student: true}, {projection: {leaderboardScore: 1}})
+  ])
+  if (!viewer) throw new Error('Your account could not be found.')
+  const authorIds = [...new Map(posts.map(post => [String(post.studentId), post.studentId])).values()]
+  const authors = authorIds.length ? await usersCollection.find({_id: {$in: authorIds}, secret: secret, student: true}).project({_id: 1, fName: 1}).toArray() : []
+  const authorNames = new Map(authors.map(author => [String(author._id), author.fName || 'A student']))
+  posts.forEach(post => {
+    post.posterName = authorNames.get(String(post.studentId)) || 'A student'
+    post.isOwnPost = String(post.studentId) === String(viewerObjectId)
+    post.donatedPoints = Math.max(0, Number(post.donatedPoints) || 0)
+  })
+  return {posts: posts, points: Math.max(0, Number(viewer.leaderboardScore) || 0)}
+}
+
+User.donateStudioPostPoints = async function(secret, senderId, postId, amountValue) {
+  if (!ObjectId.isValid(senderId) || !ObjectId.isValid(postId)) throw new Error('That Studio Post could not be found.')
+  const amount = Number(amountValue)
+  if (![1, 3, 5].includes(amount)) throw new Error('Choose a 1, 3 or 5 point gift.')
+  const senderObjectId = new ObjectId(senderId)
+  const post = await studioPostsCollection.findOne({_id: new ObjectId(postId), secret: secret, status: 'published'}, {projection: {studentId: 1}})
+  if (!post) throw new Error('That Studio Post is no longer available.')
+  if (String(post.studentId) === String(senderObjectId)) throw new Error('Keep your points for applauding somebody else.')
+  const recipient = await usersCollection.findOne({_id: post.studentId, secret: secret, student: true}, {projection: {_id: 1}})
+  if (!recipient) throw new Error('The poster’s account is no longer available.')
+  const deducted = await usersCollection.updateOne({_id: senderObjectId, secret: secret, student: true, leaderboardScore: {$gte: amount}}, {$inc: {leaderboardScore: -amount}})
+  if (!deducted.modifiedCount) throw new Error('You do not have enough points for that gift.')
+  const credited = await usersCollection.updateOne({_id: recipient._id, secret: secret, student: true}, {$inc: {leaderboardScore: amount}})
+  if (!credited.modifiedCount) {
+    await usersCollection.updateOne({_id: senderObjectId, secret: secret, student: true}, {$inc: {leaderboardScore: amount}})
+    throw new Error('The gift could not be delivered, so your points were returned.')
+  }
+  await Promise.all([
+    studioPostsCollection.updateOne({_id: post._id, secret: secret, status: 'published'}, {$inc: {donatedPoints: amount, donationCount: 1}}),
+    studioPointDonationsCollection.insertOne({secret: secret, postId: post._id, fromStudentId: senderObjectId, toStudentId: recipient._id, amount: amount, createdAt: new Date()})
+  ])
+  return `${amount} point${amount === 1 ? '' : 's'} sent as a little applause.`
+}
+
+User.resolveStudioPost = async function(secret, postId, decision) {
+  if (!ObjectId.isValid(postId)) throw new Error('That Studio Post could not be found.')
+  if (!['approve', 'decline'].includes(decision)) throw new Error('Choose whether to publish or decline the post.')
+  const post = await studioPostsCollection.findOne({_id: new ObjectId(postId), secret: secret, status: 'pending'})
+  if (!post) throw new Error('That Studio Post has already been handled.')
+  if (decision === 'decline') {
+    const declined = await studioPostsCollection.updateOne({_id: post._id, secret: secret, status: 'pending'}, {$set: {status: 'declined', resolvedAt: new Date()}})
+    if (!declined.modifiedCount) throw new Error('That Studio Post has already been handled.')
+    return {message: 'The Studio Post draft was declined.'}
+  }
+  const pointsAwarded = post.kind === 'concert' ? 55 : 33
+  const publishedAt = new Date()
+  const published = await studioPostsCollection.updateOne({_id: post._id, secret: secret, status: 'pending'}, {$set: {status: 'published', publishedAt: publishedAt, resolvedAt: publishedAt, pointsAwarded: pointsAwarded}})
+  if (!published.modifiedCount) throw new Error('That Studio Post has already been handled.')
+  const student = await usersCollection.updateOne({_id: post.studentId, secret: secret, student: true}, {$inc: {leaderboardScore: pointsAwarded}})
+  if (!student.modifiedCount) {
+    await studioPostsCollection.updateOne({_id: post._id, status: 'published'}, {$set: {status: 'pending'}, $unset: {publishedAt: '', resolvedAt: '', pointsAwarded: ''}})
+    throw new Error('The student account could not be credited, so the post remains pending.')
+  }
+  return {message: `The Studio Post is live and ${pointsAwarded} points were awarded.`}
+}
+
+function cleanTemplatePieces(value) {
+  const pieces = Array.isArray(value) ? value : []
+  return pieces.slice(0, 4).map(piece => ({
+    pieceName: sanitizeHTML(String(piece.pieceName || '')).trim().slice(0, 120),
+    lessonFocus: sanitizeHTML(String(piece.lessonFocus || '')).trim().slice(0, 600),
+    quietKnot: sanitizeHTML(String(piece.quietKnot || '')).trim().slice(0, 600),
+    practiceTasks: (Array.isArray(piece.practiceTasks) ? piece.practiceTasks : []).slice(0, 6).map(task => ({
+      task: sanitizeHTML(String(task.task || '')).trim().slice(0, 500),
+      start: sanitizeHTML(String(task.start || '')).trim().slice(0, 300),
+      why: sanitizeHTML(String(task.why || '')).trim().slice(0, 500),
+      success: sanitizeHTML(String(task.success || '')).trim().slice(0, 500)
+    })).filter(task => task.task)
+  })).filter(piece => piece.pieceName || piece.lessonFocus || piece.practiceTasks.length)
+}
+
+User.getPathTemplates = function(secret) {
+  return pathTemplatesCollection.find({secret: secret}).sort({name: 1}).toArray()
+}
+
+User.getMaterialLibrary = async function(secret) {
+  const students = await usersCollection.find({secret: secret, student: true}).project({_id: 1, fName: 1, lName: 1}).toArray()
+  const names = new Map(students.map(student => [String(student._id), `${student.fName} ${student.lName}`.trim()]))
+  const weeks = students.length ? await weeksCollection.find({studentId: {$in: students.map(student => student._id)}, 'attachments.0': {$exists: true}}).project({studentId: 1, pieceName: 1, attachments: 1, createdDate: 1}).sort({createdDate: -1}).limit(100).toArray() : []
+  return weeks.flatMap(week => (week.attachments || []).map(material => ({weekId: week._id, materialId: material.id, name: material.name, mimeType: material.mimeType, studentName: names.get(String(week.studentId)) || 'Student', pieceName: week.pieceName || 'Lesson path', createdDate: week.createdDate}))).slice(0, 150)
+}
+
+User.getStudioOperations = async function(secret) {
+  const students = await usersCollection.find({secret: secret, student: true}).project({_id: 1, fName: 1, lName: 1, parentName: 1, email: 1}).toArray()
+  const studentIds = students.map(student => student._id)
+  const names = new Map(students.map(student => [String(student._id), `${student.fName || ''} ${student.lName || ''}`.trim() || student.username || 'Student']))
+  const contacts = new Map(students.map(student => [String(student._id), student.email || 'No family email recorded']))
+  const weeks = studentIds.length ? await weeksCollection.find({studentId: {$in: studentIds}, $or: [{status: 'scheduled'}, {'emailDelivery.state': {$exists: true, $ne: 'not-requested'}}]}).project({studentId: 1, status: 1, scheduledFor: 1, createdDate: 1, publishedDate: 1, pieceName: 1, pieces: 1, emailSubject: 1, emailDelivery: 1, pointsAdd: 1}).sort({createdDate: -1}).limit(200).toArray() : []
+  const label = week => (week.pieces || []).map(piece => piece.pieceName).filter(Boolean).join(', ') || week.pieceName || 'Lesson path'
+  return {
+    scheduled: weeks.filter(week => week.status === 'scheduled').sort((a, b) => new Date(a.scheduledFor) - new Date(b.scheduledFor)).map(week => Object.assign(week, {studentName: names.get(String(week.studentId)), pathLabel: label(week)})),
+    deliveries: weeks.filter(week => week.emailDelivery && week.emailDelivery.state !== 'not-requested').map(week => Object.assign(week, {studentName: names.get(String(week.studentId)), recipients: contacts.get(String(week.studentId)), pathLabel: label(week)}))
+  }
+}
+
+User.reschedulePath = async function(secret, weekId, scheduledFor) {
+  if (!ObjectId.isValid(weekId)) throw new Error('That scheduled path could not be found.')
+  const date = new Date(scheduledFor)
+  if (Number.isNaN(date.getTime()) || date <= new Date() || date > new Date(Date.now() + 366 * 86400000)) throw new Error('Choose a future time within the next year.')
+  const student = await usersCollection.findOne({secret: secret, student: true, _id: (await weeksCollection.findOne({_id: new ObjectId(weekId)}, {projection: {studentId: 1}}) || {}).studentId}, {projection: {_id: 1}})
+  if (!student) throw new Error('That scheduled path could not be found.')
+  const result = await weeksCollection.updateOne({_id: new ObjectId(weekId), studentId: student._id, status: 'scheduled'}, {$set: {scheduledFor: date}})
+  if (!result.modifiedCount) throw new Error('That path is no longer awaiting publication.')
+  return date
+}
+
+User.publishScheduledPath = async function(secret, weekId) {
+  if (!ObjectId.isValid(weekId)) throw new Error('That scheduled path could not be found.')
+  const week = await weeksCollection.findOne({_id: new ObjectId(weekId), status: 'scheduled'})
+  if (!week) throw new Error('That path is no longer awaiting publication.')
+  const student = await usersCollection.findOne({_id: week.studentId, secret: secret, student: true})
+  if (!student) throw new Error('That scheduled path could not be found.')
+  const now = new Date()
+  const published = await weeksCollection.updateOne({_id: week._id, status: 'scheduled'}, {$set: {status: 'published', publishedDate: now, createdDate: now}, $unset: {scheduledFor: ''}})
+  if (!published.modifiedCount) throw new Error('That path was already handled elsewhere.')
+  await usersCollection.updateOne({_id: student._id}, {$inc: {lessonCount: 1, leaderboardScore: Number(week.pointsAdd) || 0}})
+  return {week, student}
+}
+
+User.getStudentProgressReport = async function(secret, studentId) {
+  if (!ObjectId.isValid(studentId)) throw new Error('That student could not be found.')
+  const student = await usersCollection.findOne({_id: new ObjectId(studentId), secret: secret, student: true}, {projection: {fName: 1, lName: 1, lessonCount: 1, paidLessons: 1, leaderboardScore: 1}})
+  if (!student) throw new Error('That student could not be found.')
+  const weeks = await weeksCollection.find({studentId: student._id, status: 'published'}).sort({createdDate: -1}).project({adminId: 0, studentId: 0, emailDelivery: 0}).toArray()
+  return {student: student, weeks: weeks, generatedAt: new Date()}
+}
+
+User.savePathTemplate = async function(secret, data) {
+  const name = sanitizeHTML(String(data.name || '')).trim().slice(0, 80)
+  const pieces = cleanTemplatePieces(data.pieces)
+  if (!name) throw new Error('Give this template a name.')
+  if (!pieces.length) throw new Error('Add at least one piece or task before saving a template.')
+  const existing = await pathTemplatesCollection.findOne({secret: secret, name: name})
+  if (existing) {
+    await pathTemplatesCollection.updateOne({_id: existing._id}, {$set: {pieces: pieces, updatedAt: new Date()}})
+    return existing._id
+  }
+  const result = await pathTemplatesCollection.insertOne({secret: secret, name: name, pieces: pieces, createdAt: new Date(), updatedAt: new Date()})
+  return result.insertedId
+}
+
+User.deletePathTemplate = async function(secret, templateId) {
+  if (!ObjectId.isValid(templateId)) throw new Error('That template could not be found.')
+  const result = await pathTemplatesCollection.deleteOne({_id: new ObjectId(templateId), secret: secret})
+  if (!result.deletedCount) throw new Error('That template could not be found.')
+}
+
+User.saveTaskResponses = async function(userId, weekId, responseValues, labels, question) {
+  if (!ObjectId.isValid(weekId)) throw new Error('That lesson path could not be found.')
+  const latest = await weeksCollection.find({studentId: new ObjectId(userId), status: 'published'}).sort({createdDate: -1}).limit(1).project({_id: 1, pieces: 1, practiceTasks: 1}).toArray()
+  if (!latest.length || String(latest[0]._id) !== String(weekId)) throw new Error('Only the current path can receive a practice update.')
+  const allowed = new Set(['started', 'changed', 'secure', 'help'])
+  const values = [].concat(responseValues || [])
+  const cleanLabels = [].concat(labels || [])
+  const serverLabels = Array.isArray(latest[0].pieces) && latest[0].pieces.length
+    ? latest[0].pieces.flatMap(piece => (piece.practiceTasks || []).map(task => task.task))
+    : (latest[0].practiceTasks || []).map(task => task.task)
+  const items = values.map((value, index) => {
+    const parts = String(value).split(':')
+    const taskIndex = Number(parts[0])
+    const status = parts[1]
+    if (!Number.isInteger(taskIndex) || taskIndex < 0 || taskIndex > 30 || !allowed.has(status)) return null
+    return {taskIndex: taskIndex, status: status, label: sanitizeHTML(String(serverLabels[taskIndex] || cleanLabels[index] || '')).trim().slice(0, 500)}
+  }).filter(Boolean)
+  if (!items.length) throw new Error('Choose a response for at least one task.')
+  const cleanQuestion = sanitizeHTML(String(question || ''), {allowedTags: [], allowedAttributes: []}).trim().slice(0, 1000)
+  await weeksCollection.updateOne({_id: latest[0]._id}, {
+    $set: {'practiceResponse.items': items, 'practiceResponse.question': cleanQuestion, 'practiceResponse.teacherFlags': [], 'practiceResponse.updatedAt': new Date()},
+    $unset: {'practiceResponse.reviewedAt': ''}
+  })
+  const award = await weeksCollection.updateOne({_id: latest[0]._id, 'practiceResponse.pointsAwarded': {$ne: true}}, {$set: {'practiceResponse.pointsAwarded': true, 'practiceResponse.pointsAwardedAt': new Date()}})
+  const awardedPoints = Boolean(typeof award.modifiedCount === 'number' ? award.modifiedCount : award.result && award.result.nModified)
+  if (awardedPoints) await usersCollection.updateOne({_id: new ObjectId(userId)}, {$inc: {leaderboardScore: 5}})
+  return {items: items, awardedPoints: awardedPoints}
+}
+
+User.savePracticeResponseFlags = async function(secret, weekId, flagValues) {
+  if (!ObjectId.isValid(weekId)) throw new Error('That practice update could not be found.')
+  const week = await weeksCollection.findOne({_id: new ObjectId(weekId)}, {projection: {studentId: 1, practiceResponse: 1}})
+  if (!week || !await usersCollection.findOne({_id: week.studentId, secret: secret, student: true}, {projection: {_id: 1}})) throw new Error('That practice update could not be found.')
+  const allowed = new Set(['revisit', 'listen', 'celebrate', 'explain'])
+  const responseIndexes = new Set(((week.practiceResponse && week.practiceResponse.items) || []).map(item => item.taskIndex))
+  const teacherFlags = [].concat(flagValues || []).map(value => {
+    const parts = String(value).split(':')
+    const taskIndex = Number(parts[0])
+    const flag = parts[1]
+    return Number.isInteger(taskIndex) && responseIndexes.has(taskIndex) && allowed.has(flag) ? {taskIndex: taskIndex, flag: flag} : null
+  }).filter(Boolean)
+  await weeksCollection.updateOne({_id: week._id}, {$set: {'practiceResponse.teacherFlags': teacherFlags}})
+  return teacherFlags
+}
+
+User.markPracticeResponseReviewed = async function(secret, weekId) {
+  if (!ObjectId.isValid(weekId)) throw new Error('That practice update could not be found.')
+  const week = await weeksCollection.findOne({_id: new ObjectId(weekId)}, {projection: {studentId: 1}})
+  if (!week || !await usersCollection.findOne({_id: week.studentId, secret: secret, student: true}, {projection: {_id: 1}})) throw new Error('That practice update could not be found.')
+  await weeksCollection.updateOne({_id: week._id}, {$set: {'practiceResponse.reviewedAt': new Date()}})
+}
+
+User.reopenPracticeResponse = async function(secret, weekId) {
+  if (!ObjectId.isValid(weekId)) throw new Error('That reviewed update could not be found.')
+  const week = await weeksCollection.findOne({_id: new ObjectId(weekId)}, {projection: {studentId: 1, practiceResponse: 1}})
+  if (!week || !week.practiceResponse || !week.practiceResponse.reviewedAt || !await usersCollection.findOne({_id: week.studentId, secret: secret, student: true}, {projection: {_id: 1}})) throw new Error('That reviewed update could not be found.')
+  await weeksCollection.updateOne({_id: week._id}, {$unset: {'practiceResponse.reviewedAt': ''}})
 }
 
 User.getAdminStudentView = async function(secret, studentId) {
@@ -391,7 +756,7 @@ User.getAdminStudentView = async function(secret, studentId) {
   }).sort({fName: 1, lName: 1}).toArray()
   const index = students.findIndex(student => String(student._id) === studentId)
   if (index < 0) throw new Error('That student is not attached to this studio account.')
-  const weeks = await weeksCollection.find({studentId: students[index]._id, status: {$ne: 'draft'}}).sort({createdDate: -1}).limit(8).toArray()
+  const weeks = await weeksCollection.find({studentId: students[index]._id, status: 'published'}).sort({createdDate: -1}).limit(8).toArray()
   return {student: students[index], students: students, index: index, weeks: weeks}
 }
 
@@ -497,9 +862,9 @@ User.findWeekAndUpdate = function(secret, editData) {
       if (!existing) throw new Error('Missing path')
       const student = await usersCollection.findOne({_id: existing.studentId, secret: secret, student: true}, {projection: {_id: 1}})
       if (!student) throw new Error('Wrong studio')
-      const wasDraft = existing.status === 'draft'
+      const wasUnpublished = existing.status !== 'published'
       const requestedPublish = editData.submissionAction === 'publish'
-      const nextStatus = requestedPublish ? 'published' : (wasDraft ? 'draft' : 'published')
+      const nextStatus = requestedPublish ? 'published' : existing.status
       const completeSnapshot = ['rhythm', 'coordination', 'tone', 'dynamics', 'stylistic'].every(field => editData[field])
       const completePieces = pieces.length && pieces.every(piece => piece.pieceName && piece.practiceTasks.length)
       if (requestedPublish && (!completePieces || !completeSnapshot)) throw new Error('Complete every piece and the development snapshot before publishing.')
@@ -531,10 +896,10 @@ User.findWeekAndUpdate = function(secret, editData) {
           ...(pieces.length ? {pieces: pieces} : {}),
           generalNote: sanitizeHTML(String(editData.generalNote || ''), {allowedTags: [], allowedAttributes: []}).trim(),
           status: nextStatus,
-          ...(wasDraft && requestedPublish ? {publishedDate: new Date()} : {})
+          ...(wasUnpublished && requestedPublish ? {publishedDate: new Date(), createdDate: new Date()} : {})
         }
       })
-      resolve({message: wasDraft && requestedPublish ? 'Draft published successfully.' : 'Path changes saved.', publishedNow: wasDraft && requestedPublish, studentId: existing.studentId, pointsAdd: Number(existing.pointsAdd) || 0})
+      resolve({message: wasUnpublished && requestedPublish ? 'Path published successfully.' : 'Path changes saved.', publishedNow: wasUnpublished && requestedPublish, studentId: existing.studentId, pointsAdd: Number(existing.pointsAdd) || 0})
     } catch (err) {
       reject(err.message === 'Complete every piece and the development snapshot before publishing.' ? err.message : 'Could not update.')
     }
@@ -544,7 +909,7 @@ User.findWeekAndUpdate = function(secret, editData) {
 User.getStudentWeeks = async function(userId) {
     return new Promise(async(resolve, reject) => {
         // create studentWeeks object
-        let studentWeeks = await weeksCollection.find({"studentId": new ObjectId(userId), status: {$ne: 'draft'}}).sort({createdDate: -1}).toArray()
+        let studentWeeks = await weeksCollection.find({"studentId": new ObjectId(userId), status: 'published'}).sort({createdDate: -1}).toArray()
         studentWeeks.reverse() // Array method reverses in place
         // create graphData object
         let dateLabels = []
@@ -581,7 +946,7 @@ User.getStudentWeeks = async function(userId) {
 
 User.getAdminWeekForEmail = async function(secret, weekId) {
   if (typeof weekId != 'string' || !weekId.match(/^[a-f\d]{24}$/i)) throw new Error('That path could not be found.')
-  const week = await weeksCollection.findOne({_id: new ObjectId(weekId), status: {$ne: 'draft'}})
+  const week = await weeksCollection.findOne({_id: new ObjectId(weekId), status: 'published'})
   if (!week) throw new Error('Only published paths can be emailed.')
   const student = await usersCollection.findOne({_id: week.studentId, secret: secret, student: true})
   if (!student) throw new Error('That path is not attached to this studio account.')
@@ -597,7 +962,7 @@ User.recordWeekEmailDelivery = function(weekId, state, extra) {
 
 User.getPrintableStudentWeek = async function(userId, weekId) {
     if (typeof weekId != 'string' || !weekId.match(/^[a-f\d]{24}$/i)) return null
-    return weeksCollection.findOne({_id: new ObjectId(weekId), studentId: new ObjectId(userId), status: {$ne: 'draft'}})
+    return weeksCollection.findOne({_id: new ObjectId(weekId), studentId: new ObjectId(userId), status: 'published'})
 }
 
 User.getTutorials = async function() {

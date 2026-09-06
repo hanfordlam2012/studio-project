@@ -1,0 +1,15 @@
+<style>
+  .top{background:#15364c;color:#fff}.top-inner{align-items:center;display:flex;gap:20px;justify-content:space-between;margin:auto;max-width:1180px;min-height:72px;padding:14px 24px}.brand{color:#fff;font-family:Rye,serif;font-size:18px;text-decoration:none}.nav{align-items:center;display:flex;gap:6px;max-width:100%;overflow-x:auto}.nav form{margin:0}.nav a,.nav .logout{background:none;border:1px solid transparent;border-radius:4px;color:#dce9ed;cursor:pointer;font:inherit;padding:8px 10px;text-decoration:none;white-space:nowrap}.nav a:hover,.nav a.is-active{background:#f2c94c;border-color:#f2c94c;color:#15364c}@media(max-width:850px){.top-inner{align-items:flex-start;flex-direction:column}.nav{width:100%}}@media(max-width:560px){.top-inner{padding:12px 16px}.nav a,.nav .logout{font-size:13px;padding:7px 8px}}
+</style>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="/admin">Music Learning Studio</a>
+    <nav class="nav" aria-label="Studio administration">
+      <a class="<%= currentPage === 'desk' ? 'is-active active' : '' %>" href="/admin"<% if(currentPage === 'desk'){ %> aria-current="page"<% } %>>Studio Desk</a>
+      <a class="<%= currentPage === 'prepare' ? 'is-active active' : '' %>" href="/create-week"<% if(currentPage === 'prepare'){ %> aria-current="page"<% } %>>Prepare Path</a>
+      <a class="<%= currentPage === 'archive' ? 'is-active active' : '' %>" href="/choose-week"<% if(currentPage === 'archive'){ %> aria-current="page"<% } %>>Path Archive</a>
+      <a class="<%= currentPage === 'records' ? 'is-active active' : '' %>" href="/admin/records"<% if(currentPage === 'records'){ %> aria-current="page"<% } %>>Studio Records</a>
+      <form action="/logout" method="POST"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="logout" type="submit">Log out</button></form>
+    </nav>
+  </div>
+</header>

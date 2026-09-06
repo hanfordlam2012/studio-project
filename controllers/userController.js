@@ -124,6 +124,11 @@ exports.viewAdminPage = async function(req, res) {
         res.render('adminDashboard', {
             students: dashboard.students,
             prizes: dashboard.prizes,
+            inbox: dashboard.inbox,
+            insights: dashboard.insights,
+            reviewed: dashboard.reviewed,
+            studioPosts: dashboard.studioPosts,
+            rewardRequests: dashboard.rewardRequests,
             adErrors: req.flash('adErrors'),
             adminSuccess: req.flash('adminSuccess')
         })
@@ -136,6 +141,7 @@ exports.viewAdminPage = async function(req, res) {
 exports.updateAdminStudentField = async function(req, res) {
     try {
         const value = await User.updateAdminStudentField(req.session.user.secret, req.body.studentId, req.body.field, req.body.value)
+        await require('../lib/studioActivity').record(req.session.user, 'student-field-updated', `Updated ${req.body.field}`)
         res.json({ok: true, value: value})
     } catch (error) {
         res.status(400).json({ok: false, error: error.message || 'That change could not be saved.'})
@@ -145,6 +151,7 @@ exports.updateAdminStudentField = async function(req, res) {
 exports.createAdminStudent = async function(req, res) {
     try {
         req.flash('adminSuccess', await User.createAdminStudent(req.session.user.secret, req.body))
+        await require('../lib/studioActivity').record(req.session.user, 'student-created', `Created account for ${req.body.fName} ${req.body.lName}`)
     } catch (error) {
         req.flash('adErrors', error.message || 'The student could not be added.')
     }
@@ -154,10 +161,66 @@ exports.createAdminStudent = async function(req, res) {
 exports.updateAdminStudentPassword = async function(req, res) {
     try {
         req.flash('adminSuccess', await User.updateAdminStudentPassword(req.session.user.secret, req.body.studentId, req.body.password, req.body.passwordConfirm))
+        await require('../lib/studioActivity').record(req.session.user, 'password-updated', 'Updated a student password')
     } catch (error) {
         req.flash('adErrors', error.message || 'The password could not be updated.')
     }
     req.session.save(() => res.redirect('/admin#studentList'))
+}
+
+exports.updateAdminStudentTrophies = async function(req, res) {
+    try {
+        req.flash('adminSuccess', await User.updateAdminStudentTrophies(req.session.user.secret, req.body.studentId, req.body))
+        await require('../lib/studioActivity').record(req.session.user, 'trophies-updated', 'Updated a student trophy cabinet')
+    } catch (error) {
+        req.flash('adErrors', error.message || 'The trophy cabinet could not be updated.')
+    }
+    req.session.save(() => res.redirect('/admin#studentList'))
+}
+
+exports.submitStudioPost = async function(req, res) {
+    try {
+        req.flash('studioPostStatus', await User.submitStudioPost(req.session.user.userId, req.body))
+    } catch (error) {
+        req.flash('studioPostError', error.message || 'The Studio Post could not be submitted.')
+    }
+    req.session.save(() => res.redirect('/practice?studioPost=review'))
+}
+
+exports.showStudioPostsPage = async function(req, res) {
+    try {
+        const noticeboard = await User.getPublishedStudioPosts(req.session.user.secret, req.session.user.userId)
+        res.render('studioPostsPageV2', {
+            posts: noticeboard.posts,
+            points: noticeboard.points,
+            fName: req.session.user.fName,
+            studioPostStatus: req.flash('studioPostStatus'),
+            studioPostError: req.flash('studioPostError')
+        })
+    } catch (error) {
+        req.flash('adErrors', 'The Studio Noticeboard could not be loaded.')
+        req.session.save(() => res.redirect('/practice'))
+    }
+}
+
+exports.donateStudioPostPoints = async function(req, res) {
+    try {
+        req.flash('studioPostStatus', await User.donateStudioPostPoints(req.session.user.secret, req.session.user.userId, req.body.postId, req.body.amount))
+    } catch (error) {
+        req.flash('studioPostError', error.message || 'Those points could not be sent.')
+    }
+    req.session.save(() => res.redirect('/studio-posts#post-' + encodeURIComponent(req.body.postId || '')))
+}
+
+exports.resolveStudioPost = async function(req, res) {
+    try {
+        const result = await User.resolveStudioPost(req.session.user.secret, req.body.postId, req.body.decision)
+        req.flash('adminSuccess', result.message)
+        await require('../lib/studioActivity').record(req.session.user, 'studio-post-resolved', result.message)
+    } catch (error) {
+        req.flash('adErrors', error.message || 'That Studio Post could not be changed.')
+    }
+    req.session.save(() => res.redirect('/admin#studioPosts'))
 }
 
 exports.viewAdminStudent = async function(req, res) {
@@ -180,10 +243,31 @@ exports.viewAdminStudent = async function(req, res) {
 exports.saveAdminPrize = async function(req, res) {
     try {
         req.flash('adminSuccess', await User.saveAdminPrize(req.body))
+        await require('../lib/studioActivity').record(req.session.user, 'points-possibility-saved', String(req.body.title || 'Possibility updated'))
     } catch (error) {
         req.flash('adErrors', error.message || 'The reward could not be saved.')
     }
     req.session.save(() => res.redirect('/admin#rewards'))
+}
+
+exports.requestReward = async function(req, res) {
+    try {
+        req.flash('rewardStatus', await User.requestReward(req.session.user.userId, req.body.prizeId))
+    } catch (error) {
+        req.flash('adErrors', error.message || 'That reward could not be requested.')
+    }
+    req.session.save(() => res.redirect('/leaderboard#rewards'))
+}
+
+exports.resolveRewardRequest = async function(req, res) {
+    try {
+        const message = await User.resolveRewardRequest(req.session.user.secret, req.body.requestId, req.body.decision)
+        req.flash('adminSuccess', message)
+        await require('../lib/studioActivity').record(req.session.user, 'reward-request-resolved', message)
+    } catch (error) {
+        req.flash('adErrors', error.message || 'That reward request could not be changed.')
+    }
+    req.session.save(() => res.redirect('/admin#rewardRequests'))
 }
 
 exports.getStudentData = function (req, res) {
@@ -218,9 +302,11 @@ exports.getStudentData = function (req, res) {
 }
 
 exports.viewCreateWeekPage = function (req, res) {
-    User.getStudentList(req.session.user.secret, req.session.user.userId).then(function (studentList) {
+    Promise.all([User.getStudentList(req.session.user.secret, req.session.user.userId), User.getPathTemplates(req.session.user.secret), User.getMaterialLibrary(req.session.user.secret)]).then(function (results) {
         res.render('createWeekV2', {
-            studentList: studentList, 
+            studentList: results[0],
+            pathTemplates: results[1],
+            materialLibrary: results[2],
             success: req.flash('success'),
             warnings: req.flash('warning'),
             errors: req.flash('createError')
@@ -240,6 +326,105 @@ exports.viewChooseWeekPage = function (req, res) {
     }).catch(function() {
         res.send("Student list didn't build successfully.")
     })
+}
+
+exports.viewStudioRecords = async function(req, res) {
+    try {
+        const [students, materials, activity, operations, health] = await Promise.all([
+            User.getStudentList(req.session.user.secret, req.session.user.userId),
+            User.getMaterialLibrary(req.session.user.secret),
+            require('../lib/studioActivity').recent(req.session.user.secret, 80),
+            User.getStudioOperations(req.session.user.secret),
+            require('../lib/studioHealth').inspect()
+        ])
+        res.render('studioRecords', {students, materials, activity, deliveries: operations.deliveries, scheduled: operations.scheduled, health, backupStatus: req.flash('backupStatus'), recordErrors: req.flash('recordErrors'), operationStatus: req.flash('operationStatus')})
+    } catch (error) {
+        req.flash('adErrors', 'Studio Records could not be loaded.')
+        req.session.save(() => res.redirect('/admin'))
+    }
+}
+
+exports.printStudentProgress = async function(req, res) {
+    try {
+        const report = await User.getStudentProgressReport(req.session.user.secret, req.params.studentId)
+        await require('../lib/studioActivity').record(req.session.user, 'progress-report', `Opened progress report for ${report.student.fName} ${report.student.lName}`)
+        res.render('studentExport', report)
+    } catch (error) { res.status(404).render('404') }
+}
+
+exports.downloadStudioBackup = async function(req, res) {
+    try {
+        const backup = await require('../lib/studioBackup').create(req.session.user.secret, req.body.passphrase)
+        await require('../lib/studioActivity').record(req.session.user, 'backup-created', 'Created an encrypted database backup')
+        res.attachment(`music-studio-backup-${new Date().toISOString().slice(0, 10)}.studio-backup`).type('application/octet-stream').send(backup)
+    } catch (error) {
+        req.flash('recordErrors', error.message || 'The encrypted backup could not be created.')
+        req.session.save(() => res.redirect('/admin/records#backup'))
+    }
+}
+
+exports.inspectStudioBackup = function(req, res) {
+    try {
+        if (!req.file) throw new Error('Choose a Studio Backup file.')
+        const result = require('../lib/studioBackup').inspect(req.file.buffer, req.body.passphrase)
+        req.flash('backupStatus', `Valid backup from ${new Date(result.createdAt).toLocaleString('en-AU')}: ${result.counts.users} users, ${result.counts.weeks} paths, ${result.counts.pathTemplates} templates and ${result.counts.studioActivity} activity records. No data was changed.`)
+    } catch (error) {
+        req.flash('recordErrors', error.message || 'That backup could not be validated.')
+    }
+    req.session.save(() => res.redirect('/admin/records#backup'))
+}
+
+exports.savePathTemplate = async function(req, res) {
+    try {
+        const templateId = await User.savePathTemplate(req.session.user.secret, req.body)
+        await require('../lib/studioActivity').record(req.session.user, 'path-template-saved', String(req.body.name || 'Template updated'))
+        res.json({ok: true, templateId: templateId})
+    } catch (error) {
+        res.status(400).json({ok: false, error: error.message || 'The template could not be saved.'})
+    }
+}
+
+exports.deletePathTemplate = async function(req, res) {
+    try {
+        await User.deletePathTemplate(req.session.user.secret, req.body.templateId)
+        await require('../lib/studioActivity').record(req.session.user, 'path-template-deleted', 'Removed a reusable path template')
+        res.json({ok: true})
+    } catch (error) {
+        res.status(400).json({ok: false, error: error.message || 'The template could not be removed.'})
+    }
+}
+
+exports.markPracticeResponseReviewed = async function(req, res) {
+    try {
+        await User.markPracticeResponseReviewed(req.session.user.secret, req.body.weekId)
+        await require('../lib/studioActivity').record(req.session.user, 'practice-update-reviewed', 'Marked a practice update reviewed')
+        req.flash('adminSuccess', 'Practice update marked as reviewed.')
+    } catch (error) {
+        req.flash('adErrors', error.message || 'That practice update could not be changed.')
+    }
+    req.session.save(() => res.redirect('/admin#nextLessonInbox'))
+}
+
+exports.savePracticeResponseFlags = async function(req, res) {
+    try {
+        await User.savePracticeResponseFlags(req.session.user.secret, req.body.weekId, req.body.teacherFlags)
+        await require('../lib/studioActivity').record(req.session.user, 'lesson-flags-saved', 'Updated next-lesson flags')
+        req.flash('adminSuccess', 'Next-lesson flags saved.')
+    } catch (error) {
+        req.flash('adErrors', error.message || 'Those lesson flags could not be saved.')
+    }
+    req.session.save(() => res.redirect('/admin#nextLessonInbox'))
+}
+
+exports.reopenPracticeResponse = async function(req, res) {
+    try {
+        await User.reopenPracticeResponse(req.session.user.secret, req.body.weekId)
+        await require('../lib/studioActivity').record(req.session.user, 'practice-update-reopened', 'Returned a reviewed update to the inbox')
+        req.flash('adminSuccess', 'Practice update returned to the Next-Lesson Inbox.')
+    } catch (error) {
+        req.flash('adErrors', error.message || 'That reviewed update could not be reopened.')
+    }
+    req.session.save(() => res.redirect('/admin#reviewedUpdates'))
 }
 
 exports.getStudentWeekArchive = function(req, res) {
@@ -270,7 +455,17 @@ exports.viewEditWeekPage = function (req, res) {
 }
 
 exports.editWeek = function (req, res) {
+    try {
+        require('../lib/pathMaterials').validateFiles(req.files || [])
+    } catch (error) {
+        req.flash('editError', error.message)
+        return req.session.save(function() { res.redirect('/choose-week') })
+    }
     User.findWeekAndUpdate(req.session.user.secret, req.body).then(async function (result) {
+		const pathMaterials = require('../lib/pathMaterials')
+		await pathMaterials.renameMaterials(req.body.week_id, req.body.materialIds, req.body.materialNames)
+		await pathMaterials.removeMaterials(req.body.week_id, req.body.removeMaterialIds)
+		if (req.files && req.files.length) await pathMaterials.addMaterials(req.body.week_id, req.files)
         if (result.publishedNow) {
             await require('../db').db('studio-project').collection('users').updateOne({_id: result.studentId}, {$inc: {lessonCount: 1, leaderboardScore: result.pointsAdd}})
         }
@@ -280,6 +475,19 @@ exports.editWeek = function (req, res) {
         req.flash('editError', error)
         req.session.save(function() { res.redirect('/choose-week') })
     })
+}
+
+exports.downloadPathMaterial = async function(req, res) {
+    try {
+        const found = await require('../lib/pathMaterials').findAccessibleMaterial(req.session.user, req.params.weekId, req.params.materialId)
+        if (!found) return res.status(404).render('404')
+        await require('fs').promises.access(found.filePath, require('fs').constants.R_OK)
+        res.type(found.material.mimeType)
+        res.set('X-Content-Type-Options', 'nosniff')
+        res.sendFile(found.filePath)
+    } catch (error) {
+        res.status(404).render('404')
+    }
 }
 
 exports.showFeedbackPage = function(req, res) {
@@ -357,6 +565,8 @@ exports.showMissionsPage = async function(req, res) {
         username: req.session.user.username, fName: req.session.user.fName, userId: req.session.user.userId,
         parentName: req.session.user.parentName, admin: req.session.user.admin,
         missionsAccomplished: userProps.missionsAccomplished || [], repertoirePolished: userProps.repertoirePolished || [],
+        quaverCompletedAt: userProps.missionProgress && userProps.missionProgress.quaverAttack && userProps.missionProgress.quaverAttack.completedAt,
+        quaverCodeReady: Boolean(process.env.QUAVER_COMPLETION_CODE_HASH), missionStatus: req.flash('missionStatus'), missionErrors: req.flash('missionErrors'),
         points: userProps.leaderboardScore, adErrors: req.flash('adErrors'), randomBPM: randomBPM,
         BPMStatus: bpmFeedbackFrom(userProps).status, lessonCount: req.session.user.lessonCount,
         paidLessons: req.session.user.paidLessons, leaderboardColor: req.session.user.leaderboardColor,
@@ -377,6 +587,8 @@ exports.showLeaderboardPage = async function(req, res) {
         adErrors: req.flash('adErrors'), prizeList: prizeList, lessonCount: req.session.user.lessonCount,
         paidLessons: req.session.user.paidLessons, leaderboardColor: req.session.user.leaderboardColor,
         points: userProps.leaderboardScore, practiceConversation: userProps.practiceConversations || [],
+        rewardStatus: req.flash('rewardStatus'),
+        quaverCompletedAt: userProps.missionProgress && userProps.missionProgress.quaverAttack && userProps.missionProgress.quaverAttack.completedAt,
         practicePrompt: adminProps.practicePrompt, practiceStatus: practiceSubmittedToday(userProps)
     })
 }

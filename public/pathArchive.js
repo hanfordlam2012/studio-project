@@ -37,13 +37,13 @@
 
   function pieceMarkup(piece = {}, index = 0) {
     const tasks = Array.isArray(piece.practiceTasks) && piece.practiceTasks.length ? piece.practiceTasks : [{}]
-    return `<section class="piece-editor"><div class="piece-editor-head"><strong>Piece ${index + 1}</strong><div><button type="button" class="move-piece-up">Move up</button><button type="button" class="move-piece-down">Move down</button><button type="button" class="remove-piece">Remove piece</button></div></div><div class="two"><div class="field"><label>Piece or project</label><input data-piece-key="pieceName" value="${esc(piece.pieceName)}" required></div><div class="field"><label>Lesson focus</label><textarea data-piece-key="lessonFocus">${esc(piece.lessonFocus)}</textarea></div></div><div class="field"><label>Practice path</label><div class="tasks">${tasks.map(taskMarkup).join('')}</div><button type="button" class="add-task">+ Add task</button></div><div class="field"><label>What I noticed</label><textarea data-piece-key="quietKnot" rows="3" placeholder="A difficulty, discovery, or piece of progress evident in this week's playing.">${esc(piece.quietKnot)}</textarea></div></section>`
+    return `<section class="piece-editor"><div class="piece-editor-head"><strong>Piece ${index + 1}</strong><div><button type="button" class="move-piece-up">Move up</button><button type="button" class="move-piece-down">Move down</button><button type="button" class="remove-piece">Remove piece</button></div></div><div class="two"><div class="field"><label>Piece or project</label><input data-piece-key="pieceName" value="${esc(piece.pieceName)}" required></div><div class="field"><label>Lesson focus</label><textarea data-piece-key="lessonFocus">${esc(piece.lessonFocus)}</textarea></div></div><div class="field"><label>Practice path</label><div class="tasks">${tasks.map(taskMarkup).join('')}</div><button type="button" class="add-task">+ Add task</button></div><div class="field"><label>What Hanford noticed</label><textarea data-piece-key="quietKnot" rows="3" placeholder="A difficulty, discovery, or piece of progress evident in this week's playing.">${esc(piece.quietKnot)}</textarea></div></section>`
   }
 
   function card(week) {
     const pieces = piecesFor(week)
     const names = pieces.map(piece => piece.pieceName).filter(Boolean)
-    const isDraft = week.status === 'draft'
+    const isDraft = week.status !== 'published'
     const delivery = week.emailDelivery || {state: 'not-recorded'}
     const deliveryText = ({sent:'Family email sent',failed:'Family email failed',sending:'Family email sending','not-sent':'No family email sent','not-requested':'Family email not requested','not-recorded':'Email status not recorded'})[delivery.state] || 'Email status not recorded'
     return `<article class="path-card" data-id="${esc(week._id)}"><button class="path-summary" type="button" aria-expanded="false"><span class="path-date">${date(week.createdDate)}<br><span class="state-badge ${isDraft ? 'draft' : ''}">${isDraft ? 'Draft' : 'Published'}</span></span><span class="path-piece">${esc(names[0] || 'Untitled path')}${names.length > 1 ? ` + ${names.length - 1} more` : ''}</span><span class="path-focus">${esc(week.lessonFocus || week.generalNote || 'No focus recorded')}</span><span class="path-mark">+</span></button><div class="edit-region"><form action="/edit-week" method="POST" class="editor"><input type="hidden" name="_csrf" value="${esc(csrf)}"><input type="hidden" name="week_id" value="${esc(week._id)}"><input type="hidden" name="pieceName"><input type="hidden" name="lessonFocus"><input type="hidden" name="quietKnot"><input type="hidden" name="practiceTasks"><input type="hidden" name="pieces"><input type="hidden" name="comments"><div class="editor-grid"><div class="edit-fields"><div class="piece-edit-list">${pieces.map(pieceMarkup).join('')}</div><button type="button" class="add-piece">+ Add another piece</button><div class="field"><label>Lesson-wide note</label><textarea name="generalNote" rows="4" placeholder="A note beyond any one piece.">${esc(week.generalNote)}</textarea></div><details><summary>Development snapshot</summary><div class="ratings">${rating('rhythm', 'Pulse and rhythm', week.rhythm)}${rating('coordination', 'Pitch', week.coordination)}${rating('tone', 'Articulation', week.tone)}${rating('dynamics', 'Dynamics', week.dynamics)}${rating('stylistic', 'Body feeling', week.stylistic)}</div></details>${!isDraft ? `<div class="email-state">${esc(deliveryText)}${delivery.sentAt ? ` on ${date(delivery.sentAt)}` : ''}</div>` : ''}<div class="save-row"><button type="button" class="cancel">Close</button>${!isDraft ? '<button class="resend-email" type="submit" formaction="/week-email-resend" formmethod="POST">Send family email again</button>' : ''}<button class="save" type="submit" name="submissionAction" value="save">Save changes</button>${isDraft ? '<button class="publish-draft" type="submit" name="submissionAction" value="publish">Publish draft</button>' : ''}</div></div><aside class="preview"><small>${isDraft ? 'Private draft preview' : 'Student preview'}</small><div class="preview-content"></div></aside></div></form></div></article>`
@@ -73,7 +73,7 @@
         lines.push('## Practice Path')
         piece.practiceTasks.forEach((task, index) => lines.push(`${index + 1}. **${task.task}**${task.start ? `\n\n   **Begin at:** ${task.start}` : ''}${task.why ? `\n\n   **Why:** ${task.why}` : ''}${task.success ? `\n\n   **Success cue:** ${task.success}` : ''}`))
       }
-      if (piece.quietKnot) lines.push(`## What I Noticed\n> ${piece.quietKnot}`)
+      if (piece.quietKnot) lines.push(`## What Hanford noticed\n> ${piece.quietKnot}`)
     })
     if (generalNote) lines.push(`## Lesson-wide Note\n${generalNote}`)
     return lines.join('\n\n')
@@ -104,7 +104,7 @@
     form.quietKnot.value = first.quietKnot
     form.practiceTasks.value = JSON.stringify(first.practiceTasks)
     form.comments.value = notesFor(pieces, form.generalNote.value.trim())
-    form.querySelector('.preview-content').innerHTML = pieces.map(piece => `<section class="preview-piece"><h3>${esc(piece.pieceName || 'Untitled piece')}</h3>${piece.lessonFocus ? `<p>${esc(piece.lessonFocus)}</p>` : ''}<ol>${piece.practiceTasks.length ? piece.practiceTasks.map(task => `<li><strong>${esc(task.task)}</strong>${task.success ? ` · ${esc(task.success)}` : ''}</li>`).join('') : '<li>No tasks recorded.</li>'}</ol>${piece.quietKnot ? `<p class="preview-knot">What I noticed: ${esc(piece.quietKnot)}</p>` : ''}</section>`).join('') + (form.generalNote.value.trim() ? `<p class="preview-general">Lesson-wide note: ${esc(form.generalNote.value.trim())}</p>` : '')
+    form.querySelector('.preview-content').innerHTML = pieces.map(piece => `<section class="preview-piece"><h3>${esc(piece.pieceName || 'Untitled piece')}</h3>${piece.lessonFocus ? `<p>${esc(piece.lessonFocus)}</p>` : ''}<ol>${piece.practiceTasks.length ? piece.practiceTasks.map(task => `<li><strong>${esc(task.task)}</strong>${task.success ? ` · ${esc(task.success)}` : ''}</li>`).join('') : '<li>No tasks recorded.</li>'}</ol>${piece.quietKnot ? `<p class="preview-knot">What Hanford noticed: ${esc(piece.quietKnot)}</p>` : ''}</section>`).join('') + (form.generalNote.value.trim() ? `<p class="preview-general">Lesson-wide note: ${esc(form.generalNote.value.trim())}</p>` : '')
     renumber(form)
   }
 
@@ -146,6 +146,15 @@
       refresh(cardElement)
     })
     form.addEventListener('submit', event => {
+      const materialInput = form.querySelector('input[type="file"][name="materials"]')
+      const existingCount = form.querySelectorAll('input[name="removeMaterialIds"]').length
+      const removingCount = form.querySelectorAll('input[name="removeMaterialIds"]:checked').length
+      const newFiles = materialInput ? [...materialInput.files] : []
+      if (existingCount - removingCount + newFiles.length > 3 || newFiles.some(file => file.size > 5 * 1024 * 1024)) {
+        event.preventDefault()
+        alert(existingCount - removingCount + newFiles.length > 3 ? 'A path can contain no more than three materials.' : 'Each path material must be 5 MB or smaller.')
+        return
+      }
       if (event.submitter && event.submitter.classList.contains('resend-email') && !confirm('Send this published path to the family email currently saved for this student?')) { event.preventDefault(); return }
       refresh(cardElement)
       const pieces = pieceData(form)
@@ -158,12 +167,22 @@
     })
   }
 
+  function mountMaterials(cardElement, week) {
+    const form = cardElement.querySelector('form')
+    form.enctype = 'multipart/form-data'
+    const materials = Array.isArray(week.attachments) ? week.attachments : []
+    const panel = document.createElement('div')
+    panel.className = 'archive-materials'
+    panel.innerHTML = `<strong>Path materials</strong>${materials.map(material => `<div class="archive-material"><input type="hidden" name="materialIds" value="${esc(material.id)}"><input type="text" name="materialNames" value="${esc(material.name)}" maxlength="140" aria-label="Material name"><a href="/path-materials/${esc(week._id)}/${esc(material.id)}" target="_blank" rel="noopener">Open</a><label><input type="checkbox" name="removeMaterialIds" value="${esc(material.id)}"> Remove</label></div>`).join('')}<input type="file" name="materials" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.mp3,.m4a,.wav,.aac,.ogg"><small>${materials.length}/3 attached · PDF, image, or audio · 5 MB each</small>`
+    form.querySelector('.edit-fields').insertBefore(panel, form.querySelector('.edit-fields details'))
+  }
+
   function render() {
     const query = search.value.trim().toLowerCase()
     const filtered = weeks.filter(week => [week.comments, week.generalNote, ...piecesFor(week).flatMap(piece => [piece.pieceName, piece.lessonFocus, piece.quietKnot])].join(' ').toLowerCase().includes(query))
     archive.innerHTML = filtered.length ? `<div class="path-list">${filtered.map(card).join('')}</div>` : '<div class="empty">No paths match this search.</div>'
     count.textContent = `${filtered.length} ${filtered.length === 1 ? 'path' : 'paths'}`
-    archive.querySelectorAll('.path-card').forEach(bind)
+    archive.querySelectorAll('.path-card').forEach((cardElement, index) => { mountMaterials(cardElement, filtered[index]); bind(cardElement) })
   }
 
   student.addEventListener('change', async () => {

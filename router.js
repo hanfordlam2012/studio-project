@@ -39,7 +39,9 @@ router.get('/practice', userController.mustBeLoggedIn, userController.showPracti
 router.get('/missions', userController.mustBeLoggedIn, userController.showMissionsPage)
 router.get('/leaderboard', userController.mustBeLoggedIn, userController.showLeaderboardPage)
 router.get('/parents', userController.mustBeLoggedIn, userController.showParentsPage)
+router.get('/studio-posts', userController.mustBeLoggedIn, userController.showStudioPostsPage)
 router.get('/parents/print/:weekId', userController.mustBeLoggedIn, userController.showPrintableLesson)
+router.get('/path-materials/:weekId/:materialId', userController.mustBeLoggedIn, userController.downloadPathMaterial)
 
 // game routes
 //router.post('/saveScore', userController.mustBeLoggedIn, missionController.compareScoreAndSave) FOR LEGATO SMOOTH
@@ -48,15 +50,31 @@ router.get('/parents/print/:weekId', userController.mustBeLoggedIn, userControll
 // practice routes
 router.post('/updateLastSubmittedDateAndAddPoints', userController.mustBeLoggedIn, missionController.updateLastSubmittedDateAndAddPoints)
 router.post('/guessBPM', userController.mustBeLoggedIn, missionController.checkBPM)
+router.post('/missions/quaver-attack/claim', userController.mustBeLoggedIn, missionController.claimQuaverAttack)
 router.post('/sendCheckedSnapshot', userController.mustBeLoggedIn, messageController.sendCheckedSnapshot)
+router.post('/studio-post', userController.mustBeLoggedIn, userController.submitStudioPost)
+router.post('/studio-posts/donate', userController.mustBeLoggedIn, userController.donateStudioPostPoints)
+router.post('/rewards/request', userController.mustBeLoggedIn, userController.requestReward)
 
 // admin routes
 router.get('/admin', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewAdminPage)
 router.get('/admin/student-view', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewAdminStudent)
+router.get('/admin/records', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewStudioRecords)
+router.get('/admin/student-progress/:studentId', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.printStudentProgress)
+router.post('/admin/backup-download', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.downloadStudioBackup)
+router.post('/admin/backup-inspect', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.inspectStudioBackup)
 router.post('/admin/student-field', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.updateAdminStudentField)
 router.post('/admin/student-create', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.createAdminStudent)
 router.post('/admin/student-password', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.updateAdminStudentPassword)
+router.post('/admin/student-trophies', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.updateAdminStudentTrophies)
 router.post('/admin/prize', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.saveAdminPrize)
+router.post('/admin/reward-request', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.resolveRewardRequest)
+router.post('/admin/studio-post', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.resolveStudioPost)
+router.post('/admin/path-template', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.savePathTemplate)
+router.post('/admin/path-template-delete', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.deletePathTemplate)
+router.post('/admin/practice-response-reviewed', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.markPracticeResponseReviewed)
+router.post('/admin/practice-response-flags', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.savePracticeResponseFlags)
+router.post('/admin/practice-response-reopen', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.reopenPracticeResponse)
 router.get('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewCreateWeekPage)
 router.post('/create-week', userController.mustBeLoggedIn, userController.mustBeAdmin, weekController.createWeek)
 router.get('/choose-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.viewChooseWeekPage)
@@ -64,6 +82,7 @@ router.post('/choose-week', userController.mustBeLoggedIn, userController.mustBe
 router.post('/getStudentWeekArchive', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.getStudentWeekArchive)
 router.post('/edit-week', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.editWeek)
 router.post('/week-email-resend', userController.mustBeLoggedIn, userController.mustBeAdmin, weekController.resendWeekEmail)
+router.post('/admin/scheduled-path-reschedule', userController.mustBeLoggedIn, userController.mustBeAdmin, weekController.reschedulePath)
 router.post('/getStudentData', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.getStudentData)
 router.post('/replyToStudent', userController.mustBeLoggedIn, userController.mustBeAdmin, missionController.replyToStudent)
 

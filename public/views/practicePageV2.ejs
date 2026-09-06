@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Poppins&family=Recursive&family=Belgrano&family=Bellota&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/style.css?v=4">
+  <link rel="stylesheet" href="/styles/style.css?v=23">
   <title>Today's Path | Learning Park Portal</title>
   <style>HTML,BODY{cursor:url("../../images/cursor.cur"),auto;}</style>
   <style>
@@ -21,33 +21,76 @@
     }
   </style>
 </head>
-<body class="portal-body">
+<body class="portal-body portal-body-practice">
   <%- include('includes/portalHeader', {activePortalTab: 'practice'}) %>
   <main class="portal-main">
     <% adErrors.forEach(function(message) { %><div class="alert alert-danger text-center"><%= message %></div><% }) %>
     <%- include('includes/portalStatus') %>
 
-    <section class="portal-intro">
-      <p class="portal-eyebrow">Today's Path</p>
-      <h1>What shall we move today?</h1>
-      <p>Your lesson notes become a practical route: choose one task, listen closely, and notice what changes.</p>
-    </section>
-
-    <div class="portal-practice-layout">
+    <div class="portal-practice-layout portal-practice-layout-simple">
       <section class="portal-workspace" aria-labelledby="lesson-notes-title">
+        <div class="portal-section-heading">
+          <div><p class="portal-eyebrow">From your latest lesson</p><h1 id="lesson-notes-title">Today's Path</h1></div>
+          <span class="portal-state"><%= practiceStatus ? 'Shared today' : 'Ready to practise' %></span>
+        </div>
+        <% if (checklistStatus == 'fail') { %><div class="alert alert-danger text-center">Your checked work could not be sent. Try again shortly.</div><% } %>
+        <% if (checklistStatus == 'successPoints') { %><div class="alert alert-success text-center">Practice update received. Five personal-progress points joined your trail.</div><% } %>
+        <% if (checklistStatus == 'success') { %><div class="alert alert-success text-center">Practice update received. You can update it again while this path is current; its five points have already been awarded.</div><% } %>
+        <% if (latestComments.length) { %>
+          <% latestComments.forEach((comment) => { %>
+            <form action="/sendCheckedSnapshot" method="POST" class="portal-checklist-form" data-practice-checklist data-responses="<%= JSON.stringify(comment.practiceResponse && comment.practiceResponse.items || []) %>">
+              <div class="portal-lesson-notes" data-checklist-content><%- displayPathHTML(comment.comments) %></div>
+              <%- include('includes/pathMaterials', {materials: comment.attachments, weekId: comment._id}) %>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" name="weekId" value="<%= comment._id %>">
+              <div class="practice-question"><div class="practice-question-mark" aria-hidden="true">?</div><div class="practice-question-field"><div class="practice-question-heading"><label for="practiceQuestion">Ask Hanford <span>(optional)</span></label></div><textarea id="practiceQuestion" name="practiceQuestion" maxlength="1000" rows="3" placeholder="A question, puzzle, or place to revisit..."><%= comment.practiceResponse && comment.practiceResponse.question || '' %></textarea></div></div>
+              <div class="portal-primary-actions"><button type="submit" class="portal-button portal-button-primary">Send practice update</button><button type="button" class="portal-print-icon" data-print-notes aria-label="Print today's path" title="Print today's path">Print</button></div>
+            </form>
+          <% }) %>
+        <% } else { %><div class="portal-empty-state"><strong>No current lesson notes yet.</strong><span>Your next path will appear here after Hanford prepares it.</span></div><% } %>
+      </section>
+
+      <details class="portal-conversation portal-collapsible" id="practiceCorrespondence">
+        <summary><span><small>Practice correspondence</small><strong>What Changed?</strong></span><span class="portal-state"><%= practiceStatus ? 'Sent today' : 'Open' %></span></summary>
+        <div class="portal-collapsible-body">
+          <div class="portal-message-list" id="practiceConversationMessages"><% practiceConversation.forEach((entry) => { %><% if (entry[0] == 'You' || entry[0] == 'Hanford') { %><article class="portal-message <%= entry[0] == 'You' ? 'is-student' : 'is-hanford' %>"><strong><%= entry[0] %></strong><div><%- filterUserHTML(entry[1]) %></div></article><% } %><% }) %><% if (!practiceConversation.length) { %><div class="portal-empty-state"><span>Your practice conversation will gather here over time.</span></div><% } %></div>
+          <% if (!practiceStatus) { %><form id="PracticeConvo" class="portal-reflection-form" action="/updateLastSubmittedDateAndAddPoints" method="POST"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><label for="practiceConversationInput">Leave Hanford a short field note</label><textarea autocomplete="off" name="practiceConversation" id="practiceConversationInput" rows="4" placeholder="<%= practicePrompt %>&#10;&#10;What changed? What remains tangled?"></textarea><button type="submit" class="portal-button portal-button-primary">Share my field note</button></form><% } else { %><p class="portal-sent-note">Your note is with Hanford. Three personal-progress points were added today.</p><% } %>
+        </div>
+      </details>
+    </div>
+
+    <details class="portal-practice-tools">
+      <summary>Practice Tools <span>Pulse game and performance rubric</span></summary>
+      <div class="portal-tool-row">
+      <section class="portal-tool tempo-tool" id="guessTheTempo">
+        <p class="portal-eyebrow">Listening experiment</p><h2>Find the Pulse</h2>
+        <% if (BPMStatus == 'success' || BPMStatus == 'notQuite') { const difference = BPMGuess == null ? null : Math.abs(Number(BPMGuess)-Number(randomBPM)); %>
+          <div class="tempo-result <%= BPMStatus == 'success' ? 'tempo-result-success' : '' %>"><div class="tempo-result-copy"><strong><%= BPMStatus == 'success' ? 'You found the pulse.' : 'Close listening. Here is the pulse.' %></strong><span><%= BPMStatus == 'success' ? 'Three points joined your trail.' : 'Watch it, feel it, and compare it with your estimate.' %></span></div><div class="tempo-stage tempo-feedback-stage" style="--beat-duration:<%= 60 / randomBPM %>s" aria-label="The correct pulse at <%= randomBPM %> beats per minute"><span class="tempo-track"></span><span class="tempo-pendulum"></span><span class="tempo-beat"></span></div><div class="tempo-comparison"><div><span>Your estimate</span><strong><%= BPMGuess == null ? 'Not recorded' : BPMGuess + ' BPM' %></strong></div><div><span>Actual pulse</span><strong><%= randomBPM %> BPM</strong></div><div><span>Difference</span><strong><%= difference == null ? '—' : difference + ' BPM' %></strong></div></div></div>
+        <% } else { %>
+          <form action="/guessBPM" method="POST" class="tempo-form"><div class="tempo-stage" style="--beat-duration:<%= 60 / randomBPM %>s" aria-label="A visual pulse to estimate"><span class="tempo-track"></span><span class="tempo-pendulum"></span><span class="tempo-beat"></span></div><label for="bpmGuess">Your estimate</label><div class="tempo-control"><input type="range" min="20" max="200" step="10" name="bpmGuess" id="bpmGuess" value="110" oninput="bpmOutput.value=this.value"><output id="bpmOutput" for="bpmGuess">110</output><span>BPM</span></div><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit" class="portal-button portal-button-primary">Test my estimate</button></form>
+        <% } %>
+      </section>
+      <section class="portal-tool portal-guide-tool"><p class="portal-eyebrow">Wayside reference</p><h2>Performance Rubric</h2><p>Use the rubric to understand the development snapshot stored with each lesson.</p><a class="portal-button portal-button-quiet" href="/files/Piano%20Performance%20Development%20Rubric.pdf" target="_blank" rel="noopener noreferrer">Open the rubric</a></section>
+      </div>
+    </details>
+    <% if (false) { %>
         <div class="portal-section-heading">
           <div><p class="portal-eyebrow">From your latest lesson</p><h2 id="lesson-notes-title">Hanford's Notes</h2></div>
           <span class="portal-state"><%= practiceStatus ? 'Shared today' : 'Ready to practise' %></span>
         </div>
         <% if (checklistStatus == 'fail') { %><div class="alert alert-danger text-center">Your checked work could not be sent. Try again shortly.</div><% } %>
-        <% if (checklistStatus == 'success') { %><div class="alert alert-success text-center">Checked work received. Thank you for showing the work.</div><% } %>
+        <% if (checklistStatus == 'successPoints') { %><div class="alert alert-success text-center">Practice update received. Five personal-progress points joined your trail.</div><% } %>
+        <% if (checklistStatus == 'success') { %><div class="alert alert-success text-center">Practice update received. You can update it again while this path is current; its five points have already been awarded.</div><% } %>
         <% if (latestComments.length) { %>
           <% latestComments.forEach((comment) => { %>
-            <form action="/sendCheckedSnapshot" method="POST" class="portal-checklist-form" data-practice-checklist>
-              <div class="portal-lesson-notes" data-checklist-content><%- filterUserHTML(comment.comments) %></div>
+            <form action="/sendCheckedSnapshot" method="POST" class="portal-checklist-form" data-practice-checklist data-responses="<%= JSON.stringify(comment.practiceResponse && comment.practiceResponse.items || []) %>">
+              <div class="portal-lesson-notes" data-checklist-content><%- displayPathHTML(comment.comments) %></div>
+              <%- include('includes/pathMaterials', {materials: comment.attachments, weekId: comment._id}) %>
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" name="weekId" value="<%= comment._id %>">
+              <div class="practice-question"><div class="practice-question-mark" aria-hidden="true">?</div><div class="practice-question-field"><div class="practice-question-heading"><label for="practiceQuestion">A question for next time <span>(optional)</span></label></div><p>Leave a thought, musical puzzle, or place you would like Hanford to revisit.</p><textarea id="practiceQuestion" name="practiceQuestion" maxlength="1000" rows="3" placeholder="I wondered whether..."><%= comment.practiceResponse && comment.practiceResponse.question || '' %></textarea></div></div>
               <div class="portal-primary-actions">
-                <button type="submit" class="portal-button portal-button-primary">Share today's checked work</button>
+                <button type="submit" class="portal-button portal-button-primary">Share my practice update</button>
                 <button type="button" class="portal-button portal-button-quiet" data-print-notes>Print notes</button>
               </div>
             </form>
@@ -58,65 +101,36 @@
       </section>
 
       <aside class="portal-side-column">
-        <section class="portal-tool tempo-tool" id="guessTheTempo">
-          <p class="portal-eyebrow">Listening experiment</p>
-          <h2>Find the Pulse</h2>
-          <% if (BPMStatus == 'success' || BPMStatus == 'notQuite') { const difference = BPMGuess == null ? null : Math.abs(Number(BPMGuess)-Number(randomBPM)); %>
-            <div class="tempo-result <%= BPMStatus == 'success' ? 'tempo-result-success' : '' %>">
-              <div class="tempo-result-copy"><strong><%= BPMStatus == 'success' ? 'You found the pulse.' : 'Close listening. Here is the pulse.' %></strong><span><%= BPMStatus == 'success' ? 'Three points joined your trail.' : 'Watch it, feel it, and compare it with your estimate.' %></span></div>
-              <div class="tempo-stage tempo-feedback-stage" style="--beat-duration:<%= 60 / randomBPM %>s" aria-label="The correct pulse at <%= randomBPM %> beats per minute"><span class="tempo-track"></span><span class="tempo-pendulum"></span><span class="tempo-beat"></span></div>
-              <div class="tempo-comparison"><div><span>Your estimate</span><strong><%= BPMGuess == null ? 'Not recorded' : BPMGuess + ' BPM' %></strong></div><div><span>Actual pulse</span><strong><%= randomBPM %> BPM</strong></div><div><span>Difference</span><strong><%= difference == null ? '—' : difference + ' BPM' %></strong></div></div>
-            </div>
-          <% } else { %>
-            <form action="/guessBPM" method="POST" class="tempo-form">
-              <div class="tempo-stage" style="--beat-duration:<%= 60 / randomBPM %>s" aria-label="A visual pulse to estimate">
-                <span class="tempo-track"></span><span class="tempo-pendulum"></span><span class="tempo-beat"></span>
-              </div>
-              <label for="bpmGuess">Your estimate</label>
-              <div class="tempo-control">
-                <input type="range" min="20" max="200" step="10" name="bpmGuess" id="bpmGuess" value="110" oninput="bpmOutput.value=this.value">
-                <output id="bpmOutput" for="bpmGuess">110</output><span>BPM</span>
-              </div>
+        <section class="portal-conversation" aria-labelledby="conversation-title">
+          <div class="portal-section-heading">
+            <div><p class="portal-eyebrow">Practice correspondence</p><h2 id="conversation-title">What Changed?</h2></div>
+            <span class="portal-state"><%= practiceStatus ? 'Sent today' : 'Open' %></span>
+          </div>
+          <div class="portal-message-list" id="practiceConversationMessages">
+            <% practiceConversation.forEach((entry) => { %>
+              <% if (entry[0] == 'You' || entry[0] == 'Hanford') { %>
+                <article class="portal-message <%= entry[0] == 'You' ? 'is-student' : 'is-hanford' %>">
+                  <strong><%= entry[0] %></strong><div><%- filterUserHTML(entry[1]) %></div>
+                </article>
+              <% } %>
+            <% }) %>
+            <% if (!practiceConversation.length) { %><div class="portal-empty-state"><span>Your practice conversation will gather here over time.</span></div><% } %>
+          </div>
+          <% if (!practiceStatus) { %>
+            <form id="PracticeConvo" class="portal-reflection-form" action="/updateLastSubmittedDateAndAddPoints" method="POST">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-              <button type="submit" class="portal-button portal-button-primary">Test my estimate</button>
+              <label for="practiceConversationInput">Leave Hanford a short field note</label>
+              <textarea autocomplete="off" name="practiceConversation" id="practiceConversationInput" rows="5" placeholder="<%= practicePrompt %>&#10;&#10;What changed? What remains tangled?"></textarea>
+              <button type="submit" class="portal-button portal-button-primary">Share my field note</button>
             </form>
+          <% } else { %>
+            <p class="portal-sent-note">Your note is with Hanford. Three personal-progress points were added today.</p>
           <% } %>
-        </section>
-        <section class="portal-tool portal-guide-tool">
-          <p class="portal-eyebrow">Wayside reference</p><h2>Performance Rubric</h2>
-          <p>Use the four-stage rubric when you need clearer language for pulse, pitch, touch, and body feeling.</p>
-          <a class="portal-button portal-button-quiet" href="/files/Piano%20Performance%20Development%20Rubric.pdf" target="_blank" rel="noopener noreferrer">Open the rubric</a>
         </section>
       </aside>
     </div>
 
-    <section class="portal-conversation" aria-labelledby="conversation-title">
-      <div class="portal-section-heading">
-        <div><p class="portal-eyebrow">Practice correspondence</p><h2 id="conversation-title">What Changed?</h2></div>
-        <span class="portal-state"><%= practiceStatus ? 'Sent today' : 'Open' %></span>
-      </div>
-      <div class="portal-message-list" id="practiceConversationMessages">
-        <% practiceConversation.forEach((entry) => { %>
-          <% if (entry[0] == 'You' || entry[0] == 'Hanford') { %>
-            <article class="portal-message <%= entry[0] == 'You' ? 'is-student' : 'is-hanford' %>">
-              <strong><%= entry[0] %></strong><div><%- filterUserHTML(entry[1]) %></div>
-            </article>
-          <% } %>
-        <% }) %>
-        <% if (!practiceConversation.length) { %><div class="portal-empty-state"><span>Your practice conversation will gather here over time.</span></div><% } %>
-      </div>
-      <% if (!practiceStatus) { %>
-        <form id="PracticeConvo" class="portal-reflection-form" action="/updateLastSubmittedDateAndAddPoints" method="POST">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <label for="practiceConversationInput">Leave Hanford a short field note</label>
-          <textarea autocomplete="off" name="practiceConversation" id="practiceConversationInput" rows="5" placeholder="<%= practicePrompt %>&#10;&#10;What changed? What remains tangled?"></textarea>
-          <button type="submit" class="portal-button portal-button-primary">Share my field note</button>
-        </form>
-      <% } else { %>
-        <p class="portal-sent-note">Your note is with Hanford. Three personal-progress points were added today.</p>
-      <% } %>
-    </section>
-
+    <% } %>
     <% if (recordedLessonURL) { %>
       <details class="portal-legacy-recording">
         <summary>Open a previous lesson recording</summary>
@@ -127,15 +141,14 @@
   <footer class="portal-footer">Learning Park Portal · <a href="/">Return to hanfordlam.com</a></footer>
   <script>
     document.querySelectorAll('[data-practice-checklist]').forEach(function(form) {
-      var list=form.querySelector('[data-checklist-content]');
+      var list=form.querySelector('[data-checklist-content]'),responses=[];try{responses=JSON.parse(form.dataset.responses||'[]')}catch(error){}
       list.querySelectorAll('li').forEach(function(item,index) {
-        var input=document.createElement('input'),label=document.createElement('label'),id='practice-item-'+index;
-        input.type='checkbox'; input.name='checkedItems'; input.value=item.textContent.trim(); input.id=id; label.htmlFor=id;
-        while(item.firstChild) label.appendChild(item.firstChild);
-        item.appendChild(input); item.appendChild(label);
+        var labelText=item.textContent.trim(),controls=document.createElement('div'),label=document.createElement('label'),select=document.createElement('select'),hidden=document.createElement('input'),saved=responses.find(function(response){return response.taskIndex===index});
+        var detailLines=[].slice.call(item.children).filter(function(child){return child.tagName==='P'}).slice(1);if(detailLines.length){var extra=document.createElement('details'),summary=document.createElement('summary');extra.className='practice-task-detail';summary.textContent='More detail';extra.appendChild(summary);detailLines.forEach(function(line){extra.appendChild(line)});item.appendChild(extra)}
+        controls.className='practice-task-response';label.textContent='How is this task feeling?';label.htmlFor='practice-response-'+index;select.id=label.htmlFor;select.name='taskResponses';[['','Choose a response'],['started','Started'],['changed','Something changed'],['secure','Feels secure'],['help','I need help']].forEach(function(option){var node=document.createElement('option');node.value=option[0]?index+':'+option[0]:'';node.textContent=option[1];if(saved&&saved.status===option[0])node.selected=true;select.appendChild(node)});hidden.type='hidden';hidden.name='taskLabels';hidden.value=labelText;controls.appendChild(label);controls.appendChild(select);controls.appendChild(hidden);item.appendChild(controls);
       });
       var allowed=true;
-      form.addEventListener('submit',function(event){if(!form.querySelector('input[name="checkedItems"]:checked')){event.preventDefault();alert('Check at least one practice item before sharing.');return}if(!allowed){event.preventDefault();return}allowed=false;});
+      form.addEventListener('submit',function(event){if(![...form.querySelectorAll('select[name="taskResponses"]')].some(function(select){return select.value})){event.preventDefault();alert('Choose a response for at least one practice task before sharing.');return}if(!allowed){event.preventDefault();return}allowed=false;});
     });
     document.querySelectorAll('[data-print-notes]').forEach(function(button) {
       button.addEventListener('click',function() {
@@ -147,8 +160,8 @@
       });
     });
     var messages=document.getElementById('practiceConversationMessages');messages.scrollTop=messages.scrollHeight;
-    if(new URLSearchParams(window.location.search).get('correspondence')==='posted')window.setTimeout(function(){document.querySelector('.portal-conversation').scrollIntoView({behavior:'smooth',block:'center'});window.history.replaceState({},document.title,window.location.pathname+'#conversation-title')},350);
-    if(new URLSearchParams(window.location.search).get('pulse')==='answered')window.setTimeout(function(){document.querySelector('#guessTheTempo').scrollIntoView({behavior:'smooth',block:'center'});window.history.replaceState({},document.title,window.location.pathname+'#guessTheTempo')},350);
+    if(new URLSearchParams(window.location.search).get('correspondence')==='posted')window.setTimeout(function(){var correspondence=document.querySelector('.portal-conversation');correspondence.open=true;correspondence.scrollIntoView({behavior:'smooth',block:'center'});window.history.replaceState({},document.title,window.location.pathname+'#practiceCorrespondence')},350);
+    if(new URLSearchParams(window.location.search).get('pulse')==='answered')window.setTimeout(function(){var tools=document.querySelector('.portal-practice-tools');tools.open=true;document.querySelector('#guessTheTempo').scrollIntoView({behavior:'smooth',block:'center'});window.history.replaceState({},document.title,window.location.pathname+'#guessTheTempo')},350);
     var reflection=document.getElementById('PracticeConvo'),reflectionAllowed=true;
     if(reflection)reflection.addEventListener('submit',function(event){if(!reflectionAllowed)event.preventDefault();reflectionAllowed=false;});
   </script>

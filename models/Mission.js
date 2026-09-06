@@ -5,6 +5,7 @@ const sessionsCollection = require('../db').db('studio-project').collection('ses
 const ObjectId = require('mongodb').ObjectId
 const Message = require('./Message')
 const sanitizeHTML = require('../lib/safeContent').plainText
+const bcrypt = require('bcryptjs')
 
 let Mission = function(data) {
     this.data = data
@@ -83,11 +84,40 @@ Mission.updatePracticeConversationAndEmailHanford = async function(data, userId,
 }
 
 Mission.updateLastSubmittedDateAndAddPoints = async function(points, userId) {
-    let userDoc = await usersCollection.findOne({"_id": new ObjectId(userId)})
-    let leaderboardScore = userDoc.leaderboardScore
-    let practicePoints = parseInt(points, 10)
-    let todaysDate = new Date()
-    await usersCollection.updateOne({"_id": new ObjectId(userId)}, { $set: {"lastSubmittedDate": todaysDate, "leaderboardScore": leaderboardScore + practicePoints} })
+    const practicePoints = parseInt(points, 10)
+    const todaysDate = new Date()
+    const awardDay = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Australia/Sydney', year: 'numeric', month: '2-digit', day: '2-digit'
+    }).format(todaysDate)
+    const award = await usersCollection.updateOne({
+        _id: new ObjectId(userId),
+        student: true,
+        lastCorrespondenceAwardDay: {$ne: awardDay}
+    }, {
+        $set: {lastSubmittedDate: todaysDate, lastCorrespondenceAwardDay: awardDay},
+        $inc: {leaderboardScore: practicePoints}
+    })
+    if (!award.modifiedCount) await usersCollection.updateOne({_id: new ObjectId(userId), student: true}, {$set: {lastSubmittedDate: todaysDate}})
+    return Boolean(award.modifiedCount)
+}
+
+Mission.claimQuaverAttack = async function(userId, code) {
+    const completionHash = String(process.env.QUAVER_COMPLETION_CODE_HASH || '')
+    if (!completionHash) throw new Error('The Quaver Attack completion code is awaiting studio setup.')
+    const submittedCode = String(code || '').trim()
+    if (!submittedCode || submittedCode.length > 80) throw new Error('Enter the code shown at the end of the game.')
+    if (!await bcrypt.compare(submittedCode, completionHash)) throw new Error('That is not the completion code. Check the final screen and try again.')
+    const completedAt = new Date()
+    const result = await usersCollection.updateOne({
+        _id: new ObjectId(userId),
+        student: true,
+        'missionProgress.quaverAttack.completedAt': {$exists: false}
+    }, {
+        $set: {'missionProgress.quaverAttack.completedAt': completedAt, 'missionProgress.quaverAttack.pointsAwarded': 100},
+        $inc: {leaderboardScore: 100}
+    })
+    if (!result.modifiedCount) return {awarded: false}
+    return {awarded: true, completedAt: completedAt}
 }
     
 

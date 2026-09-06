@@ -1,0 +1,13 @@
+<% if (Array.isArray(materials) && materials.length) { %>
+  <section class="path-materials" aria-label="Path materials">
+    <p class="path-materials-title">Path materials</p>
+    <div class="path-material-list">
+      <% materials.forEach(function(material) { const audio=String(material.mimeType || '').startsWith('audio/'); %>
+        <a class="path-material" href="/path-materials/<%= weekId %>/<%= material.id %>" target="_blank" rel="noopener">
+          <span class="path-material-icon" aria-hidden="true"><%= audio ? '♪' : '↓' %></span>
+          <span><strong><%= material.name %></strong><small><%= audio ? 'Audio' : String(material.mimeType || '').split('/').pop().toUpperCase() %> · <%= Math.max(1, Math.round(Number(material.size || 0) / 1024)) %> KB</small></span>
+        </a>
+      <% }) %>
+    </div>
+  </section>
+<% } %>

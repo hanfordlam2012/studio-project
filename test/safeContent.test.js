@@ -1,5 +1,5 @@
 const assert = require('assert')
-const {plainText, renderSafeMarkdown} = require('../lib/safeContent')
+const {plainText, renderSafeMarkdown, renderPathMarkdown} = require('../lib/safeContent')
 
 const malicious = [
   '<script>alert(1)</script>',
@@ -27,5 +27,13 @@ assert(specialCharacters.includes("Hanford&#039;s idea: Debussy\u2019s r\u00eave
 const encodedMarkup = renderSafeMarkdown('&lt;script&gt;alert(1)&lt;/script&gt;')
 assert(!encodedMarkup.includes('<script>'))
 assert(encodedMarkup.includes('&lt;script&gt;'))
+
+const legacyPath = renderPathMarkdown('# The Quiet Knot\n\nSomething became easier.')
+assert(legacyPath.includes('<h1>What Hanford noticed</h1>'))
+assert(!legacyPath.includes('Quiet Knot'))
+
+const previousObservationPath = renderPathMarkdown('## What I Noticed\n\nA more settled pulse.')
+assert(previousObservationPath.includes('<h2>What Hanford noticed</h2>'))
+assert(!previousObservationPath.includes('What I Noticed'))
 
 console.log('safeContent tests passed')

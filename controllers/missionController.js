@@ -54,8 +54,22 @@ exports.checkBPM = async function(req, res) {
 
     // compare Hanford's ...
     if (adminDoc.randomBPM == bpmGuess) {
-        let newScore = studentDoc.leaderboardScore + 3
-        await usersCollection.updateOne({"_id": new ObjectId(req.session.user.userId)}, { $set: {"BPMStatus": "success", "lastBPMGuess": todaysDate, "lastBPMGuessValue": bpmGuess, "leaderboardScore": newScore} })
+        const awardDay = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'Australia/Sydney', year: 'numeric', month: '2-digit', day: '2-digit'
+        }).format(new Date())
+        await usersCollection.updateOne({
+            _id: new ObjectId(req.session.user.userId),
+            student: true,
+            lastBPMAwardDay: {$ne: awardDay}
+        }, {
+            $set: {BPMStatus: 'success', lastBPMGuess: todaysDate, lastBPMGuessValue: bpmGuess, lastBPMAwardDay: awardDay},
+            $inc: {leaderboardScore: 3}
+        })
+        await usersCollection.updateOne({
+            _id: new ObjectId(req.session.user.userId),
+            student: true,
+            lastBPMAwardDay: awardDay
+        }, {$set: {BPMStatus: 'success', lastBPMGuess: todaysDate, lastBPMGuessValue: bpmGuess}})
         res.redirect('/practice?pulse=answered')
     } else {
         await usersCollection.updateOne({"_id": new ObjectId(req.session.user.userId)}, { $set: {"BPMStatus": "notQuite", "lastBPMGuess": todaysDate, "lastBPMGuessValue": bpmGuess} })
@@ -88,9 +102,9 @@ exports.compareScoreAndSave = async function(req, res) {
 // PRACTICE CONVERSATION
 exports.updateLastSubmittedDateAndAddPoints = async function(req, res) {
     let randomInt = 3
-    await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
+    const awarded = await Mission.updateLastSubmittedDateAndAddPoints(randomInt, req.session.user.userId)
     await Mission.updatePracticeConversationAndEmailHanford(req.body, req.session.user.userId, req.session.user.username)
-    req.flash('status', 'success')
+    req.flash('status', awarded ? 'success' : 'successNoPoints')
     req.session.save(function() {
         res.redirect('/practice?correspondence=posted')
     })
@@ -111,6 +125,16 @@ exports.replyToStudent = async function(req, res) {
     req.session.save(function() {
         res.redirect('/admin/student-view?studentId=' + encodeURIComponent(req.body.studentId || '') + '#correspondence')
     })
+}
+
+exports.claimQuaverAttack = async function(req, res) {
+    try {
+        const result = await Mission.claimQuaverAttack(req.session.user.userId, req.body.completionCode)
+        req.flash('missionStatus', result.awarded ? 'Quaver Attack completed. The 100-point bounty has joined your trail.' : 'This mission bounty is already complete. You can still replay whenever you like.')
+    } catch (error) {
+        req.flash('missionErrors', error.message || 'The completion code could not be checked.')
+    }
+    req.session.save(() => res.redirect('/missions#quaver-attack'))
 }
 
 // PACMAN HIGHSCORES

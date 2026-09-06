@@ -45,19 +45,18 @@ exports.sendMelodyToHanford = function(req, res) {
 }
 
 exports.sendCheckedSnapshot = async function(req, res) {
-    if (!req.body.checkedItems || ![].concat(req.body.checkedItems).filter(Boolean).length) {
+    if (!req.body.taskResponses || ![].concat(req.body.taskResponses).filter(Boolean).length) {
         req.flash("checklistStatus", "empty")
         return req.session.save(function() { res.redirect('/practice') })
     }
-    Message.sendCheckedSnapshot(req).then((response) => {
-        req.flash("checklistStatus", response)
-        req.session.save(function() {
-            res.redirect('/practice')
-        })
-    }).catch((err) => {
-        req.flash("checklistStatus", err)
-        req.session.save(function() {
-            res.redirect('/practice')
-        })
-    })
+    try {
+        const update = await require('../models/User').saveTaskResponses(req.session.user.userId, req.body.weekId, req.body.taskResponses, req.body.taskLabels, req.body.practiceQuestion)
+        const labels = {started: 'Started', changed: 'Something changed', secure: 'Feels secure', help: 'I need help'}
+        req.body.checkedItems = update.items.map(item => `${labels[item.status]} — ${item.label || `Task ${item.taskIndex + 1}`}`)
+        await Message.sendCheckedSnapshot(req)
+        req.flash("checklistStatus", update.awardedPoints ? "successPoints" : "success")
+    } catch (error) {
+        req.flash("checklistStatus", "fail")
+    }
+    req.session.save(function() { res.redirect('/practice') })
 }

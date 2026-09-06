@@ -39,7 +39,7 @@ Message.sendLessonPathToParent = async function(data) {
         <h2 style="font-size:22px">${escapeEmailHTML(piece.pieceName)}</h2>
         ${piece.lessonFocus ? `<p><strong>Focus:</strong> ${escapeEmailHTML(piece.lessonFocus)}</p>` : ''}
         ${taskItems ? `<h3 style="font-size:17px">Practice path</h3><ol>${taskItems}</ol>` : ''}
-        ${piece.quietKnot ? `<p><strong>What I noticed:</strong> ${escapeEmailHTML(piece.quietKnot)}</p>` : ''}
+        ${piece.quietKnot ? `<p><strong>What Hanford noticed:</strong> ${escapeEmailHTML(piece.quietKnot)}</p>` : ''}
       </section>`
     }).join('')
     const output = `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#17242b;max-width:640px">
@@ -47,6 +47,7 @@ Message.sendLessonPathToParent = async function(data) {
         <p>Here is ${escapeEmailHTML(data.studentName)}'s next practice path from the studio.</p>
         ${pieceSections}
         ${data.generalNote ? `<p style="border-left:4px solid #087f76;padding:12px 14px;background:#eef7f5"><strong>Lesson-wide note:</strong><br>${escapeEmailHTML(data.generalNote)}</p>` : ''}
+        ${data.attachments && data.attachments.length ? `<p><strong>Path materials:</strong> ${data.attachments.length} ${data.attachments.length === 1 ? 'file is' : 'files are'} attached to this email.</p>` : ''}
         <p>${escapeEmailHTML(data.familySummary)}</p>
         <p>The same notes are waiting in the Music Learning Studio portal.</p>
         <p>Warmly,<br>Hanford</p>
@@ -62,7 +63,8 @@ Message.sendLessonPathToParent = async function(data) {
         from: process.env.A2EMAIL,
         to: recipientList(data.to),
         subject: safeSubject,
-        html: output
+        html: output,
+        attachments: data.attachments || []
     })
 }
 
@@ -264,7 +266,9 @@ Message.sendCheckedSnapshot = function(req) {
             const student = [req.session.user.fName, req.session.user.lName].filter(Boolean).join(' ') || req.session.user.username || 'A student'
             const submittedAt = new Intl.DateTimeFormat('en-AU', {timeZone: 'Australia/Sydney', dateStyle: 'full', timeStyle: 'short'}).format(new Date())
             const itemRows = checkedItems.map((item, index) => `<li style="margin:0 0 12px;padding:12px 14px;background:#f4f8f7;border-left:4px solid #087f76"><strong style="color:#087f76">${index + 1}.</strong> ${escapeEmailHTML(item)}</li>`).join('')
-            const output = `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#19303a;max-width:640px"><div style="background:#15364c;color:#fff;padding:20px 24px"><div style="font-size:12px;text-transform:uppercase;color:#9fddd4;font-weight:bold">Music Learning Studio</div><h1 style="font-size:24px;margin:6px 0 0">Practice items checked</h1></div><div style="padding:22px 24px;border:1px solid #d8ddd8;border-top:0"><p style="margin-top:0"><strong>${escapeEmailHTML(student)}</strong> shared ${checkedItems.length} completed ${checkedItems.length === 1 ? 'item' : 'items'}.</p><ol style="list-style:none;margin:20px 0;padding:0">${itemRows}</ol><p style="color:#63747a;font-size:13px;margin-bottom:0">Received ${escapeEmailHTML(submittedAt)}</p></div></div>`
+            const question = String(req.body.practiceQuestion || '').trim().slice(0, 1000)
+            const questionBlock = question ? `<div style="margin:20px 0;padding:14px 16px;background:#fff7dc;border-left:4px solid #f2c94c"><strong style="display:block;margin-bottom:5px">Question for the next lesson</strong>${escapeEmailHTML(question)}</div>` : ''
+            const output = `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#19303a;max-width:640px"><div style="background:#15364c;color:#fff;padding:20px 24px"><div style="font-size:12px;text-transform:uppercase;color:#9fddd4;font-weight:bold">Music Learning Studio</div><h1 style="font-size:24px;margin:6px 0 0">Practice update</h1></div><div style="padding:22px 24px;border:1px solid #d8ddd8;border-top:0"><p style="margin-top:0"><strong>${escapeEmailHTML(student)}</strong> shared how ${checkedItems.length} practice ${checkedItems.length === 1 ? 'task is' : 'tasks are'} feeling.</p><ol style="list-style:none;margin:20px 0;padding:0">${itemRows}</ol>${questionBlock}<p style="color:#63747a;font-size:13px;margin-bottom:0">Received ${escapeEmailHTML(submittedAt)}</p></div></div>`
             // create reusable transporter object using the default SMTP transport
             let transporter = nodemailer.createTransport({
                 host: "sg1-ts3.a2hosting.com",
@@ -280,7 +284,7 @@ Message.sendCheckedSnapshot = function(req) {
             await transporter.sendMail({
                 from: process.env.A2EMAIL, // sender address
                 to: process.env.EMAIL, // list of receivers
-                subject: `Practice update from ${student}: ${checkedItems.length} checked`,
+                subject: `Practice update from ${student}`,
                 html: output, // html body
             });
             resolve("success")

@@ -9,7 +9,7 @@ const flash = require('connect-flash')
 const {csrfSync} = require('csrf-sync')
 const helmet = require('helmet')
 const rateLimit = require('express-rate-limit')
-const {renderSafeMarkdown} = require('./lib/safeContent')
+const {renderSafeMarkdown, renderPathMarkdown} = require('./lib/safeContent')
 // express() returns top-level function
 const app = express();
 
@@ -52,6 +52,7 @@ app.use(function(req, res, next) {
     if (req.session.user) res.set('Cache-Control', 'private, no-store')
     // make markdown function available in ejs templates
     res.locals.filterUserHTML = renderSafeMarkdown
+    res.locals.displayPathHTML = renderPathMarkdown
     next()
 })
 
@@ -63,10 +64,30 @@ app.use(express.urlencoded({extended: false}))
 // our app now accepts JSON
 app.use(express.json())
 
+const pathMaterials = require('./lib/pathMaterials')
+app.use(['/create-week', '/edit-week', '/week-email-resend'], function(req, res, next) {
+    if (req.method !== 'POST' || !String(req.headers['content-type'] || '').startsWith('multipart/form-data')) return next()
+    pathMaterials.upload(req, res, function(error) {
+        if (!error) return next()
+        const archiveAction = req.path !== '/create-week'
+        req.flash(archiveAction ? 'editError' : 'createError', pathMaterials.uploadMessage(error))
+        req.session.save(() => res.redirect(archiveAction ? '/choose-week' : '/create-week'))
+    })
+})
+app.use('/admin/backup-inspect', function(req, res, next) {
+    if (req.method !== 'POST') return next()
+    require('./lib/studioBackup').upload(req, res, function(error) {
+        if (!error) return next()
+        req.flash('recordErrors', error && error.code === 'LIMIT_FILE_SIZE' ? 'The backup file is larger than 25 MB.' : 'That backup file could not be read.')
+        req.session.save(() => res.redirect('/admin/records#backup'))
+    })
+})
+
 const accountLimiter = rateLimit({windowMs: 15 * 60 * 1000, max: 40})
 const messageLimiter = rateLimit({windowMs: 60 * 60 * 1000, max: 20})
 app.use(['/login', '/register', '/doesUsernameExist', '/doesEmailExist'], accountLimiter)
-app.use(['/sendEmail', '/sendFeedbackToHanford', '/sendQuizToHanford'], messageLimiter)
+app.use(['/sendEmail', '/sendFeedbackToHanford', '/sendQuizToHanford', '/studio-post'], messageLimiter)
+app.use('/missions/quaver-attack/claim', rateLimit({windowMs: 15 * 60 * 1000, max: 10}))
 
 // set path to views
 app.set('views', 'public/views');

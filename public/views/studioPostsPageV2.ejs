@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width">
+  <meta name="theme-color" content="#122e44"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Music Studio"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Recursive&family=Belgrano&family=Bellota&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/style.css?v=23">
+  <title>Studio Posts | Learning Park Portal</title>
+  <style>
+    .studio-board{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:24px}.studio-board-card{background:#fff;border:2px solid #19303a;border-top:8px solid #ffde24;border-radius:6px;box-shadow:7px 7px 0 rgba(18,46,68,.12);display:grid;gap:13px;padding:22px}.studio-board-card header{align-items:start;display:flex;gap:14px;justify-content:space-between}.studio-board-card h2{font-family:Belgrano,serif;font-size:1.2rem;margin:0}.studio-board-card time{color:#63757b;font-size:.78rem;white-space:nowrap}.studio-board-kind{color:#087f76;font-size:.72rem;font-weight:800;margin:0;text-transform:uppercase}.studio-board-message{font-size:1rem;line-height:1.7;margin:0;white-space:pre-wrap}.studio-board-link{color:#0c665f;font-weight:700;overflow-wrap:anywhere}.studio-board-points{background:#eef8f3;color:#17683f;font-size:.75rem;font-weight:800;padding:5px 8px;width:max-content}.studio-applause{border-top:1px solid #d7e0dd;display:grid;gap:8px;padding-top:13px}.studio-applause p{color:#4a5f65;font-size:.8rem;margin:0}.studio-applause form{align-items:center;display:flex;flex-wrap:wrap;gap:7px}.studio-applause button{background:#ffde24;border:1px solid #19303a;border-radius:4px;color:#19303a;font-weight:800;min-width:44px;padding:7px 10px}.studio-applause button:hover{background:#fff1a3}.studio-own-post{color:#087f76;font-size:.78rem;font-weight:800}.studio-board-empty{background:#fff;border:2px dashed #8da09d;padding:32px;text-align:center}.studio-board-empty h2{font-family:Belgrano,serif}.studio-post-page-action{margin-top:20px}@media(max-width:760px){.studio-board{grid-template-columns:1fr}.studio-board-card{padding:18px}.studio-board-card header{display:grid}.studio-board-card time{white-space:normal}}
+  </style>
+</head>
+<body class="portal-body portal-body-cabinet">
+  <%- include('includes/portalHeader', {activePortalTab: 'studio-posts'}) %>
+  <main class="portal-main">
+    <% studioPostError.forEach(function(message){ %><div class="alert alert-danger text-center"><%= message %></div><% }) %>
+    <% studioPostStatus.forEach(function(message){ %><div class="alert alert-success text-center"><%= message %></div><% }) %>
+    <section class="portal-intro">
+      <p class="portal-eyebrow">Private studio noticeboard</p>
+      <h1>Studio Posts</h1>
+      <p>Reflections, discoveries and musical work shared by people inside the studio. You have <strong><%= points %> points</strong>.</p>
+      <button class="portal-button portal-button-primary studio-post-page-action" type="button" onclick="var d=document.getElementById('studioPostDialog');if(typeof d.showModal==='function'){d.showModal()}else{d.setAttribute('open','');d.classList.add('is-open')}">Send a Studio Post</button>
+    </section>
+    <section class="studio-board" aria-label="Published Studio Posts">
+      <% posts.forEach(function(post){ %><article class="studio-board-card" id="post-<%= post._id %>"><header><div><p class="studio-board-kind"><%= post.label %></p><h2><%= post.posterName %>'s post</h2></div><time datetime="<%= new Date(post.publishedAt || post.createdAt).toISOString() %>"><%= new Date(post.publishedAt || post.createdAt).toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'}) %></time></header><p class="studio-board-message"><%= post.message %></p><% if(post.link){ %><a class="studio-board-link" href="<%= post.link %>" target="_blank" rel="noopener noreferrer">Open the shared music or video</a><% } %><span class="studio-board-points"><%= post.donatedPoints %> points gifted by the studio</span><div class="studio-applause"><% if(post.isOwnPost){ %><span class="studio-own-post">This is your post.</span><% }else{ %><p>Gift a little applause from your own points</p><form action="/studio-posts/donate" method="POST"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><input type="hidden" name="postId" value="<%= post._id %>"><button type="submit" name="amount" value="1" aria-label="Gift 1 point to <%= post.posterName %>">+1</button><button type="submit" name="amount" value="3" aria-label="Gift 3 points to <%= post.posterName %>">+3</button><button type="submit" name="amount" value="5" aria-label="Gift 5 points to <%= post.posterName %>">+5</button></form><% } %></div></article><% }) %>
+      <% if(!posts.length){ %><div class="studio-board-empty"><h2>The noticeboard is ready.</h2><p>The first approved Studio Post will appear here.</p></div><% } %>
+    </section>
+  </main>
+  <script src="/pwa.js" defer></script>
+</body>
+</html>
