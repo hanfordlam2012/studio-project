@@ -287,10 +287,12 @@ User.getLeaderboard = function() {
 }
 
 User.getLatestComments = function(userId) {
-  return new Promise (async(resolve, reject) => {
-    let latestComments = await weeksCollection.find({studentId: new ObjectId(userId), status: 'published'}).sort({createdDate: -1}).limit(1).project({comments: 1, attachments: 1, pieces: 1, practiceTasks: 1, pieceName: 1, lessonFocus: 1, quietKnot: 1, practiceResponse: 1}).toArray() //removed "studentId" quotations
-    resolve(latestComments)
-  })
+  return weeksCollection
+    .find({studentId: new ObjectId(userId), status: 'published'})
+    .sort({createdDate: -1})
+    .limit(1)
+    .project({comments: 1, attachments: 1, pieces: 1, practiceTasks: 1, pieceName: 1, lessonFocus: 1, quietKnot: 1, practiceResponse: 1})
+    .toArray()
 }
 
 User.getOneWeek = function(week_id) {

@@ -32,7 +32,7 @@ Message.sendLessonPathToParent = async function(data) {
     const pieceSections = pieces.map((piece, index) => {
       const taskItems = (piece.practiceTasks || []).map((task) => `
         <li style="margin-bottom:12px"><strong>${escapeEmailHTML(task.task)}</strong>
-        ${task.start ? `<br>Begin at: ${escapeEmailHTML(task.start)}` : ''}
+        ${task.start ? `<br>Portion to practise: ${escapeEmailHTML(task.start)}` : ''}
         ${task.why ? `<br>Why: ${escapeEmailHTML(task.why)}` : ''}
         ${task.success ? `<br>Success cue: ${escapeEmailHTML(task.success)}` : ''}</li>`).join('')
       return `<section style="border-top:${index ? '1px solid #d7dfe2' : '0'};padding-top:${index ? '18px' : '0'};margin-top:${index ? '18px' : '0'}">

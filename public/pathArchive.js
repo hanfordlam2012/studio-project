@@ -7,6 +7,7 @@
   const heading = document.querySelector('#archiveHeading')
   const count = document.querySelector('#archiveCount')
   let weeks = []
+  let visibleLimit = 10
 
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
@@ -32,7 +33,7 @@
   }
 
   function taskMarkup(task = {}, index = 0) {
-    return `<div class="task"><div class="task-head"><span>TASK ${index + 1}</span><button type="button" class="remove-task">Remove</button></div><textarea class="wide" data-key="task" placeholder="What to do">${esc(task.task)}</textarea><textarea data-key="start" placeholder="Where to begin">${esc(task.start)}</textarea><textarea data-key="why" placeholder="Why it matters">${esc(task.why)}</textarea><textarea class="wide" data-key="success" placeholder="Success cue">${esc(task.success)}</textarea></div>`
+    return `<div class="task"><div class="task-head"><span>TASK ${index + 1}</span><button type="button" class="remove-task">Remove</button></div><textarea class="wide" data-key="task" placeholder="What to do">${esc(task.task)}</textarea><textarea data-key="start" placeholder="Portion to practise, e.g. bars 3–10 or first page">${esc(task.start)}</textarea><textarea data-key="why" placeholder="Why it matters">${esc(task.why)}</textarea><textarea class="wide" data-key="success" placeholder="Success cue">${esc(task.success)}</textarea></div>`
   }
 
   function pieceMarkup(piece = {}, index = 0) {
@@ -71,7 +72,7 @@
       if (piece.lessonFocus) lines.push(`## Focus\n${piece.lessonFocus}`)
       if (piece.practiceTasks.length) {
         lines.push('## Practice Path')
-        piece.practiceTasks.forEach((task, index) => lines.push(`${index + 1}. **${task.task}**${task.start ? `\n\n   **Begin at:** ${task.start}` : ''}${task.why ? `\n\n   **Why:** ${task.why}` : ''}${task.success ? `\n\n   **Success cue:** ${task.success}` : ''}`))
+        piece.practiceTasks.forEach((task, index) => lines.push(`${index + 1}. **${task.task}**${task.start ? `\n\n   **Portion to practise:** ${task.start}` : ''}${task.why ? `\n\n   **Why:** ${task.why}` : ''}${task.success ? `\n\n   **Success cue:** ${task.success}` : ''}`))
       }
       if (piece.quietKnot) lines.push(`## What Hanford noticed\n> ${piece.quietKnot}`)
     })
@@ -180,13 +181,17 @@
   function render() {
     const query = search.value.trim().toLowerCase()
     const filtered = weeks.filter(week => [week.comments, week.generalNote, ...piecesFor(week).flatMap(piece => [piece.pieceName, piece.lessonFocus, piece.quietKnot])].join(' ').toLowerCase().includes(query))
-    archive.innerHTML = filtered.length ? `<div class="path-list">${filtered.map(card).join('')}</div>` : '<div class="empty">No paths match this search.</div>'
-    count.textContent = `${filtered.length} ${filtered.length === 1 ? 'path' : 'paths'}`
-    archive.querySelectorAll('.path-card').forEach((cardElement, index) => { mountMaterials(cardElement, filtered[index]); bind(cardElement) })
+    const visible = filtered.slice(0, visibleLimit)
+    const more = filtered.length > visible.length ? `<button type="button" class="show-more">Show more paths (${filtered.length - visible.length} remaining)</button>` : ''
+    archive.innerHTML = filtered.length ? `<div class="path-list">${visible.map(card).join('')}</div>${more}` : '<div class="empty">No paths match this search.</div>'
+    count.textContent = filtered.length > visible.length ? `Showing ${visible.length} of ${filtered.length} paths` : `${filtered.length} ${filtered.length === 1 ? 'path' : 'paths'}`
+    archive.querySelectorAll('.path-card').forEach((cardElement, index) => { mountMaterials(cardElement, visible[index]); bind(cardElement) })
+    archive.querySelector('.show-more')?.addEventListener('click', () => { visibleLimit += 10; render() })
   }
 
   student.addEventListener('change', async () => {
     weeks = []
+    visibleLimit = 10
     search.value = ''
     search.disabled = true
     count.textContent = ''
@@ -210,5 +215,5 @@
       archive.innerHTML = '<div class="empty">The archive could not be loaded.</div>'
     }
   })
-  search.addEventListener('input', render)
+  search.addEventListener('input', () => { visibleLimit = 10; render() })
 })()

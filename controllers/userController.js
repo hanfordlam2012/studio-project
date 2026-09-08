@@ -270,35 +270,25 @@ exports.resolveRewardRequest = async function(req, res) {
     req.session.save(() => res.redirect('/admin#rewardRequests'))
 }
 
-exports.getStudentData = function (req, res) {
+exports.getStudentData = async function (req, res) {
     const studentId = req.body.studentId
     if (!studentId || !studentId.match(/^[a-f\d]{24}$/i)) return res.status(400).json({error: 'That student could not be found.'})
-    const users = require('../db').db('studio-project').collection('users')
-    users.findOne({_id: new (require('mongodb').ObjectId)(studentId), secret: req.session.user.secret, student: true}, {projection: {_id: 1}}).then((ownedStudent) => {
-    if (!ownedStudent) return res.status(404).json({error: 'That student could not be found.'})
-    getThesePropertyValuesForUser(['practiceConversations'], studentId).then((practiceConversations) => {
-        User.getLatestComments(req.body.studentId).then((lastLessonComments) => {
-            const student = req.body.studentId && req.body.studentId.match(/^[a-f\d]{24}$/i)
-                ? require('../db').db('studio-project').collection('users').findOne(
-                    {_id: new (require('mongodb').ObjectId)(studentId), secret: req.session.user.secret, student: true},
-                    {projection: {fName: 1, lName: 1, parentName: 1, email: 1, lessonCount: 1}}
-                )
-                : Promise.resolve(null)
-            student.then((studentContact) => {
-            const latestComments = lastLessonComments[0] && lastLessonComments[0].comments
-            const lastLessonHTML = latestComments ? renderSafeMarkdown(latestComments) : ''
-            res.json(
-                {
-                    practiceConversations: practiceConversations,
-                    lastLessonComments: lastLessonComments,
-                    lastLessonHTML: lastLessonHTML,
-                    student: studentContact
-                }
-            )
-            })
+    try {
+        const objectId = new (require('mongodb').ObjectId)(studentId)
+        const users = require('../db').db('studio-project').collection('users')
+        const student = await users.findOne({_id: objectId, secret: req.session.user.secret, student: true}, {projection: {fName: 1, lName: 1, parentName: 1, email: 1, lessonCount: 1}})
+        if (!student) return res.status(404).json({error: 'That student could not be found.'})
+        const lastLessonComments = await User.getLatestComments(studentId)
+        const latestComments = lastLessonComments[0] && lastLessonComments[0].comments
+        res.json({
+            lastLessonComments: lastLessonComments,
+            lastLessonHTML: latestComments ? renderSafeMarkdown(latestComments) : '',
+            student: student
         })
-    })
-    })
+    } catch (error) {
+        console.error('Create Week student lookup failed:', error)
+        res.status(500).json({error: 'Student details could not be loaded.'})
+    }
 }
 
 exports.viewCreateWeekPage = function (req, res) {
