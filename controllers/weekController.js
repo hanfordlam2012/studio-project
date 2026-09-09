@@ -4,6 +4,17 @@ const ObjectId = require('mongodb').ObjectId
 const Message = require('../models/Message')
 const pathMaterials = require('../lib/pathMaterials')
 
+function emailFailureDetails(error, category) {
+	const clean = value => String(value || '').replace(/[^a-z0-9_. -]/gi, '').slice(0, 80)
+	const responseCode = Number(error && error.responseCode)
+	return {
+		errorCategory: category,
+		errorCode: clean(error && error.code) || 'UNKNOWN',
+		errorCommand: clean(error && error.command),
+		responseCode: Number.isInteger(responseCode) ? responseCode : null
+	}
+}
+
 exports.createWeek = function(req, res) {
 	try {
 		pathMaterials.validateFiles(req.files || [])
@@ -62,7 +73,7 @@ exports.createWeek = function(req, res) {
 					req.flash('success', 'Path published and family email sent.')
 				} catch (err) {
 					console.log('Lesson path email failed:', err.message)
-					await require('../models/User').recordWeekEmailDelivery(String(result.weekId), 'failed', {errorCategory: 'delivery-failed'})
+					await require('../models/User').recordWeekEmailDelivery(String(result.weekId), 'failed', emailFailureDetails(err, 'delivery-failed'))
 					req.flash('success', result.message)
 					req.flash('warning', 'The path was published, but the family email could not be sent.')
 				}
@@ -107,7 +118,7 @@ exports.resendWeekEmail = async function(req, res) {
 		await User.recordWeekEmailDelivery(req.body.week_id, 'sent', {sentAt: new Date(), resend: true})
 		req.flash('success', 'Family email sent again.')
 	} catch (error) {
-		try { if (sendAttempted) await require('../models/User').recordWeekEmailDelivery(req.body.week_id, 'failed', {errorCategory: 'resend-failed'}) } catch (ignored) {}
+		try { if (sendAttempted) await require('../models/User').recordWeekEmailDelivery(req.body.week_id, 'failed', emailFailureDetails(error, 'resend-failed')) } catch (ignored) {}
 		req.flash('editError', error.message || 'The family email could not be sent.')
 	}
 	const destination = req.body.returnTo === 'records' ? '/admin/records#deliveries' : '/choose-week'
