@@ -38,7 +38,7 @@
     "start": "node db.js",
     "build": "webpack --mode production",
     "watch": "start nodemon db --ignore frontend-js --ignore public/ && start webpack --watch",
-    "test": "node test/safeContent.test.js && node test/pathMaterials.test.js && node test/studioBackup.test.js"
+    "test": "node test/safeContent.test.js && node test/pathMaterials.test.js && node test/studioBackup.test.js && node test/studioPostMedia.test.js"
   },
   "author": "Hanford",
   "license": "MIT",

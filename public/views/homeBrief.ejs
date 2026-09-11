@@ -5,22 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Learning Studio | Music Sessions in Boronia</title>
   <meta name="description" content="Free music resources, public workshops and thoughtful piano guidance from Hanford Lam.">
-  <meta property="og:image" content="https://www.hanfordlam.com/images/hanford-piano-teacher.webp">
+  <meta property="og:image" content="https://www.hanfordlam.com/images/studio-hero.webp">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/images/music-studio-app-icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Rye&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/home-brief.css?v=4">
+  <link rel="stylesheet" href="/styles/home-brief.css?v=7">
+  <link rel="stylesheet" href="/styles/public-nav.css?v=1">
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="/">The Learning Studio · Boronia</a>
-    <nav aria-label="Main navigation"><a href="#freeShelf">Free shelf</a><a href="#parkMap">Workshops</a><a href="/reports">Student portal</a><a href="#contactForm">Contact</a></nav>
+  <header class="public-site-header">
+    <div class="public-site-header-inner">
+      <a class="public-site-brand" href="/"><span class="public-site-brand-kicker">Hanford Lam</span><strong>The Learning Studio · Boronia</strong></a>
+      <nav class="public-site-nav" aria-label="Main navigation"><a href="#freeShelf">Free shelf</a><a href="#parkMap">Workshops</a><a href="/reports">Student portal</a><a href="#contactForm">Contact</a></nav>
+    </div>
   </header>
   <main>
     <section class="hero">
-      <img src="/images/hanford-piano-teacher.webp" alt="Hanford Lam at the piano" width="1200" height="800">
+      <img src="/images/studio-hero.webp" alt="The Learning Studio with two grand pianos" width="1920" height="1080" fetchpriority="high">
       <div class="hero-copy"><p class="eyebrow">A small park of music, thought and useful experiments</p><h1>The Learning Studio</h1><p>Enter with something tangled. Leave with greater clarity, something useful, and a reason to return.</p><a class="button" href="#quickDoors">Enter the studio</a></div>
     </section>
 
@@ -65,7 +68,7 @@
     <section class="section listen-section"><p class="eyebrow">Listen and work together</p><h2>A performance, or a second pair of ears</h2><div class="listen-grid"><a href="https://youtu.be/zhUdsJw0IBo" target="_blank" rel="noopener noreferrer"><strong>Hyde Sonata, first movement</strong><span>Watch on YouTube</span></a><a href="http://www.fiverr.com/s/KeNGDl8" target="_blank" rel="noopener noreferrer"><strong>Focused piano feedback</strong><span>Visit the Fiverr service</span></a></div></section>
 
     <section class="about-contact" id="contactForm">
-      <div class="about"><img src="/images/hanford-music-teacher.webp" alt="Hanford Lam in his music studio" width="900" height="600" loading="lazy"><div><p class="eyebrow">About Hanford</p><h2>The curator behind the park</h2><p>I am a pianist and teacher interested in the moment confusion becomes curiosity. My studio work brings together music, careful listening and practical ways forward.</p></div></div>
+      <div class="about"><figure class="curator-mirror"><img src="/images/hanford-piano-teacher.webp" alt="Hanford Lam at the piano" width="800" height="450" loading="lazy"></figure><div><p class="eyebrow">About Hanford</p><h2>The curator behind the park</h2><p>I am a pianist and teacher interested in the moment confusion becomes curiosity. My studio work brings together music, careful listening and practical ways forward.</p></div></div>
       <form id="contact-form" method="post" action="/sendEmail" novalidate>
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="hidden" name="recaptchaTokenInput" id="recaptchaTokenInput" value="">

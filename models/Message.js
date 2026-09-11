@@ -22,6 +22,13 @@ const recipientList = value => {
     return [...new Set(recipients)]
 }
 
+const createMailTransport = () => nodemailer.createTransport({
+    host: process.env.A2EMAILHOST || 'sg1-ts3.a2hosting.com',
+    port: Number(process.env.A2EMAILPORT) || 465,
+    secure: true,
+    auth: {user: process.env.A2EMAIL, pass: process.env.A2EMAILPASSWORD}
+})
+
 Message.sendLessonPathToParent = async function(data) {
     const pieces = Array.isArray(data.pieces) && data.pieces.length ? data.pieces : [{
         pieceName: data.pieceName,
@@ -52,12 +59,7 @@ Message.sendLessonPathToParent = async function(data) {
         <p>The same notes are waiting in the Music Learning Studio portal.</p>
         <p>Warmly,<br>Hanford</p>
     </div>`
-    const transporter = nodemailer.createTransport({
-        host: "sg1-ts3.a2hosting.com",
-        port: 465,
-        secure: true,
-        auth: {user: process.env.A2EMAIL, pass: process.env.A2EMAILPASSWORD}
-    })
+    const transporter = createMailTransport()
     const safeSubject = String(data.subject || 'A new practice path').replace(/[\r\n]+/g, ' ').trim().slice(0, 140)
     return transporter.sendMail({
         from: process.env.A2EMAIL,
@@ -83,15 +85,7 @@ Message.sendEmail = async function (data) {
                 <li>Message: ${message}</li>
                 </ul>`
                 // create reusable transporter object using the default SMTP transport
-                let transporter = nodemailer.createTransport({
-                    host: "sg1-ts3.a2hosting.com",
-                    port: 465,
-                    secure: true, // true for 465, false for other ports
-                    auth: {
-                    user: process.env.A2EMAIL,
-                    pass: process.env.A2EMAILPASSWORD,
-                    },
-                });
+                let transporter = createMailTransport();
 
                 // send mail with defined transport object
                 await transporter.sendMail({
@@ -133,15 +127,7 @@ Message.sendFeedbackToHanford = function(data) {
             feedback3: ${response3}
             `
             // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
-                host: "sg1-ts3.a2hosting.com",
-                port: 465,
-                secure: true, // true for 465, false for other ports
-                auth: {
-                user: process.env.A2EMAIL,
-                pass: process.env.A2EMAILPASSWORD,
-                },
-            });
+            let transporter = createMailTransport();
 
             // send mail with defined transport object
             await transporter.sendMail({
@@ -189,15 +175,7 @@ Message.sendQuizToHanford = function(data) {
             <p>Question 10: Which phrases help describe the final section of the piece? <strong style="color:#FF0000;">${q10}</strong></p>
             `
             // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
-                host: "sg1-ts3.a2hosting.com",
-                port: 465,
-                secure: true, // true for 465, false for other ports
-                auth: {
-                user: process.env.A2EMAIL,
-                pass: process.env.A2EMAILPASSWORD,
-                },
-            });
+            let transporter = createMailTransport();
 
             // send mail with defined transport object
             await transporter.sendMail({
@@ -233,15 +211,7 @@ Message.sendMelodyToHanford = function(data) {
             <p>Climax reflection: ${q5}</p>
             `
             // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
-                host: "sg1-ts3.a2hosting.com",
-                port: 465,
-                secure: true, // true for 465, false for other ports
-                auth: {
-                user: process.env.A2EMAIL,
-                pass: process.env.A2EMAILPASSWORD,
-                },
-            });
+            let transporter = createMailTransport();
 
             // send mail with defined transport object
             await transporter.sendMail({
@@ -270,15 +240,7 @@ Message.sendCheckedSnapshot = function(req) {
             const questionBlock = question ? `<div style="margin:20px 0;padding:14px 16px;background:#fff7dc;border-left:4px solid #f2c94c"><strong style="display:block;margin-bottom:5px">Question for the next lesson</strong>${escapeEmailHTML(question)}</div>` : ''
             const output = `<div style="font-family:Arial,sans-serif;line-height:1.55;color:#19303a;max-width:640px"><div style="background:#15364c;color:#fff;padding:20px 24px"><div style="font-size:12px;text-transform:uppercase;color:#9fddd4;font-weight:bold">Music Learning Studio</div><h1 style="font-size:24px;margin:6px 0 0">Practice update</h1></div><div style="padding:22px 24px;border:1px solid #d8ddd8;border-top:0"><p style="margin-top:0"><strong>${escapeEmailHTML(student)}</strong> shared how ${checkedItems.length} practice ${checkedItems.length === 1 ? 'task is' : 'tasks are'} feeling.</p><ol style="list-style:none;margin:20px 0;padding:0">${itemRows}</ol>${questionBlock}<p style="color:#63747a;font-size:13px;margin-bottom:0">Received ${escapeEmailHTML(submittedAt)}</p></div></div>`
             // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
-                host: "sg1-ts3.a2hosting.com",
-                port: 465,
-                secure: true, // true for 465, false for other ports
-                auth: {
-                user: process.env.A2EMAIL,
-                pass: process.env.A2EMAILPASSWORD,
-                },
-            });
+            let transporter = createMailTransport();
 
             // send mail with defined transport object
             await transporter.sendMail({

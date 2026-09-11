@@ -19,6 +19,7 @@ rewardRequestsCollection.createIndex(
 // more convenient validation
 const validator = require("validator")
 const sanitizeHTML = require('../lib/safeContent').plainText
+const studioPostMedia = require('../lib/studioPostMedia')
 
 let User = function(data) {
     this.data = data
@@ -491,7 +492,7 @@ User.getAdminDashboard = async function(secret, userId) {
     studentName: studentNames.get(String(week.studentId)) || 'Student',
     response: week.practiceResponse
   }))
-  const studioPosts = studentIds.length ? await studioPostsCollection.find({studentId: {$in: studentIds}, status: 'pending'}).sort({createdAt: -1}).limit(30).toArray() : []
+  const studioPosts = studentIds.length ? await studioPostsCollection.find({studentId: {$in: studentIds}, secret: secret, status: {$in: ['pending', 'published']}}).sort({createdAt: -1}).limit(60).toArray() : []
   studioPosts.forEach(post => { post.studentName = studentNames.get(String(post.studentId)) || 'Student' })
   const rewardRequests = studentIds.length ? await rewardRequestsCollection.find({studentId: {$in: studentIds}, secret: secret, status: 'pending'}).sort({createdAt: 1}).limit(50).toArray() : []
   rewardRequests.forEach(request => {
@@ -528,6 +529,37 @@ User.submitStudioPost = async function(userId, data) {
   return 'Your private Studio Post draft is waiting for Hanford to review.'
 }
 
+function cleanStudioPostData(data) {
+  const kinds = {reflection: 'Musical reflection', progress: 'Work in progress', discovery: 'Musical discovery', concert: 'Concert review'}
+  const kind = kinds[data.kind] ? data.kind : 'reflection'
+  const message = sanitizeHTML(String(data.message || '')).trim().slice(0, 1200)
+  const link = String(data.link || '').trim().slice(0, 500)
+  if (!message) throw new Error('Add a short note for the Studio Post.')
+  if (link && (!validator.isURL(link, {protocols: ['http', 'https'], require_protocol: true}) || !/^https?:\/\//i.test(link))) throw new Error('Use a complete http or https link.')
+  return {kind: kind, label: kinds[kind], message: message, link: link}
+}
+
+User.updateAdminStudioPost = async function(secret, postId, data) {
+  if (!ObjectId.isValid(postId)) throw new Error('That Studio Post could not be found.')
+  const clean = cleanStudioPostData(data)
+  const result = await studioPostsCollection.updateOne(
+    {_id: new ObjectId(postId), secret: secret, status: {$in: ['pending', 'published']}},
+    {$set: {...clean, updatedAt: new Date()}}
+  )
+  if (!result.matchedCount) throw new Error('That Studio Post is no longer editable.')
+  return 'Studio Post changes saved.'
+}
+
+User.removeAdminStudioPost = async function(secret, postId) {
+  if (!ObjectId.isValid(postId)) throw new Error('That Studio Post could not be found.')
+  const result = await studioPostsCollection.updateOne(
+    {_id: new ObjectId(postId), secret: secret, status: {$in: ['pending', 'published']}},
+    {$set: {status: 'removed', removedAt: new Date()}}
+  )
+  if (!result.modifiedCount) throw new Error('That Studio Post was already removed or handled elsewhere.')
+  return 'The Studio Post was removed. Previously awarded and gifted points were left unchanged.'
+}
+
 User.getPublishedStudioPosts = async function(secret, viewerId) {
   if (!ObjectId.isValid(viewerId)) throw new Error('Your account could not be found.')
   const viewerObjectId = new ObjectId(viewerId)
@@ -543,6 +575,7 @@ User.getPublishedStudioPosts = async function(secret, viewerId) {
     post.posterName = authorNames.get(String(post.studentId)) || 'A student'
     post.isOwnPost = String(post.studentId) === String(viewerObjectId)
     post.donatedPoints = Math.max(0, Number(post.donatedPoints) || 0)
+    post.media = studioPostMedia(post.link)
   })
   return {posts: posts, points: Math.max(0, Number(viewer.leaderboardScore) || 0)}
 }

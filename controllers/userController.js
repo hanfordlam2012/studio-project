@@ -127,7 +127,8 @@ exports.viewAdminPage = async function(req, res) {
             inbox: dashboard.inbox,
             insights: dashboard.insights,
             reviewed: dashboard.reviewed,
-            studioPosts: dashboard.studioPosts,
+            studioPosts: dashboard.studioPosts.filter(post => post.status === 'pending'),
+            publishedStudioPosts: dashboard.studioPosts.filter(post => post.status === 'published'),
             rewardRequests: dashboard.rewardRequests,
             adErrors: req.flash('adErrors'),
             adminSuccess: req.flash('adminSuccess')
@@ -219,6 +220,40 @@ exports.resolveStudioPost = async function(req, res) {
         await require('../lib/studioActivity').record(req.session.user, 'studio-post-resolved', result.message)
     } catch (error) {
         req.flash('adErrors', error.message || 'That Studio Post could not be changed.')
+    }
+    req.session.save(() => res.redirect('/admin#studioPosts'))
+}
+
+exports.updateAdminStudioPost = async function(req, res) {
+    try {
+        const message = await User.updateAdminStudioPost(req.session.user.secret, req.body.postId, req.body)
+        req.flash('adminSuccess', message)
+        await require('../lib/studioActivity').record(req.session.user, 'studio-post-edited', message)
+    } catch (error) {
+        req.flash('adErrors', error.message || 'That Studio Post could not be saved.')
+    }
+    req.session.save(() => res.redirect('/admin#studioPosts'))
+}
+
+exports.publishAdminStudioPost = async function(req, res) {
+    try {
+        await User.updateAdminStudioPost(req.session.user.secret, req.body.postId, req.body)
+        const result = await User.resolveStudioPost(req.session.user.secret, req.body.postId, 'approve')
+        req.flash('adminSuccess', result.message)
+        await require('../lib/studioActivity').record(req.session.user, 'studio-post-resolved', result.message)
+    } catch (error) {
+        req.flash('adErrors', error.message || 'That Studio Post could not be published.')
+    }
+    req.session.save(() => res.redirect('/admin#studioPosts'))
+}
+
+exports.removeAdminStudioPost = async function(req, res) {
+    try {
+        const message = await User.removeAdminStudioPost(req.session.user.secret, req.body.postId)
+        req.flash('adminSuccess', message)
+        await require('../lib/studioActivity').record(req.session.user, 'studio-post-removed', message)
+    } catch (error) {
+        req.flash('adErrors', error.message || 'That Studio Post could not be removed.')
     }
     req.session.save(() => res.redirect('/admin#studioPosts'))
 }

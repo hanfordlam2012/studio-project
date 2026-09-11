@@ -1,0 +1,11 @@
+.public-site-header{background:#122e44;border-bottom:4px solid #ffde24;color:#fff}
+.public-site-header-inner{align-items:center;display:flex;gap:28px;justify-content:space-between;margin:0 auto;max-width:1480px;min-height:76px;padding:14px clamp(20px,4vw,58px);width:100%}
+.public-site-brand{color:#fff;display:grid;line-height:1.2;text-decoration:none}
+.public-site-brand:hover,.public-site-brand:focus{color:#ffde24}
+.public-site-brand-kicker{color:#9fddd4;font:700 .64rem 'DM Sans',sans-serif;text-transform:uppercase}
+.public-site-brand strong{font:400 1.05rem Rye,Georgia,serif}
+.public-site-nav{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}
+.public-site-nav a{border:1px solid rgba(255,255,255,.28);border-radius:6px;color:#fff;font:700 .78rem 'DM Sans',sans-serif;padding:10px 12px;text-align:center;text-decoration:none;white-space:nowrap}
+.public-site-nav a:hover,.public-site-nav a:focus,.public-site-nav a.is-active{background:#ffde24;border-color:#ffde24;color:#122e44}
+.public-site-nav a:focus-visible,.public-site-brand:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media(max-width:720px){.public-site-header-inner{align-items:flex-start;flex-direction:column;gap:12px;padding:13px 16px}.public-site-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.public-site-nav a{font-size:.72rem;padding:9px 7px;white-space:normal}}

@@ -34,4 +34,31 @@
     });
   });
   (function(){var dialog=document.querySelector('#studioPostDialog');function openDialog(){if(typeof dialog.showModal==='function')dialog.showModal();else{dialog.setAttribute('open','');dialog.classList.add('is-open')}}function closeDialog(){if(typeof dialog.close==='function')dialog.close();else{dialog.removeAttribute('open');dialog.classList.remove('is-open')}}document.querySelectorAll('[data-studio-post-open]').forEach(function(button){button.addEventListener('click',openDialog)});dialog.querySelector('[data-studio-post-close]').addEventListener('click',closeDialog);dialog.addEventListener('click',function(event){if(event.target===dialog)closeDialog()})}());
+  document.querySelectorAll('form[method="POST"], form[method="post"]').forEach(function(form) {
+    form.addEventListener('submit', function(event) {
+      if (form.dataset.submitting === 'true') {
+        event.preventDefault();
+        return;
+      }
+
+      form.dataset.submitting = 'true';
+      var submitter = event.submitter;
+      if (submitter && submitter.name) {
+        var submittedValue = document.createElement('input');
+        submittedValue.type = 'hidden';
+        submittedValue.name = submitter.name;
+        submittedValue.value = submitter.value;
+        form.appendChild(submittedValue);
+      }
+
+      form.querySelectorAll('button[type="submit"], input[type="submit"]').forEach(function(button) {
+        button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
+      });
+      if (submitter) {
+        if (submitter.tagName === 'INPUT') submitter.value = 'Please wait...';
+        else submitter.textContent = 'Please wait...';
+      }
+    });
+  });
 </script>
