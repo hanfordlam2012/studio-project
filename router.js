@@ -7,11 +7,14 @@ const messageController = require('./controllers/messageController')
 const missionController = require('./controllers/missionController')
 const scoresbyController = require('./controllers/scoresbyController')
 const performanceController = require('./controllers/performanceController')
+const secondOpinionController = require('./controllers/secondOpinionController')
 
 // run this function for that route
 router.get('/', function(req, res) {
     res.render('homeBrief', {status: req.flash('status')})
 })
+router.get('/piano-second-opinion', secondOpinionController.show)
+router.post('/piano-second-opinion', secondOpinionController.submit)
 
 
 // Retired teaching pages are intentionally no longer public routes.
@@ -73,6 +76,10 @@ router.post('/admin/studio-post', userController.mustBeLoggedIn, userController.
 router.post('/admin/studio-post-save', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.updateAdminStudioPost)
 router.post('/admin/studio-post-publish', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.publishAdminStudioPost)
 router.post('/admin/studio-post-remove', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.removeAdminStudioPost)
+router.post('/admin/second-opinion', userController.mustBeLoggedIn, userController.mustBeAdmin, secondOpinionController.saveReview)
+router.post('/admin/second-opinion-resend', userController.mustBeLoggedIn, userController.mustBeAdmin, secondOpinionController.resendCompleted)
+router.post('/admin/second-opinion-preview', userController.mustBeLoggedIn, userController.mustBeAdmin, secondOpinionController.preview)
+router.get('/admin/second-opinion/:orderId/:kind', userController.mustBeLoggedIn, userController.mustBeAdmin, secondOpinionController.download)
 router.post('/admin/path-template', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.savePathTemplate)
 router.post('/admin/path-template-delete', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.deletePathTemplate)
 router.post('/admin/practice-response-reviewed', userController.mustBeLoggedIn, userController.mustBeAdmin, userController.markPracticeResponseReviewed)

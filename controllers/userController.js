@@ -120,7 +120,10 @@ exports.logout = function (req, res) {
 // ADMIN FUNCTIONS
 exports.viewAdminPage = async function(req, res) {
     try {
-        const dashboard = await User.getAdminDashboard(req.session.user.secret, req.session.user.userId)
+        const [dashboard, secondOpinions] = await Promise.all([
+            User.getAdminDashboard(req.session.user.secret, req.session.user.userId),
+            require('../lib/secondOpinion').list()
+        ])
         res.render('adminDashboard', {
             students: dashboard.students,
             prizes: dashboard.prizes,
@@ -130,6 +133,7 @@ exports.viewAdminPage = async function(req, res) {
             studioPosts: dashboard.studioPosts.filter(post => post.status === 'pending'),
             publishedStudioPosts: dashboard.studioPosts.filter(post => post.status === 'published'),
             rewardRequests: dashboard.rewardRequests,
+            secondOpinions: secondOpinions,
             adErrors: req.flash('adErrors'),
             adminSuccess: req.flash('adminSuccess')
         })

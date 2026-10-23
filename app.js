@@ -82,6 +82,19 @@ app.use('/admin/backup-inspect', function(req, res, next) {
         req.session.save(() => res.redirect('/admin/records#backup'))
     })
 })
+const secondOpinion = require('./lib/secondOpinion')
+const secondOpinionLimiter = rateLimit({windowMs: 60 * 60 * 1000, max: 6})
+app.use('/piano-second-opinion', function(req, res, next) {
+    if (req.method !== 'POST') return next()
+    secondOpinionLimiter(req, res, function() {
+        if (!String(req.headers['content-type'] || '').startsWith('multipart/form-data')) return next()
+        secondOpinion.upload(req, res, function(error) {
+            if (!error) return next()
+            req.flash('secondOpinionError', secondOpinion.uploadMessage(error))
+            req.session.save(() => res.redirect('/piano-second-opinion#submit'))
+        })
+    })
+})
 
 const accountLimiter = rateLimit({windowMs: 15 * 60 * 1000, max: 40})
 const messageLimiter = rateLimit({windowMs: 60 * 60 * 1000, max: 20})
